@@ -1,5 +1,5 @@
 {
-  "generated": "2025-09-30T07:26:58.633Z",
+  "generated": "2025-09-30T07:06:39.871Z",
   "count": 35,
   "projects": [
     {
@@ -13,14 +13,64 @@
       "model": "claude-sonnet-4"
     },
     {
-      "folder": "anhnh2002--titan-sight-docs",
-      "owner": "anhnh2002",
-      "name": "Titan Sight",
-      "language": "Unknown",
-      "components": 14,
-      "modules": 4,
+      "folder": "sveltejs--svelte-docs",
+      "owner": "sveltejs",
+      "name": "Svelte",
+      "language": "JavaScript",
+      "components": 2049,
+      "modules": 14,
       "depth": 2,
-      "model": "kimi-k2-instruct"
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "puppeteer--puppeteer-docs",
+      "owner": "puppeteer",
+      "name": "Puppeteer",
+      "language": "TypeScript",
+      "components": 1832,
+      "modules": 14,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "Unity-Technologies--ml-agents-docs",
+      "owner": "Unity-Technologies",
+      "name": "Ml Agents",
+      "language": "TypeScript",
+      "components": 739,
+      "modules": 13,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "elastic--logstash-docs",
+      "owner": "elastic",
+      "name": "Logstash",
+      "language": "Java",
+      "components": 3290,
+      "modules": 16,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "wazuh--wazuh-docs",
+      "owner": "wazuh",
+      "name": "Wazuh",
+      "language": "C",
+      "components": 13496,
+      "modules": 20,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "electron--electron-docs",
+      "owner": "electron",
+      "name": "Electron",
+      "language": "C++",
+      "components": 1529,
+      "modules": 8,
+      "depth": 2,
+      "model": "claude-sonnet-4"
     },
     {
       "folder": "chartjs--Chart.js-docs",
@@ -41,26 +91,6 @@
       "modules": 14,
       "depth": 2,
       "model": "kimi-k2-instruct"
-    },
-    {
-      "folder": "elastic--logstash-docs",
-      "owner": "elastic",
-      "name": "Logstash",
-      "language": "Java",
-      "components": 3290,
-      "modules": 16,
-      "depth": 2,
-      "model": "claude-sonnet-4"
-    },
-    {
-      "folder": "electron--electron-docs",
-      "owner": "electron",
-      "name": "Electron",
-      "language": "C++",
-      "components": 1529,
-      "modules": 8,
-      "depth": 2,
-      "model": "claude-sonnet-4"
     },
     {
       "folder": "FluentValidation--FluentValidation-docs",
@@ -183,16 +213,6 @@
       "model": "kimi-k2-instruct"
     },
     {
-      "folder": "puppeteer--puppeteer-docs",
-      "owner": "puppeteer",
-      "name": "Puppeteer",
-      "language": "TypeScript",
-      "components": 1832,
-      "modules": 14,
-      "depth": 2,
-      "model": "claude-sonnet-4"
-    },
-    {
       "folder": "qmk--qmk_firmware-docs",
       "owner": "qmk",
       "name": "Qmk_firmware",
@@ -273,16 +293,6 @@
       "model": "kimi-k2-instruct"
     },
     {
-      "folder": "sveltejs--svelte-docs",
-      "owner": "sveltejs",
-      "name": "Svelte",
-      "language": "JavaScript",
-      "components": 2049,
-      "modules": 14,
-      "depth": 2,
-      "model": "claude-sonnet-4"
-    },
-    {
       "folder": "systemd--systemd-docs",
       "owner": "systemd",
       "name": "Systemd",
@@ -303,16 +313,6 @@
       "model": "claude-sonnet-4"
     },
     {
-      "folder": "Unity-Technologies--ml-agents-docs",
-      "owner": "Unity-Technologies",
-      "name": "Ml Agents",
-      "language": "TypeScript",
-      "components": 739,
-      "modules": 13,
-      "depth": 2,
-      "model": "claude-sonnet-4"
-    },
-    {
       "folder": "vitejs--vite-docs",
       "owner": "vitejs",
       "name": "Vite",
@@ -321,16 +321,6 @@
       "modules": 13,
       "depth": 2,
       "model": "kimi-k2-instruct"
-    },
-    {
-      "folder": "wazuh--wazuh-docs",
-      "owner": "wazuh",
-      "name": "Wazuh",
-      "language": "C",
-      "components": 13496,
-      "modules": 20,
-      "depth": 2,
-      "model": "claude-sonnet-4"
     },
     {
       "folder": "x64dbg--x64dbg-docs",
