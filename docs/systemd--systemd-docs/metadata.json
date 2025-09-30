@@ -1,0 +1,21 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T17:41:24.109875",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/systemd--systemd",
+        "commit_id": "823fc6e9f7003fcd3f93713835b49ca91941787d"
+    },
+    "statistics": {
+        "total_components": 19109,
+        "leaf_nodes": 25,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "build-tools.md",
+        "uki-management.md"
+    ]
+}

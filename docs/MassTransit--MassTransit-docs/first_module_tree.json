@@ -1,0 +1,110 @@
+{
+    "Core_Abstractions": {
+        "path": "src/MassTransit.Abstractions",
+        "components": [
+            "src.MassTransit.Abstractions.IConsumer.IConsumer",
+            "src.MassTransit.Abstractions.ISaga.ISaga",
+            "src.MassTransit.Abstractions.IRequestClient.IRequestClient",
+            "src.MassTransit.Abstractions.ConsumeContext.ConsumeContext",
+            "src.MassTransit.Abstractions.SendContext.SendContext",
+            "src.MassTransit.Abstractions.PublishContext.PublishContext",
+            "src.MassTransit.Abstractions.ReceiveContext.ReceiveContext",
+            "src.MassTransit.Abstractions.MessageUrn.MessageUrn",
+            "src.MassTransit.Abstractions.CorrelatedBy.CorrelatedBy"
+        ],
+        "children": {}
+    },
+    "Middleware_Core": {
+        "path": "src/MassTransit/Middleware",
+        "components": [
+            "src.MassTransit.Middleware.IPipe.IPipe",
+            "src.MassTransit.Middleware.IFilter.IFilter",
+            "src.MassTransit.Middleware.ConsumePipe.ConsumePipe",
+            "src.MassTransit.Middleware.SendPipe.SendPipe",
+            "src.MassTransit.Middleware.PublishPipe.PublishPipe",
+            "src.MassTransit.Middleware.ReceivePipe.ReceivePipe"
+        ],
+        "children": {}
+    },
+    "Configuration_Core": {
+        "path": "src/MassTransit/Configuration",
+        "components": [
+            "src.MassTransit.Configuration.IBusFactoryConfigurator.IBusFactoryConfigurator",
+            "src.MassTransit.Configuration.IReceiveEndpointConfigurator.IReceiveEndpointConfigurator",
+            "src.MassTransit.Configuration.IConsumerConfigurator.IConsumerConfigurator",
+            "src.MassTransit.Configuration.ISagaConfigurator.ISagaConfigurator"
+        ],
+        "children": {}
+    },
+    "Transports_Core": {
+        "path": "src/MassTransit/Transports",
+        "components": [
+            "src.MassTransit.Transports.ISendTransport.ISendTransport",
+            "src.MassTransit.Transports.IReceiveTransport.IReceiveTransport",
+            "src.MassTransit.Transports.SendEndpoint.SendEndpoint",
+            "src.MassTransit.Transports.ReceiveEndpoint.ReceiveEndpoint",
+            "src.MassTransit.Transports.PublishEndpointProvider.PublishEndpointProvider",
+            "src.MassTransit.Transports.SendEndpointProvider.SendEndpointProvider"
+        ],
+        "children": {}
+    },
+    "Serialization_Core": {
+        "path": "src/MassTransit/Serialization",
+        "components": [
+            "src.MassTransit.Serialization.IMessageDeserializer.IMessageDeserializer",
+            "src.MassTransit.Serialization.IMessageSerializer.IMessageSerializer",
+            "src.MassTransit.Serialization.JsonMessageEnvelope.JsonMessageEnvelope",
+            "src.MassTransit.Serialization.SystemTextJsonMessageSerializer.SystemTextJsonMessageSerializer"
+        ],
+        "children": {}
+    },
+    "Saga_StateMachine_Core": {
+        "path": "src/MassTransit/SagaStateMachine",
+        "components": [
+            "src.MassTransit.SagaStateMachine.MassTransitStateMachine.MassTransitStateMachine",
+            "src.MassTransit.SagaStateMachine.StateMachine.StateMachine",
+            "src.MassTransit.SagaStateMachine.IStateMachineActivitySelector.IStateMachineActivitySelector",
+            "src.MassTransit.SagaStateMachine.BehaviorContext.BehaviorContext"
+        ],
+        "children": {}
+    },
+    "Courier_Core": {
+        "path": "src/MassTransit/Courier",
+        "components": [
+            "src.MassTransit.Courier.IActivity.IActivity",
+            "src.MassTransit.Courier.IExecuteActivity.IExecuteActivity",
+            "src.MassTransit.Courier.ICompensateActivity.ICompensateActivity",
+            "src.MassTransit.Courier.IRoutingSlipBuilder.IRoutingSlipBuilder",
+            "src.MassTransit.Courier.RoutingSlipExecutor.RoutingSlipExecutor"
+        ],
+        "children": {}
+    },
+    "DependencyInjection_Core": {
+        "path": "src/MassTransit/DependencyInjection",
+        "components": [
+            "src.MassTransit.DependencyInjection.IRegistrationBusFactory.IRegistrationBusFactory",
+            "src.MassTransit.DependencyInjection.IBusRegistrationContext.IBusRegistrationContext",
+            "src.MassTransit.DependencyInjection.RegistrationBusFactory.RegistrationBusFactory"
+        ],
+        "children": {}
+    },
+    "Testing_Core": {
+        "path": "src/MassTransit/Testing",
+        "components": [
+            "src.MassTransit.Testing.IBusTestHarness.IBusTestHarness",
+            "src.MassTransit.Testing.IConsumerTestHarness.IConsumerTestHarness",
+            "src.MassTransit.Testing.ISagaTestHarness.ISagaTestHarness",
+            "src.MassTransit.Testing.InMemoryTestHarness.InMemoryTestHarness"
+        ],
+        "children": {}
+    },
+    "InMemory_Transport": {
+        "path": "src/MassTransit/InMemoryTransport",
+        "components": [
+            "src.MassTransit.InMemoryTransport.InMemoryBusInstance.InMemoryBusInstance",
+            "src.MassTransit.InMemoryTransport.InMemoryReceiveTransport.InMemoryReceiveTransport",
+            "src.MassTransit.InMemoryTransport.InMemorySendTransportProvider.InMemorySendTransportProvider"
+        ],
+        "children": {}
+    }
+}

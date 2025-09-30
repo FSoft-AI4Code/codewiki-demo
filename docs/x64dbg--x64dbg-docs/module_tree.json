@@ -1,0 +1,290 @@
+{
+    "Memory Management": {
+        "components": [
+            "src.dbg.memory._WIN11_HEAP",
+            "src.dbg.memory._WIN11_PROCESS_HEAP_DESCRIPTOR",
+            "src.dbg.memory._WIN11_SEGMENT_HEAP"
+        ],
+        "children": {}
+    },
+    "Breakpoint System": {
+        "components": [
+            "src.dbg.breakpoint.BreakpointLogFile"
+        ],
+        "children": {}
+    },
+    "Symbol Resolution": {
+        "components": [
+            "src.dbg.symbolinfo.DownloadBaseGuard",
+            "src.dbg.symbolinfo.SYMBOLCBDATA"
+        ],
+        "children": {}
+    },
+    "Module Management": {
+        "components": [
+            "src.dbg.module.ModuleSerializer",
+            "src.dbg.module.CV_INFO_PDB20",
+            "src.dbg.module.CV_INFO_PDB70",
+            "src.dbg.module.MODULEPARTYINFO",
+            "src.dbg.module.CV_HEADER",
+            "src.dbg.module.ModulePartyInfo"
+        ],
+        "children": {}
+    },
+    "Reference Management": {
+        "components": [
+            "src.dbg.xrefs.Xrefs",
+            "src.dbg.xrefs.FromInfo",
+            "src.dbg.xrefs.XrefSerializer",
+            "src.dbg.xrefs.AddressInfo",
+            "src.dbg.xrefs.XREFSINFO"
+        ],
+        "children": {}
+    },
+    "Encoding Map": {
+        "components": [
+            "src.dbg.encodemap.ENCODEMAP",
+            "src.dbg.encodemap.EncodeMap",
+            "src.dbg.encodemap.EncodeMapSerializer"
+        ],
+        "children": {}
+    },
+    "Expression Functions": {
+        "components": [
+            "src.dbg.expressionfunctions.seq",
+            "src.dbg.expressionfunctions.gens"
+        ],
+        "children": {}
+    },
+    "Plugin System": {
+        "components": [
+            "src.dbg.plugin_loader.ChangeDirectory",
+            "src.dbg.plugin_loader.DllDirectory",
+            "src.dbg.plugin_loader.ExprFuncWrapper"
+        ],
+        "children": {}
+    },
+    "PDB Symbol Loading": {
+        "components": [
+            "src.dbg.symbolsourcedia.SourceFileInfo"
+        ],
+        "children": {}
+    },
+    "Comment System": {
+        "components": [
+            "src.dbg.comment.Comments",
+            "src.dbg.comment.CommentSerializer"
+        ],
+        "children": {}
+    },
+    "Bookmark System": {
+        "components": [
+            "src.dbg.bookmark.Bookmarks",
+            "src.dbg.bookmark.BookmarkSerializer"
+        ],
+        "children": {}
+    },
+    "Argument Management": {
+        "components": [
+            "src.dbg.argument.Arguments",
+            "src.dbg.argument.ArgumentSerializer"
+        ],
+        "children": {}
+    },
+    "Function Management": {
+        "components": [
+            "src.dbg.function.FunctionSerializer",
+            "src.dbg.function.Functions"
+        ],
+        "children": {}
+    },
+    "Type System": {
+        "components": [
+            "src.dbg.types.Enum"
+        ],
+        "children": {}
+    },
+    "Label System": {
+        "components": [
+            "src.dbg.label.LabelSerializer",
+            "src.dbg.label.Labels"
+        ],
+        "children": {}
+    },
+    "Symbol Source Base": {
+        "components": [
+            "src.dbg.symbolsourcebase.PrefixCmp"
+        ],
+        "children": {}
+    },
+    "TCP Connections": {
+        "components": [
+            "src.dbg.tcpconnections.in_addr"
+        ],
+        "children": {}
+    },
+    "Data Instruction Helper": {
+        "components": [
+            "src.dbg.datainst_helper.DataInstruction"
+        ],
+        "children": {}
+    },
+    "Exception Handler Info": {
+        "components": [
+            "src.dbg.exhandlerinfo.VEH_ENTRY_XP",
+            "src.dbg.exhandlerinfo.VEH_ENTRY_VISTA"
+        ],
+        "children": {}
+    },
+    "Simple Script": {
+        "components": [
+            "src.dbg.simplescript.SCRIPTFRAME",
+            "src.dbg.simplescript.SCRIPTBP",
+            "src.dbg.simplescript.LINEMAPENTRY"
+        ],
+        "children": {}
+    },
+    "GUI Bridge": {
+        "components": [
+            "src.gui.Src.Bridge.Bridge.BridgeArchitecture"
+        ],
+        "children": {}
+    },
+    "Symbol View": {
+        "components": [
+            "src.gui.Src.Gui.SymbolView.SymbolSearchList"
+        ],
+        "children": {}
+    },
+    "Breakpoints View": {
+        "components": [
+            "src.gui.Src.Gui.BreakpointsView.Hax"
+        ],
+        "children": {}
+    },
+    "Trace File Dump": {
+        "components": [
+            "src.gui.Src.Tracer.TraceFileDump.PARTIALMATCH"
+        ],
+        "children": {}
+    },
+    "Patch Dialog": {
+        "components": [
+            "src.gui.Src.Gui.PatchDialog._IMPORTSTATUS"
+        ],
+        "children": {}
+    },
+    "Release Notes Dialog": {
+        "components": [
+            "src.gui.Src.Gui.ReleaseNotesDialog.BadEmoji"
+        ],
+        "children": {}
+    },
+    "Zeh Symbol Table": {
+        "components": [
+            "src.gui.Src.Gui.ZehSymbolTable.SymbolInfoWrapper"
+        ],
+        "children": {}
+    },
+    "Update Checker": {
+        "components": [
+            "src.gui.Src.Utils.UpdateChecker.Cleanup"
+        ],
+        "children": {}
+    },
+    "Common Actions": {
+        "components": [
+            "src.gui.Src.Utils.CommonActions.ActionHolder"
+        ],
+        "children": {}
+    },
+    "Script API Symbol": {
+        "components": [
+            "src.dbg._scriptapi_symbol.cbSymbolEnumCtx"
+        ],
+        "children": {}
+    },
+    "Pattern Highlighter": {
+        "components": [
+            "src.cross.hex_viewer.PatternHighlighter.Format"
+        ],
+        "children": {}
+    },
+    "Pattern Language": {
+        "components": [
+            "src.cross.hex_viewer.PatternLanguage.ApiPatternVisitor"
+        ],
+        "children": {}
+    },
+    "Hex Viewer MainWindow": {
+        "components": [
+            "src.cross.hex_viewer.MainWindow.DefaultArchitecture"
+        ],
+        "children": {}
+    },
+    "Minidump File Parser": {
+        "components": [
+            "src.cross.minidump.FileParser.DmpFileParser",
+            "src.cross.minidump.FileParser.PeFileParser",
+            "src.cross.minidump.FileParser.DumpMemoryProvider",
+            "src.cross.minidump.FileParser.GlobalArchitecture",
+            "src.cross.minidump.FileParser.Section"
+        ],
+        "children": {}
+    },
+    "Remote Server": {
+        "components": [
+            "src.cross.remote_server.main.TableResult",
+            "src.cross.remote_server.main.TableParams"
+        ],
+        "children": {}
+    },
+    "Headless Mode": {
+        "components": [
+            "src.headless.headless.GuiState"
+        ],
+        "children": {}
+    },
+    "Launcher": {
+        "components": [
+            "src.launcher.x64dbg_launcher.RedirectWow"
+        ],
+        "children": {}
+    },
+    "WinInet Downloader": {
+        "components": [
+            "src.dbg.WinInet-Downloader.downslib.Cleanup"
+        ],
+        "children": {}
+    },
+    "Reference System": {
+        "components": [
+            "src.dbg.reference.RefModInfo"
+        ],
+        "children": {}
+    },
+    "Command Searching": {
+        "components": [
+            "src.dbg.commands.cmd-searching.VALUERANGE",
+            "src.dbg.commands.cmd-searching.GUIDEqualObject",
+            "src.dbg.commands.cmd-searching.SearchTimer",
+            "src.dbg.commands.cmd-searching.GUIDInfo",
+            "src.dbg.commands.cmd-searching.GUIDRefInfo",
+            "src.dbg.commands.cmd-searching.GUIDHashObject"
+        ],
+        "children": {}
+    },
+    "PDB DIA File": {
+        "components": [
+            "src.dbg.pdbdiafile.ScopedDiaType",
+            "src.dbg.pdbdiafile.FileStream"
+        ],
+        "children": {}
+    },
+    "History Context": {
+        "components": [
+            "src.dbg.historycontext.ChangedData"
+        ],
+        "children": {}
+    }
+}

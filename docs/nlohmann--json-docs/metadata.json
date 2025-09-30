@@ -1,0 +1,21 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T18:38:13.074511",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/nlohmann--json",
+        "commit_id": "4bc4e37f4f56f88b3a80abb7a6508b19a244e803"
+    },
+    "statistics": {
+        "total_components": 35,
+        "leaf_nodes": 9,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "serve_header.md",
+        "gdb_pretty_printer.md"
+    ]
+}

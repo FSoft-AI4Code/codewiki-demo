@@ -1,0 +1,259 @@
+{
+    "core_data_structures": {
+        "path": "logstash-core/src/main/java/org/logstash",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.Accessors.Accessors",
+            "logstash-core.src.main.java.org.logstash.Cloner.Cloner",
+            "logstash-core.src.main.java.org.logstash.Javafier.Javafier",
+            "logstash-core.src.main.java.org.logstash.Rubyfier.Converter",
+            "logstash-core.src.main.java.org.logstash.Rubyfier.Rubyfier",
+            "logstash-core.src.main.java.org.logstash.Valuefier.Converter",
+            "logstash-core.src.main.java.org.logstash.ObjectMappers.ObjectMappers",
+            "logstash-core.src.main.java.org.logstash.StringInterpolation.StringInterpolation",
+            "logstash-core.src.main.java.org.logstash.Util.Util"
+        ],
+        "children": {
+            "data_access_layer": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.Accessors.Accessors",
+                    "logstash-core.src.main.java.org.logstash.Cloner.Cloner"
+                ],
+                "children": {}
+            },
+            "serialization_framework": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.ObjectMappers.ObjectMappers"
+                ],
+                "children": {}
+            },
+            "type_conversion_system": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.Javafier.Javafier",
+                    "logstash-core.src.main.java.org.logstash.Rubyfier.Converter",
+                    "logstash-core.src.main.java.org.logstash.Rubyfier.Rubyfier",
+                    "logstash-core.src.main.java.org.logstash.Valuefier.Converter"
+                ],
+                "children": {}
+            },
+            "utility_operations": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.StringInterpolation.StringInterpolation",
+                    "logstash-core.src.main.java.org.logstash.Util.Util"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "ruby_integration": {
+        "path": "logstash-core/src/main/java/org/logstash",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.RubyJavaIntegration.RubyJavaIntegration",
+            "logstash-core.src.main.java.org.logstash.RubyUtil.RubyUtil",
+            "logstash-core.src.main.java.org.logstash.ext.JrubyEventExtLibrary.JrubyEventExtLibrary",
+            "logstash-core.src.main.java.org.logstash.ext.JrubyTimestampExtLibrary.JrubyTimestampExtLibrary"
+        ],
+        "children": {}
+    },
+    "event_api": {
+        "path": "logstash-core/src/main/java/co/elastic/logstash/api",
+        "components": [
+            "logstash-core.src.main.java.co.elastic.logstash.api.Event.Event",
+            "logstash-core.src.main.java.co.elastic.logstash.api.Plugin.Plugin",
+            "logstash-core.src.main.java.co.elastic.logstash.api.PluginHelper.PluginHelper",
+            "logstash-core.src.main.java.co.elastic.logstash.api.DeadLetterQueueWriter.DeadLetterQueueWriter"
+        ],
+        "children": {}
+    },
+    "pipeline_execution": {
+        "path": "logstash-core/src/main/java/org/logstash/execution",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.execution.WorkerLoop.WorkerLoop",
+            "logstash-core.src.main.java.org.logstash.execution.EventDispatcherExt.EventDispatcherExt",
+            "logstash-core.src.main.java.org.logstash.execution.PeriodicFlush.PeriodicFlush",
+            "logstash-core.src.main.java.org.logstash.execution.ShutdownWatcherExt.ShutdownWatcherExt"
+        ],
+        "children": {}
+    },
+    "config_compilation": {
+        "path": "logstash-core/src/main/java/org/logstash/config/ir",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.config.ir.CompiledPipeline.CompiledUnorderedExecution",
+            "logstash-core.src.main.java.org.logstash.config.ir.CompiledPipeline.CompiledOrderedExecution",
+            "logstash-core.src.main.java.org.logstash.config.ir.ConfigCompiler.ConfigCompiler",
+            "logstash-core.src.main.java.org.logstash.config.ir.DSL.DSL"
+        ],
+        "children": {}
+    },
+    "ir_compiler": {
+        "path": "logstash-core/src/main/java/org/logstash/config/ir/compiler",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.config.ir.compiler.DatasetCompiler.DatasetCompiler",
+            "logstash-core.src.main.java.org.logstash.config.ir.compiler.EventCondition.Compiler",
+            "logstash-core.src.main.java.org.logstash.config.ir.compiler.FilterDelegatorExt.FilterDelegatorExt",
+            "logstash-core.src.main.java.org.logstash.config.ir.compiler.OutputStrategyExt.OutputStrategyExt",
+            "logstash-core.src.main.java.org.logstash.config.ir.compiler.RubyIntegration.RubyIntegration"
+        ],
+        "children": {
+            "dataset_compilation": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.DatasetCompiler.DatasetCompiler"
+                ],
+                "children": {}
+            },
+            "event_condition_system": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.EventCondition.Compiler"
+                ],
+                "children": {}
+            },
+            "output_strategy_management": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.OutputStrategyExt.OutputStrategyExt"
+                ],
+                "children": {}
+            },
+            "plugin_delegation": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.FilterDelegatorExt.FilterDelegatorExt"
+                ],
+                "children": {}
+            },
+            "ruby_integration_layer": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.RubyIntegration.RubyIntegration"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "plugin_system": {
+        "path": "logstash-core/src/main/java/org/logstash/plugins",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.plugins.PluginLookup.PluginClass",
+            "logstash-core.src.main.java.org.logstash.plugins.PluginUtil.PluginUtil",
+            "logstash-core.src.main.java.org.logstash.plugins.UniversalPluginExt.UniversalPluginExt",
+            "logstash-core.src.main.java.org.logstash.plugins.HooksRegistryExt.HooksRegistryExt"
+        ],
+        "children": {
+            "plugin_factory": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.plugins.factory.AbstractPluginCreator.AbstractPluginCreator",
+                    "logstash-core.src.main.java.org.logstash.plugins.factory.ContextualizerExt.ContextualizerExt",
+                    "logstash-core.src.main.java.org.logstash.plugins.factory.PluginFactoryExt.IdExtractor"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "plugin_factory": {
+        "path": "logstash-core/src/main/java/org/logstash/plugins/factory",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.plugins.factory.AbstractPluginCreator.AbstractPluginCreator",
+            "logstash-core.src.main.java.org.logstash.plugins.factory.ContextualizerExt.ContextualizerExt",
+            "logstash-core.src.main.java.org.logstash.plugins.factory.PluginFactoryExt.IdExtractor"
+        ],
+        "children": {}
+    },
+    "queue_management": {
+        "path": "logstash-core/src/main/java/org/logstash/ackedqueue",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.ackedqueue.QueueFactoryExt.QueueFactoryExt",
+            "logstash-core.src.main.java.org.logstash.ackedqueue.PageFactory.PageFactory",
+            "logstash-core.src.main.java.org.logstash.ackedqueue.SettingsImpl.SettingsImpl",
+            "logstash-core.src.main.java.org.logstash.ackedqueue.Settings.Builder"
+        ],
+        "children": {}
+    },
+    "metrics_system": {
+        "path": "logstash-core/src/main/java/org/logstash/instrument/metrics",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.instrument.metrics.AbstractMetric.AbstractMetric",
+            "logstash-core.src.main.java.org.logstash.instrument.metrics.MetricExt.TimedExecution",
+            "logstash-core.src.main.java.org.logstash.instrument.metrics.SnapshotExt.SnapshotExt",
+            "logstash-core.src.main.java.co.elastic.logstash.api.CounterMetric.CounterMetric",
+            "logstash-core.src.main.java.co.elastic.logstash.api.TimerMetric.TimerMetric",
+            "logstash-core.src.main.java.co.elastic.logstash.api.Metric.Metric"
+        ],
+        "children": {}
+    },
+    "monitoring": {
+        "path": "logstash-core/src/main/java/org/logstash/instrument/monitors",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.instrument.monitors.HotThreadsMonitor.HotThreadsMonitor",
+            "logstash-core.src.main.java.org.logstash.instrument.monitors.MemoryMonitor.MemoryMonitor",
+            "logstash-core.src.main.java.org.logstash.instrument.monitors.ProcessMonitor.ProcessMonitor",
+            "logstash-core.src.main.java.org.logstash.instrument.monitors.SystemMonitor.SystemMonitor"
+        ],
+        "children": {}
+    },
+    "health_system": {
+        "path": "logstash-core/src/main/java/org/logstash/health",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.health.HealthObserver.HealthObserver",
+            "logstash-core.src.main.java.org.logstash.health.Indicator.Report",
+            "logstash-core.src.main.java.org.logstash.health.PipelineIndicator.Status",
+            "logstash-core.src.main.java.org.logstash.health.ProbeIndicator.ProbeIndicator"
+        ],
+        "children": {}
+    },
+    "settings_management": {
+        "path": "logstash-core/src/main/java/org/logstash/settings",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.settings.SettingDelegator.SettingDelegator",
+            "logstash-core.src.main.java.org.logstash.settings.Coercible.Coercible",
+            "logstash-core.src.main.java.org.logstash.settings.Boolean.Boolean",
+            "logstash-core.src.main.java.org.logstash.settings.SettingNumeric.SettingNumeric"
+        ],
+        "children": {}
+    },
+    "dead_letter_queue": {
+        "path": "logstash-core/src/main/java/org/logstash/common/io",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.common.io.DeadLetterQueueReader.DeadLetterQueueReader",
+            "logstash-core.src.main.java.org.logstash.common.io.DeadLetterQueueWriter.Builder",
+            "logstash-core.src.main.java.org.logstash.common.DeadLetterQueueFactory.DeadLetterQueueFactory",
+            "logstash-core.src.main.java.org.logstash.common.AbstractDeadLetterQueueWriterExt.PluginDeadLetterQueueWriterExt"
+        ],
+        "children": {
+            "dlq_reader_system": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.common.io.DeadLetterQueueReader.DeadLetterQueueReader"
+                ],
+                "children": {}
+            },
+            "dlq_writer_system": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.common.io.DeadLetterQueueWriter.Builder",
+                    "logstash-core.src.main.java.org.logstash.common.DeadLetterQueueFactory.DeadLetterQueueFactory"
+                ],
+                "children": {}
+            },
+            "plugin_integration_layer": {
+                "components": [
+                    "logstash-core.src.main.java.org.logstash.common.AbstractDeadLetterQueueWriterExt.PluginDeadLetterQueueWriterExt"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "common_utilities": {
+        "path": "logstash-core/src/main/java/org/logstash/common",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.common.BufferedTokenizer.IteratorDecorator",
+            "logstash-core.src.main.java.org.logstash.common.BufferedTokenizerExt.BufferedTokenizerExt",
+            "logstash-core.src.main.java.org.logstash.common.FsUtil.FsUtil",
+            "logstash-core.src.main.java.org.logstash.common.LsQueueUtils.LsQueueUtils"
+        ],
+        "children": {}
+    },
+    "logging_system": {
+        "path": "logstash-core/src/main/java/org/logstash/log",
+        "components": [
+            "logstash-core.src.main.java.org.logstash.log.LoggerExt.LoggerExt",
+            "logstash-core.src.main.java.org.logstash.log.LoggableExt.LoggableExt",
+            "logstash-core.src.main.java.org.logstash.log.LogstashConfigurationFactory.LogstashConfigurationFactory",
+            "logstash-core.src.main.java.org.logstash.log.PipelineRoutingAppender.Builder"
+        ],
+        "children": {}
+    }
+}

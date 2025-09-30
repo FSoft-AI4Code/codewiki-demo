@@ -1,0 +1,44 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T18:05:16.768006",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/libsdl-org--SDL",
+        "commit_id": "875653658abcb6091fa6a17bd4859fb66e8a1187"
+    },
+    "statistics": {
+        "total_components": 8953,
+        "leaf_nodes": 66,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "dynapi_module.md",
+        "initialization_sub_module.md",
+        "communication_and_command_sub_module.md",
+        "activity_management_sub_module.md",
+        "controller_management_sub_module.md",
+        "android_sdl_core_module.md",
+        "audio_management_sub_module.md",
+        "gameinput_joystick_sub_module.md",
+        "android_hid_module.md",
+        "gameinput_module.md",
+        "android_sdl_input_module.md",
+        "hid_api_module.md",
+        "build_release_sub_module.md",
+        "hid_device_ble_steam_controller.md",
+        "macro_management_sub_module.md",
+        "build_scripts_module.md",
+        "surface_input_sub_module.md",
+        "hid_device_manager.md",
+        "xbox_tools_module.md",
+        "gdk_desktop_setup_sub_module.md",
+        "threading_and_execution_sub_module.md",
+        "android_jni_validation_sub_module.md",
+        "text_input_sub_module.md",
+        "hid_device_usb.md",
+        "windows_gameinput_sub_module.md"
+    ]
+}

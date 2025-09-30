@@ -1,0 +1,451 @@
+{
+    "core_agent_system": {
+        "path": "openhands/controller",
+        "components": [
+            "openhands.controller.agent.Agent",
+            "openhands.controller.action_parser.ActionParser",
+            "openhands.controller.action_parser.ResponseParser",
+            "openhands.controller.state.state.TrafficControlState",
+            "openhands.controller.state.control_flags.ControlFlag"
+        ],
+        "children": {
+            "action_processing": {
+                "components": [
+                    "openhands.controller.action_parser.ActionParser",
+                    "openhands.controller.action_parser.ResponseParser"
+                ],
+                "children": {}
+            },
+            "agent_management": {
+                "components": [
+                    "openhands.controller.agent.Agent"
+                ],
+                "children": {}
+            },
+            "state_management": {
+                "components": [
+                    "openhands.controller.state.state.TrafficControlState",
+                    "openhands.controller.state.control_flags.ControlFlag"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "agent_implementations": {
+        "path": "openhands/agenthub",
+        "components": [
+            "openhands.agenthub.codeact_agent.codeact_agent.CodeActAgent",
+            "openhands.agenthub.browsing_agent.browsing_agent.BrowsingAgent",
+            "openhands.agenthub.visualbrowsing_agent.visualbrowsing_agent.VisualBrowsingAgent",
+            "openhands.agenthub.loc_agent.loc_agent.LocAgent",
+            "openhands.agenthub.readonly_agent.readonly_agent.ReadOnlyAgent"
+        ],
+        "children": {
+            "browsing_agents": {
+                "components": [
+                    "openhands.agenthub.browsing_agent.browsing_agent.BrowsingAgent",
+                    "openhands.agenthub.visualbrowsing_agent.visualbrowsing_agent.VisualBrowsingAgent"
+                ],
+                "children": {}
+            },
+            "codeact_agents": {
+                "components": [
+                    "openhands.agenthub.codeact_agent.codeact_agent.CodeActAgent",
+                    "openhands.agenthub.loc_agent.loc_agent.LocAgent",
+                    "openhands.agenthub.readonly_agent.readonly_agent.ReadOnlyAgent"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "events_and_actions": {
+        "path": "openhands/events",
+        "components": [
+            "openhands.events.event.Event",
+            "openhands.events.action.action.Action",
+            "openhands.events.observation.observation.Observation",
+            "openhands.events.stream.EventStreamSubscriber",
+            "openhands.events.event_store_abc.EventStoreABC",
+            "openhands.core.schema.action.ActionType",
+            "openhands.core.schema.observation.ObservationType"
+        ],
+        "children": {
+            "event_foundation": {
+                "components": [
+                    "openhands.events.event.Event",
+                    "openhands.events.action.action.Action",
+                    "openhands.events.observation.observation.Observation"
+                ],
+                "children": {}
+            },
+            "event_streaming": {
+                "components": [
+                    "openhands.events.stream.EventStreamSubscriber",
+                    "openhands.events.event_store_abc.EventStoreABC"
+                ],
+                "children": {}
+            },
+            "type_definitions": {
+                "components": [
+                    "openhands.core.schema.action.ActionType",
+                    "openhands.core.schema.observation.ObservationType"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "llm_integration": {
+        "path": "openhands/llm",
+        "components": [
+            "openhands.llm.llm.LLM",
+            "openhands.llm.async_llm.AsyncLLM",
+            "openhands.llm.streaming_llm.StreamingLLM",
+            "openhands.llm.router.base.RouterLLM",
+            "openhands.llm.retry_mixin.RetryMixin",
+            "openhands.llm.debug_mixin.DebugMixin"
+        ],
+        "children": {
+            "core_llm_implementation": {
+                "components": [
+                    "openhands.llm.llm.LLM",
+                    "openhands.llm.async_llm.AsyncLLM",
+                    "openhands.llm.streaming_llm.StreamingLLM"
+                ],
+                "children": {}
+            },
+            "router_system": {
+                "components": [
+                    "openhands.llm.router.base.RouterLLM"
+                ],
+                "children": {}
+            },
+            "utility_mixins": {
+                "components": [
+                    "openhands.llm.retry_mixin.RetryMixin",
+                    "openhands.llm.debug_mixin.DebugMixin"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "runtime_system": {
+        "path": "openhands/runtime",
+        "components": [
+            "openhands.runtime.base.Runtime",
+            "openhands.runtime.impl.local.local_runtime.LocalRuntime",
+            "openhands.runtime.impl.cli.cli_runtime.CLIRuntime",
+            "openhands.runtime.impl.kubernetes.kubernetes_runtime.KubernetesRuntime",
+            "openhands.runtime.builder.base.RuntimeBuilder",
+            "openhands.runtime.plugins.requirement.Plugin"
+        ],
+        "children": {
+            "builder_system": {
+                "components": [
+                    "openhands.runtime.builder.base.RuntimeBuilder"
+                ],
+                "children": {}
+            },
+            "plugin_system": {
+                "components": [
+                    "openhands.runtime.plugins.requirement.Plugin"
+                ],
+                "children": {}
+            },
+            "runtime_implementations": {
+                "components": [
+                    "openhands.runtime.impl.local.local_runtime.LocalRuntime",
+                    "openhands.runtime.impl.cli.cli_runtime.CLIRuntime",
+                    "openhands.runtime.impl.kubernetes.kubernetes_runtime.KubernetesRuntime"
+                ],
+                "children": {
+                    "cli_runtime": {
+                        "components": [
+                            "openhands.runtime.impl.cli.cli_runtime.CLIRuntime"
+                        ],
+                        "children": {}
+                    },
+                    "kubernetes_runtime": {
+                        "components": [
+                            "openhands.runtime.impl.kubernetes.kubernetes_runtime.KubernetesRuntime"
+                        ],
+                        "children": {}
+                    },
+                    "local_runtime": {
+                        "components": [
+                            "openhands.runtime.impl.local.local_runtime.LocalRuntime"
+                        ],
+                        "children": {}
+                    }
+                }
+            }
+        }
+    },
+    "git_integrations": {
+        "path": "openhands/integrations",
+        "components": [
+            "openhands.integrations.service_types.GitService",
+            "openhands.integrations.service_types.BaseGitService",
+            "openhands.integrations.github.service.base.GitHubMixinBase",
+            "openhands.integrations.gitlab.service.base.GitLabMixinBase",
+            "openhands.integrations.bitbucket.service.base.BitBucketMixinBase"
+        ],
+        "children": {
+            "provider_implementations": {
+                "components": [
+                    "openhands.integrations.github.service.base.GitHubMixinBase",
+                    "openhands.integrations.gitlab.service.base.GitLabMixinBase",
+                    "openhands.integrations.bitbucket.service.base.BitBucketMixinBase"
+                ],
+                "children": {}
+            },
+            "service_foundation": {
+                "components": [
+                    "openhands.integrations.service_types.GitService",
+                    "openhands.integrations.service_types.BaseGitService"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "server_and_api": {
+        "path": "openhands/server",
+        "components": [
+            "openhands.server.conversation_manager.conversation_manager.ConversationManager",
+            "openhands.server.session.session.WebSession",
+            "openhands.server.middleware.RateLimitMiddleware",
+            "openhands.server.types.ServerConfigInterface",
+            "openhands.server.user_auth.user_auth.UserAuth"
+        ],
+        "children": {
+            "authentication_system": {
+                "components": [
+                    "openhands.server.user_auth.user_auth.UserAuth"
+                ],
+                "children": {}
+            },
+            "configuration_management": {
+                "components": [
+                    "openhands.server.types.ServerConfigInterface"
+                ],
+                "children": {}
+            },
+            "conversation_orchestration": {
+                "components": [
+                    "openhands.server.conversation_manager.conversation_manager.ConversationManager",
+                    "openhands.server.session.conversation.ServerConversation",
+                    "openhands.server.data_models.agent_loop_info.AgentLoopInfo"
+                ],
+                "children": {}
+            },
+            "session_management": {
+                "components": [
+                    "openhands.server.session.session.WebSession",
+                    "openhands.server.session.agent_session.AgentSession"
+                ],
+                "children": {}
+            },
+            "web_infrastructure": {
+                "components": [
+                    "openhands.server.middleware.RateLimitMiddleware"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "storage_system": {
+        "path": "openhands/storage",
+        "components": [
+            "openhands.storage.conversation.conversation_store.ConversationStore",
+            "openhands.storage.files.FileStore",
+            "openhands.storage.secrets.secrets_store.SecretsStore",
+            "openhands.storage.settings.settings_store.SettingsStore"
+        ],
+        "children": {
+            "conversation_management": {
+                "components": [
+                    "openhands.storage.conversation.conversation_store.ConversationStore"
+                ],
+                "children": {}
+            },
+            "file_storage_infrastructure": {
+                "components": [
+                    "openhands.storage.files.FileStore"
+                ],
+                "children": {}
+            },
+            "user_data_management": {
+                "components": [
+                    "openhands.storage.secrets.secrets_store.SecretsStore",
+                    "openhands.storage.settings.settings_store.SettingsStore"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "frontend_core": {
+        "path": "frontend/src/api",
+        "components": [
+            "frontend.src.api.open-hands.OpenHands",
+            "frontend.src.api.auth-service.auth-service.api.AuthService",
+            "frontend.src.api.git-service.git-service.api.GitService",
+            "frontend.src.api.user-service.user-service.api.UserService"
+        ],
+        "children": {
+            "api_services": {
+                "components": [
+                    "frontend.src.api.open-hands.OpenHands",
+                    "frontend.src.api.auth-service.auth-service.api.AuthService",
+                    "frontend.src.api.git-service.git-service.api.GitService",
+                    "frontend.src.api.user-service.user-service.api.UserService"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "frontend_state_management": {
+        "path": "frontend/src/state",
+        "components": [
+            "frontend.src.state.conversation-slice.ConversationState",
+            "frontend.src.state.code-slice.FileState",
+            "frontend.src.state.metrics-slice.MetricsState"
+        ],
+        "children": {}
+    },
+    "core_configuration": {
+        "path": "openhands/core/config",
+        "components": [
+            "openhands.core.config.cli_config.CLIConfig",
+            "openhands.core.config.security_config.SecurityConfig",
+            "openhands.core.config.mcp_config.OpenHandsMCPConfig",
+            "openhands.core.config.kubernetes_config.KubernetesConfig"
+        ],
+        "children": {
+            "cli_configuration": {
+                "components": [
+                    "openhands.core.config.cli_config.CLIConfig"
+                ],
+                "children": {}
+            },
+            "kubernetes_configuration": {
+                "components": [
+                    "openhands.core.config.kubernetes_config.KubernetesConfig"
+                ],
+                "children": {}
+            },
+            "mcp_configuration": {
+                "components": [
+                    "openhands.core.config.mcp_config.OpenHandsMCPConfig"
+                ],
+                "children": {}
+            },
+            "security_configuration": {
+                "components": [
+                    "openhands.core.config.security_config.SecurityConfig"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "microagent_system": {
+        "path": "openhands/microagent",
+        "components": [
+            "openhands.microagent.microagent.TaskMicroagent",
+            "openhands.microagent.types.MicroagentType",
+            "openhands.microagent.types.MicroagentResponse"
+        ],
+        "children": {
+            "agent_implementations": {
+                "components": [
+                    "openhands.microagent.microagent.TaskMicroagent"
+                ],
+                "children": {}
+            },
+            "type_system": {
+                "components": [
+                    "openhands.microagent.types.MicroagentType",
+                    "openhands.microagent.types.MicroagentResponse"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "security_system": {
+        "path": "openhands/security",
+        "components": [
+            "openhands.security.analyzer.SecurityAnalyzer",
+            "openhands.security.invariant.analyzer.InvariantAnalyzer",
+            "openhands.security.llm.analyzer.LLMRiskAnalyzer"
+        ],
+        "children": {
+            "invariant_analysis": {
+                "components": [
+                    "openhands.security.invariant.analyzer.InvariantAnalyzer",
+                    "openhands.security.invariant.client.InvariantClient",
+                    "openhands.security.invariant.parser.TraceElement"
+                ],
+                "children": {}
+            },
+            "llm_risk_analysis": {
+                "components": [
+                    "openhands.security.llm.analyzer.LLMRiskAnalyzer"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "enterprise_integrations": {
+        "path": "enterprise/integrations",
+        "components": [
+            "enterprise.integrations.github.github_manager.GithubManager",
+            "enterprise.integrations.gitlab.gitlab_manager.GitlabManager",
+            "enterprise.integrations.jira.jira_manager.JiraManager",
+            "enterprise.integrations.slack.slack_manager.SlackManager",
+            "enterprise.integrations.models.JobResult"
+        ],
+        "children": {
+            "platform_managers": {
+                "components": [
+                    "enterprise.integrations.github.github_manager.GithubManager",
+                    "enterprise.integrations.gitlab.gitlab_manager.GitlabManager",
+                    "enterprise.integrations.jira.jira_manager.JiraManager",
+                    "enterprise.integrations.slack.slack_manager.SlackManager"
+                ],
+                "children": {}
+            },
+            "shared_infrastructure": {
+                "components": [
+                    "enterprise.integrations.models.JobResult"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "enterprise_server": {
+        "path": "enterprise/server",
+        "components": [
+            "enterprise.server.config.SaaSServerConfig",
+            "enterprise.server.auth.auth_utils.UserVerifier",
+            "enterprise.server.middleware.SetAuthCookieMiddleware"
+        ],
+        "children": {
+            "authentication_system": {
+                "components": [
+                    "enterprise.server.auth.auth_utils.UserVerifier"
+                ],
+                "children": {}
+            },
+            "configuration_management": {
+                "components": [
+                    "enterprise.server.config.SaaSServerConfig"
+                ],
+                "children": {}
+            },
+            "security_infrastructure": {
+                "components": [
+                    "enterprise.server.middleware.SetAuthCookieMiddleware"
+                ],
+                "children": {}
+            }
+        }
+    }
+}

@@ -1,0 +1,190 @@
+{
+    "Core_Validation_Engine": {
+        "path": "src/FluentValidation",
+        "components": [
+            "src.FluentValidation.IValidator.IValidator",
+            "src.FluentValidation.IValidationContext.IValidationContext",
+            "src.FluentValidation.IValidationContext.ValidationContext",
+            "src.FluentValidation.IValidationContext.IHasFailures",
+            "src.FluentValidation.Results.ValidationFailure",
+            "src.FluentValidation.Results.ValidationResult",
+            "src.FluentValidation.ValidatorDescriptor.ValidatorDescriptor",
+            "src.FluentValidation.ValidatorOptions.ValidatorConfiguration"
+        ],
+        "children": {}
+    },
+    "Validation_Rules": {
+        "path": "src/FluentValidation/Internal",
+        "components": [
+            "src.FluentValidation.IValidationRule.IValidationRule",
+            "src.FluentValidation.IValidationRuleInternal.IValidationRuleInternal",
+            "src.FluentValidation.Internal.PropertyRule.PropertyRule",
+            "src.FluentValidation.Internal.CollectionPropertyRule.CollectionPropertyRule",
+            "src.FluentValidation.Internal.IncludeRule.IncludeRule",
+            "src.FluentValidation.Internal.IncludeRule.IIncludeRule",
+            "src.FluentValidation.ICollectionRule.ICollectionRule",
+            "src.FluentValidation.Internal.IRuleComponent.IRuleComponent",
+            "src.FluentValidation.Internal.RuleComponent.RuleComponent",
+            "src.FluentValidation.Internal.RuleComponentForNullableStruct.RuleComponentForNullableStruct"
+        ],
+        "children": {}
+    },
+    "Property_Validators": {
+        "path": "src/FluentValidation/Validators",
+        "components": [
+            "src.FluentValidation.Validators.IPropertyValidator.IPropertyValidator",
+            "src.FluentValidation.Validators.IPropertyValidator.IAsyncPropertyValidator",
+            "src.FluentValidation.Validators.NotNullValidator.NotNullValidator",
+            "src.FluentValidation.Validators.NotNullValidator.INotNullValidator",
+            "src.FluentValidation.Validators.NullValidator.NullValidator",
+            "src.FluentValidation.Validators.NullValidator.INullValidator",
+            "src.FluentValidation.Validators.NotEmptyValidator.NotEmptyValidator",
+            "src.FluentValidation.Validators.NotEmptyValidator.INotEmptyValidator",
+            "src.FluentValidation.Validators.EmptyValidator.EmptyValidator",
+            "src.FluentValidation.Validators.EqualValidator.EqualValidator",
+            "src.FluentValidation.Validators.EqualValidator.IEqualValidator",
+            "src.FluentValidation.Validators.NotEqualValidator.NotEqualValidator",
+            "src.FluentValidation.Validators.LengthValidator.LengthValidator",
+            "src.FluentValidation.Validators.LengthValidator.ILengthValidator",
+            "src.FluentValidation.Validators.RegularExpressionValidator.RegularExpressionValidator",
+            "src.FluentValidation.Validators.RegularExpressionValidator.IRegularExpressionValidator",
+            "src.FluentValidation.Validators.EmailValidator.EmailValidator",
+            "src.FluentValidation.Validators.EmailValidator.IEmailValidator",
+            "src.FluentValidation.Validators.CreditCardValidator.CreditCardValidator",
+            "src.FluentValidation.Validators.CreditCardValidator.ICreditCardValidator",
+            "src.FluentValidation.Validators.EnumValidator.EnumValidator",
+            "src.FluentValidation.Validators.EnumValidator.IEnumValidator",
+            "src.FluentValidation.Validators.StringEnumValidator.StringEnumValidator",
+            "src.FluentValidation.Validators.PredicateValidator.PredicateValidator",
+            "src.FluentValidation.Validators.PredicateValidator.IPredicateValidator",
+            "src.FluentValidation.Validators.AsyncPredicateValidator.AsyncPredicateValidator",
+            "src.FluentValidation.Validators.ChildValidatorAdaptor.ChildValidatorAdaptor",
+            "src.FluentValidation.Validators.ChildValidatorAdaptor.IChildValidatorAdaptor",
+            "src.FluentValidation.Validators.PolymorphicValidator.PolymorphicValidator"
+        ],
+        "children": {}
+    },
+    "Comparison_Validators": {
+        "path": "src/FluentValidation/Validators",
+        "components": [
+            "src.FluentValidation.Validators.AbstractComparisonValidator.IComparisonValidator",
+            "src.FluentValidation.Validators.GreaterThanValidator.GreaterThanValidator",
+            "src.FluentValidation.Validators.GreaterThanOrEqualValidator.GreaterThanOrEqualValidator",
+            "src.FluentValidation.Validators.GreaterThanOrEqualValidator.IGreaterThanOrEqualValidator",
+            "src.FluentValidation.Validators.LessThanValidator.LessThanValidator",
+            "src.FluentValidation.Validators.LessThanOrEqualValidator.LessThanOrEqualValidator",
+            "src.FluentValidation.Validators.LessThanOrEqualValidator.ILessThanOrEqualValidator",
+            "src.FluentValidation.Validators.InclusiveBetweenValidator.InclusiveBetweenValidator",
+            "src.FluentValidation.Validators.InclusiveBetweenValidator.IInclusiveBetweenValidator",
+            "src.FluentValidation.Validators.ExclusiveBetweenValidator.ExclusiveBetweenValidator",
+            "src.FluentValidation.Validators.ExclusiveBetweenValidator.IBetweenValidator",
+            "src.FluentValidation.Validators.ComparableComparer.ComparableComparer",
+            "src.FluentValidation.Validators.PrecisionScaleValidator.PrecisionScaleValidator"
+        ],
+        "children": {}
+    },
+    "Rule_Building": {
+        "path": "src/FluentValidation/Internal",
+        "components": [
+            "src.FluentValidation.Internal.RuleBuilder.RuleBuilder",
+            "src.FluentValidation.Internal.ConditionBuilder.ConditionBuilder",
+            "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionBuilder",
+            "src.FluentValidation.Internal.ConditionBuilder.ConditionOtherwiseBuilder",
+            "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionOtherwiseBuilder",
+            "src.FluentValidation.Internal.ChildRulesContainer.ChildRulesContainer"
+        ],
+        "children": {}
+    },
+    "Validator_Selection": {
+        "path": "src/FluentValidation/Internal",
+        "components": [
+            "src.FluentValidation.Internal.IValidatorSelector.IValidatorSelector",
+            "src.FluentValidation.Internal.DefaultValidatorSelector.DefaultValidatorSelector",
+            "src.FluentValidation.Internal.CompositeValidatorSelector.CompositeValidatorSelector",
+            "src.FluentValidation.Internal.MemberNameValidatorSelector.MemberNameValidatorSelector",
+            "src.FluentValidation.Internal.RulesetValidatorSelector.RulesetValidatorSelector"
+        ],
+        "children": {}
+    },
+    "Localization": {
+        "path": "src/FluentValidation/Resources",
+        "components": [
+            "src.FluentValidation.Resources.ILanguageManager.ILanguageManager",
+            "src.FluentValidation.Resources.LanguageManager.LanguageManager",
+            "src.FluentValidation.Internal.MessageFormatter.MessageFormatter",
+            "src.FluentValidation.Internal.MessageBuilderContext.IMessageBuilderContext",
+            "src.FluentValidation.Internal.MessageBuilderContext.MessageBuilderContext"
+        ],
+        "children": {}
+    },
+    "AbstractValidator": {
+        "path": "src/FluentValidation",
+        "components": [
+            "src.FluentValidation.Syntax.IRuleBuilderInitial",
+            "src.FluentValidation.Syntax.IRuleBuilderInitialCollection",
+            "src.FluentValidation.Syntax.IRuleBuilder",
+            "src.FluentValidation.Syntax.IRuleBuilderOptions",
+            "src.FluentValidation.Syntax.IRuleBuilderOptionsConditions",
+            "src.FluentValidation.Syntax.IRuleBuilderInternal",
+            "src.FluentValidation.Syntax.IConditionBuilder"
+        ],
+        "children": {}
+    },
+    "InlineValidator": {
+        "path": "src/FluentValidation",
+        "components": [
+            "src.FluentValidation.InlineValidator.InlineValidator"
+        ],
+        "children": {}
+    },
+    "Assembly_Scanning": {
+        "path": "src/FluentValidation",
+        "components": [
+            "src.FluentValidation.AssemblyScanner.AssemblyScanner",
+            "src.FluentValidation.AssemblyScanner.AssemblyScanResult"
+        ],
+        "children": {}
+    },
+    "Validator_Factory": {
+        "path": "src/FluentValidation",
+        "components": [
+            "src.FluentValidation.IValidatorFactory.IValidatorFactory"
+        ],
+        "children": {}
+    },
+    "Property_Chain": {
+        "path": "src/FluentValidation/Internal",
+        "components": [
+            "src.FluentValidation.Internal.PropertyChain.PropertyChain"
+        ],
+        "children": {}
+    },
+    "Accessor_Cache": {
+        "path": "src/FluentValidation/Internal",
+        "components": [
+            "src.FluentValidation.Internal.AccessorCache.Key"
+        ],
+        "children": {}
+    },
+    "Validation_Strategy": {
+        "path": "src/FluentValidation/Internal",
+        "components": [
+            "src.FluentValidation.Internal.ValidationStrategy.ValidationStrategy"
+        ],
+        "children": {}
+    },
+    "Tracking_Collection": {
+        "path": "src/FluentValidation/Internal",
+        "components": [
+            "src.FluentValidation.Internal.TrackingCollection.TrackingCollection"
+        ],
+        "children": {}
+    },
+    "Dependency_Injection": {
+        "path": "src/FluentValidation.DependencyInjectionExtensions",
+        "components": [
+            "src.FluentValidation.DependencyInjectionExtensions.ServiceProviderValidatorFactory.ServiceProviderValidatorFactory"
+        ],
+        "children": {}
+    }
+}

@@ -1,0 +1,46 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T04:32:21.575964",
+        "main_model": "claude-sonnet-4",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/sveltejs--svelte",
+        "commit_id": "be645b4d9f84cb7580683c7b2336d1023906c4da"
+    },
+    "statistics": {
+        "total_components": 2049,
+        "leaf_nodes": 364,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "utility_classes.md",
+        "transitions.md",
+        "css_types.md",
+        "parsing_phase.md",
+        "transform_phase.md",
+        "compiler_types.md",
+        "reactivity_system.md",
+        "reactive_data_structures.md",
+        "tweening_engine.md",
+        "actions.md",
+        "animations.md",
+        "collection_structures.md",
+        "analysis_phase.md",
+        "motion.md",
+        "template_types.md",
+        "compiler_core.md",
+        "compilation_interface.md",
+        "preprocessor.md",
+        "spring_physics.md",
+        "web_api_wrappers.md",
+        "batch_processing.md",
+        "component_system.md",
+        "animation_transition.md",
+        "stores.md",
+        "client_runtime.md",
+        "server_runtime.md",
+        "html_elements.md"
+    ]
+}

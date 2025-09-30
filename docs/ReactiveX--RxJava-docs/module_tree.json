@@ -1,0 +1,178 @@
+{
+    "core_reactive_types": {
+        "path": "src/main/java/io/reactivex/rxjava3/core",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.core.CompletableConverter.CompletableConverter",
+            "src.main.java.io.reactivex.rxjava3.core.CompletableTransformer.CompletableTransformer",
+            "src.main.java.io.reactivex.rxjava3.core.FlowableConverter.FlowableConverter",
+            "src.main.java.io.reactivex.rxjava3.core.FlowableTransformer.FlowableTransformer",
+            "src.main.java.io.reactivex.rxjava3.core.MaybeConverter.MaybeConverter",
+            "src.main.java.io.reactivex.rxjava3.core.MaybeTransformer.MaybeTransformer",
+            "src.main.java.io.reactivex.rxjava3.core.ObservableConverter.ObservableConverter",
+            "src.main.java.io.reactivex.rxjava3.core.ObservableTransformer.ObservableTransformer",
+            "src.main.java.io.reactivex.rxjava3.core.SingleConverter.SingleConverter",
+            "src.main.java.io.reactivex.rxjava3.core.SingleTransformer.SingleTransformer",
+            "src.main.java.io.reactivex.rxjava3.core.Emitter.Emitter",
+            "src.main.java.io.reactivex.rxjava3.core.Scheduler.DisposeTask"
+        ],
+        "children": {
+            "schedulers": {
+                "components": [
+                    "src.main.java.io.reactivex.rxjava3.schedulers.Schedulers.Schedulers",
+                    "src.main.java.io.reactivex.rxjava3.internal.schedulers.SchedulerPoolFactory.SchedulerPoolFactory"
+                ],
+                "children": {}
+            },
+            "base_observers_subscribers": {
+                "components": [
+                    "src.main.java.io.reactivex.rxjava3.internal.observers.BasicFuseableObserver.BasicFuseableObserver",
+                    "src.main.java.io.reactivex.rxjava3.internal.observers.BasicQueueDisposable.BasicQueueDisposable",
+                    "src.main.java.io.reactivex.rxjava3.internal.observers.BlockingBaseObserver.BlockingBaseObserver",
+                    "src.main.java.io.reactivex.rxjava3.internal.observers.DeferredScalarObserver.DeferredScalarObserver",
+                    "src.main.java.io.reactivex.rxjava3.internal.observers.QueueDrainObserver.QueueDrainObserver",
+                    "src.main.java.io.reactivex.rxjava3.internal.subscribers.BasicFuseableConditionalSubscriber.BasicFuseableConditionalSubscriber",
+                    "src.main.java.io.reactivex.rxjava3.internal.subscribers.BasicFuseableSubscriber.BasicFuseableSubscriber",
+                    "src.main.java.io.reactivex.rxjava3.internal.subscribers.BlockingBaseSubscriber.BlockingBaseSubscriber",
+                    "src.main.java.io.reactivex.rxjava3.internal.subscribers.DeferredScalarSubscriber.DeferredScalarSubscriber",
+                    "src.main.java.io.reactivex.rxjava3.internal.subscribers.QueueDrainSubscriber.QueueDrainSubscriber"
+                ],
+                "children": {}
+            },
+            "internal_utilities": {
+                "components": [
+                    "src.main.java.io.reactivex.rxjava3.internal.functions.Functions.Functions",
+                    "src.main.java.io.reactivex.rxjava3.internal.functions.ObjectHelper.ObjectHelper",
+                    "src.main.java.io.reactivex.rxjava3.internal.util.BackpressureHelper.BackpressureHelper",
+                    "src.main.java.io.reactivex.rxjava3.internal.util.BlockingHelper.BlockingHelper",
+                    "src.main.java.io.reactivex.rxjava3.internal.util.EndConsumerHelper.EndConsumerHelper",
+                    "src.main.java.io.reactivex.rxjava3.internal.util.HalfSerializer.HalfSerializer",
+                    "src.main.java.io.reactivex.rxjava3.internal.util.QueueDrainHelper.QueueDrainHelper"
+                ],
+                "children": {}
+            },
+            "public_observers_subscribers": {
+                "components": [
+                    "src.main.java.io.reactivex.rxjava3.observers.DefaultObserver.DefaultObserver",
+                    "src.main.java.io.reactivex.rxjava3.observers.DisposableObserver.DisposableObserver",
+                    "src.main.java.io.reactivex.rxjava3.observers.ResourceObserver.ResourceObserver",
+                    "src.main.java.io.reactivex.rxjava3.subscribers.DefaultSubscriber.DefaultSubscriber",
+                    "src.main.java.io.reactivex.rxjava3.subscribers.DisposableSubscriber.DisposableSubscriber",
+                    "src.main.java.io.reactivex.rxjava3.subscribers.ResourceSubscriber.ResourceSubscriber"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "disposables_and_subscriptions": {
+        "path": "src/main/java/io/reactivex/rxjava3/disposables",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.disposables.ReferenceDisposable.ReferenceDisposable",
+            "src.main.java.io.reactivex.rxjava3.disposables.SerialDisposable.SerialDisposable"
+        ],
+        "children": {}
+    },
+    "grouped_streams": {
+        "path": "src/main/java/io/reactivex/rxjava3",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.flowables.GroupedFlowable.GroupedFlowable",
+            "src.main.java.io.reactivex.rxjava3.observables.GroupedObservable.GroupedObservable"
+        ],
+        "children": {}
+    },
+    "functional_interfaces": {
+        "path": "src/main/java/io/reactivex/rxjava3/functions",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.functions.Cancellable.Cancellable",
+            "src.main.java.io.reactivex.rxjava3.functions.IntFunction.IntFunction"
+        ],
+        "children": {}
+    },
+    "internal_utilities": {
+        "path": "src/main/java/io/reactivex/rxjava3/internal",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.internal.functions.Functions.Functions",
+            "src.main.java.io.reactivex.rxjava3.internal.functions.ObjectHelper.ObjectHelper",
+            "src.main.java.io.reactivex.rxjava3.internal.util.BackpressureHelper.BackpressureHelper",
+            "src.main.java.io.reactivex.rxjava3.internal.util.BlockingHelper.BlockingHelper",
+            "src.main.java.io.reactivex.rxjava3.internal.util.EndConsumerHelper.EndConsumerHelper",
+            "src.main.java.io.reactivex.rxjava3.internal.util.HalfSerializer.HalfSerializer",
+            "src.main.java.io.reactivex.rxjava3.internal.util.QueueDrainHelper.QueueDrainHelper"
+        ],
+        "children": {}
+    },
+    "fuseable_operators": {
+        "path": "src/main/java/io/reactivex/rxjava3",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.internal.fuseable.AbstractEmptyQueueFuseable.AbstractEmptyQueueFuseable",
+            "src.main.java.io.reactivex.rxjava3.operators.QueueFuseable.QueueFuseable"
+        ],
+        "children": {}
+    },
+    "base_observers_subscribers": {
+        "path": "src/main/java/io/reactivex/rxjava3/internal",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.internal.observers.BasicFuseableObserver.BasicFuseableObserver",
+            "src.main.java.io.reactivex.rxjava3.internal.observers.BasicQueueDisposable.BasicQueueDisposable",
+            "src.main.java.io.reactivex.rxjava3.internal.observers.BlockingBaseObserver.BlockingBaseObserver",
+            "src.main.java.io.reactivex.rxjava3.internal.observers.DeferredScalarObserver.DeferredScalarObserver",
+            "src.main.java.io.reactivex.rxjava3.internal.observers.QueueDrainObserver.QueueDrainObserver",
+            "src.main.java.io.reactivex.rxjava3.internal.subscribers.BasicFuseableConditionalSubscriber.BasicFuseableConditionalSubscriber",
+            "src.main.java.io.reactivex.rxjava3.internal.subscribers.BasicFuseableSubscriber.BasicFuseableSubscriber",
+            "src.main.java.io.reactivex.rxjava3.internal.subscribers.BlockingBaseSubscriber.BlockingBaseSubscriber",
+            "src.main.java.io.reactivex.rxjava3.internal.subscribers.DeferredScalarSubscriber.DeferredScalarSubscriber",
+            "src.main.java.io.reactivex.rxjava3.internal.subscribers.QueueDrainSubscriber.QueueDrainSubscriber"
+        ],
+        "children": {}
+    },
+    "base_subscriptions": {
+        "path": "src/main/java/io/reactivex/rxjava3/internal/subscriptions",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.internal.subscriptions.BasicQueueSubscription.BasicQueueSubscription",
+            "src.main.java.io.reactivex.rxjava3.internal.subscriptions.BooleanSubscription.BooleanSubscription"
+        ],
+        "children": {}
+    },
+    "schedulers": {
+        "path": "src/main/java/io/reactivex/rxjava3/schedulers",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.schedulers.Schedulers.Schedulers",
+            "src.main.java.io.reactivex.rxjava3.internal.schedulers.SchedulerPoolFactory.SchedulerPoolFactory"
+        ],
+        "children": {}
+    },
+    "parallel_streams": {
+        "path": "src/main/java/io/reactivex/rxjava3/parallel",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.parallel.ParallelFlowableConverter.ParallelFlowableConverter",
+            "src.main.java.io.reactivex.rxjava3.parallel.ParallelTransformer.ParallelTransformer"
+        ],
+        "children": {}
+    },
+    "plugins_system": {
+        "path": "src/main/java/io/reactivex/rxjava3/plugins",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.plugins.RxJavaPlugins.RxJavaPlugins"
+        ],
+        "children": {}
+    },
+    "public_observers_subscribers": {
+        "path": "src/main/java/io/reactivex/rxjava3",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.observers.DefaultObserver.DefaultObserver",
+            "src.main.java.io.reactivex.rxjava3.observers.DisposableObserver.DisposableObserver",
+            "src.main.java.io.reactivex.rxjava3.observers.ResourceObserver.ResourceObserver",
+            "src.main.java.io.reactivex.rxjava3.subscribers.DefaultSubscriber.DefaultSubscriber",
+            "src.main.java.io.reactivex.rxjava3.subscribers.DisposableSubscriber.DisposableSubscriber",
+            "src.main.java.io.reactivex.rxjava3.subscribers.ResourceSubscriber.ResourceSubscriber"
+        ],
+        "children": {}
+    },
+    "test_utilities": {
+        "path": "src/main/java/io/reactivex/rxjava3",
+        "components": [
+            "src.main.java.io.reactivex.rxjava3.observers.BaseTestConsumer.BaseTestConsumer",
+            "src.main.java.io.reactivex.rxjava3.schedulers.TestScheduler.TestScheduler"
+        ],
+        "children": {}
+    }
+}

@@ -1,0 +1,183 @@
+{
+    "core_models": {
+        "path": "zerver/models",
+        "components": [
+            "zerver.models.realms.Meta",
+            "zerver.models.realms.RealmDomain",
+            "zerver.models.realms.RealmExport",
+            "zerver.models.users.Meta",
+            "zerver.models.users.ExternalAuthID",
+            "zerver.models.messages.ArchivedMessage",
+            "zerver.models.messages.Meta",
+            "zerver.models.messages.ArchivedUserMessage",
+            "zerver.models.messages.ArchivedSubMessage",
+            "zerver.models.messages.ArchivedReaction",
+            "zerver.models.messages.ArchiveTransaction",
+            "zerver.models.messages.ArchivedAttachment",
+            "zerver.models.messages.MessageType",
+            "zerver.models.messages.ImageAttachment",
+            "zerver.models.streams.DefaultStreamGroup",
+            "zerver.models.streams.Meta",
+            "zerver.models.streams.ChannelEmailAddress",
+            "zerver.models.recipients.Meta",
+            "zerver.models.groups.SystemGroups",
+            "zerver.models.groups.Meta"
+        ],
+        "children": {}
+    },
+    "authentication_and_backends": {
+        "path": "zproject/backends.py",
+        "components": [
+            "zproject.backends.ZulipLDAPAuthBackend",
+            "zproject.backends.SAMLAuthBackend",
+            "zproject.backends.SAMLSPInitiatedLogout",
+            "zproject.backends.DevAuthBackend",
+            "zproject.backends.ExternalAuthMethodDictT",
+            "zproject.backends.EmailAuthBackend",
+            "zproject.backends.GitHubAuthBackend",
+            "zproject.backends.ZulipDummyBackend",
+            "zproject.backends.GoogleAuthBackend",
+            "zproject.backends.GenericOpenIdConnectBackend",
+            "zproject.backends.AppleAuthBackend",
+            "zproject.backends.AzureADAuthBackend",
+            "zproject.backends.ZulipRemoteUserBackend",
+            "zproject.backends.GitLabAuthBackend"
+        ],
+        "children": {}
+    },
+    "message_actions": {
+        "path": "zerver/actions",
+        "components": [
+            "zerver.actions.message_delete.DeleteMessagesEvent",
+            "zerver.actions.message_edit.UpdateMessageResult",
+            "zerver.actions.message_send.RecipientInfoResult",
+            "zerver.actions.message_send.ActiveUserDict",
+            "zerver.actions.message_send.UserData",
+            "zerver.actions.user_groups.MemberGroupUserDict"
+        ],
+        "children": {}
+    },
+    "event_system": {
+        "path": "zerver/lib/event_types.py",
+        "components": [
+            "zerver.lib.event_types.EventMessage",
+            "zerver.lib.event_types.EventUpdateMessage",
+            "zerver.lib.event_types.EventDeleteMessage",
+            "zerver.lib.event_types.EventReactionAdd",
+            "zerver.lib.event_types.EventReactionRemove",
+            "zerver.lib.event_types.EventSubscriptionAdd",
+            "zerver.lib.event_types.EventSubscriptionRemove",
+            "zerver.lib.event_types.EventUserGroupAdd",
+            "zerver.lib.event_types.EventUserGroupRemove",
+            "zerver.lib.event_types.EventRealmUpdate"
+        ],
+        "children": {}
+    },
+    "tornado_realtime": {
+        "path": "zerver/tornado",
+        "components": [
+            "zerver.tornado.event_queue.ClientDescriptor",
+            "zerver.tornado.event_queue.ClientInfo",
+            "zerver.tornado.handlers.AsyncDjangoHandler",
+            "zerver.tornado.views.UserClient"
+        ],
+        "children": {}
+    },
+    "api_views": {
+        "path": "zerver/views",
+        "components": [
+            "zerver.views.streams.AddSubscriptionData",
+            "zerver.views.users.ProfileDataElement",
+            "zerver.views.auth.TwoFactorLoginView"
+        ],
+        "children": {}
+    },
+    "core_libraries": {
+        "path": "zerver/lib",
+        "components": [
+            "zerver.lib.message.UnreadMessagesResult",
+            "zerver.lib.message.RawUnreadMessagesResult",
+            "zerver.lib.message_cache.MessageDict",
+            "zerver.lib.message_cache.ReactionDict",
+            "zerver.lib.streams.StreamDict",
+            "zerver.lib.users.Account",
+            "zerver.lib.user_groups.UserGroupDict",
+            "zerver.lib.types.UserTopicDict",
+            "zerver.lib.types.ProfileDataElement",
+            "zerver.lib.types.SubscriptionInfo"
+        ],
+        "children": {}
+    },
+    "middleware": {
+        "path": "zerver/middleware.py",
+        "components": [
+            "zerver.middleware.LocaleMiddleware",
+            "zerver.middleware.HostDomainMiddleware",
+            "zerver.middleware.RateLimitMiddleware",
+            "zerver.middleware.LogRequests"
+        ],
+        "children": {}
+    },
+    "management_commands": {
+        "path": "zerver/management/commands",
+        "components": [
+            "zerver.management.commands.create_realm.Command",
+            "zerver.management.commands.create_user.Command",
+            "zerver.management.commands.export.Command",
+            "zerver.management.commands.import.Command",
+            "zerver.management.commands.process_queue.Command"
+        ],
+        "children": {}
+    },
+    "worker_queue_system": {
+        "path": "zerver/worker",
+        "components": [
+            "zerver.worker.base.LoopQueueProcessingWorker",
+            "zerver.worker.email_senders.ImmediateEmailSenderWorker",
+            "zerver.worker.missedmessage_emails.MissedMessageWorker",
+            "zerver.worker.missedmessage_mobile_notifications.PushNotificationsWorker",
+            "zerver.worker.outgoing_webhooks.OutgoingWebhookWorker"
+        ],
+        "children": {}
+    },
+    "corporate_billing": {
+        "path": "corporate",
+        "components": [
+            "corporate.models.customers.Meta",
+            "corporate.models.plans.Meta",
+            "corporate.models.plans.CustomerPlan",
+            "corporate.lib.stripe.UpgradePageContext",
+            "corporate.lib.stripe.BillingSessionEventType"
+        ],
+        "children": {}
+    },
+    "analytics": {
+        "path": "analytics",
+        "components": [
+            "analytics.models.Meta",
+            "analytics.models.InstallationCount",
+            "analytics.models.RealmCount",
+            "analytics.models.StreamCount",
+            "analytics.models.FillState"
+        ],
+        "children": {}
+    },
+    "confirmation_system": {
+        "path": "confirmation",
+        "components": [
+            "confirmation.models.ConfirmationType",
+            "confirmation.models.Meta"
+        ],
+        "children": {}
+    },
+    "remote_server_management": {
+        "path": "zilencer",
+        "components": [
+            "zilencer.models.RemoteZulipServer",
+            "zilencer.models.Meta",
+            "zilencer.models.RemoteRealmBillingUser",
+            "zilencer.models.RemotePushDevice"
+        ],
+        "children": {}
+    }
+}

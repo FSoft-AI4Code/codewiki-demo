@@ -1,0 +1,53 @@
+{
+    "build": {
+        "components": [
+            "scripts/build/build.js",
+            "scripts/build/config.js",
+            "scripts/build/build-javascript-module.js",
+            "scripts/build/build-package-json.js",
+            "scripts/build/build-dependencies-license.js",
+            "scripts/build/build-types.js",
+            "scripts/build/esbuild-plugins/add-default-export.js",
+            "scripts/build/esbuild-plugins/evaluate.js",
+            "scripts/build/esbuild-plugins/primitive-define.js",
+            "scripts/build/esbuild-plugins/replace-module.js",
+            "scripts/build/esbuild-plugins/shim-commonjs-objects.js",
+            "scripts/build/esbuild-plugins/strip-node-protocol.js",
+            "scripts/build/esbuild-plugins/throw-warnings.js",
+            "scripts/build/esbuild-plugins/umd.js",
+            "scripts/build/esbuild-plugins/visualizer.js",
+            "scripts/build/transform/index.js",
+            "scripts/build/transform/transforms/create-method-call-transform.js",
+            "scripts/build/utils.js"
+        ],
+        "children": {}
+    },
+    "website": {
+        "components": [
+            "website/docusaurus.config.js",
+            "website/playground/EditorState.js",
+            "website/playground/Playground.jsx",
+            "website/playground/PrettierFormat.js",
+            "website/playground/VersionLink.jsx",
+            "website/playground/WorkerApi.js",
+            "website/playground/buttons.jsx",
+            "website/playground/dummyId.js",
+            "website/playground/helpers.js",
+            "website/playground/index.jsx",
+            "website/playground/markdown.js",
+            "website/playground/panels.jsx",
+            "website/playground/sidebar/SidebarOptions.jsx",
+            "website/playground/sidebar/components.jsx",
+            "website/playground/sidebar/inputs.jsx",
+            "website/playground/sidebar/options.jsx",
+            "website/playground/storage.js",
+            "website/playground/urlHash.js",
+            "website/playground/util.js",
+            "website/src/pages/help/index.jsx",
+            "website/src/pages/index.jsx",
+            "website/src/pages/users/index.jsx",
+            "scripts/build-website.js"
+        ],
+        "children": {}
+    }
+}

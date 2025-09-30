@@ -1,0 +1,26 @@
+{
+    "uki-management": {
+        "components": [
+            "src.ukify.ukify.UKI",
+            "src.ukify.ukify.UkifyConfig",
+            "src.ukify.ukify.SignTool",
+            "src.ukify.ukify.PeSign",
+            "src.ukify.ukify.SbSign",
+            "src.ukify.ukify.SystemdSbSign",
+            "src.ukify.ukify.Section",
+            "src.ukify.ukify.Uname"
+        ],
+        "children": {}
+    },
+    "build-tools": {
+        "components": [
+            "tools.elf2efi.PeCoffHeader",
+            "tools.elf2efi.PeOptionalHeader",
+            "tools.elf2efi.PeSection",
+            "tools.elf2efi.PeRelocationBlock",
+            "tools.elf2efi.PeRelocationEntry",
+            "tools.xml_helper.CustomResolver"
+        ],
+        "children": {}
+    }
+}

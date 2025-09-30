@@ -1,0 +1,38 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T20:12:09.512612",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/FluentValidation--FluentValidation",
+        "commit_id": "298069b4ef88241013d0573f38e25c936e80685f"
+    },
+    "statistics": {
+        "total_components": 397,
+        "leaf_nodes": 354,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "Validation_Rules.md",
+        "InlineValidator.md",
+        "Condition_Building.md",
+        "Validator_Factory.md",
+        "Dependency_Injection.md",
+        "Assembly_Scanning.md",
+        "AbstractValidator.md",
+        "Validation_Strategy.md",
+        "Rule_Building.md",
+        "Tracking_Collection.md",
+        "Rule_Building_Core.md",
+        "Accessor_Cache.md",
+        "Comparison_Validators.md",
+        "Child_Rules_Management.md",
+        "Property_Validators.md",
+        "Localization.md",
+        "Validator_Selection.md",
+        "Core_Validation_Engine.md",
+        "Property_Chain.md"
+    ]
+}

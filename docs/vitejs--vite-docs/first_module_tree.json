@@ -1,0 +1,210 @@
+{
+    "module-runner": {
+        "path": "packages/vite/src/module-runner",
+        "components": [
+            "packages.vite.src.module-runner.esmEvaluator.ESModulesEvaluator",
+            "packages.vite.src.module-runner.evaluatedModules.EvaluatedModules",
+            "packages.vite.src.module-runner.evaluatedModules.EvaluatedModuleNode",
+            "packages.vite.src.module-runner.runner.ModuleRunner",
+            "packages.vite.src.module-runner.runner.ModuleRunnerDebugger",
+            "packages.vite.src.module-runner.sourcemap.decoder.DecodedMap",
+            "packages.vite.src.module-runner.sourcemap.decoder.SourceMapLike",
+            "packages.vite.src.module-runner.sourcemap.decoder.Stats",
+            "packages.vite.src.module-runner.sourcemap.interceptor.InterceptorOptions",
+            "packages.vite.src.module-runner.sourcemap.interceptor.CallSite",
+            "packages.vite.src.module-runner.sourcemap.interceptor.State",
+            "packages.vite.src.module-runner.sourcemap.interceptor.RetrieveSourceMapHandler",
+            "packages.vite.src.module-runner.sourcemap.interceptor.RetrieveFileHandler",
+            "packages.vite.src.module-runner.sourcemap.interceptor.CachedMapEntry",
+            "packages.vite.src.module-runner.types.ModuleRunnerImportMeta",
+            "packages.vite.src.module-runner.types.ImportMetaEnv",
+            "packages.vite.src.module-runner.types.ModuleRunnerContext",
+            "packages.vite.src.module-runner.types.ModuleEvaluator",
+            "packages.vite.src.module-runner.types.ModuleRunnerHmr",
+            "packages.vite.src.module-runner.types.ModuleRunnerOptions"
+        ],
+        "children": {}
+    },
+    "dev-server": {
+        "path": "packages/vite/src/node/server",
+        "components": [
+            "packages.vite.src.node.server.index.ServerOptions",
+            "packages.vite.src.node.server.index.ViteDevServer",
+            "packages.vite.src.node.server.index.FileSystemServeOptions",
+            "packages.vite.src.node.server.index.ResolvedServerUrls",
+            "packages.vite.src.node.server.index.ResolvedServerOptions",
+            "packages.vite.src.node.server.environment.DevEnvironment",
+            "packages.vite.src.node.server.environment.DevEnvironmentContext",
+            "packages.vite.src.node.server.environments.fetchableEnvironments.FetchableDevEnvironmentContext",
+            "packages.vite.src.node.server.environments.fetchableEnvironments.FetchableDevEnvironment",
+            "packages.vite.src.node.server.environments.runnableEnvironment.RunnableDevEnvironment",
+            "packages.vite.src.node.server.environments.runnableEnvironment.RunnableDevEnvironmentContext",
+            "packages.vite.src.node.server.send.SendOptions",
+            "packages.vite.src.node.server.sourcemap.SourceMapLike",
+            "packages.vite.src.node.server.transformRequest.TransformOptions",
+            "packages.vite.src.node.server.transformRequest.TransformResult",
+            "packages.vite.src.node.server.transformRequest.TransformOptionsInternal",
+            "packages.vite.src.node.server.ws.WebSocketServer",
+            "packages.vite.src.node.server.ws.WebSocketClient"
+        ],
+        "children": {}
+    },
+    "build": {
+        "path": "packages/vite/src/node/build.ts",
+        "components": [
+            "packages.vite.src.node.build.ViteBuilder",
+            "packages.vite.src.node.build.LibraryOptions",
+            "packages.vite.src.node.build.ResolvedModulePreloadOptions",
+            "packages.vite.src.node.build.BuildEnvironmentOptions",
+            "packages.vite.src.node.build.ModulePreloadOptions",
+            "packages.vite.src.node.build.BuilderOptions",
+            "packages.vite.src.node.build.ResolvedBuildEnvironmentOptions",
+            "packages.vite.src.node.build.BuildEnvironment",
+            "packages.vite.src.node.build.ResolvedBuildOptions"
+        ],
+        "children": {}
+    },
+    "plugin-system": {
+        "path": "packages/vite/src/node/plugin.ts",
+        "components": [
+            "packages.vite.src.node.plugin.PluginContextMeta",
+            "packages.vite.src.node.plugin.PluginContextExtension",
+            "packages.vite.src.node.plugin.ConfigPluginContext",
+            "packages.vite.src.node.plugin.MinimalPluginContextWithoutEnvironment",
+            "packages.vite.src.node.plugin.PluginContextMetaExtension",
+            "packages.vite.src.node.plugin.Plugin",
+            "packages.vite.src.node.plugin.MinimalPluginContext"
+        ],
+        "children": {}
+    },
+    "plugin-container": {
+        "path": "packages/vite/src/node/server/pluginContainer.ts",
+        "components": [
+            "packages.vite.src.node.server.pluginContainer.MinimalPluginContext",
+            "packages.vite.src.node.server.pluginContainer.ResolveIdContext",
+            "packages.vite.src.node.server.pluginContainer.TransformPluginContext",
+            "packages.vite.src.node.server.pluginContainer.EnvironmentPluginContainer",
+            "packages.vite.src.node.server.pluginContainer.PluginContext",
+            "packages.vite.src.node.server.pluginContainer.PluginContainer",
+            "packages.vite.src.node.server.pluginContainer.PluginContainerOptions",
+            "packages.vite.src.node.server.pluginContainer.BasicMinimalPluginContext",
+            "packages.vite.src.node.server.pluginContainer.LoadPluginContext"
+        ],
+        "children": {}
+    },
+    "config": {
+        "path": "packages/vite/src/node/config.ts",
+        "components": [
+            "packages.vite.src.node.config.ExperimentalOptions",
+            "packages.vite.src.node.config.DevEnvironmentOptions",
+            "packages.vite.src.node.config.EnvironmentOptions",
+            "packages.vite.src.node.config.PluginHookUtils",
+            "packages.vite.src.node.config.CreateDevEnvironmentContext",
+            "packages.vite.src.node.config.SharedEnvironmentOptions",
+            "packages.vite.src.node.config.ConfigEnv",
+            "packages.vite.src.node.config.InlineConfig",
+            "packages.vite.src.node.config.LegacyOptions",
+            "packages.vite.src.node.config.HTMLOptions",
+            "packages.vite.src.node.config.ResolvedWorkerOptions",
+            "packages.vite.src.node.config.FutureOptions",
+            "packages.vite.src.node.config.ResolvedConfig",
+            "packages.vite.src.node.config.UserConfig",
+            "packages.vite.src.node.config.NodeModuleWithCompile"
+        ],
+        "children": {}
+    },
+    "hmr": {
+        "path": "packages/vite/src/node/server/hmr.ts",
+        "components": [
+            "packages.vite.src.node.server.hmr.NormalizedHotChannelClient",
+            "packages.vite.src.node.server.hmr.HotUpdateOptions",
+            "packages.vite.src.node.server.hmr.HotChannelClient",
+            "packages.vite.src.node.server.hmr.PropagationBoundary",
+            "packages.vite.src.node.server.hmr.HotChannel",
+            "packages.vite.src.node.server.hmr.HmrOptions",
+            "packages.vite.src.node.server.hmr.HmrContext",
+            "packages.vite.src.node.server.hmr.NormalizedHotChannel"
+        ],
+        "children": {}
+    },
+    "hmr-shared": {
+        "path": "packages/vite/src/shared/hmr.ts",
+        "components": [
+            "packages.vite.src.shared.hmr.HMRLogger",
+            "packages.vite.src.shared.hmr.HMRContext",
+            "packages.vite.src.shared.hmr.HotModule",
+            "packages.vite.src.shared.hmr.HotCallback",
+            "packages.vite.src.shared.hmr.HMRClient"
+        ],
+        "children": {}
+    },
+    "ssr": {
+        "path": "packages/vite/src/node/ssr",
+        "components": [
+            "packages.vite.src.node.ssr.index.ResolvedSSROptions",
+            "packages.vite.src.node.ssr.index.SSROptions",
+            "packages.vite.src.node.ssr.fetchModule.FetchModuleOptions",
+            "packages.vite.src.node.ssr.runnerImport.RunnerImportResult",
+            "packages.vite.src.node.ssr.runtime.serverModuleRunner.ServerModuleRunnerOptions",
+            "packages.vite.src.node.ssr.ssrModuleLoader.SSRCompatModuleRunner",
+            "packages.vite.src.node.ssr.ssrTransform.Visitors",
+            "packages.vite.src.node.ssr.ssrTransform.ModuleRunnerTransformOptions"
+        ],
+        "children": {}
+    },
+    "optimizer": {
+        "path": "packages/vite/src/node/optimizer",
+        "components": [
+            "packages.vite.src.node.optimizer.index.DepOptimizationMetadata",
+            "packages.vite.src.node.optimizer.index.OptimizedDepInfo",
+            "packages.vite.src.node.optimizer.index.DepOptimizationResult",
+            "packages.vite.src.node.optimizer.index.DepOptimizationConfig",
+            "packages.vite.src.node.optimizer.index.DepsOptimizer",
+            "packages.vite.src.node.optimizer.scan.ScanEnvironment"
+        ],
+        "children": {}
+    },
+    "module-graph": {
+        "path": "packages/vite/src/node/server",
+        "components": [
+            "packages.vite.src.node.server.mixedModuleGraph.ModuleGraph",
+            "packages.vite.src.node.server.mixedModuleGraph.DualWeakMap",
+            "packages.vite.src.node.server.mixedModuleGraph.ModuleNode",
+            "packages.vite.src.node.server.moduleGraph.EnvironmentModuleNode",
+            "packages.vite.src.node.server.moduleGraph.EnvironmentModuleGraph"
+        ],
+        "children": {}
+    },
+    "core-types": {
+        "path": "packages/vite/types",
+        "components": [
+            "packages.vite.types.hmrPayload.d.UpdatePayload",
+            "packages.vite.types.hmrPayload.d.PingPayload",
+            "packages.vite.types.hmrPayload.d.FullReloadPayload",
+            "packages.vite.types.hmrPayload.d.ConnectedPayload",
+            "packages.vite.types.hmrPayload.d.PrunePayload",
+            "packages.vite.types.hmrPayload.d.Update",
+            "packages.vite.types.hmrPayload.d.CustomPayload",
+            "packages.vite.types.hot.d.ViteHotContext",
+            "packages.vite.types.importGlob.d.KnownAsTypeMap",
+            "packages.vite.types.importGlob.d.ImportGlobOptions",
+            "packages.vite.types.importGlob.d.Worker",
+            "packages.vite.types.importGlob.d.ImportGlobFunction",
+            "packages.vite.types.importMeta.d.ViteTypeOptions",
+            "packages.vite.types.importMeta.d.ImportMetaEnv",
+            "packages.vite.types.importMeta.d.ImportMeta",
+            "packages.vite.types.metadata.d.CustomPluginOptions",
+            "packages.vite.types.metadata.d.CustomPluginOptionsVite",
+            "packages.vite.types.metadata.d.ChunkMetadata",
+            "packages.vite.types.metadata.d.RenderedChunk"
+        ],
+        "children": {}
+    },
+    "plugin-legacy": {
+        "path": "packages/plugin-legacy/src/types.ts",
+        "components": [
+            "packages.plugin-legacy.src.types.Options"
+        ],
+        "children": {}
+    }
+}

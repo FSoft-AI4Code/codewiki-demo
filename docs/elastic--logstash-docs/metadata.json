@@ -1,0 +1,47 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T11:37:09.516199",
+        "main_model": "claude-sonnet-4",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/elastic--logstash",
+        "commit_id": "895cfa5b14633ae9b9e671105f7b7935c9f2b9f1"
+    },
+    "statistics": {
+        "total_components": 3290,
+        "leaf_nodes": 208,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "output_strategy_management.md",
+        "monitoring.md",
+        "logging_system.md",
+        "dataset_compilation.md",
+        "utility_operations.md",
+        "core_data_structures.md",
+        "serialization_framework.md",
+        "plugin_system.md",
+        "config_compilation.md",
+        "event_api.md",
+        "health_system.md",
+        "common_utilities.md",
+        "plugin_factory.md",
+        "data_access_layer.md",
+        "ir_compiler.md",
+        "settings_management.md",
+        "ruby_integration_layer.md",
+        "ruby_integration.md",
+        "dlq_reader_system.md",
+        "dead_letter_queue.md",
+        "queue_management.md",
+        "metrics_system.md",
+        "plugin_integration_layer.md",
+        "plugin_delegation.md",
+        "event_condition_system.md",
+        "dlq_writer_system.md",
+        "pipeline_execution.md",
+        "type_conversion_system.md"
+    ]
+}

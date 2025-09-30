@@ -1,0 +1,32 @@
+{
+    "search-providers": {
+        "components": [
+            "src.search.providers.base.SearchProvider",
+            "src.search.providers.google.GoogleSearchProvider",
+            "src.search.providers.duckduckgo.DuckDuckGoSearchProvider",
+            "src.search.providers.searxng.SearxngSearchProvider"
+        ],
+        "children": {}
+    },
+    "caching-system": {
+        "components": [
+            "src.clients.cache_clients.ShortTermCacheClient",
+            "src.clients.cache_clients.LongTermCacheClient"
+        ],
+        "children": {}
+    },
+    "ai-integration": {
+        "components": [
+            "src.clients.llm_clients.LLMClient",
+            "src.clients.embedding_clients.EmbeddingClient"
+        ],
+        "children": {}
+    },
+    "data-models": {
+        "components": [
+            "src.schemas.SearchResult",
+            "src.schemas.SearchResponse"
+        ],
+        "children": {}
+    }
+}

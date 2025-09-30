@@ -1,0 +1,500 @@
+{
+    "Core_Engine": {
+        "path": "src/Core",
+        "components": [
+            "src.Core.Settings.SettingsImpl",
+            "src.Core.ServerSettings.ServerSettingsImpl",
+            "src.Core.FormatFactorySettings.FormatFactorySettingsImpl",
+            "src.Core.ExternalTable.ParserTypeList",
+            "src.Core.SortDescription.CompiledSortDescriptionFunctionHolder"
+        ],
+        "children": {
+            "Settings_Management": {
+                "components": [
+                    "src.Core.Settings.SettingsImpl"
+                ],
+                "children": {}
+            },
+            "Server_Settings": {
+                "components": [
+                    "src.Core.ServerSettings.ServerSettingsImpl"
+                ],
+                "children": {}
+            },
+            "Format_Factory": {
+                "components": [
+                    "src.Core.FormatFactorySettings.FormatFactorySettingsImpl"
+                ],
+                "children": {}
+            },
+            "External_Table_Parser": {
+                "components": [
+                    "src.Core.ExternalTable.ParserTypeList"
+                ],
+                "children": {}
+            },
+            "Sort_Description_Compiler": {
+                "components": [
+                    "src.Core.SortDescription.CompiledSortDescriptionFunctionHolder"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Interpreters": {
+        "path": "src/Interpreters",
+        "components": [
+            "src.Interpreters.Context.QueryUUID",
+            "src.Interpreters.Context.ContextSharedPart",
+            "src.Interpreters.DatabaseCatalog.stat",
+            "src.Interpreters.DatabaseCatalog.DatabaseNameHints",
+            "src.Interpreters.ActionsDAG.Frame",
+            "src.Interpreters.ActionsDAG.Data",
+            "src.Interpreters.ActionsDAG.ConjunctionNodes",
+            "src.Interpreters.ExpressionActions.ActionsDAGReverseInfo",
+            "src.Interpreters.ExpressionActions.ExecutionContext",
+            "src.Interpreters.ExpressionActions.Data",
+            "src.Interpreters.ExpressionActions.NodeInfo",
+            "src.Interpreters.ExpressionActions.LazyExecutionInfo",
+            "src.Interpreters.Aggregator.CompiledAggregateFunctionsHolder"
+        ],
+        "children": {
+            "Context": {
+                "components": [
+                    "src.Interpreters.Context.QueryUUID",
+                    "src.Interpreters.Context.ContextSharedPart"
+                ],
+                "children": {}
+            },
+            "DatabaseCatalog": {
+                "components": [
+                    "src.Interpreters.DatabaseCatalog.stat",
+                    "src.Interpreters.DatabaseCatalog.DatabaseNameHints"
+                ],
+                "children": {}
+            },
+            "ActionsDAG": {
+                "components": [
+                    "src.Interpreters.ActionsDAG.Frame",
+                    "src.Interpreters.ActionsDAG.Data",
+                    "src.Interpreters.ActionsDAG.ConjunctionNodes"
+                ],
+                "children": {}
+            },
+            "ExpressionActions": {
+                "components": [
+                    "src.Interpreters.ExpressionActions.ActionsDAGReverseInfo",
+                    "src.Interpreters.ExpressionActions.ExecutionContext",
+                    "src.Interpreters.ExpressionActions.Data",
+                    "src.Interpreters.ExpressionActions.NodeInfo",
+                    "src.Interpreters.ExpressionActions.LazyExecutionInfo"
+                ],
+                "children": {}
+            },
+            "Aggregator": {
+                "components": [
+                    "src.Interpreters.Aggregator.CompiledAggregateFunctionsHolder"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Storage_Engine": {
+        "path": "src/Storages",
+        "components": [
+            "src.Storages.ColumnDefault.AliasNames",
+            "src.Storages.MergeTree.MergeTreeSettings.MergeTreeSettingsImpl",
+            "src.Storages.MergeTree.MergeTreeData.RemovalRanges",
+            "src.Storages.MergeTree.MergeTreeDataMergerMutator.PartitionStatistics",
+            "src.Storages.MergeTree.MergeTreeDataSelectExecutor.IndexStat",
+            "src.Storages.MergeTree.MergeTreeDataSelectExecutor.Stats",
+            "src.Storages.MergeTree.MergeTreePartition.LegacyFieldVisitorHash",
+            "src.Storages.MergeTree.MergeTreePartsMover.LargestPartsWithRequiredSize",
+            "src.Storages.MergeTree.MergeTreePartsMover.PartsSizeOnDiskComparator",
+            "src.Storages.MergeTree.MergeTreeReadPool.PartInfo",
+            "src.Storages.StorageMergeTree.FutureNewEmptyPart",
+            "src.Storages.StorageMergeTree.PartVersionWithName",
+            "src.Storages.StorageReplicatedMergeTree.PartDescription",
+            "src.Storages.StorageReplicatedMergeTree.QueueEntryInfo"
+        ],
+        "children": {
+            "MergeTree_Engine": {
+                "components": [
+                    "src.Storages.StorageMergeTree.FutureNewEmptyPart",
+                    "src.Storages.StorageMergeTree.PartVersionWithName",
+                    "src.Storages.StorageReplicatedMergeTree.PartDescription",
+                    "src.Storages.StorageReplicatedMergeTree.QueueEntryInfo"
+                ],
+                "children": {}
+            },
+            "MergeTree_Data": {
+                "components": [
+                    "src.Storages.MergeTree.MergeTreeData.RemovalRanges",
+                    "src.Storages.MergeTree.MergeTreeDataMergerMutator.PartitionStatistics",
+                    "src.Storages.MergeTree.MergeTreeDataSelectExecutor.IndexStat",
+                    "src.Storages.MergeTree.MergeTreeDataSelectExecutor.Stats"
+                ],
+                "children": {}
+            },
+            "Storage_Utilities": {
+                "components": [
+                    "src.Storages.ColumnDefault.AliasNames",
+                    "src.Storages.MergeTree.MergeTreePartition.LegacyFieldVisitorHash",
+                    "src.Storages.MergeTree.MergeTreePartsMover.LargestPartsWithRequiredSize",
+                    "src.Storages.MergeTree.MergeTreePartsMover.PartsSizeOnDiskComparator",
+                    "src.Storages.MergeTree.MergeTreeReadPool.PartInfo"
+                ],
+                "children": {}
+            },
+            "MergeTree_Settings": {
+                "components": [
+                    "src.Storages.MergeTree.MergeTreeSettings.MergeTreeSettingsImpl"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Query_Planning": {
+        "path": "src/Processors/QueryPlan",
+        "components": [
+            "src.Processors.QueryPlan.QueryPlan.EstimateCounters",
+            "src.Processors.QueryPlan.QueryPlan.Frame",
+            "src.Processors.QueryPlan.QueryPlanSerializationSettings.QueryPlanSerializationSettingsImpl",
+            "src.Processors.QueryPlan.ReadFromMergeTree.PartRangesReadInfo",
+            "src.Processors.QueryPlan.PartsSplitter.SplitPartsRangesResult",
+            "src.Processors.QueryPlan.PartsSplitter.PartRangeIndexHash"
+        ],
+        "children": {
+            "Query_Plan_Core": {
+                "components": [
+                    "src.Processors.QueryPlan.QueryPlan.EstimateCounters",
+                    "src.Processors.QueryPlan.QueryPlan.Frame"
+                ],
+                "children": {}
+            },
+            "Query_Plan_Serialization": {
+                "components": [
+                    "src.Processors.QueryPlan.QueryPlanSerializationSettings.QueryPlanSerializationSettingsImpl"
+                ],
+                "children": {}
+            },
+            "MergeTree_Reading": {
+                "components": [
+                    "src.Processors.QueryPlan.ReadFromMergeTree.PartRangesReadInfo"
+                ],
+                "children": {}
+            },
+            "Parts_Splitting": {
+                "components": [
+                    "src.Processors.QueryPlan.PartsSplitter.SplitPartsRangesResult",
+                    "src.Processors.QueryPlan.PartsSplitter.PartRangeIndexHash"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Data_Types": {
+        "path": "src/DataTypes",
+        "components": [
+            "src.DataTypes.DataTypeEnum.EnumName",
+            "src.DataTypes.DataTypeLowCardinality.CreateColumnVector",
+            "src.DataTypes.ObjectUtils.ColumnWithTypeAndDimensions",
+            "src.DataTypes.Serializations.ISerialization.SubstreamsCacheColumnWithNumReadRowsElement"
+        ],
+        "children": {
+            "DataType_Enum": {
+                "components": [
+                    "src.DataTypes.DataTypeEnum.EnumName"
+                ],
+                "children": {}
+            },
+            "DataType_LowCardinality": {
+                "components": [
+                    "src.DataTypes.DataTypeLowCardinality.CreateColumnVector"
+                ],
+                "children": {}
+            },
+            "Object_Utils": {
+                "components": [
+                    "src.DataTypes.ObjectUtils.ColumnWithTypeAndDimensions"
+                ],
+                "children": {}
+            },
+            "Serialization_Core": {
+                "components": [
+                    "src.DataTypes.Serializations.ISerialization.SubstreamsCacheColumnWithNumReadRowsElement"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Functions": {
+        "path": "src/Functions",
+        "components": [
+            "src.Functions.CastOverloadResolver.CastOverloadResolverImpl",
+            "src.Functions.FunctionJoinGet.FunctionJoinGet",
+            "src.Functions.FunctionJoinGet.HashJoin",
+            "src.Functions.FunctionJoinGet.JoinGetOverloadResolver",
+            "src.Functions.FunctionJoinGet.ExecutableFunctionJoinGet"
+        ],
+        "children": {
+            "Cast_Operations": {
+                "components": [
+                    "src.Functions.CastOverloadResolver.CastOverloadResolverImpl"
+                ],
+                "children": {}
+            },
+            "JoinGet_Operations": {
+                "components": [
+                    "src.Functions.FunctionJoinGet.FunctionJoinGet",
+                    "src.Functions.FunctionJoinGet.HashJoin",
+                    "src.Functions.FunctionJoinGet.JoinGetOverloadResolver",
+                    "src.Functions.FunctionJoinGet.ExecutableFunctionJoinGet"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Parsers": {
+        "path": "src/Parsers",
+        "components": [
+            "src.Parsers.ASTCreateQuery.ASTColumnsElement",
+            "src.Parsers.ASTLiteral.FieldVisitorToStringPostgreSQL",
+            "src.Parsers.ASTLiteral.FieldVisitorToColumnName",
+            "src.Parsers.ASTSetQuery.FieldVisitorToSetting",
+            "src.Parsers.CommonParsers.KeyWordToStringConverter"
+        ],
+        "children": {
+            "AST_Create_Query": {
+                "components": [
+                    "src.Parsers.ASTCreateQuery.ASTColumnsElement"
+                ],
+                "children": {}
+            },
+            "AST_Literal": {
+                "components": [
+                    "src.Parsers.ASTLiteral.FieldVisitorToStringPostgreSQL",
+                    "src.Parsers.ASTLiteral.FieldVisitorToColumnName"
+                ],
+                "children": {}
+            },
+            "AST_Set_Query": {
+                "components": [
+                    "src.Parsers.ASTSetQuery.FieldVisitorToSetting"
+                ],
+                "children": {}
+            },
+            "Common_Parsers": {
+                "components": [
+                    "src.Parsers.CommonParsers.KeyWordToStringConverter"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "IO_System": {
+        "path": "src/IO",
+        "components": [
+            "src.IO.ReadBuffer.ReadBufferWrapper",
+            "src.IO.SeekableReadBuffer.SeekableReadBufferWrapper",
+            "src.IO.ConnectionTimeouts.TimeoutsForFirstAttempt"
+        ],
+        "children": {
+            "ReadBuffer_Management": {
+                "components": [
+                    "src.IO.ReadBuffer.ReadBufferWrapper"
+                ],
+                "children": {}
+            },
+            "SeekableReadBuffer_Operations": {
+                "components": [
+                    "src.IO.SeekableReadBuffer.SeekableReadBufferWrapper"
+                ],
+                "children": {}
+            },
+            "Connection_Timeouts_Configuration": {
+                "components": [
+                    "src.IO.ConnectionTimeouts.TimeoutsForFirstAttempt"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Columns": {
+        "path": "src/Columns",
+        "components": [
+            "src.Columns.ColumnLowCardinality.LowCardinalityComparator",
+            "src.Columns.ColumnObject.ColumnObjectCheckpoint",
+            "src.Columns.ColumnObject.Iterator",
+            "src.Columns.ColumnsCommon.NoResultOffsetsBuilder"
+        ],
+        "children": {
+            "ColumnLowCardinality": {
+                "components": [
+                    "src.Columns.ColumnLowCardinality.LowCardinalityComparator"
+                ],
+                "children": {}
+            },
+            "ColumnObject": {
+                "components": [
+                    "src.Columns.ColumnObject.ColumnObjectCheckpoint",
+                    "src.Columns.ColumnObject.Iterator"
+                ],
+                "children": {}
+            },
+            "ColumnsCommon": {
+                "components": [
+                    "src.Columns.ColumnsCommon.NoResultOffsetsBuilder"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Access_Control": {
+        "path": "src/Access",
+        "components": [
+            "src.Access.AccessControl.Rule",
+            "src.Access.AccessRights.ProtoElement",
+            "src.Access.AccessRights.Iterator",
+            "src.Access.Common.AccessFlags.Node",
+            "src.Access.Common.AccessType.AccessTypeToStringConverter",
+            "src.Access.ContextAccess.PrecalculatedFlags"
+        ],
+        "children": {
+            "Access_Rights_Management": {
+                "components": [
+                    "src.Access.AccessRights.ProtoElement",
+                    "src.Access.AccessRights.Iterator"
+                ],
+                "children": {}
+            },
+            "Authentication_Management": {
+                "components": [
+                    "src.Access.AccessControl.Rule"
+                ],
+                "children": {}
+            },
+            "Access_Flags_System": {
+                "components": [
+                    "src.Access.Common.AccessFlags.Node",
+                    "src.Access.Common.AccessType.AccessTypeToStringConverter"
+                ],
+                "children": {}
+            },
+            "Context_Access_System": {
+                "components": [
+                    "src.Access.ContextAccess.PrecalculatedFlags"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Query_Pipeline": {
+        "path": "src/QueryPipeline",
+        "components": [
+            "src.QueryPipeline.QueryPipeline.QueuedEntry",
+            "src.QueryPipeline.printPipeline.EdgeData"
+        ],
+        "children": {
+            "Pipeline_Core": {
+                "components": [
+                    "src.QueryPipeline.QueryPipeline.QueuedEntry"
+                ],
+                "children": {}
+            },
+            "Pipeline_Diagnostics": {
+                "components": [
+                    "src.QueryPipeline.printPipeline.EdgeData"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Aggregate_Functions": {
+        "path": "src/AggregateFunctions",
+        "components": [
+            "src.AggregateFunctions.AggregateFunctionFactory.Settings",
+            "src.AggregateFunctions.registerAggregateFunctions.AggregateFunctionCombinatorFactory",
+            "src.AggregateFunctions.registerAggregateFunctions.Settings",
+            "src.AggregateFunctions.registerAggregateFunctions.AggregateFunctionFactory"
+        ],
+        "children": {
+            "Function_Factory": {
+                "components": [
+                    "src.AggregateFunctions.AggregateFunctionFactory.Settings"
+                ],
+                "children": {}
+            },
+            "Function_Registration": {
+                "components": [
+                    "src.AggregateFunctions.registerAggregateFunctions.AggregateFunctionCombinatorFactory",
+                    "src.AggregateFunctions.registerAggregateFunctions.Settings",
+                    "src.AggregateFunctions.registerAggregateFunctions.AggregateFunctionFactory"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Analyzer": {
+        "path": "src/Analyzer",
+        "components": [
+            "src.Analyzer.IQueryTreeNode.NodePairHash",
+            "src.Analyzer.QueryTreeBuilder.QueryTreeBuilder",
+            "src.Analyzer.QueryTreePassManager.ValidationChecker"
+        ],
+        "children": {
+            "Query_Tree_Builder": {
+                "components": [
+                    "src.Analyzer.QueryTreeBuilder.QueryTreeBuilder"
+                ],
+                "children": {}
+            },
+            "Query_Tree_Node_Management": {
+                "components": [
+                    "src.Analyzer.IQueryTreeNode.NodePairHash"
+                ],
+                "children": {}
+            },
+            "Query_Optimization_Passes": {
+                "components": [
+                    "src.Analyzer.QueryTreePassManager.ValidationChecker"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Common_Utilities": {
+        "path": "src/Common",
+        "components": [
+            "src.Common.DNSResolver.DNSFilterSettings",
+            "src.Common.StackTrace.StackTraceCache",
+            "src.Common.StackTrace.StackTraceTriple",
+            "src.Common.StackTrace.CacheEntry",
+            "src.Common.StackTrace.StackTraceRefTriple",
+            "src.Common.ThreadPool.ScopedDecrement"
+        ],
+        "children": {
+            "DNS_Resolution": {
+                "components": [
+                    "src.Common.DNSResolver.DNSFilterSettings"
+                ],
+                "children": {}
+            },
+            "Stack_Trace_Management": {
+                "components": [
+                    "src.Common.StackTrace.StackTraceCache",
+                    "src.Common.StackTrace.StackTraceTriple",
+                    "src.Common.StackTrace.CacheEntry",
+                    "src.Common.StackTrace.StackTraceRefTriple"
+                ],
+                "children": {}
+            },
+            "Thread_Pool_System": {
+                "components": [
+                    "src.Common.ThreadPool.ScopedDecrement"
+                ],
+                "children": {}
+            }
+        }
+    }
+}

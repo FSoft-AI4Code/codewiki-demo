@@ -1,0 +1,428 @@
+{
+    "API Framework": {
+        "path": "api/",
+        "components": [
+            "api.api.alogging.APILoggerSize",
+            "api.api.alogging.WazuhJsonFormatter",
+            "api.api.encoder.WazuhAPIJSONEncoder",
+            "api.api.middlewares.SecureHeadersMiddleware",
+            "api.api.middlewares.CheckExpectHeaderMiddleware",
+            "api.api.middlewares.CheckBlockedIP",
+            "api.api.middlewares.CheckRateLimitsMiddleware",
+            "api.api.middlewares.WazuhAccessLoggerMiddleware",
+            "api.api.uri_parser.APIUriParser"
+        ],
+        "children": {}
+    },
+    "API Models": {
+        "path": "api/api/models/",
+        "components": [
+            "api.api.models.base_model_.Body",
+            "api.api.models.base_model_.Model",
+            "api.api.models.base_model_.AllOf",
+            "api.api.models.base_model_.Items",
+            "api.api.models.base_model_.Data",
+            "api.api.models.active_response_model.ActiveResponseModel",
+            "api.api.models.agent_added_model.AgentForce",
+            "api.api.models.agent_added_model.DisconnectedTime",
+            "api.api.models.agent_added_model.AgentAddedModel",
+            "api.api.models.agent_group_added_model.GroupAddedModel",
+            "api.api.models.agent_inserted_model.AgentInsertedModel",
+            "api.api.models.basic_info_model.BasicInfo",
+            "api.api.models.configuration_model.SecurityConfigurationModel",
+            "api.api.models.event_ingest_model.EventIngestModel",
+            "api.api.models.logtest_model.LogtestModel",
+            "api.api.models.security_model.CreateUserModel",
+            "api.api.models.security_model.RoleModel",
+            "api.api.models.security_model.PolicyModel",
+            "api.api.models.security_model.RuleModel",
+            "api.api.models.security_model.UpdateUserModel",
+            "api.api.models.security_token_response_model.TokenResponseModel"
+        ],
+        "children": {}
+    },
+    "Core Framework": {
+        "path": "framework/wazuh/",
+        "components": [
+            "framework.wazuh.__init__.Wazuh",
+            "framework.wazuh.core.InputValidator.InputValidator",
+            "framework.wazuh.core.results.WazuhResult",
+            "framework.wazuh.core.results.AffectedItemsWazuhResult",
+            "framework.wazuh.core.results.AbstractWazuhResult",
+            "framework.wazuh.core.utils.WazuhDBQueryGroupBy",
+            "framework.wazuh.core.utils.Timeout",
+            "framework.wazuh.core.utils.WazuhDBQueryDistinct",
+            "framework.wazuh.core.utils.WazuhDBBackend",
+            "framework.wazuh.core.utils.WazuhDBQuery",
+            "framework.wazuh.core.utils.WazuhVersion",
+            "framework.wazuh.core.utils.AbstractDatabaseBackend"
+        ],
+        "children": {}
+    },
+    "Agent Management": {
+        "path": "framework/wazuh/core/agent.py",
+        "components": [
+            "framework.wazuh.core.agent.WazuhDBQueryDistinctAgents",
+            "framework.wazuh.core.agent.WazuhDBQueryGroup",
+            "framework.wazuh.core.agent.Agent",
+            "framework.wazuh.core.agent.WazuhDBQueryAgents",
+            "framework.wazuh.core.agent.WazuhDBQueryGroupByAgents",
+            "framework.wazuh.core.agent.WazuhDBQueryMultigroups"
+        ],
+        "children": {}
+    },
+    "Active Response": {
+        "path": "framework/wazuh/core/active_response.py",
+        "components": [
+            "framework.wazuh.core.active_response.ARMessageBuilder",
+            "framework.wazuh.core.active_response.ARStrMessage",
+            "framework.wazuh.core.active_response.ARJsonMessage"
+        ],
+        "children": {}
+    },
+    "Cluster Management": {
+        "path": "framework/wazuh/core/cluster/",
+        "components": [
+            "framework.wazuh.core.cluster.common.ReceiveStringTask",
+            "framework.wazuh.core.cluster.common.SendStringTask",
+            "framework.wazuh.core.cluster.common.InBuffer",
+            "framework.wazuh.core.cluster.common.WazuhCommon",
+            "framework.wazuh.core.cluster.common.SyncFiles",
+            "framework.wazuh.core.cluster.common.WazuhJSONEncoder",
+            "framework.wazuh.core.cluster.common.SyncTask",
+            "framework.wazuh.core.cluster.common.Handler",
+            "framework.wazuh.core.cluster.common.SyncWazuhdb",
+            "framework.wazuh.core.cluster.common.ReceiveFileTask",
+            "framework.wazuh.core.cluster.common.Response",
+            "framework.wazuh.core.cluster.master.ReceiveExtraValidTask",
+            "framework.wazuh.core.cluster.master.MasterHandler",
+            "framework.wazuh.core.cluster.master.SendEntireAgentGroupsTask",
+            "framework.wazuh.core.cluster.master.ReceiveIntegrityTask",
+            "framework.wazuh.core.cluster.master.ReceiveAgentInfoTask",
+            "framework.wazuh.core.cluster.master.Master",
+            "framework.wazuh.core.cluster.worker.ReceiveAgentGroupsTask",
+            "framework.wazuh.core.cluster.worker.ReceiveEntireAgentGroupsTask",
+            "framework.wazuh.core.cluster.worker.Worker",
+            "framework.wazuh.core.cluster.worker.ReceiveIntegrityTask",
+            "framework.wazuh.core.cluster.worker.WorkerHandler"
+        ],
+        "children": {
+            "Common Communication Framework": {
+                "components": [
+                    "framework.wazuh.core.cluster.common.ReceiveStringTask",
+                    "framework.wazuh.core.cluster.common.SendStringTask",
+                    "framework.wazuh.core.cluster.common.InBuffer",
+                    "framework.wazuh.core.cluster.common.WazuhCommon",
+                    "framework.wazuh.core.cluster.common.SyncFiles",
+                    "framework.wazuh.core.cluster.common.WazuhJSONEncoder",
+                    "framework.wazuh.core.cluster.common.SyncTask",
+                    "framework.wazuh.core.cluster.common.Handler",
+                    "framework.wazuh.core.cluster.common.SyncWazuhdb",
+                    "framework.wazuh.core.cluster.common.ReceiveFileTask",
+                    "framework.wazuh.core.cluster.common.Response"
+                ],
+                "children": {}
+            },
+            "Master Node Management": {
+                "components": [
+                    "framework.wazuh.core.cluster.master.ReceiveExtraValidTask",
+                    "framework.wazuh.core.cluster.master.MasterHandler",
+                    "framework.wazuh.core.cluster.master.SendEntireAgentGroupsTask",
+                    "framework.wazuh.core.cluster.master.ReceiveIntegrityTask",
+                    "framework.wazuh.core.cluster.master.ReceiveAgentInfoTask",
+                    "framework.wazuh.core.cluster.master.Master"
+                ],
+                "children": {}
+            },
+            "Worker Node Management": {
+                "components": [
+                    "framework.wazuh.core.cluster.worker.ReceiveAgentGroupsTask",
+                    "framework.wazuh.core.cluster.worker.ReceiveEntireAgentGroupsTask",
+                    "framework.wazuh.core.cluster.worker.Worker",
+                    "framework.wazuh.core.cluster.worker.ReceiveIntegrityTask",
+                    "framework.wazuh.core.cluster.worker.WorkerHandler"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Distributed API": {
+        "path": "framework/wazuh/core/cluster/dapi/",
+        "components": [
+            "framework.wazuh.core.cluster.dapi.dapi.APIRequestQueue",
+            "framework.wazuh.core.cluster.dapi.dapi.WazuhRequestQueue",
+            "framework.wazuh.core.cluster.dapi.dapi.DistributedAPI",
+            "framework.wazuh.core.cluster.dapi.dapi.SendSyncRequestQueue"
+        ],
+        "children": {}
+    },
+    "Database Connectivity": {
+        "path": "framework/wazuh/core/",
+        "components": [
+            "framework.wazuh.core.wdb.WazuhDBConnection",
+            "framework.wazuh.core.wdb.AsyncWazuhDBConnection",
+            "framework.wazuh.core.wdb_http.AgentStatus",
+            "framework.wazuh.core.wdb_http.AgentIDGroups",
+            "framework.wazuh.core.wdb_http.WazuhDBHTTPClient",
+            "framework.wazuh.core.wdb_http.AgentsSummary"
+        ],
+        "children": {}
+    },
+    "Communication Layer": {
+        "path": "framework/wazuh/core/",
+        "components": [
+            "framework.wazuh.core.wazuh_queue.BaseQueue",
+            "framework.wazuh.core.wazuh_queue.WazuhQueue",
+            "framework.wazuh.core.wazuh_queue.WazuhAnalysisdQueue",
+            "framework.wazuh.core.wazuh_socket.WazuhAsyncProtocol",
+            "framework.wazuh.core.wazuh_socket.WazuhAsyncSocketJSON",
+            "framework.wazuh.core.wazuh_socket.WazuhAsyncSocket",
+            "framework.wazuh.core.wazuh_socket.WazuhSocket",
+            "framework.wazuh.core.wazuh_socket.WazuhSocketJSON"
+        ],
+        "children": {}
+    },
+    "Security Modules": {
+        "path": "framework/wazuh/core/",
+        "components": [
+            "framework.wazuh.core.rootcheck.WazuhDBQueryRootcheck",
+            "framework.wazuh.core.sca.WazuhDBQuerySCACheck",
+            "framework.wazuh.core.sca.WazuhDBQuerySCA",
+            "framework.wazuh.core.sca.WazuhDBQuerySCACheckRelational",
+            "framework.wazuh.core.sca.WazuhDBQueryDistinctSCACheck",
+            "framework.wazuh.core.sca.WazuhDBQuerySCACheckIDs",
+            "framework.wazuh.core.syscheck.WazuhDBQuerySyscheck",
+            "framework.wazuh.core.syscollector.Type",
+            "framework.wazuh.core.syscollector.WazuhDBQuerySyscollector"
+        ],
+        "children": {
+            "rootcheck": {
+                "components": [
+                    "framework.wazuh.core.rootcheck.WazuhDBQueryRootcheck"
+                ],
+                "children": {}
+            },
+            "sca": {
+                "components": [
+                    "framework.wazuh.core.sca.WazuhDBQuerySCACheck",
+                    "framework.wazuh.core.sca.WazuhDBQuerySCA",
+                    "framework.wazuh.core.sca.WazuhDBQuerySCACheckRelational",
+                    "framework.wazuh.core.sca.WazuhDBQueryDistinctSCACheck",
+                    "framework.wazuh.core.sca.WazuhDBQuerySCACheckIDs"
+                ],
+                "children": {}
+            },
+            "syscheck": {
+                "components": [
+                    "framework.wazuh.core.syscheck.WazuhDBQuerySyscheck"
+                ],
+                "children": {}
+            },
+            "syscollector": {
+                "components": [
+                    "framework.wazuh.core.syscollector.Type",
+                    "framework.wazuh.core.syscollector.WazuhDBQuerySyscollector"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "MITRE ATT&CK Integration": {
+        "path": "framework/wazuh/core/mitre.py",
+        "components": [
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreSoftware",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreMitigations",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreGroups",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreTactics",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreRelationalMitigate",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreMetadata",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreReferences",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreRelational",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreRelationalUse",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreRelationalPhase",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitreTechniques",
+            "framework.wazuh.core.mitre.WazuhDBQueryMitre"
+        ],
+        "children": {}
+    },
+    "RBAC Security": {
+        "path": "framework/wazuh/rbac/",
+        "components": [
+            "framework.wazuh.rbac.auth_context.RBAChecker",
+            "framework.wazuh.rbac.orm.DatabaseManager",
+            "framework.wazuh.rbac.orm.RolesManager",
+            "framework.wazuh.rbac.orm.RulesManager",
+            "framework.wazuh.rbac.orm.RolesPoliciesManager",
+            "framework.wazuh.rbac.orm.Roles",
+            "framework.wazuh.rbac.orm.Rules",
+            "framework.wazuh.rbac.orm.RolesRules",
+            "framework.wazuh.rbac.orm.UserRolesManager",
+            "framework.wazuh.rbac.orm.UsersTokenBlacklist",
+            "framework.wazuh.rbac.orm.RolesRulesManager",
+            "framework.wazuh.rbac.orm.RolesTokenBlacklist",
+            "framework.wazuh.rbac.orm.Policies",
+            "framework.wazuh.rbac.orm.PoliciesManager",
+            "framework.wazuh.rbac.orm.RolesPolicies",
+            "framework.wazuh.rbac.orm.RBACManager",
+            "framework.wazuh.rbac.orm.TokenManager",
+            "framework.wazuh.rbac.orm.RunAsTokenBlacklist",
+            "framework.wazuh.rbac.orm.User",
+            "framework.wazuh.rbac.orm.AuthenticationManager",
+            "framework.wazuh.rbac.orm.UserRoles",
+            "framework.wazuh.rbac.preprocessor.PreProcessor"
+        ],
+        "children": {
+            "Authentication and User Management": {
+                "components": [
+                    "[Scrubbed due to 'Auth']"
+                ],
+                "children": {}
+            },
+            "Authorization and Policy Engine": {
+                "components": [
+                    "[Scrubbed due to 'Auth']"
+                ],
+                "children": {}
+            },
+            "Data Management and ORM": {
+                "components": [
+                    "framework.wazuh.rbac.orm.DatabaseManager",
+                    "framework.wazuh.rbac.orm.RBACManager",
+                    "framework.wazuh.rbac.orm.RolesRules",
+                    "framework.wazuh.rbac.orm.RolesPolicies",
+                    "framework.wazuh.rbac.orm.RolesPoliciesManager",
+                    "framework.wazuh.rbac.orm.RolesRulesManager"
+                ],
+                "children": {}
+            }
+          }
+    },
+    "Logging System": {
+        "path": "framework/wazuh/core/wlogging.py",
+        "components": [
+            "framework.wazuh.core.wlogging.TimeBasedFileRotatingHandler",
+            "framework.wazuh.core.wlogging.CustomFilter",
+            "framework.wazuh.core.wlogging.SizeBasedFileRotatingHandler",
+            "framework.wazuh.core.wlogging.WazuhLogger"
+        ],
+        "children": {}
+    },
+    "Engine Core": {
+        "path": "src/engine/",
+        "components": [
+            "framework.wazuh.core.engine.__init__.Engine",
+            "framework.wazuh.core.engine.base.BaseModule"
+        ],
+        "children": {}
+    },
+    "Alert Forwarder": {
+        "path": "src/alert_forwarder/",
+        "components": [
+            "src.alert_forwarder.main.AlertForwarder"
+        ],
+        "children": {}
+    },
+    "Engine Testing Suite": {
+        "path": "src/engine/tools/engine-suite/",
+        "components": [
+            "src.engine.tools.engine-suite.src.engine_test.api_connector.ApiConfig",
+            "src.engine.tools.engine-suite.src.engine_test.api_connector.ApiConnector",
+            "src.engine.tools.engine-suite.src.engine_test.base_tester_integration.BaseIntegrationTester",
+            "src.engine.tools.engine-suite.src.engine_test.base_tester_integration.EngineDumper",
+            "src.engine.tools.engine-suite.src.engine_test.tester_integration.IntegrationTester",
+            "src.engine.tools.engine-suite.src.engine_test.raw_tester_integration.RawIntegrationTester",
+            "src.engine.tools.engine-suite.src.engine_test.input_collector.InputEventCollector"
+        ],
+        "children": {}
+    },
+    "AWS Integration": {
+        "path": "wodles/aws/",
+        "components": [
+            "wodles.aws.buckets_s3.aws_bucket.AWSBucket",
+            "wodles.aws.buckets_s3.aws_bucket.AWSCustomBucket",
+            "wodles.aws.buckets_s3.aws_bucket.AWSLogsBucket",
+            "wodles.aws.buckets_s3.cloudtrail.AWSCloudTrailBucket",
+            "wodles.aws.buckets_s3.config.AWSConfigBucket",
+            "wodles.aws.buckets_s3.guardduty.AWSGuardDutyBucket",
+            "wodles.aws.buckets_s3.load_balancers.AWSALBBucket",
+            "wodles.aws.buckets_s3.load_balancers.AWSNLBBucket",
+            "wodles.aws.buckets_s3.load_balancers.AWSCLBBucket",
+            "wodles.aws.buckets_s3.load_balancers.AWSLBBucket",
+            "wodles.aws.buckets_s3.vpcflow.AWSVPCFlowBucket",
+            "wodles.aws.buckets_s3.waf.AWSWAFBucket",
+            "wodles.aws.services.aws_service.AWSService",
+            "wodles.aws.services.cloudwatchlogs.AWSCloudWatchLogs",
+            "wodles.aws.services.inspector.AWSInspector",
+            "wodles.aws.subscribers.sqs_queue.AWSSQSQueue",
+            "wodles.aws.wazuh_integration.WazuhAWSDatabase",
+            "wodles.aws.wazuh_integration.WazuhIntegration"
+        ],
+        "children": {
+            "Core Integration Framework": {
+                "components": [
+                    "wodles.aws.wazuh_integration.WazuhAWSDatabase",
+                    "wodles.aws.wazuh_integration.WazuhIntegration"
+                ],
+                "children": {}
+            },
+            "Direct Service Integration": {
+                "components": [
+                    "wodles.aws.services.aws_service.AWSService",
+                    "wodles.aws.services.cloudwatchlogs.AWSCloudWatchLogs",
+                    "wodles.aws.services.inspector.AWSInspector"
+                ],
+                "children": {}
+            },
+            "Message Queue Processing": {
+                "components": [
+                    "wodles.aws.subscribers.sqs_queue.AWSSQSQueue"
+                ],
+                "children": {}
+            },
+            "S3 Bucket Processing": {
+                "components": [
+                    "wodles.aws.buckets_s3.aws_bucket.AWSBucket",
+                    "wodles.aws.buckets_s3.aws_bucket.AWSCustomBucket",
+                    "wodles.aws.buckets_s3.aws_bucket.AWSLogsBucket",
+                    "wodles.aws.buckets_s3.cloudtrail.AWSCloudTrailBucket",
+                    "wodles.aws.buckets_s3.config.AWSConfigBucket",
+                    "wodles.aws.buckets_s3.guardduty.AWSGuardDutyBucket",
+                    "wodles.aws.buckets_s3.load_balancers.AWSALBBucket",
+                    "wodles.aws.buckets_s3.load_balancers.AWSNLBBucket",
+                    "wodles.aws.buckets_s3.load_balancers.AWSCLBBucket",
+                    "wodles.aws.buckets_s3.load_balancers.AWSLBBucket",
+                    "wodles.aws.buckets_s3.vpcflow.AWSVPCFlowBucket",
+                    "wodles.aws.buckets_s3.waf.AWSWAFBucket"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Azure Integration": {
+        "path": "wodles/azure/",
+        "components": [
+            "wodles.azure.db.orm.Graph",
+            "wodles.azure.db.orm.LogAnalytics",
+            "wodles.azure.db.orm.Storage",
+            "wodles.azure.db.orm.AzureTable"
+        ],
+        "children": {}
+    },
+    "Google Cloud Integration": {
+        "path": "wodles/gcloud/",
+        "components": [
+            "wodles.gcloud.buckets.access_logs.GCSAccessLogs",
+            "wodles.gcloud.buckets.bucket.WazuhGCloudBucket",
+            "wodles.gcloud.integration.WazuhGCloudIntegration",
+            "wodles.gcloud.pubsub.subscriber.WazuhGCloudSubscriber"
+        ],
+        "children": {}
+    },
+    "Docker Integration": {
+        "path": "wodles/docker-listener/",
+        "components": [
+            "wodles.docker-listener.DockerListener.DockerListener"
+        ],
+        "children": {}
+    }
+}

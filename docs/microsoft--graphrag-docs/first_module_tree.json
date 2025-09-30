@@ -1,0 +1,149 @@
+{
+    "data_models": {
+        "path": "graphrag/data_model",
+        "components": [
+            "graphrag.data_model.community.Community",
+            "graphrag.data_model.community_report.CommunityReport",
+            "graphrag.data_model.covariate.Covariate",
+            "graphrag.data_model.document.Document",
+            "graphrag.data_model.entity.Entity",
+            "graphrag.data_model.identified.Identified",
+            "graphrag.data_model.named.Named",
+            "graphrag.data_model.relationship.Relationship",
+            "graphrag.data_model.text_unit.TextUnit"
+        ],
+        "children": {}
+    },
+    "configuration": {
+        "path": "graphrag/config",
+        "components": [
+            "graphrag.config.defaults.GraphRagConfigDefaults",
+            "graphrag.config.enums.ChunkStrategyType",
+            "graphrag.config.enums.StorageType",
+            "graphrag.config.enums.CacheType",
+            "graphrag.config.enums.VectorStoreType",
+            "graphrag.config.enums.SearchMethod",
+            "graphrag.config.environment_reader.EnvironmentReader",
+            "graphrag.config.models.graph_rag_config.GraphRagConfig",
+            "graphrag.config.models.input_config.InputConfig",
+            "graphrag.config.models.storage_config.StorageConfig",
+            "graphrag.config.models.cache_config.CacheConfig",
+            "graphrag.config.models.language_model_config.LanguageModelConfig",
+            "graphrag.config.models.vector_store_config.VectorStoreConfig"
+        ],
+        "children": {}
+    },
+    "caching": {
+        "path": "graphrag/cache",
+        "components": [
+            "graphrag.cache.factory.CacheFactory",
+            "graphrag.cache.pipeline_cache.PipelineCache",
+            "graphrag.cache.json_pipeline_cache.JsonPipelineCache",
+            "graphrag.cache.memory_pipeline_cache.InMemoryCache",
+            "graphrag.cache.noop_pipeline_cache.NoopPipelineCache"
+        ],
+        "children": {}
+    },
+    "storage": {
+        "path": "graphrag/storage",
+        "components": [
+            "graphrag.storage.factory.StorageFactory",
+            "graphrag.storage.pipeline_storage.PipelineStorage",
+            "graphrag.storage.file_pipeline_storage.FilePipelineStorage",
+            "graphrag.storage.blob_pipeline_storage.BlobPipelineStorage",
+            "graphrag.storage.memory_pipeline_storage.MemoryPipelineStorage",
+            "graphrag.storage.cosmosdb_pipeline_storage.CosmosDBPipelineStorage"
+        ],
+        "children": {}
+    },
+    "language_models": {
+        "path": "graphrag/language_model",
+        "components": [
+            "graphrag.language_model.factory.ModelFactory",
+            "graphrag.language_model.manager.ModelManager",
+            "graphrag.language_model.protocol.base.ChatModel",
+            "graphrag.language_model.protocol.base.EmbeddingModel",
+            "graphrag.language_model.response.base.ModelResponse",
+            "graphrag.language_model.response.base.ModelOutput",
+            "graphrag.language_model.providers.fnllm.models.OpenAIChatFNLLM",
+            "graphrag.language_model.providers.fnllm.models.OpenAIEmbeddingFNLLM"
+        ],
+        "children": {}
+    },
+    "vector_stores": {
+        "path": "graphrag/vector_stores",
+        "components": [
+            "graphrag.vector_stores.factory.VectorStoreFactory",
+            "graphrag.vector_stores.base.BaseVectorStore",
+            "graphrag.vector_stores.base.VectorStoreDocument",
+            "graphrag.vector_stores.base.VectorStoreSearchResult",
+            "graphrag.vector_stores.azure_ai_search.AzureAISearchVectorStore",
+            "graphrag.vector_stores.lancedb.LanceDBVectorStore",
+            "graphrag.vector_stores.cosmosdb.CosmosDBVectorStore"
+        ],
+        "children": {}
+    },
+    "index_operations": {
+        "path": "graphrag/index/operations",
+        "components": [
+            "graphrag.index.operations.extract_graph.graph_extractor.GraphExtractor",
+            "graphrag.index.operations.extract_graph.graph_extractor.GraphExtractionResult",
+            "graphrag.index.operations.embed_text.embed_text.TextEmbedStrategyType",
+            "graphrag.index.operations.embed_graph.embed_node2vec.NodeEmbeddings",
+            "graphrag.index.operations.summarize_communities.community_reports_extractor.CommunityReportsExtractor",
+            "graphrag.index.operations.summarize_descriptions.description_summary_extractor.SummarizeExtractor",
+            "graphrag.index.operations.extract_covariates.claim_extractor.ClaimExtractor",
+            "graphrag.index.operations.chunk_text.typing.TextChunk"
+        ],
+        "children": {}
+    },
+    "query_system": {
+        "path": "graphrag/query",
+        "components": [
+            "graphrag.query.structured_search.base.BaseSearch",
+            "graphrag.query.structured_search.base.SearchResult",
+            "graphrag.query.structured_search.local_search.search.LocalSearch",
+            "graphrag.query.structured_search.global_search.search.GlobalSearch",
+            "graphrag.query.structured_search.basic_search.search.BasicSearch",
+            "graphrag.query.structured_search.drift_search.search.DRIFTSearch",
+            "graphrag.query.context_builder.builders.LocalContextBuilder",
+            "graphrag.query.context_builder.builders.GlobalContextBuilder",
+            "graphrag.query.context_builder.conversation_history.ConversationHistory"
+        ],
+        "children": {}
+    },
+    "callbacks": {
+        "path": "graphrag/callbacks",
+        "components": [
+            "graphrag.callbacks.workflow_callbacks.WorkflowCallbacks",
+            "graphrag.callbacks.query_callbacks.QueryCallbacks",
+            "graphrag.callbacks.workflow_callbacks_manager.WorkflowCallbacksManager",
+            "graphrag.callbacks.console_workflow_callbacks.ConsoleWorkflowCallbacks",
+            "graphrag.callbacks.llm_callbacks.BaseLLMCallback"
+        ],
+        "children": {}
+    },
+    "pipeline_infrastructure": {
+        "path": "graphrag/index/typing",
+        "components": [
+            "graphrag.index.typing.pipeline.Pipeline",
+            "graphrag.index.typing.context.PipelineRunContext",
+            "graphrag.index.typing.pipeline_run_result.PipelineRunResult",
+            "graphrag.index.typing.stats.PipelineRunStats",
+            "graphrag.index.workflows.factory.PipelineFactory"
+        ],
+        "children": {}
+    },
+    "unified_search_app": {
+        "path": "unified-search-app/app",
+        "components": [
+            "unified-search-app.app.knowledge_loader.model.KnowledgeModel",
+            "unified-search-app.app.knowledge_loader.data_sources.typing.Datasource",
+            "unified-search-app.app.rag.typing.SearchResult",
+            "unified-search-app.app.rag.typing.SearchType",
+            "unified-search-app.app.state.session_variables.SessionVariables",
+            "unified-search-app.app.ui.search.SearchStats"
+        ],
+        "children": {}
+    }
+}

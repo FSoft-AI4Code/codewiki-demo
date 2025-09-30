@@ -1,0 +1,107 @@
+{
+    "database": {
+        "components": [
+            "packages.core.database.src.types.index.Model",
+            "packages.core.database.src.types.index.Attribute",
+            "packages.core.database.src.types.index.BaseAttribute",
+            "packages.core.database.src.types.index.BaseRelationalAttribute",
+            "packages.core.database.src.query.helpers.streams.readable.ReadableStrapiQuery",
+            "packages.core.database.src.dialects.postgresql.index.PostgresDialect",
+            "packages.core.database.src.dialects.mysql.index.MysqlDialect",
+            "packages.core.database.src.dialects.sqlite.index.SqliteDialect",
+            "packages.core.database.src.fields.string.StringField",
+            "packages.core.database.src.fields.number.NumberField",
+            "packages.core.database.src.fields.date.DateField",
+            "packages.core.database.src.fields.datetime.DatetimeField",
+            "packages.core.database.src.fields.json.JSONField",
+            "packages.core.database.src.schema.types.Schema",
+            "packages.core.database.src.schema.types.Table",
+            "packages.core.database.src.schema.types.Column",
+            "packages.core.database.src.entity-manager.regular-relations.deleteRelations"
+        ],
+        "children": {}
+    },
+    "content-manager": {
+        "components": [
+            "packages.core.content-manager.admin.src.content-manager.ContentManagerPlugin",
+            "packages.core.content-manager.admin.src.content-manager.ListViewContext",
+            "packages.core.content-manager.admin.src.content-manager.EditViewContext",
+            "packages.core.content-manager.shared.contracts.collection-types.Request",
+            "packages.core.content-manager.shared.contracts.single-types.Request",
+            "packages.core.content-manager.shared.contracts.components.Request",
+            "packages.core.content-manager.shared.contracts.relations.Request",
+            "packages.core.content-manager.shared.contracts.content-types.Request",
+            "packages.core.content-manager.shared.contracts.history-versions.Request",
+            "packages.core.content-manager.shared.contracts.preview.Request",
+            "packages.core.content-manager.admin.src.pages.EditView.components.FormInputs.ComponentContext.ComponentContextValue",
+            "packages.core.content-manager.admin.src.pages.EditView.components.FormInputs.BlocksInput.BlocksInput.BlocksInputProps",
+            "packages.core.content-manager.admin.src.pages.EditView.components.FormInputs.Wysiwyg.Editor.EditorApi",
+            "packages.core.content-manager.admin.src.pages.EditView.components.FormInputs.DynamicZone.ComponentCard.ComponentCardProps",
+            "packages.core.content-manager.admin.src.components.RelativeTime.RelativeTimeProps",
+            "packages.core.content-manager.admin.src.components.InjectionZone.InjectionZones"
+        ],
+        "children": {}
+    },
+    "admin": {
+        "components": [
+            "packages.core.admin.admin.src.reducer.AppState",
+            "packages.core.admin.admin.src.features.Tracking.TrackingContextValue",
+            "packages.core.admin.admin.src.features.AppInfo.AppInfoContextValue",
+            "packages.core.admin.admin.src.features.Configuration.ConfigurationContextValue",
+            "packages.core.admin.admin.src.features.BackButton.BackButtonProps",
+            "packages.core.admin.admin.src.components.Filters.Query",
+            "packages.core.admin.admin.src.components.Filters.Filter",
+            "packages.core.admin.admin.src.components.Table.ContentProps",
+            "packages.core.admin.admin.src.components.Table.CellProps",
+            "packages.core.admin.admin.src.components.Table.LoadingProps",
+            "packages.core.admin.admin.src.components.Table.BodyProps",
+            "packages.core.admin.admin.src.components.Table.HeadProps",
+            "packages.core.admin.admin.src.components.Table.RowProps",
+            "packages.core.admin.admin.src.components.Table.CheckboxCellProps",
+            "packages.core.admin.admin.src.components.Table.EmptyProps",
+            "packages.core.admin.admin.src.components.Table.ActionBarProps",
+            "packages.core.admin.admin.src.components.Pagination.Props",
+            "packages.core.admin.admin.src.components.Pagination.PageSizeProps",
+            "packages.core.admin.admin.src.components.Pagination.LinksProps",
+            "packages.core.admin.admin.src.components.FormInputs.types.StringProps",
+            "packages.core.admin.admin.src.components.FormInputs.types.EnumerationProps",
+            "packages.core.admin.admin.src.core.apis.Plugin.PluginConfig",
+            "packages.core.admin.admin.src.core.apis.CustomFields.CustomFields"
+        ],
+        "children": {}
+    },
+    "upload": {
+        "components": [
+            "packages.core.upload.shared.contracts.files.Request",
+            "packages.core.upload.shared.contracts.files.Response",
+            "packages.core.upload.shared.contracts.folders.Request",
+            "packages.core.upload.shared.contracts.folders.Response",
+            "packages.core.upload.shared.contracts.configuration.Request",
+            "packages.core.upload.shared.contracts.settings.Request",
+            "packages.core.upload.admin.src.components.AssetDialog.AssetDialog.FileRow",
+            "packages.core.upload.admin.src.components.AssetDialog.AssetDialog.FolderRow",
+            "packages.core.upload.admin.src.components.EditAssetDialog.EditAssetContent.Asset",
+            "packages.core.upload.admin.src.components.EditFolderDialog.EditFolderDialog.EditFolderDialogProps",
+            "packages.core.upload.admin.src.components.BulkMoveDialog.BulkMoveDialog.BulkMoveDialogProps",
+            "packages.core.upload.admin.src.components.MediaLibraryInput.MediaLibraryInput.MediaLibraryInputProps",
+            "packages.core.upload.admin.src.components.AssetCard.AssetCardBase.AssetCardBaseProps",
+            "packages.core.upload.admin.src.components.TableList.TableList.TableListProps",
+            "packages.core.upload.admin.src.components.TableList.TableRows.TableRowsProps",
+            "packages.core.upload.admin.src.components.UploadProgress.UploadProgress.UploadProgressProps",
+            "packages.core.upload.admin.src.components.SelectTree.SelectTree.SelectTreeProps",
+            "packages.core.upload.admin.src.pages.App.MediaLibrary.components.BulkActions.FileWithType",
+            "packages.core.upload.admin.src.pages.App.MediaLibrary.components.Header.HeaderProps"
+        ],
+        "children": {}
+    },
+    "content-type-builder": {
+        "components": [
+            "packages.core.content-type-builder.admin.src.components.AutoReloadOverlayBlocker.AutoReloadOverlayBlockerProviderProps",
+            "packages.core.content-type-builder.admin.src.components.AutoReloadOverlayBlocker.AutoReloadOverlayBlockerContextValue",
+            "packages.core.content-type-builder.admin.src.components.CustomRadioGroup.CustomRadioGroup.CustomRadioGroupProps",
+            "packages.core.content-type-builder.admin.src.pages.ListView.LinkToCMSettingsView.LinkToCMSettingsViewProps",
+            "packages.core.content-type-builder.admin.src.utils.formAPI.FormAPI"
+        ],
+        "children": {}
+    }
+}

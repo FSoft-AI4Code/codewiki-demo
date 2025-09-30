@@ -1,0 +1,346 @@
+{
+  "generated": "2025-09-30T07:06:39.871Z",
+  "count": 35,
+  "projects": [
+    {
+      "folder": "All-Hands-AI--OpenHands-docs",
+      "owner": "All-Hands-AI",
+      "name": "OpenHands",
+      "language": "Python",
+      "components": 3206,
+      "modules": 15,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "sveltejs--svelte-docs",
+      "owner": "sveltejs",
+      "name": "Svelte",
+      "language": "JavaScript",
+      "components": 2049,
+      "modules": 14,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "puppeteer--puppeteer-docs",
+      "owner": "puppeteer",
+      "name": "Puppeteer",
+      "language": "TypeScript",
+      "components": 1832,
+      "modules": 14,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "Unity-Technologies--ml-agents-docs",
+      "owner": "Unity-Technologies",
+      "name": "Ml Agents",
+      "language": "TypeScript",
+      "components": 739,
+      "modules": 13,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "elastic--logstash-docs",
+      "owner": "elastic",
+      "name": "Logstash",
+      "language": "Java",
+      "components": 3290,
+      "modules": 16,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "wazuh--wazuh-docs",
+      "owner": "wazuh",
+      "name": "Wazuh",
+      "language": "C",
+      "components": 13496,
+      "modules": 20,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "electron--electron-docs",
+      "owner": "electron",
+      "name": "Electron",
+      "language": "C++",
+      "components": 1529,
+      "modules": 8,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "chartjs--Chart.js-docs",
+      "owner": "chartjs",
+      "name": "Chart.Js",
+      "language": "JavaScript",
+      "components": 744,
+      "modules": 8,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "ClickHouse--ClickHouse-docs",
+      "owner": "ClickHouse",
+      "name": "ClickHouse",
+      "language": "C++",
+      "components": 42739,
+      "modules": 14,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "FluentValidation--FluentValidation-docs",
+      "owner": "FluentValidation",
+      "name": "FluentValidation",
+      "language": "C#",
+      "components": 397,
+      "modules": 16,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "git-ecosystem--git-credential-manager-docs",
+      "owner": "git-ecosystem",
+      "name": "Git Credential Manager",
+      "language": "C#",
+      "components": 587,
+      "modules": 15,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "grpc--grpc-docs",
+      "owner": "grpc",
+      "name": "Grpc",
+      "language": "C++",
+      "components": 16174,
+      "modules": 9,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "langflow-ai--langflow-docs",
+      "owner": "langflow-ai",
+      "name": "Langflow",
+      "language": "Python",
+      "components": 3995,
+      "modules": 17,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "libsdl-org--SDL-docs",
+      "owner": "libsdl-org",
+      "name": "SDL",
+      "language": "C",
+      "components": 8953,
+      "modules": 8,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "marktext--marktext-docs",
+      "owner": "marktext",
+      "name": "Marktext",
+      "language": "JavaScript",
+      "components": 705,
+      "modules": 23,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "MassTransit--MassTransit-docs",
+      "owner": "MassTransit",
+      "name": "MassTransit",
+      "language": "C#",
+      "components": 5061,
+      "modules": 10,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "material-components--material-components-android-docs",
+      "owner": "material-components",
+      "name": "Material Components Android",
+      "language": "TypeScript",
+      "components": 12257,
+      "modules": 25,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "mermaid-js--mermaid-docs",
+      "owner": "mermaid-js",
+      "name": "Mermaid",
+      "language": "JavaScript",
+      "components": 1823,
+      "modules": 31,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "microsoft--graphrag-docs",
+      "owner": "microsoft",
+      "name": "Graphrag",
+      "language": "Python",
+      "components": 664,
+      "modules": 11,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "nlohmann--json-docs",
+      "owner": "nlohmann",
+      "name": "Json",
+      "language": "JavaScript",
+      "components": 35,
+      "modules": 3,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "prettier--prettier-docs",
+      "owner": "prettier",
+      "name": "Prettier",
+      "language": "JavaScript",
+      "components": 1578,
+      "modules": 2,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "qmk--qmk_firmware-docs",
+      "owner": "qmk",
+      "name": "Qmk_firmware",
+      "language": "C",
+      "components": 12031,
+      "modules": 14,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "RasaHQ--rasa-docs",
+      "owner": "RasaHQ",
+      "name": "Rasa",
+      "language": "Python",
+      "components": 1464,
+      "modules": 10,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "ReactiveX--RxJava-docs",
+      "owner": "ReactiveX",
+      "name": "RxJava",
+      "language": "Java",
+      "components": 9586,
+      "modules": 13,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "serverless--serverless-docs",
+      "owner": "serverless",
+      "name": "Serverless",
+      "language": "JavaScript",
+      "components": 309,
+      "modules": 10,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "StackExchange--StackExchange.Redis-docs",
+      "owner": "StackExchange",
+      "name": "StackExchange.Redis",
+      "language": "C#",
+      "components": 435,
+      "modules": 11,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "StarRocks--starrocks-docs",
+      "owner": "StarRocks",
+      "name": "Starrocks",
+      "language": "Java",
+      "components": 64708,
+      "modules": 9,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "strapi--strapi-docs",
+      "owner": "strapi",
+      "name": "Strapi",
+      "language": "TypeScript",
+      "components": 6639,
+      "modules": 5,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "sumatrapdfreader--sumatrapdf-docs",
+      "owner": "sumatrapdfreader",
+      "name": "Sumatrapdf",
+      "language": "C",
+      "components": 27858,
+      "modules": 11,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "systemd--systemd-docs",
+      "owner": "systemd",
+      "name": "Systemd",
+      "language": "C",
+      "components": 19109,
+      "modules": 2,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "tursodatabase--libsql-docs",
+      "owner": "tursodatabase",
+      "name": "Libsql",
+      "language": "C",
+      "components": 24664,
+      "modules": 8,
+      "depth": 2,
+      "model": "claude-sonnet-4"
+    },
+    {
+      "folder": "vitejs--vite-docs",
+      "owner": "vitejs",
+      "name": "Vite",
+      "language": "JavaScript",
+      "components": 1834,
+      "modules": 13,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "x64dbg--x64dbg-docs",
+      "owner": "x64dbg",
+      "name": "X64dbg",
+      "language": "C++",
+      "components": 5266,
+      "modules": 42,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    },
+    {
+      "folder": "zulip--zulip-docs",
+      "owner": "zulip",
+      "name": "Zulip",
+      "language": "Python",
+      "components": 11688,
+      "modules": 14,
+      "depth": 2,
+      "model": "kimi-k2-instruct"
+    }
+  ]
+}

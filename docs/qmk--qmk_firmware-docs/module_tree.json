@@ -1,0 +1,110 @@
+{
+    "painter_qgf": {
+        "components": [
+            "lib.python.qmk.painter_qgf.QGFBlockHeader",
+            "lib.python.qmk.painter_qgf.QGFGraphicsDescriptor",
+            "lib.python.qmk.painter_qgf.QGFFrameDeltaDescriptorV1",
+            "lib.python.qmk.painter_qgf.QGFFrameDataDescriptorV1",
+            "lib.python.qmk.painter_qgf.QGFImageFile",
+            "lib.python.qmk.painter_qgf.QGFFrameOffsetDescriptorV1",
+            "lib.python.qmk.painter_qgf.QGFFramePaletteDescriptorV1",
+            "lib.python.qmk.painter_qgf.QGFFrameDescriptorV1"
+        ],
+        "children": {}
+    },
+    "painter_qff": {
+        "components": [
+            "lib.python.qmk.painter_qff.QFFUnicodeGlyphTableV1",
+            "lib.python.qmk.painter_qff.QFFGlyphInfo",
+            "lib.python.qmk.painter_qff.QFFFont",
+            "lib.python.qmk.painter_qff.QFFFontDescriptor",
+            "lib.python.qmk.painter_qff.QFFAsciiGlyphTableV1",
+            "lib.python.qmk.painter_qff.QFFFontDataDescriptorV1"
+        ],
+        "children": {}
+    },
+    "search": {
+        "components": [
+            "lib.python.qmk.search.Contains",
+            "lib.python.qmk.search.FilterFunction",
+            "lib.python.qmk.search.Length",
+            "lib.python.qmk.search.Absent",
+            "lib.python.qmk.search.KeyboardKeymapDesc",
+            "lib.python.qmk.search.Exists"
+        ],
+        "children": {}
+    },
+    "build_targets": {
+        "components": [
+            "lib.python.qmk.build_targets.KeyboardKeymapBuildTarget",
+            "lib.python.qmk.build_targets.BuildTarget",
+            "lib.python.qmk.build_targets.JsonKeymapBuildTarget"
+        ],
+        "children": {}
+    },
+    "keyboard": {
+        "components": [
+            "lib.python.qmk.keyboard.AllKeyboards"
+        ],
+        "children": {}
+    },
+    "flashers": {
+        "components": [
+            "lib.python.qmk.flashers.DelayedKeyboardInterrupt"
+        ],
+        "children": {}
+    },
+    "userspace": {
+        "components": [
+            "lib.python.qmk.userspace.UserspaceDefs"
+        ],
+        "children": {}
+    },
+    "json_encoders": {
+        "components": [
+            "lib.python.qmk.json_encoders.QMKJSONEncoder",
+            "lib.python.qmk.json_encoders.InfoJSONEncoder",
+            "lib.python.qmk.json_encoders.UserspaceJSONEncoder",
+            "lib.python.qmk.json_encoders.CommunityModuleJSONEncoder",
+            "lib.python.qmk.json_encoders.KeymapJSONEncoder"
+        ],
+        "children": {}
+    },
+    "path": {
+        "components": [
+            "lib.python.qmk.path.FileType"
+        ],
+        "children": {}
+    },
+    "community_modules": {
+        "components": [
+            "lib.python.qmk.community_modules.ModuleAPI"
+        ],
+        "children": {}
+    },
+    "bluefruit_le": {
+        "components": [
+            "drivers.bluetooth.bluefruit_le.sdep_msg",
+            "drivers.bluetooth.bluefruit_le.queue_item"
+        ],
+        "children": {}
+    },
+    "keymap_beautifier": {
+        "components": [
+            "keyboards.ergodox_ez.util.keymap_beautifier.KeymapBeautifier.KeymapBeautifier"
+        ],
+        "children": {}
+    },
+    "uf2conv": {
+        "components": [
+            "util.uf2conv.Block"
+        ],
+        "children": {}
+    },
+    "kle2xy": {
+        "components": [
+            "lib.python.kle2xy.KLE2xy"
+        ],
+        "children": {}
+    }
+}

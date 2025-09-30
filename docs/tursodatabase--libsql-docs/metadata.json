@@ -1,0 +1,38 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T08:06:49.998520",
+        "main_model": "claude-sonnet-4",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/tursodatabase--libsql",
+        "commit_id": "6e55668cdb1d1d7406ea7fd6eea22991ac1ac301"
+    },
+    "statistics": {
+        "total_components": 24664,
+        "leaf_nodes": 202,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "core_database_objects.md",
+        "utility_types.md",
+        "wasm_extensions.md",
+        "jni_capi.md",
+        "development_utilities.md",
+        "jni_callbacks.md",
+        "jni_functions.md",
+        "function_system.md",
+        "jni_fts5.md",
+        "database_operations.md",
+        "jni_core_api.md",
+        "libsql_ffi_bundled.md",
+        "database_objects.md",
+        "jni_infrastructure.md",
+        "opfs_storage_management.md",
+        "callback_infrastructure.md",
+        "utility_infrastructure.md",
+        "specialized_handles.md",
+        "jni_wrapper1.md"
+    ]
+}

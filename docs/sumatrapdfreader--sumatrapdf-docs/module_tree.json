@@ -1,0 +1,710 @@
+{
+    "metadata": {
+        "path": "do/scripts/metadata",
+        "components": [
+            "do.scripts.metadata.metadata.Bool",
+            "do.scripts.metadata.metadata.Struct",
+            "do.scripts.metadata.metadata.Color",
+            "do.scripts.metadata.metadata.Float",
+            "do.scripts.metadata.metadata.U64",
+            "do.scripts.metadata.metadata.U16"
+        ],
+        "children": {}
+    },
+    "gumbo_parser": {
+        "path": "ext/gumbo-parser",
+        "components": [
+            "ext.gumbo-parser.python.gumbo.gumboc.AttributeNamespace",
+            "ext.gumbo-parser.python.gumbo.gumboc.Namespace",
+            "ext.gumbo-parser.python.gumbo.gumboc.Document",
+            "ext.gumbo-parser.python.gumbo.gumboc.AttributeVector",
+            "ext.gumbo-parser.python.gumbo.gumboc.NodeType",
+            "ext.gumbo-parser.python.gumbo.gumboc.NodeVector",
+            "ext.gumbo-parser.python.gumbo.gumboc.Element",
+            "ext.gumbo-parser.python.gumbo.gumboc.QuirksMode",
+            "ext.gumbo-parser.python.gumbo.gumboc.Node",
+            "ext.gumbo-parser.python.gumbo.gumboc.EnumMetaclass",
+            "ext.gumbo-parser.python.gumbo.gumboc.Attribute",
+            "ext.gumbo-parser.python.gumbo.gumboc.Output",
+            "ext.gumbo-parser.python.gumbo.gumboc.SourcePosition",
+            "ext.gumbo-parser.python.gumbo.gumboc.Text",
+            "ext.gumbo-parser.python.gumbo.gumboc.StringPiece",
+            "ext.gumbo-parser.python.gumbo.gumboc.NodeUnion"
+        ],
+        "children": {}
+    },
+    "mupdf_java_bindings": {
+        "path": "mupdf/platform/java/src/com/artifex/mupdf/fitz",
+        "components": [
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.BarcodeInfo.BarcodeInfo",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Buffer.Buffer",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.BufferInputStream.BufferInputStream",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.BufferOutputStream.BufferOutputStream",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.ColorParams.ColorParams",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.ColorSpace.ColorSpace",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Context.Context",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.DOM.DOMAttribute",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.DefaultAppearance.DefaultAppearance",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.DefaultColorSpaces.DefaultColorSpaces",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Device.Device",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.DisplayList.DisplayList",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.DisplayListDevice.DisplayListDevice",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Document.Document",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.DocumentWriter.DocumentWriter",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.DocumentWriter.OCRListener",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.DrawDevice.DrawDevice",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.FitzInputStream.FitzInputStream",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Font.Font",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Image.Image",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Link.Link",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.MultiArchive.MultiArchive",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Outline.Outline",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.OutlineIterator.OutlineItem",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.OutlineIterator.OutlineIterator",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFAnnotation.PDFAnnotation",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFDocument.PDFDocument",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFDocument.JsEventListener",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFDocument.AlertResult",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFDocument.PDFEmbeddedFileParams",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFGraftMap.PDFGraftMap",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFObject.PDFObject",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFPage.PDFPage",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFWidget.PDFWidget",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFWidget.TextWidgetCharLayout",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFWidget.TextWidgetLineLayout",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFWidget.TextWidgetLayout",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PKCS7DistinguishedName.PKCS7DistinguishedName",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PKCS7Signer.PKCS7Signer",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PKCS7Verifier.PKCS7Verifier",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Page.Page",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Path.Path",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.PathWalker.PathWalker",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Pixmap.Pixmap",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Point.Point",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Quad.Quad",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Rect.Rect",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.SeekableInputOutputStream.SeekableInputOutputStream",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.SeekableStream.SeekableStream",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Shade.Shade",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.StrokeState.StrokeState",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.StructuredText.StructuredText",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.StructuredTextWalker.StructuredTextWalker",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.StructuredTextWalker.VectorInfo",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.Text.Text",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.TextWalker.TextWalker",
+            "mupdf.platform.java.src.com.artifex.mupdf.fitz.TreeArchive.TreeArchive"
+        ],
+        "children": {
+            "document_core": {
+                "components": [
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Document.Document",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Page.Page",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Context.Context"
+                ],
+                "children": {}
+            },
+            "rendering_system": {
+                "components": [
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Device.Device",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.DisplayList.DisplayList",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Pixmap.Pixmap",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.DrawDevice.DrawDevice"
+                ],
+                "children": {}
+            },
+            "pdf_features": {
+                "components": [
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFDocument.PDFDocument",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFPage.PDFPage",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFAnnotation.PDFAnnotation",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.PDFWidget.PDFWidget"
+                ],
+                "children": {}
+            },
+            "content_extraction": {
+                "components": [
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.StructuredText.StructuredText",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Text.Text",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Image.Image"
+                ],
+                "children": {}
+            },
+            "graphics_primitives": {
+                "components": [
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Path.Path",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Point.Point",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Rect.Rect",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Quad.Quad"
+                ],
+                "children": {}
+            },
+            "io_streams": {
+                "components": [
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.Buffer.Buffer",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.FitzInputStream.FitzInputStream",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.SeekableStream.SeekableStream"
+                ],
+                "children": {}
+            },
+            "security_signatures": {
+                "components": [
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.PKCS7Signer.PKCS7Signer",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.PKCS7Verifier.PKCS7Verifier",
+                    "mupdf.platform.java.src.com.artifex.mupdf.fitz.PKCS7DistinguishedName.PKCS7DistinguishedName"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "mupdf_wrap_scripts": {
+        "path": "mupdf/scripts",
+        "components": [
+            "mupdf.scripts.jlib.Args",
+            "mupdf.scripts.jlib.LogDeltaScope",
+            "mupdf.scripts.jlib.LogPrefixFileLine",
+            "mupdf.scripts.jlib.LogPrefixTime",
+            "mupdf.scripts.jlib.LogPrefixScopes",
+            "mupdf.scripts.jlib.Ret",
+            "mupdf.scripts.jlib.StreamPrefix",
+            "mupdf.scripts.jlib.Timings",
+            "mupdf.scripts.jlib.Stream",
+            "mupdf.scripts.wrap.__main__.FzItem",
+            "mupdf.scripts.wrap.__main__.encoder",
+            "mupdf.scripts.wrap.classes.ExtraConstructor",
+            "mupdf.scripts.wrap.classes.ClassExtras",
+            "mupdf.scripts.wrap.cpp.Outputs",
+            "mupdf.scripts.wrap.parse.MethodExcludeReason_NO_EXTRAS",
+            "mupdf.scripts.wrap.parse.MethodExcludeReason_ENUM",
+            "mupdf.scripts.wrap.parse.MethodExcludeReason_NOT_COPYABLE",
+            "mupdf.scripts.wrap.parse.MethodExcludeReason_FIRST_ARG_NOT_STRUCT",
+            "mupdf.scripts.wrap.parse.MethodExcludeReason_NO_WRAPPER_CLASS",
+            "mupdf.scripts.wrap.parse.MethodExcludeReason_OMIT_CLASS",
+            "mupdf.scripts.wrap.parse.MethodExcludeReason_NO_RAW_CONSTRUCTOR",
+            "mupdf.scripts.wrap.parse.MethodExcludeReason_VARIADIC",
+            "mupdf.scripts.wrap.state.State"
+        ],
+        "children": {
+            "jlib": {
+                "components": [
+                    "mupdf.scripts.jlib.Args",
+                    "mupdf.scripts.jlib.LogDeltaScope",
+                    "mupdf.scripts.jlib.LogPrefixFileLine",
+                    "mupdf.scripts.jlib.LogPrefixTime",
+                    "mupdf.scripts.jlib.LogPrefixScopes",
+                    "mupdf.scripts.jlib.Ret",
+                    "mupdf.scripts.jlib.StreamPrefix",
+                    "mupdf.scripts.jlib.Timings",
+                    "mupdf.scripts.jlib.Stream"
+                ],
+                "children": {}
+            },
+            "wrap_main": {
+                "components": [
+                    "mupdf.scripts.wrap.__main__.FzItem",
+                    "mupdf.scripts.wrap.__main__.encoder"
+                ],
+                "children": {}
+            },
+            "wrap_classes": {
+                "components": [
+                    "mupdf.scripts.wrap.classes.ExtraConstructor",
+                    "mupdf.scripts.wrap.classes.ClassExtras"
+                ],
+                "children": {}
+            },
+            "wrap_cpp": {
+                "components": [
+                    "mupdf.scripts.wrap.cpp.Outputs"
+                ],
+                "children": {}
+            },
+            "wrap_parse": {
+                "components": [
+                    "mupdf.scripts.wrap.parse.MethodExcludeReason_NO_EXTRAS",
+                    "mupdf.scripts.wrap.parse.MethodExcludeReason_ENUM",
+                    "mupdf.scripts.wrap.parse.MethodExcludeReason_NOT_COPYABLE",
+                    "mupdf.scripts.wrap.parse.MethodExcludeReason_FIRST_ARG_NOT_STRUCT",
+                    "mupdf.scripts.wrap.parse.MethodExcludeReason_NO_WRAPPER_CLASS",
+                    "mupdf.scripts.wrap.parse.MethodExcludeReason_OMIT_CLASS",
+                    "mupdf.scripts.wrap.parse.MethodExcludeReason_NO_RAW_CONSTRUCTOR",
+                    "mupdf.scripts.wrap.parse.MethodExcludeReason_VARIADIC"
+                ],
+                "children": {}
+            },
+            "wrap_state": {
+                "components": [
+                    "mupdf.scripts.wrap.state.State"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "utils": {
+        "path": "src/utils",
+        "components": [
+            "src.utils.Archive.Data",
+            "src.utils.AvifReader.heif_image_handle",
+            "src.utils.AvifReader.heif_image",
+            "src.utils.Dict.StrKeyHasherComparator",
+            "src.utils.Dict.WStrKeyHasherComparator",
+            "src.utils.Dict.HashTableEntry",
+            "src.utils.Dict.HashTable",
+            "src.utils.FileWatcher.WatchedFile",
+            "src.utils.FileWatcher.FileWatcherState",
+            "src.utils.FileWatcher.OverlappedEx",
+            "src.utils.FileWatcher.WatchedDir",
+            "src.utils.GuessFileType.FileSig",
+            "src.utils.JsonParser.ParseArgs",
+            "src.utils.LzmaSimpleArchive.ISzAllocatorAlloc",
+            "src.utils.StrFormat.Fmt",
+            "src.utils.StrFormat.Inst",
+            "src.utils.StrVec.StrVecPage",
+            "src.utils.TgaReader.TgaFooter",
+            "src.utils.TgaReader.TgaHeader",
+            "src.utils.TgaReader.TgaExtArea",
+            "src.utils.TgaReader.ReadState",
+            "src.utils.ThreadUtil.tagTHREADNAME_INFO",
+            "src.utils.ZipUtil.FileWriteStream"
+        ],
+        "children": {
+            "Archive": {
+                "components": [
+                    "src.utils.Archive.Data"
+                ],
+                "children": {}
+            },
+            "FileWatcher": {
+                "components": [
+                    "src.utils.FileWatcher.WatchedFile",
+                    "src.utils.FileWatcher.FileWatcherState",
+                    "src.utils.FileWatcher.OverlappedEx",
+                    "src.utils.FileWatcher.WatchedDir"
+                ],
+                "children": {}
+            },
+            "Dict": {
+                "components": [
+                    "src.utils.Dict.StrKeyHasherComparator",
+                    "src.utils.Dict.WStrKeyHasherComparator",
+                    "src.utils.Dict.HashTableEntry",
+                    "src.utils.Dict.HashTable"
+                ],
+                "children": {}
+            },
+            "StrVec": {
+                "components": [
+                    "src.utils.StrVec.StrVecPage"
+                ],
+                "children": {}
+            },
+            "GuessFileType": {
+                "components": [
+                    "src.utils.GuessFileType.FileSig"
+                ],
+                "children": {}
+            },
+            "TgaReader": {
+                "components": [
+                    "src.utils.TgaReader.TgaFooter",
+                    "src.utils.TgaReader.TgaHeader",
+                    "src.utils.TgaReader.TgaExtArea",
+                    "src.utils.TgaReader.ReadState"
+                ],
+                "children": {}
+            },
+            "AvifReader": {
+                "components": [
+                    "src.utils.AvifReader.heif_image_handle",
+                    "src.utils.AvifReader.heif_image"
+                ],
+                "children": {}
+            },
+            "StrFormat": {
+                "components": [
+                    "src.utils.StrFormat.Fmt",
+                    "src.utils.StrFormat.Inst"
+                ],
+                "children": {}
+            },
+            "JsonParser": {
+                "components": [
+                    "src.utils.JsonParser.ParseArgs"
+                ],
+                "children": {}
+            },
+            "LzmaSimpleArchive": {
+                "components": [
+                    "src.utils.LzmaSimpleArchive.ISzAllocatorAlloc"
+                ],
+                "children": {}
+            },
+            "ZipUtil": {
+                "components": [
+                    "src.utils.ZipUtil.FileWriteStream"
+                ],
+                "children": {}
+            },
+            "ThreadUtil": {
+                "components": [
+                    "src.utils.ThreadUtil.tagTHREADNAME_INFO"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "engines": {
+        "path": "src",
+        "components": [
+            "src.EngineDjVu.PageDestinationDjVu",
+            "src.EngineDjVu.DjVuPageInfo",
+            "src.EngineDjVu.DjVuInfoChunk",
+            "src.EngineEbook.EbookAbortCookie",
+            "src.EngineEbook.EngineHtml",
+            "src.EngineEbook.EngineTxt",
+            "src.EngineEbook.EngineFb2",
+            "src.EngineEbook.PageAnchor",
+            "src.EngineEbook.EngineMobi",
+            "src.EngineEbook.EngineChm",
+            "src.EngineEbook.ChmHtmlCollector",
+            "src.EngineEbook.ChmDataCache",
+            "src.EngineEbook.EbookTocBuilder",
+            "src.EngineEbook.ChmFormatter",
+            "src.EngineEbook.EnginePdb",
+            "src.EngineImages.ComicInfoParser",
+            "src.EngineImages.ImagePage",
+            "src.EngineImages.EngineImageDir",
+            "src.EngineMupdf.LinkRectList",
+            "src.EngineMupdf.PasswordCloner",
+            "src.EngineMupdf.PageDestinationMupdf",
+            "src.EngineMupdf.ContextThreadID",
+            "src.EngineMupdf.istream_filter",
+            "src.EngineMupdf.FitzAbortCookie",
+            "src.EngineMupdf.PageTreeStackItem",
+            "src.EngineMupdf.PageLabelInfo",
+            "src.EnginePs.AutoDeleteFile",
+            "src.EnginePs.EnginePs"
+        ],
+        "children": {}
+    },
+    "ui_components": {
+        "path": "src",
+        "components": [
+            "src.Caption.ButtonInfo",
+            "src.CommandPalette.ItemDataCP",
+            "src.CommandPalette.CommandPaletteBuildCtx",
+            "src.CommandPalette.ListBoxModelCP",
+            "src.Commands.ArgSpec",
+            "src.CrashHandler.Derived",
+            "src.CrashHandler.Base",
+            "src.EditAnnotations.tm",
+            "src.ExternalViewers.ExternalViewerInfo",
+            "src.HomePage.AboutLayoutInfoEl",
+            "src.HomePage.Promote",
+            "src.HomePage.ThumbnailLayout",
+            "src.HomePage.HomePageLayout",
+            "src.MainWindow.LinkHandler",
+            "src.Menu.BuildMenuCtx",
+            "src.Menu.MenuOwnerDrawInfo",
+            "src.Print.PaperSizeDesc",
+            "src.Print.UpdatePrintProgressData",
+            "src.SearchAndDDE.UpdateFindStatusData",
+            "src.SumatraDialogs.Dialog_GoToPage_Data",
+            "src.SumatraDialogs.Dialog_ChangeLanguage_Data",
+            "src.SumatraDialogs.Dialog_Find_Data",
+            "src.SumatraDialogs.Dialog_AddFav_Data",
+            "src.SumatraDialogs.Dialog_PdfAssociate_Data",
+            "src.SumatraDialogs.DLGTEMPLATEEX",
+            "src.SumatraDialogs.Dialog_CustomZoom_Data",
+            "src.SumatraDialogs.Dialog_GetPassword_Data",
+            "src.SumatraPDF.HwndPasswordUI",
+            "src.SumatraProperties.Pos",
+            "src.TableOfContents.VistorForPageNoData",
+            "src.Toolbar.ToolbarButtonInfo",
+            "src.UpdateCheck.UpdateInfo"
+        ],
+        "children": {
+            "caption_system": {
+                "components": [
+                    "src.Caption.ButtonInfo"
+                ],
+                "children": {}
+            },
+            "command_system": {
+                "components": [
+                    "src.Commands.ArgSpec"
+                ],
+                "children": {}
+            },
+            "command_palette": {
+                "components": [
+                    "src.CommandPalette.ItemDataCP",
+                    "src.CommandPalette.CommandPaletteBuildCtx",
+                    "src.CommandPalette.ListBoxModelCP"
+                ],
+                "children": {}
+            },
+            "crash_handler": {
+                "components": [
+                    "src.CrashHandler.Derived",
+                    "src.CrashHandler.Base"
+                ],
+                "children": {}
+            },
+            "edit_annotations": {
+                "components": [
+                    "src.EditAnnotations.tm"
+                ],
+                "children": {}
+            },
+            "external_viewers": {
+                "components": [
+                    "src.ExternalViewers.ExternalViewerInfo"
+                ],
+                "children": {}
+            },
+            "home_page": {
+                "components": [
+                    "src.HomePage.AboutLayoutInfoEl",
+                    "src.HomePage.Promote",
+                    "src.HomePage.ThumbnailLayout",
+                    "src.HomePage.HomePageLayout"
+                ],
+                "children": {}
+            },
+            "main_window": {
+                "components": [
+                    "src.MainWindow.LinkHandler"
+                ],
+                "children": {}
+            },
+            "menu_system": {
+                "components": [
+                    "src.Menu.BuildMenuCtx",
+                    "src.Menu.MenuOwnerDrawInfo"
+                ],
+                "children": {}
+            },
+            "print_system": {
+                "components": [
+                    "src.Print.PaperSizeDesc",
+                    "src.Print.UpdatePrintProgressData"
+                ],
+                "children": {}
+            },
+            "search_dde": {
+                "components": [
+                    "src.SearchAndDDE.UpdateFindStatusData"
+                ],
+                "children": {}
+            },
+            "dialogs": {
+                "components": [
+                    "src.SumatraDialogs.Dialog_GoToPage_Data",
+                    "src.SumatraDialogs.Dialog_ChangeLanguage_Data",
+                    "src.SumatraDialogs.Dialog_Find_Data",
+                    "src.SumatraDialogs.Dialog_AddFav_Data",
+                    "src.SumatraDialogs.Dialog_PdfAssociate_Data",
+                    "src.SumatraDialogs.DLGTEMPLATEEX",
+                    "src.SumatraDialogs.Dialog_CustomZoom_Data",
+                    "src.SumatraDialogs.Dialog_GetPassword_Data"
+                ],
+                "children": {}
+            },
+            "sumatra_core": {
+                "components": [
+                    "src.SumatraPDF.HwndPasswordUI"
+                ],
+                "children": {}
+            },
+            "properties": {
+                "components": [
+                    "src.SumatraProperties.Pos"
+                ],
+                "children": {}
+            },
+            "table_of_contents": {
+                "components": [
+                    "src.TableOfContents.VistorForPageNoData"
+                ],
+                "children": {}
+            },
+            "toolbar": {
+                "components": [
+                    "src.Toolbar.ToolbarButtonInfo"
+                ],
+                "children": {}
+            },
+            "update_check": {
+                "components": [
+                    "src.UpdateCheck.UpdateInfo"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "document_formats": {
+        "path": "src",
+        "components": [
+            "src.ChmFile.chmUnitInfo",
+            "src.ChmFile.chmFile",
+            "src.ChmModel.HtmlWindowHandler",
+            "src.ChmModel.ChmTocTraceItem",
+            "src.MobiDoc.HuffHeader",
+            "src.MobiDoc.MobiHeader",
+            "src.MobiDoc.PalmDocHeader",
+            "src.MobiDoc.CdicHeader",
+            "src.PdfSync.Pdfsync",
+            "src.PdfSync.PdfsyncFileIndex",
+            "src.PdfSync.SyncTex",
+            "src.PdfSync._stat",
+            "src.PdfSync.PdfsyncLine",
+            "src.PdfSync.PdfsyncPoint"
+        ],
+        "children": {
+            "chm_support": {
+                "components": [
+                    "src.ChmFile.chmUnitInfo",
+                    "src.ChmFile.chmFile",
+                    "src.ChmModel.HtmlWindowHandler",
+                    "src.ChmModel.ChmTocTraceItem"
+                ],
+                "children": {}
+            },
+            "mobi_support": {
+                "components": [
+                    "src.MobiDoc.HuffHeader",
+                    "src.MobiDoc.MobiHeader",
+                    "src.MobiDoc.PalmDocHeader",
+                    "src.MobiDoc.CdicHeader"
+                ],
+                "children": {}
+            },
+            "pdf_sync": {
+                "components": [
+                    "src.PdfSync.Pdfsync",
+                    "src.PdfSync.PdfsyncFileIndex",
+                    "src.PdfSync.SyncTex",
+                    "src.PdfSync._stat",
+                    "src.PdfSync.PdfsyncLine",
+                    "src.PdfSync.PdfsyncPoint"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "wingui": {
+        "path": "src/wingui",
+        "components": [
+            "src.wingui.HtmlWindow.HW_IOleControlSite",
+            "src.wingui.HtmlWindow.HW_IDownloadManager",
+            "src.wingui.HtmlWindow.HW_IOleCommandTarget",
+            "src.wingui.HtmlWindow.HW_IOleInPlaceSiteWindowless",
+            "src.wingui.HtmlWindow.HW_IDropTarget",
+            "src.wingui.HtmlWindow.HW_DWebBrowserEvents2",
+            "src.wingui.HtmlWindow.HW_IInternetProtocol",
+            "src.wingui.HtmlWindow.HW_IOleInPlaceFrame",
+            "src.wingui.HtmlWindow.HW_IOleItemContainer",
+            "src.wingui.HtmlWindow.HW_IInternetProtocolInfo",
+            "src.wingui.HtmlWindow.HW_IAdviseSink2",
+            "src.wingui.HtmlWindow.HW_IOleClientSite",
+            "src.wingui.HtmlWindow.HW_IServiceProvider",
+            "src.wingui.HtmlWindow.HW_IDocHostUIHandler",
+            "src.wingui.WebView.webview2_com_handler",
+            "src.wingui.WinGui.TooltipInfo"
+        ],
+        "children": {
+            "HtmlWindow": {
+                "components": [
+                    "src.wingui.HtmlWindow.HW_IOleControlSite",
+                    "src.wingui.HtmlWindow.HW_IDownloadManager",
+                    "src.wingui.HtmlWindow.HW_IOleCommandTarget",
+                    "src.wingui.HtmlWindow.HW_IOleInPlaceSiteWindowless",
+                    "src.wingui.HtmlWindow.HW_IDropTarget",
+                    "src.wingui.HtmlWindow.HW_DWebBrowserEvents2",
+                    "src.wingui.HtmlWindow.HW_IInternetProtocol",
+                    "src.wingui.HtmlWindow.HW_IOleInPlaceFrame",
+                    "src.wingui.HtmlWindow.HW_IOleItemContainer",
+                    "src.wingui.HtmlWindow.HW_IInternetProtocolInfo",
+                    "src.wingui.HtmlWindow.HW_IAdviseSink2",
+                    "src.wingui.HtmlWindow.HW_IOleClientSite",
+                    "src.wingui.HtmlWindow.HW_IServiceProvider",
+                    "src.wingui.HtmlWindow.HW_IDocHostUIHandler"
+                ],
+                "children": {}
+            },
+            "WebView": {
+                "components": [
+                    "src.wingui.WebView.webview2_com_handler"
+                ],
+                "children": {}
+            },
+            "WinGui": {
+                "components": [
+                    "src.wingui.WinGui.TooltipInfo"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "uia": {
+        "path": "src/uia",
+        "components": [
+            "src.uia.DocumentProvider.UiaRect",
+            "src.uia.PageProvider.UiaRect",
+            "src.uia.Provider.UiaRect",
+            "src.uia.StartPageProvider.UiaRect",
+            "src.uia.TextRange.CharEndPointMover",
+            "src.uia.TextRange.WordEndPointMover",
+            "src.uia.TextRange.LineEndPointMover"
+        ],
+        "children": {
+            "document_provider": {
+                "components": [
+                    "src.uia.DocumentProvider.UiaRect"
+                ],
+                "children": {}
+            },
+            "page_provider": {
+                "components": [
+                    "src.uia.PageProvider.UiaRect"
+                ],
+                "children": {}
+            },
+            "text_range": {
+                "components": [
+                    "src.uia.TextRange.CharEndPointMover",
+                    "src.uia.TextRange.WordEndPointMover",
+                    "src.uia.TextRange.LineEndPointMover"
+                ],
+                "children": {}
+            },
+            "root_provider": {
+                "components": [
+                    "src.uia.Provider.UiaRect"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "tools": {
+        "path": "src/tools",
+        "components": [
+            "src.tools.MakeLzSA.ISzCrtAlloc",
+            "src.tools.plugin-test.PluginStartData"
+        ],
+        "children": {
+            "MakeLzSA": {
+                "components": [
+                    "src.tools.MakeLzSA.ISzCrtAlloc"
+                ],
+                "children": {}
+            },
+            "Plugin Test": {
+                "components": [
+                    "src.tools.plugin-test.PluginStartData"
+                ],
+                "children": {}
+            }
+        }
+    }
+}

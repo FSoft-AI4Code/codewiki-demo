@@ -1,0 +1,162 @@
+{
+    "core_api": {
+        "path": "packages/puppeteer-core/src/api",
+        "components": [
+            "packages.puppeteer-core.src.api.Browser.Browser",
+            "packages.puppeteer-core.src.api.Browser.BrowserContextOptions",
+            "packages.puppeteer-core.src.api.Browser.BrowserEvents",
+            "packages.puppeteer-core.src.api.BrowserContext.BrowserContext",
+            "packages.puppeteer-core.src.api.BrowserContext.BrowserContextEvents",
+            "packages.puppeteer-core.src.api.Page.Page",
+            "packages.puppeteer-core.src.api.Page.PageEvents",
+            "packages.puppeteer-core.src.api.Frame.FrameEvents",
+            "packages.puppeteer-core.src.api.ElementHandle.ElementHandle",
+            "packages.puppeteer-core.src.api.JSHandle.JSHandle",
+            "packages.puppeteer-core.src.api.Target.Target",
+            "packages.puppeteer-core.src.api.CDPSession.CDPSession",
+            "packages.puppeteer-core.src.api.CDPSession.CDPSessionEvents"
+        ],
+        "children": {}
+    },
+    "input_and_interaction": {
+        "path": "packages/puppeteer-core/src/api",
+        "components": [
+            "packages.puppeteer-core.src.api.Input.Keyboard",
+            "packages.puppeteer-core.src.api.Input.Mouse",
+            "packages.puppeteer-core.src.api.Input.Touchscreen",
+            "packages.puppeteer-core.src.api.Input.TouchHandle",
+            "packages.puppeteer-core.src.api.Dialog.Dialog"
+        ],
+        "children": {}
+    },
+    "network_handling": {
+        "path": "packages/puppeteer-core/src/api",
+        "components": [
+            "packages.puppeteer-core.src.api.HTTPRequest.HTTPRequest",
+            "packages.puppeteer-core.src.api.HTTPResponse.HTTPResponse"
+        ],
+        "children": {}
+    },
+    "locators": {
+        "path": "packages/puppeteer-core/src/api/locators",
+        "components": [
+            "packages.puppeteer-core.src.api.locators.locators.Locator",
+            "packages.puppeteer-core.src.api.locators.locators.NodeLocator",
+            "packages.puppeteer-core.src.api.locators.locators.FilteredLocator",
+            "packages.puppeteer-core.src.api.locators.locators.MappedLocator",
+            "packages.puppeteer-core.src.api.locators.locators.FunctionLocator"
+        ],
+        "children": {}
+    },
+    "cdp_implementation": {
+        "path": "packages/puppeteer-core/src/cdp",
+        "components": [
+            "packages.puppeteer-core.src.cdp.Browser.CdpBrowser",
+            "packages.puppeteer-core.src.cdp.BrowserContext.CdpBrowserContext",
+            "packages.puppeteer-core.src.cdp.Page.CdpPage",
+            "packages.puppeteer-core.src.cdp.Frame.CdpFrame",
+            "packages.puppeteer-core.src.cdp.ElementHandle.CdpElementHandle",
+            "packages.puppeteer-core.src.cdp.JSHandle.CdpJSHandle",
+            "packages.puppeteer-core.src.cdp.Target.CdpTarget",
+            "packages.puppeteer-core.src.cdp.Connection.Connection",
+            "packages.puppeteer-core.src.cdp.CdpSession.CdpCDPSession"
+        ],
+        "children": {}
+    },
+    "cdp_network_management": {
+        "path": "packages/puppeteer-core/src/cdp",
+        "components": [
+            "packages.puppeteer-core.src.cdp.NetworkManager.NetworkManager",
+            "packages.puppeteer-core.src.cdp.HTTPRequest.CdpHTTPRequest",
+            "packages.puppeteer-core.src.cdp.HTTPResponse.CdpHTTPResponse",
+            "packages.puppeteer-core.src.cdp.NetworkEventManager.NetworkEventManager"
+        ],
+        "children": {}
+    },
+    "cdp_frame_management": {
+        "path": "packages/puppeteer-core/src/cdp",
+        "components": [
+            "packages.puppeteer-core.src.cdp.FrameManager.FrameManager",
+            "packages.puppeteer-core.src.cdp.FrameTree.FrameTree",
+            "packages.puppeteer-core.src.cdp.IsolatedWorld.IsolatedWorld",
+            "packages.puppeteer-core.src.cdp.ExecutionContext.ExecutionContext"
+        ],
+        "children": {}
+    },
+    "bidi_implementation": {
+        "path": "packages/puppeteer-core/src/bidi",
+        "components": [
+            "packages.puppeteer-core.src.bidi.Browser.BidiBrowser",
+            "packages.puppeteer-core.src.bidi.BrowserContext.BidiBrowserContext",
+            "packages.puppeteer-core.src.bidi.Page.BidiPage",
+            "packages.puppeteer-core.src.bidi.Frame.BidiFrame",
+            "packages.puppeteer-core.src.bidi.ElementHandle.BidiElementHandle",
+            "packages.puppeteer-core.src.bidi.JSHandle.BidiJSHandle",
+            "packages.puppeteer-core.src.bidi.Connection.BidiConnection"
+        ],
+        "children": {}
+    },
+    "bidi_core": {
+        "path": "packages/puppeteer-core/src/bidi/core",
+        "components": [
+            "packages.puppeteer-core.src.bidi.core.Browser.Browser",
+            "packages.puppeteer-core.src.bidi.core.BrowsingContext.BrowsingContext",
+            "packages.puppeteer-core.src.bidi.core.Connection.Connection",
+            "packages.puppeteer-core.src.bidi.core.Realm.Realm",
+            "packages.puppeteer-core.src.bidi.core.Session.Session"
+        ],
+        "children": {}
+    },
+    "browser_management": {
+        "path": "packages/browsers/src",
+        "components": [
+            "packages.browsers.src.Cache.Cache",
+            "packages.browsers.src.install.InstallOptions",
+            "packages.browsers.src.launch.LaunchOptions",
+            "packages.browsers.src.CLI.CLI"
+        ],
+        "children": {}
+    },
+    "browser_launching": {
+        "path": "packages/puppeteer-core/src/node",
+        "components": [
+            "packages.puppeteer-core.src.node.BrowserLauncher.BrowserLauncher",
+            "packages.puppeteer-core.src.node.ChromeLauncher.ChromeLauncher",
+            "packages.puppeteer-core.src.node.FirefoxLauncher.FirefoxLauncher",
+            "packages.puppeteer-core.src.node.PuppeteerNode.PuppeteerNode"
+        ],
+        "children": {}
+    },
+    "query_handlers": {
+        "path": "packages/puppeteer-core/src/common",
+        "components": [
+            "packages.puppeteer-core.src.common.QueryHandler.QueryHandler",
+            "packages.puppeteer-core.src.common.CustomQueryHandler.CustomQueryHandler",
+            "packages.puppeteer-core.src.common.CSSQueryHandler.CSSQueryHandler",
+            "packages.puppeteer-core.src.common.XPathQueryHandler.XPathQueryHandler",
+            "packages.puppeteer-core.src.common.TextQueryHandler.TextQueryHandler",
+            "packages.puppeteer-core.src.common.PQueryHandler.PQueryHandler"
+        ],
+        "children": {}
+    },
+    "common_utilities": {
+        "path": "packages/puppeteer-core/src/common",
+        "components": [
+            "packages.puppeteer-core.src.common.Puppeteer.Puppeteer",
+            "packages.puppeteer-core.src.common.EventEmitter.EventEmitter",
+            "packages.puppeteer-core.src.common.Configuration.Configuration",
+            "packages.puppeteer-core.src.common.ConnectionTransport.ConnectionTransport",
+            "packages.puppeteer-core.src.common.TimeoutSettings.TimeoutSettings"
+        ],
+        "children": {}
+    },
+    "transport_layer": {
+        "path": "packages/puppeteer-core/src",
+        "components": [
+            "packages.puppeteer-core.src.common.BrowserWebSocketTransport.BrowserWebSocketTransport",
+            "packages.puppeteer-core.src.node.NodeWebSocketTransport.NodeWebSocketTransport",
+            "packages.puppeteer-core.src.node.PipeTransport.PipeTransport"
+        ],
+        "children": {}
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-18T07:42:38.558960",
+        "main_model": "claude-sonnet-4",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/wazuh--wazuh",
+        "commit_id": "44b7cd33e05abb7730228bb092b23b419ee4f15e"
+    },
+    "statistics": {
+        "total_components": 13496,
+        "leaf_nodes": 284,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "Active Response.md",
+        "API Framework.md",
+        "Common Communication Framework.md",
+        "RBAC Security.md",
+        "Message Queue Processing.md",
+        "API Models.md",
+        "Alert Forwarder.md",
+        "Core Integration Framework.md",
+        "AWS Integration.md",
+        "Distributed API.md",
+        "syscollector.md",
+        "Direct Service Integration.md",
+        "sca.md",
+        "syscheck.md",
+        "Engine Testing Suite.md",
+        "Core Framework.md",
+        "Agent Management.md",
+        "Google Cloud Integration.md",
+        "Logging System.md",
+        "Communication Layer.md",
+        "MITRE ATT&CK Integration.md",
+        "Authorization and Policy Engine.md",
+        "Cluster Management.md",
+        "Master Node Management.md",
+        "Security Modules.md",
+        "Azure Integration.md",
+        "Docker Integration.md",
+        "rootcheck.md",
+        "Database Connectivity.md",
+        "S3 Bucket Processing.md",
+        "Worker Node Management.md",
+        "Engine Core.md",
+        "Authentication and User Management.md"
+    ]
+}

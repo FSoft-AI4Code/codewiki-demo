@@ -1,0 +1,473 @@
+{
+    "core-framework": {
+        "path": "lib/classes",
+        "components": [
+            "lib.classes.cli.CLI",
+            "lib.classes.config.Config",
+            "lib.classes.config-schema-handler.index.ConfigSchemaHandler",
+            "lib.classes.plugin-manager.PluginManager",
+            "lib.classes.plugin-manager.TerminateHookChain",
+            "lib.classes.service.Service",
+            "lib.classes.utils.Utils",
+            "lib.classes.yaml-parser.YamlParser",
+            "lib.serverless.Serverless"
+        ],
+        "children": {
+            "plugin-management": {
+                "components": [
+                    "lib.classes.plugin-manager.PluginManager",
+                    "lib.classes.plugin-manager.TerminateHookChain"
+                ],
+                "children": {}
+            },
+            "configuration-management": {
+                "components": [
+                    "lib.classes.config.Config",
+                    "lib.classes.config-schema-handler.index.ConfigSchemaHandler",
+                    "lib.classes.yaml-parser.YamlParser"
+                ],
+                "children": {}
+            },
+            "service-model": {
+                "components": [
+                    "lib.classes.service.Service"
+                ],
+                "children": {}
+            },
+            "cli-interface": {
+                "components": [
+                    "lib.classes.cli.CLI"
+                ],
+                "children": {}
+            },
+            "utility-functions": {
+                "components": [
+                    "lib.classes.utils.Utils"
+                ],
+                "children": {}
+            },
+            "core-orchestrator": {
+                "components": [
+                    "lib.serverless.Serverless"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "aws-provider": {
+        "path": "lib/plugins/aws",
+        "components": [
+            "lib.plugins.aws.provider.AwsProvider",
+            "lib.plugins.aws.common.index.AwsCommon"
+        ],
+        "children": {
+            "aws-package-compile": {
+                "components": [
+                    "lib.plugins.aws.package.index.AwsPackage",
+                    "lib.plugins.aws.package.compile.functions.AwsCompileFunctions",
+                    "lib.plugins.aws.package.compile.layers.AwsCompileLayers"
+                ],
+                "children": {}
+            },
+            "aws-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.api-gateway.index.AwsCompileApigEvents",
+                    "lib.plugins.aws.package.compile.events.http-api.HttpApiEvents",
+                    "lib.plugins.aws.package.compile.events.websockets.index.AwsCompileWebsockets",
+                    "lib.plugins.aws.package.compile.events.cloud-watch-event.AwsCompileCloudWatchEventEvents",
+                    "lib.plugins.aws.package.compile.events.event-bridge.index.AwsCompileEventBridgeEvents",
+                    "lib.plugins.aws.package.compile.events.s3.index.AwsCompileS3Events",
+                    "lib.plugins.aws.package.compile.events.stream.AwsCompileStreamEvents",
+                    "lib.plugins.aws.package.compile.events.iot.AwsCompileIoTEvents"
+                ],
+                "children": {}
+            },
+            "aws-runtime-support": {
+                "components": [
+                    "lib.plugins.aws.invoke-local.runtime-wrappers.invoke.FakeLambdaContext",
+                    "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.InvokeBridge.InvokeBridge",
+                    "lib.plugins.aws.dev.local-lambda.index.LocalLambda"
+                ],
+                "children": {}
+            },
+            "aws-commands": {
+                "components": [
+                    "lib.plugins.aws.deploy.index.AwsDeploy",
+                    "lib.plugins.aws.deploy-function.AwsDeployFunction",
+                    "lib.plugins.aws.info.index.AwsInfo",
+                    "lib.plugins.aws.invoke-local.index.AwsInvokeLocal",
+                    "lib.plugins.aws.invoke.AwsInvoke",
+                    "lib.plugins.aws.logs.AwsLogs",
+                    "lib.plugins.aws.metrics.AwsMetrics",
+                    "lib.plugins.aws.remove.index.AwsRemove",
+                    "lib.plugins.aws.rollback-function.AwsRollbackFunction",
+                    "lib.plugins.aws.rollback.AwsRollback"
+                ],
+                "children": {
+                    "aws-deploy": {
+                        "components": [
+                            "lib.plugins.aws.deploy.index.AwsDeploy"
+                        ],
+                        "children": {}
+                    },
+                    "aws-deploy-function": {
+                        "components": [
+                            "lib.plugins.aws.deploy-function.AwsDeployFunction"
+                        ],
+                        "children": {}
+                    },
+                    "aws-info": {
+                        "components": [
+                            "lib.plugins.aws.info.index.AwsInfo"
+                        ],
+                        "children": {}
+                    },
+                    "aws-invoke-local": {
+                        "components": [
+                            "lib.plugins.aws.invoke-local.index.AwsInvokeLocal"
+                        ],
+                        "children": {}
+                    },
+                    "aws-logs": {
+                        "components": [
+                            "lib.plugins.aws.logs.AwsLogs"
+                        ],
+                        "children": {}
+                    },
+                    "aws-metrics": {
+                        "components": [
+                            "lib.plugins.aws.metrics.AwsMetrics"
+                        ],
+                        "children": {}
+                    },
+                    "aws-remove": {
+                        "components": [
+                            "lib.plugins.aws.remove.index.AwsRemove"
+                        ],
+                        "children": {}
+                    },
+                    "aws-rollback": {
+                        "components": [
+                            "lib.plugins.aws.rollback.AwsRollback"
+                        ],
+                        "children": {}
+                    }
+                }
+            }
+        }
+    },
+    "aws-package-compile": {
+        "path": "lib/plugins/aws/package",
+        "components": [
+            "lib.plugins.aws.package.index.AwsPackage",
+            "lib.plugins.aws.package.compile.functions.AwsCompileFunctions",
+            "lib.plugins.aws.package.compile.layers.AwsCompileLayers"
+        ],
+        "children": {}
+    },
+    "aws-events": {
+        "path": "lib/plugins/aws/package/compile/events",
+        "components": [
+            "lib.plugins.aws.package.compile.events.activemq.AwsCompileActiveMQEvents",
+            "lib.plugins.aws.package.compile.events.alb.index.AwsCompileAlbEvents",
+            "lib.plugins.aws.package.compile.events.alexa-skill.AwsCompileAlexaSkillEvents",
+            "lib.plugins.aws.package.compile.events.alexa-smart-home.AwsCompileAlexaSmartHomeEvents",
+            "lib.plugins.aws.package.compile.events.api-gateway.index.AwsCompileApigEvents",
+            "lib.plugins.aws.package.compile.events.cloud-front.AwsCompileCloudFrontEvents",
+            "lib.plugins.aws.package.compile.events.cloud-watch-event.AwsCompileCloudWatchEventEvents",
+            "lib.plugins.aws.package.compile.events.cloud-watch-log.AwsCompileCloudWatchLogEvents",
+            "lib.plugins.aws.package.compile.events.cognito-user-pool.AwsCompileCognitoUserPoolEvents",
+            "lib.plugins.aws.package.compile.events.event-bridge.index.AwsCompileEventBridgeEvents",
+            "lib.plugins.aws.package.compile.events.http-api.HttpApiEvents",
+            "lib.plugins.aws.package.compile.events.iot-fleet-provisioning.AwsCompileIotFleetProvisioningEvents",
+            "lib.plugins.aws.package.compile.events.iot.AwsCompileIoTEvents",
+            "lib.plugins.aws.package.compile.events.kafka.AwsCompileKafkaEvents",
+            "lib.plugins.aws.package.compile.events.msk.index.AwsCompileMSKEvents",
+            "lib.plugins.aws.package.compile.events.rabbitmq.AwsCompileRabbitMQEvents",
+            "lib.plugins.aws.package.compile.events.s3.index.AwsCompileS3Events",
+            "lib.plugins.aws.package.compile.events.schedule.AwsCompileScheduledEvents",
+            "lib.plugins.aws.package.compile.events.sns.AwsCompileSNSEvents",
+            "lib.plugins.aws.package.compile.events.sqs.AwsCompileSQSEvents",
+            "lib.plugins.aws.package.compile.events.stream.AwsCompileStreamEvents",
+            "lib.plugins.aws.package.compile.events.websockets.index.AwsCompileWebsockets"
+        ],
+        "children": {
+            "api-gateway-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.api-gateway.index.AwsCompileApigEvents"
+                ],
+                "children": {}
+            },
+            "http-api-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.http-api.HttpApiEvents"
+                ],
+                "children": {}
+            },
+            "websocket-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.websockets.index.AwsCompileWebsockets"
+                ],
+                "children": {}
+            },
+            "alb-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.alb.index.AwsCompileAlbEvents"
+                ],
+                "children": {}
+            },
+            "cloud-watch-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.cloud-watch-event.AwsCompileCloudWatchEventEvents",
+                    "lib.plugins.aws.package.compile.events.cloud-watch-log.AwsCompileCloudWatchLogEvents"
+                ],
+                "children": {
+                    "cloud-watch-event-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.cloud-watch-event.AwsCompileCloudWatchEventEvents"
+                        ],
+                        "children": {}
+                    },
+                    "cloud-watch-log-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.cloud-watch-log.AwsCompileCloudWatchLogEvents"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "event-bridge-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.event-bridge.index.AwsCompileEventBridgeEvents"
+                ],
+                "children": {}
+            },
+            "scheduled-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.schedule.AwsCompileScheduledEvents"
+                ],
+                "children": {}
+            },
+            "storage-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.s3.index.AwsCompileS3Events",
+                    "lib.plugins.aws.package.compile.events.sns.AwsCompileSNSEvents",
+                    "lib.plugins.aws.package.compile.events.sqs.AwsCompileSQSEvents"
+                ],
+                "children": {
+                    "s3-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.s3.index.AwsCompileS3Events"
+                        ],
+                        "children": {}
+                    },
+                    "sns-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.sns.AwsCompileSNSEvents"
+                        ],
+                        "children": {}
+                    },
+                    "sqs-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.sqs.AwsCompileSQSEvents"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "streaming-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.stream.AwsCompileStreamEvents",
+                    "lib.plugins.aws.package.compile.events.kafka.AwsCompileKafkaEvents",
+                    "lib.plugins.aws.package.compile.events.msk.index.AwsCompileMSKEvents",
+                    "lib.plugins.aws.package.compile.events.activemq.AwsCompileActiveMQEvents",
+                    "lib.plugins.aws.package.compile.events.rabbitmq.AwsCompileRabbitMQEvents"
+                ],
+                "children": {
+                    "aws-compile-stream-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.stream.AwsCompileStreamEvents"
+                        ],
+                        "children": {}
+                    },
+                    "aws-compile-kafka-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.kafka.AwsCompileKafkaEvents"
+                        ],
+                        "children": {}
+                    },
+                    "aws-compile-msk-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.msk.index.AwsCompileMSKEvents"
+                        ],
+                        "children": {}
+                    },
+                    "aws-compile-activemq-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.activemq.AwsCompileActiveMQEvents"
+                        ],
+                        "children": {}
+                    },
+                    "aws-compile-rabbitmq-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.rabbitmq.AwsCompileRabbitMQEvents"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "iot-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.iot.AwsCompileIoTEvents",
+                    "lib.plugins.aws.package.compile.events.iot-fleet-provisioning.AwsCompileIotFleetProvisioningEvents"
+                ],
+                "children": {
+                    "iot-topic-rule-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.iot.AwsCompileIoTEvents"
+                        ],
+                        "children": {}
+                    },
+                    "iot-fleet-provisioning-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.iot-fleet-provisioning.AwsCompileIotFleetProvisioningEvents"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "cognito-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.cognito-user-pool.AwsCompileCognitoUserPoolEvents"
+                ],
+                "children": {}
+            },
+            "alexa-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.alexa-skill.AwsCompileAlexaSkillEvents",
+                    "lib.plugins.aws.package.compile.events.alexa-smart-home.AwsCompileAlexaSmartHomeEvents"
+                ],
+                "children": {
+                    "alexa-skill-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.alexa-skill.AwsCompileAlexaSkillEvents"
+                        ],
+                        "children": {}
+                    },
+                    "alexa-smart-home-events": {
+                        "components": [
+                            "lib.plugins.aws.package.compile.events.alexa-smart-home.AwsCompileAlexaSmartHomeEvents"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "cloud-front-events": {
+                "components": [
+                    "lib.plugins.aws.package.compile.events.cloud-front.AwsCompileCloudFrontEvents"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "aws-runtime-support": {
+        "path": "lib/plugins/aws/invoke-local/runtime-wrappers",
+        "components": [
+            "lib.plugins.aws.invoke-local.runtime-wrappers.invoke.FakeLambdaContext",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.Context.Context",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.InvokeBridge.InvokeBridge",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.LambdaLogger.LambdaLogger",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.mapper.AbstractMapper.AbstractMapper",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.mapper.DefaultEventMapper.DefaultEventMapper",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.mapper.DefaultMapper.DefaultMapper",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.mapper.HashMapWrapper.HashMapWrapper",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.mapper.Mapper.Mapper",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.mapper.MapperFactory.MapperFactory",
+            "lib.plugins.aws.invoke-local.runtime-wrappers.java.src.main.java.com.serverless.mapper.S3EventMapper.S3EventMapper"
+        ],
+        "children": {}
+    },
+    "aws-commands": {
+        "path": "lib/plugins/aws",
+        "components": [
+            "lib.plugins.aws.deploy-function.AwsDeployFunction",
+            "lib.plugins.aws.deploy-list.AwsDeployList",
+            "lib.plugins.aws.deploy.index.AwsDeploy",
+            "lib.plugins.aws.dev.index.AwsDev",
+            "lib.plugins.aws.dev.local-lambda.index.LocalLambda",
+            "lib.plugins.aws.info.index.AwsInfo",
+            "lib.plugins.aws.invoke-local.index.AwsInvokeLocal",
+            "lib.plugins.aws.invoke.AwsInvoke",
+            "lib.plugins.aws.logs.AwsLogs",
+            "lib.plugins.aws.metrics.AwsMetrics",
+            "lib.plugins.aws.remove.index.AwsRemove",
+            "lib.plugins.aws.rollback-function.AwsRollbackFunction",
+            "lib.plugins.aws.rollback.AwsRollback"
+        ],
+        "children": {}
+    },
+    "core-commands": {
+        "path": "lib/plugins",
+        "components": [
+            "lib.plugins.deploy.Deploy",
+            "lib.plugins.dev.Dev",
+            "lib.plugins.info.Info",
+            "lib.plugins.invoke.Invoke",
+            "lib.plugins.logs.Logs",
+            "lib.plugins.metrics.Metrics",
+            "lib.plugins.package.package.Package",
+            "lib.plugins.remove.Remove",
+            "lib.plugins.rollback.Rollback",
+            "lib.plugins.print.Print"
+        ],
+        "children": {
+            "deploy-commands": {
+                "components": [
+                    "lib.plugins.deploy.Deploy"
+                ],
+                "children": {}
+            },
+            "invoke-commands": {
+                "components": [
+                    "lib.plugins.invoke.Invoke"
+                ],
+                "children": {}
+            },
+            "package-commands": {
+                "components": [
+                    "lib.plugins.package.package.Package"
+                ],
+                "children": {}
+            },
+            "print-commands": {
+                "components": [
+                    "lib.plugins.print.Print"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "plugin-system": {
+        "path": "lib/plugins/plugin",
+        "components": [
+            "lib.plugins.plugin.list.PluginList",
+            "lib.plugins.plugin.plugin.Plugin",
+            "lib.plugins.plugin.search.PluginSearch"
+        ],
+        "children": {}
+    },
+    "esbuild-plugin": {
+        "path": "lib/plugins/esbuild",
+        "components": [
+            "lib.plugins.esbuild.index.Esbuild"
+        ],
+        "children": {}
+    },
+    "observability-plugins": {
+        "path": "lib/plugins/observability",
+        "components": [
+            "lib.plugins.observability.axiom.index.Axiom"
+        ],
+        "children": {}
+    }
+}

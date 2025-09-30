@@ -1,0 +1,145 @@
+{
+    "core_dialogue": {
+        "path": "rasa/core",
+        "components": [
+            "rasa.core.agent.Agent",
+            "rasa.core.processor.MessageProcessor",
+            "rasa.core.policies.policy.Policy",
+            "rasa.core.policies.ted_policy.TEDPolicy",
+            "rasa.core.policies.rule_policy.RulePolicy",
+            "rasa.core.policies.memoization.MemoizationPolicy",
+            "rasa.core.policies.ensemble.PolicyPredictionEnsemble",
+            "rasa.core.actions.action.Action",
+            "rasa.core.actions.forms.FormAction",
+            "rasa.core.actions.loops.LoopAction"
+        ],
+        "children": {
+            "dialogue_orchestration": {
+                "components": [
+                    "rasa.core.agent.Agent",
+                    "rasa.core.processor.MessageProcessor"
+                ],
+                "children": {}
+            },
+            "policy_framework": {
+                "components": [
+                    "rasa.core.policies.policy.Policy",
+                    "rasa.core.policies.ted_policy.TEDPolicy",
+                    "rasa.core.policies.rule_policy.RulePolicy",
+                    "rasa.core.policies.memoization.MemoizationPolicy",
+                    "rasa.core.policies.ensemble.PolicyPredictionEnsemble"
+                ],
+                "children": {}
+            },
+            "action_framework": {
+                "components": [
+                    "rasa.core.actions.action.Action",
+                    "rasa.core.actions.forms.FormAction",
+                    "rasa.core.actions.loops.LoopAction"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "nlu_processing": {
+        "path": "rasa/nlu",
+        "components": [
+            "rasa.nlu.classifiers.diet_classifier.DIETClassifier",
+            "rasa.nlu.classifiers.fallback_classifier.FallbackClassifier",
+            "rasa.nlu.extractors.crf_entity_extractor.CRFEntityExtractor",
+            "rasa.nlu.extractors.duckling_entity_extractor.DucklingEntityExtractor",
+            "rasa.nlu.tokenizers.whitespace_tokenizer.WhitespaceTokenizer",
+            "rasa.nlu.tokenizers.spacy_tokenizer.SpacyTokenizer",
+            "rasa.nlu.featurizers.sparse_featurizer.count_vectors_featurizer.CountVectorsFeaturizer",
+            "rasa.nlu.featurizers.dense_featurizer.spacy_featurizer.SpacyFeaturizer",
+            "rasa.nlu.selectors.response_selector.ResponseSelector"
+        ],
+        "children": {}
+    },
+    "engine_graph": {
+        "path": "rasa/engine",
+        "components": [
+            "rasa.engine.graph.GraphComponent",
+            "rasa.engine.graph.GraphNode",
+            "rasa.engine.graph.GraphSchema",
+            "rasa.engine.recipes.default_recipe.DefaultV1Recipe",
+            "rasa.engine.training.graph_trainer.GraphTrainer",
+            "rasa.engine.storage.storage.ModelStorage",
+            "rasa.engine.runner.interface.GraphRunner"
+        ],
+        "children": {}
+    },
+    "channels": {
+        "path": "rasa/core/channels",
+        "components": [
+            "rasa.core.channels.channel.InputChannel",
+            "rasa.core.channels.channel.OutputChannel",
+            "rasa.core.channels.rest.RestInput",
+            "rasa.core.channels.socketio.SocketIOInput",
+            "rasa.core.channels.console.CmdlineInput"
+        ],
+        "children": {}
+    },
+    "shared_core": {
+        "path": "rasa/shared/core",
+        "components": [
+            "rasa.shared.core.domain.Domain",
+            "rasa.shared.core.events.Event",
+            "rasa.shared.core.events.UserUttered",
+            "rasa.shared.core.events.ActionExecuted",
+            "rasa.shared.core.events.SlotSet",
+            "rasa.shared.core.trackers.DialogueStateTracker",
+            "rasa.shared.core.slots.Slot",
+            "rasa.shared.core.training_data.structures.StoryGraph"
+        ],
+        "children": {}
+    },
+    "shared_nlu": {
+        "path": "rasa/shared/nlu",
+        "components": [
+            "rasa.shared.nlu.training_data.training_data.TrainingData",
+            "rasa.shared.nlu.training_data.message.Message",
+            "rasa.shared.nlu.training_data.features.Features",
+            "rasa.shared.nlu.interpreter.NaturalLanguageInterpreter"
+        ],
+        "children": {}
+    },
+    "data_importers": {
+        "path": "rasa/shared/importers",
+        "components": [
+            "rasa.shared.importers.importer.TrainingDataImporter",
+            "rasa.shared.importers.rasa.RasaFileImporter",
+            "rasa.shared.importers.multi_project.MultiProjectImporter"
+        ],
+        "children": {}
+    },
+    "storage_persistence": {
+        "path": "rasa/core",
+        "components": [
+            "rasa.core.tracker_store.TrackerStore",
+            "rasa.core.tracker_store.InMemoryTrackerStore",
+            "rasa.core.tracker_store.SQLTrackerStore",
+            "rasa.core.lock_store.LockStore"
+        ],
+        "children": {}
+    },
+    "graph_providers": {
+        "path": "rasa/graph_components/providers",
+        "components": [
+            "rasa.graph_components.providers.domain_provider.DomainProvider",
+            "rasa.graph_components.providers.nlu_training_data_provider.NLUTrainingDataProvider",
+            "rasa.graph_components.providers.story_graph_provider.StoryGraphProvider",
+            "rasa.graph_components.providers.training_tracker_provider.TrainingTrackerProvider"
+        ],
+        "children": {}
+    },
+    "model_training": {
+        "path": "rasa",
+        "components": [
+            "rasa.model_training.TrainingResult",
+            "rasa.core.training.training.ActionFingerprint",
+            "rasa.engine.training.components.FingerprintComponent"
+        ],
+        "children": {}
+    }
+}

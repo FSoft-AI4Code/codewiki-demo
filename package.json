@@ -1,0 +1,26 @@
+{
+  "name": "codewiki-demo",
+  "version": "1.0.0",
+  "description": "CodeWiki Documentation Gallery - Browse documentation generated for open source projects",
+  "main": "generate-projects.js",
+  "scripts": {
+    "generate": "node generate-projects.js",
+    "serve": "npx serve -p 8080",
+    "start": "npm run generate && npm run serve",
+    "deploy": "npm run generate && git add projects.json && git commit -m 'Update projects.json' && git push"
+  },
+  "keywords": [
+    "codewiki",
+    "documentation",
+    "gallery",
+    "github-pages",
+    "static-site"
+  ],
+  "author": "CodeWiki Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/codewiki-demo.git"
+  },
+  "homepage": "https://yourusername.github.io/codewiki-demo"
+}

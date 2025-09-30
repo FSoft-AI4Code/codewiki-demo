@@ -1,0 +1,32 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-17T10:59:49.557414",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/ReactiveX--RxJava",
+        "commit_id": "d06a16ed81ea58a175024c078e803ea03fe246a9"
+    },
+    "statistics": {
+        "total_components": 9586,
+        "leaf_nodes": 390,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "schedulers.md",
+        "plugins_system.md",
+        "grouped_streams.md",
+        "test_utilities.md",
+        "base_subscriptions.md",
+        "base_observers_subscribers.md",
+        "disposables_and_subscriptions.md",
+        "parallel_streams.md",
+        "internal_utilities.md",
+        "core_reactive_types.md",
+        "public_observers_subscribers.md",
+        "functional_interfaces.md",
+        "fuseable_operators.md"
+    ]
+}

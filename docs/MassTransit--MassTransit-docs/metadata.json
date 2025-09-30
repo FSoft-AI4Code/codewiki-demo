@@ -1,0 +1,49 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T22:12:07.068920",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/MassTransit--MassTransit",
+        "commit_id": "2d7ad75ed68ba4f3db79fb433b5bf124d56a008f"
+    },
+    "statistics": {
+        "total_components": 5061,
+        "leaf_nodes": 3519,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "SendContext.md",
+        "ReceiveContext.md",
+        "MessageUrn.md",
+        "Activity_Selection.md",
+        "Transports_Core.md",
+        "InMemory_Transport_Testing.md",
+        "Testing_Core.md",
+        "Saga_Testing.md",
+        "CorrelatedBy.md",
+        "Core_Abstractions.md",
+        "PublishContext.md",
+        "JsonMessageEnvelope.md",
+        "Consumer_Testing.md",
+        "Serialization_Core.md",
+        "Courier_Core.md",
+        "Middleware_Core.md",
+        "IConsumer.md",
+        "Saga_StateMachine_Core.md",
+        "ConsumeContext.md",
+        "SystemTextJsonMessageSerializer.md",
+        "InMemory_Transport.md",
+        "Endpoint_Providers.md",
+        "ISaga.md",
+        "DependencyInjection_Core.md",
+        "Behavior_Context.md",
+        "StateMachine_Engine.md",
+        "Configuration_Core.md",
+        "IRequestClient.md",
+        "Transport_Interfaces.md",
+        "Endpoint_Implementations.md"
+    ]
+}

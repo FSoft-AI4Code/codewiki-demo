@@ -1,0 +1,177 @@
+{
+    "libsql_ffi_bundled": {
+        "path": "libsql-ffi/bundled/SQLite3MultipleCiphers",
+        "components": [
+            "libsql-ffi.bundled.SQLite3MultipleCiphers.conan.all.conanfile.sqlite3mc",
+            "libsql-ffi.bundled.SQLite3MultipleCiphers.conan.all.test_package.conanfile.sqlite3mcTest",
+            "libsql-ffi.bundled.SQLite3MultipleCiphers.scripts.amalgamate.TranslationUnit",
+            "libsql-ffi.bundled.SQLite3MultipleCiphers.scripts.amalgamate.Amalgamation"
+        ],
+        "children": {}
+    },
+    "jni_core_api": {
+        "path": "libsql-sqlite3/ext/jni/src/org/sqlite/jni",
+        "components": [
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.sqlite3.sqlite3",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.sqlite3_context.sqlite3_context",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.sqlite3_stmt.sqlite3_stmt",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.sqlite3_value.sqlite3_value",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.SQLite3Jni.SQLite3Jni",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.NativePointerHolder.NativePointerHolder",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.OutputPointer.OutputPointer",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.OutputPointer.Int64",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.OutputPointer.sqlite3_stmt",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.OutputPointer.Int32",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.OutputPointer.sqlite3",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.OutputPointer.String",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.OutputPointer.ByteArray",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.ValueHolder.ValueHolder",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.ResultCode.ResultCodeMap"
+        ],
+        "children": {}
+    },
+    "jni_capi": {
+        "path": "libsql-sqlite3/ext/jni/src/org/sqlite/jni/capi",
+        "components": [
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.CApi.CApi",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.sqlite3.sqlite3",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.sqlite3_backup.sqlite3_backup",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.sqlite3_blob.sqlite3_blob",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.sqlite3_context.sqlite3_context",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.sqlite3_stmt.sqlite3_stmt",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.sqlite3_value.sqlite3_value",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.NativePointerHolder.NativePointerHolder",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.OutputPointer",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.sqlite3",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.Int32",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.sqlite3_stmt",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.String",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.sqlite3_value",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.ByteBuffer",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.sqlite3_blob",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.Int64",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.Bool",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.OutputPointer.ByteArray",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.ValueHolder.ValueHolder",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.ResultCode.ResultCodeMap",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.TableColumnMetadata.TableColumnMetadata"
+        ],
+        "children": {}
+    },
+    "jni_callbacks": {
+        "path": "libsql-sqlite3/ext/jni/src/org/sqlite/jni/capi",
+        "components": [
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.CallbackProxy.CallbackProxy",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.AuthorizerCallback.AuthorizerCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.AutoExtensionCallback.AutoExtensionCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.BusyHandlerCallback.BusyHandlerCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.CollationCallback.CollationCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.CollationNeededCallback.CollationNeededCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.CommitHookCallback.CommitHookCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.ConfigLogCallback.ConfigLogCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.ConfigSqlLogCallback.ConfigSqlLogCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.PreupdateHookCallback.PreupdateHookCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.ProgressHandlerCallback.ProgressHandlerCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.RollbackHookCallback.RollbackHookCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.TraceV2Callback.TraceV2Callback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.UpdateHookCallback.UpdateHookCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.XDestroyCallback.XDestroyCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.AbstractCollationCallback.AbstractCollationCallback"
+        ],
+        "children": {}
+    },
+    "jni_functions": {
+        "path": "libsql-sqlite3/ext/jni/src/org/sqlite/jni/capi",
+        "components": [
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.SQLFunction.SQLFunction",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.ScalarFunction.ScalarFunction",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.AggregateFunction.PerContextState",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.AggregateFunction.AggregateFunction",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.WindowFunction.WindowFunction",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.PrepareMultiCallback.PrepareMultiCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.PrepareMultiCallback.StepAll",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.capi.PrepareMultiCallback.Finalize"
+        ],
+        "children": {}
+    },
+    "jni_fts5": {
+        "path": "libsql-sqlite3/ext/jni/src/org/sqlite/jni/fts5",
+        "components": [
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.Fts5.Fts5",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.Fts5Context.Fts5Context",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.Fts5ExtensionApi.XQueryPhraseCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.Fts5ExtensionApi.Fts5ExtensionApi",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.Fts5PhraseIter.Fts5PhraseIter",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.Fts5Tokenizer.Fts5Tokenizer",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.XTokenizeCallback.XTokenizeCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.fts5_api.fts5_api",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.fts5_extension_function.Abstract",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.fts5_extension_function.fts5_extension_function",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.fts5.fts5_tokenizer.fts5_tokenizer"
+        ],
+        "children": {}
+    },
+    "jni_wrapper1": {
+        "path": "libsql-sqlite3/ext/jni/src/org/sqlite/jni/wrapper1",
+        "components": [
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.ConfigLog",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.PrepareMultiFinalize",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.AutoExtension",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.Collation",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.ConfigSqlLog",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.Stmt",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.TraceCallback",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.CommitHookProxy",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.Status",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.RollbackHookProxy",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.BusyHandler",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.ProgressHandler",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.Blob",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.PrepareMulti",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.CommitHook",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.Authorizer",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.CollationNeeded",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.Backup",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.UpdateHook",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.UpdateHookProxy",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.Sqlite",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.RollbackHook",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.Sqlite.TableColumnMetadata",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.AggregateFunction.AggregateFunction",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.AggregateFunction.PerContextState",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.ScalarFunction.ScalarFunction",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.SqlFunction.ScalarAdapter",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.SqlFunction.Arg",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.SqlFunction.AggregateAdapter",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.SqlFunction.Arguments",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.SqlFunction.WindowAdapter",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.SqlFunction.SqlFunction",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.ValueHolder.ValueHolder",
+            "libsql-sqlite3.ext.jni.src.org.sqlite.jni.wrapper1.WindowFunction.WindowFunction"
+        ],
+        "children": {}
+    },
+    "wasm_extensions": {
+        "path": "libsql-sqlite3/ext/wasm",
+        "components": [
+            "libsql-sqlite3.ext.wasm.api.sqlite3-vfs-opfs-sahpool.c-pp.OpfsSAHPool",
+            "libsql-sqlite3.ext.wasm.api.sqlite3-vfs-opfs-sahpool.c-pp.OpfsSAHPoolUtil",
+            "libsql-sqlite3.ext.wasm.fiddle.serve.COOPCOEPHandler"
+        ],
+        "children": {
+            "development_utilities": {
+                "components": [
+                    "libsql-sqlite3.ext.wasm.fiddle.serve.COOPCOEPHandler"
+                ],
+                "children": {}
+            },
+            "opfs_storage_management": {
+                "components": [
+                    "libsql-sqlite3.ext.wasm.api.sqlite3-vfs-opfs-sahpool.c-pp.OpfsSAHPool",
+                    "libsql-sqlite3.ext.wasm.api.sqlite3-vfs-opfs-sahpool.c-pp.OpfsSAHPoolUtil"
+                ],
+                "children": {}
+            }
+        }
+    }
+}

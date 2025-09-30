@@ -1,0 +1,116 @@
+{
+    "android_hid_module": {
+        "path": "android-project/app/src/main/java/org/libsdl/app",
+        "components": [
+            "android-project.app.src.main.java.org.libsdl.app.HIDDevice.HIDDevice",
+            "android-project.app.src.main.java.org.libsdl.app.HIDDeviceBLESteamController.HIDDeviceBLESteamController",
+            "android-project.app.src.main.java.org.libsdl.app.HIDDeviceBLESteamController.GattOperation",
+            "android-project.app.src.main.java.org.libsdl.app.HIDDeviceManager.HIDDeviceManager",
+            "android-project.app.src.main.java.org.libsdl.app.HIDDeviceUSB.HIDDeviceUSB",
+            "android-project.app.src.main.java.org.libsdl.app.HIDDeviceUSB.InputThread"
+        ],
+        "children": {}
+    },
+    "android_sdl_core_module": {
+        "path": "android-project/app/src/main/java/org/libsdl/app",
+        "components": [
+            "android-project.app.src.main.java.org.libsdl.app.SDL.SDL",
+            "android-project.app.src.main.java.org.libsdl.app.SDLActivity.SDLActivity",
+            "android-project.app.src.main.java.org.libsdl.app.SDLActivity.SDLMain",
+            "android-project.app.src.main.java.org.libsdl.app.SDLActivity.SDLClipboardHandler",
+            "android-project.app.src.main.java.org.libsdl.app.SDLActivity.SDLFileDialogState",
+            "android-project.app.src.main.java.org.libsdl.app.SDLActivity.SDLCommandHandler",
+            "android-project.app.src.main.java.org.libsdl.app.SDLActivity.OneShotTask",
+            "android-project.app.src.main.java.org.libsdl.app.SDLActivity.ShowTextInputTask"
+        ],
+        "children": {}
+    },
+    "android_sdl_input_module": {
+        "path": "android-project/app/src/main/java/org/libsdl/app",
+        "components": [
+            "android-project.app.src.main.java.org.libsdl.app.SDLAudioManager.SDLAudioManager",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLControllerManager",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLJoystickHandler_API19",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLHapticHandler_API26",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLJoystickHandler_API16",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLJoystick",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLGenericMotionListener_API14",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLGenericMotionListener_API24",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLHaptic",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLHapticHandler_API31",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLJoystickHandler",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLHapticHandler",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.RangeComparator",
+            "android-project.app.src.main.java.org.libsdl.app.SDLControllerManager.SDLGenericMotionListener_API26",
+            "android-project.app.src.main.java.org.libsdl.app.SDLSurface.SDLSurface",
+            "android-project.app.src.main.java.org.libsdl.app.SDLDummyEdit.SDLDummyEdit",
+            "android-project.app.src.main.java.org.libsdl.app.SDLInputConnection.SDLInputConnection"
+        ],
+        "children": {}
+    },
+    "build_scripts_module": {
+        "path": "build-scripts",
+        "components": [
+            "build-scripts.build-release.AndroidApiVersion",
+            "build-scripts.build-release.VsArchPlatformConfig",
+            "build-scripts.build-release.GitHubSectionPrinter",
+            "build-scripts.build-release.SectionPrinter",
+            "build-scripts.build-release.NodeInArchive",
+            "build-scripts.build-release.SourceCollector",
+            "build-scripts.build-release.Executer",
+            "build-scripts.build-release.ArchiveFileTree",
+            "build-scripts.build-release.Archiver",
+            "build-scripts.build-release.VisualStudio",
+            "build-scripts.build-release.Releaser",
+            "build-scripts.check_android_jni.JniType",
+            "build-scripts.check_android_jni.JniMethodBinding",
+            "build-scripts.rename_macros.MacrosCheck",
+            "build-scripts.rename_macros.TextReplacer",
+            "build-scripts.setup-gdk-desktop.GdDesktopConfigurator"
+        ],
+        "children": {}
+    },
+    "hid_api_module": {
+        "path": "src/hidapi",
+        "components": [
+            "src.hidapi.android.hid.timeval",
+            "src.hidapi.android.hid.hid_device_info",
+            "src.hidapi.android.hid.hid_buffer_pool",
+            "src.hidapi.android.hid.hid_buffer_entry",
+            "src.hidapi.android.hid.CHIDDevice",
+            "src.hidapi.android.hid.hid_mutex_guard",
+            "src.hidapi.android.hid.hid_buffer",
+            "src.hidapi.android.hid.hid_device_ref",
+            "src.hidapi.android.hid.hid_device_",
+            "src.hidapi.android.hid.timespec",
+            "src.hidapi.testgui.test.hid_device_info"
+        ],
+        "children": {}
+    },
+    "gameinput_module": {
+        "path": "src",
+        "components": [
+            "src.joystick.gdk.SDL_gameinputjoystick.GAMEINPUT_InternalList",
+            "src.joystick.gdk.SDL_gameinputjoystick.joystick_hwdata",
+            "src.joystick.gdk.SDL_gameinputjoystick.GAMEINPUT_InternalDevice",
+            "src.video.windows.SDL_windowsgameinput.GAMEINPUT_Device",
+            "src.video.windows.SDL_windowsgameinput.WIN_GameInputData"
+        ],
+        "children": {}
+    },
+    "dynapi_module": {
+        "path": "src/dynapi",
+        "components": [
+            "src.dynapi.gendynapi.SdlProcedure",
+            "src.dynapi.gendynapi.CallOnce"
+        ],
+        "children": {}
+    },
+    "xbox_tools_module": {
+        "path": "src/video/directx",
+        "components": [
+            "src.video.directx.gen_xbox_cmacros.Program"
+        ],
+        "children": {}
+    }
+}

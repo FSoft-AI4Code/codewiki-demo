@@ -1,0 +1,437 @@
+{
+    "core-mermaid": {
+        "path": "packages/mermaid/src/mermaid.ts",
+        "components": [
+            "packages.mermaid.src.mermaid.Mermaid",
+            "packages.mermaid.src.mermaid.RunOptions"
+        ],
+        "children": {}
+    },
+    "config": {
+        "path": "packages/mermaid/src/config.type.ts",
+        "components": [
+            "packages.mermaid.src.config.type.MermaidConfig",
+            "packages.mermaid.src.config.type.BaseDiagramConfig",
+            "packages.mermaid.src.config.type.FlowchartDiagramConfig",
+            "packages.mermaid.src.config.type.SequenceDiagramConfig",
+            "packages.mermaid.src.config.type.ClassDiagramConfig",
+            "packages.mermaid.src.config.type.StateDiagramConfig",
+            "packages.mermaid.src.config.type.ErDiagramConfig",
+            "packages.mermaid.src.config.type.GanttDiagramConfig",
+            "packages.mermaid.src.config.type.JourneyDiagramConfig",
+            "packages.mermaid.src.config.type.PieDiagramConfig",
+            "packages.mermaid.src.config.type.QuadrantChartConfig",
+            "packages.mermaid.src.config.type.XYChartConfig",
+            "packages.mermaid.src.config.type.RadarDiagramConfig",
+            "packages.mermaid.src.config.type.MindmapDiagramConfig",
+            "packages.mermaid.src.config.type.TimelineDiagramConfig",
+            "packages.mermaid.src.config.type.SankeyDiagramConfig",
+            "packages.mermaid.src.config.type.ArchitectureDiagramConfig",
+            "packages.mermaid.src.config.type.C4DiagramConfig",
+            "packages.mermaid.src.config.type.BlockDiagramConfig",
+            "packages.mermaid.src.config.type.PacketDiagramConfig",
+            "packages.mermaid.src.config.type.KanbanDiagramConfig",
+            "packages.mermaid.src.config.type.RequirementDiagramConfig",
+            "packages.mermaid.src.config.type.FontConfig",
+            "packages.mermaid.src.config.type.NodeLabel"
+        ],
+        "children": {}
+    },
+    "diagram-api": {
+        "path": "packages/mermaid/src/diagram-api",
+        "components": [
+            "packages.mermaid.src.Diagram.Diagram",
+            "packages.mermaid.src.diagram-api.types.DiagramDefinition",
+            "packages.mermaid.src.diagram-api.types.DiagramDB",
+            "packages.mermaid.src.diagram-api.types.DiagramMetadata",
+            "packages.mermaid.src.diagram-api.types.DiagramRenderer",
+            "packages.mermaid.src.diagram-api.types.DiagramStyleClassDef",
+            "packages.mermaid.src.diagram-api.types.ExternalDiagramDefinition",
+            "packages.mermaid.src.diagram-api.types.ParserDefinition",
+            "packages.mermaid.src.diagram-api.types.InjectUtils",
+            "packages.mermaid.src.diagram-api.frontmatter.FrontMatterMetadata",
+            "packages.mermaid.src.diagram-api.frontmatter.FrontMatterResult"
+        ],
+        "children": {}
+    },
+    "rendering-util": {
+        "path": "packages/mermaid/src/rendering-util",
+        "components": [
+            "packages.mermaid.src.rendering-util.types.RenderData",
+            "packages.mermaid.src.rendering-util.types.LayoutData",
+            "packages.mermaid.src.rendering-util.types.BaseNode",
+            "packages.mermaid.src.rendering-util.types.ClusterNode",
+            "packages.mermaid.src.rendering-util.types.NonClusterNode",
+            "packages.mermaid.src.rendering-util.types.Edge",
+            "packages.mermaid.src.rendering-util.types.RectOptions",
+            "packages.mermaid.src.rendering-util.types.ShapeRenderOptions",
+            "packages.mermaid.src.rendering-util.types.MarkdownWord",
+            "packages.mermaid.src.rendering-util.render.RenderOptions",
+            "packages.mermaid.src.rendering-util.render.LayoutLoaderDefinition",
+            "packages.mermaid.src.rendering-util.render.LayoutAlgorithm",
+            "packages.mermaid.src.rendering-util.rendering-elements.shapes.ShapeDefinition",
+            "packages.mermaid.src.rendering-util.icons.SyncIconLoader",
+            "packages.mermaid.src.rendering-util.icons.AsyncIconLoader",
+            "packages.mermaid.src.rendering-util.uid.Uid"
+        ],
+        "children": {}
+    },
+    "themes": {
+        "path": "packages/mermaid/src/themes",
+        "components": [
+            "packages.mermaid.src.themes.theme-base.Theme",
+            "packages.mermaid.src.themes.theme-dark.Theme",
+            "packages.mermaid.src.themes.theme-default.Theme",
+            "packages.mermaid.src.themes.theme-forest.Theme",
+            "packages.mermaid.src.themes.theme-neutral.Theme"
+        ],
+        "children": {}
+    },
+    "types": {
+        "path": "packages/mermaid/src/types.ts",
+        "components": [
+            "packages.mermaid.src.types.ParseResult",
+            "packages.mermaid.src.types.RenderResult",
+            "packages.mermaid.src.types.ParseOptions",
+            "packages.mermaid.src.types.Point",
+            "packages.mermaid.src.types.EdgeData",
+            "packages.mermaid.src.types.EdgeMetaData",
+            "packages.mermaid.src.types.NodeMetaData",
+            "packages.mermaid.src.types.TextDimensions",
+            "packages.mermaid.src.types.TextDimensionConfig",
+            "packages.mermaid.src.types.ParticipantMetaData"
+        ],
+        "children": {}
+    },
+    "utils": {
+        "path": "packages/mermaid/src/utils.ts",
+        "components": [
+            "packages.mermaid.src.utils.Directive",
+            "packages.mermaid.src.utils.WrapLabelConfig",
+            "packages.mermaid.src.utils.BreakStringOutput",
+            "packages.mermaid.src.utils.InitIDGenerator"
+        ],
+        "children": {}
+    },
+    "flowchart": {
+        "path": "packages/mermaid/src/diagrams/flowchart",
+        "components": [
+            "packages.mermaid.src.diagrams.flowchart.flowDb.FlowDB",
+            "packages.mermaid.src.diagrams.flowchart.flowDb.LinkData",
+            "packages.mermaid.src.diagrams.flowchart.types.FlowVertex",
+            "packages.mermaid.src.diagrams.flowchart.types.FlowEdge",
+            "packages.mermaid.src.diagrams.flowchart.types.FlowLink",
+            "packages.mermaid.src.diagrams.flowchart.types.FlowSubGraph",
+            "packages.mermaid.src.diagrams.flowchart.types.FlowText",
+            "packages.mermaid.src.diagrams.flowchart.types.FlowClass",
+            "packages.mermaid.src.diagrams.flowchart.styles.FlowChartStyleOptions"
+        ],
+        "children": {}
+    },
+    "sequence": {
+        "path": "packages/mermaid/src/diagrams/sequence",
+        "components": [
+            "packages.mermaid.src.diagrams.sequence.sequenceDb.SequenceDB",
+            "packages.mermaid.src.diagrams.sequence.sequenceDb.SequenceState",
+            "packages.mermaid.src.diagrams.sequence.types.Actor",
+            "packages.mermaid.src.diagrams.sequence.types.Message",
+            "packages.mermaid.src.diagrams.sequence.types.Note",
+            "packages.mermaid.src.diagrams.sequence.types.Box",
+            "packages.mermaid.src.diagrams.sequence.types.AddMessageParams",
+            "packages.mermaid.src.diagrams.sequence.sequenceRenderer.NoteModel"
+        ],
+        "children": {}
+    },
+    "class": {
+        "path": "packages/mermaid/src/diagrams/class",
+        "components": [
+            "packages.mermaid.src.diagrams.class.classDb.ClassDB",
+            "packages.mermaid.src.diagrams.class.classTypes.ClassNode",
+            "packages.mermaid.src.diagrams.class.classTypes.ClassRelation",
+            "packages.mermaid.src.diagrams.class.classTypes.Interface",
+            "packages.mermaid.src.diagrams.class.classTypes.ClassNote",
+            "packages.mermaid.src.diagrams.class.classTypes.NamespaceNode",
+            "packages.mermaid.src.diagrams.class.classTypes.ClassMember",
+            "packages.mermaid.src.diagrams.class.classTypes.StyleClass",
+            "packages.mermaid.src.diagrams.class.classRenderer-v2.RectParameters"
+        ],
+        "children": {}
+    },
+    "state": {
+        "path": "packages/mermaid/src/diagrams/state",
+        "components": [
+            "packages.mermaid.src.diagrams.state.stateDb.StateDB",
+            "packages.mermaid.src.diagrams.state.stateDb.Document",
+            "packages.mermaid.src.diagrams.state.stateDb.StateStmt",
+            "packages.mermaid.src.diagrams.state.stateDb.RelationStmt",
+            "packages.mermaid.src.diagrams.state.stateDb.Edge",
+            "packages.mermaid.src.diagrams.state.stateDb.Note",
+            "packages.mermaid.src.diagrams.state.stateDb.NodeData",
+            "packages.mermaid.src.diagrams.state.stateDb.StyleStmt",
+            "packages.mermaid.src.diagrams.state.stateDb.DirectionStmt",
+            "packages.mermaid.src.diagrams.state.stateDb.DiagramEdge",
+            "packages.mermaid.src.diagrams.state.stateDb.ClassDefStmt",
+            "packages.mermaid.src.diagrams.state.stateDb.ClickStmt",
+            "packages.mermaid.src.diagrams.state.stateDb.ApplyClassStmt",
+            "packages.mermaid.src.diagrams.state.stateDb.StyleClass",
+            "packages.mermaid.src.diagrams.state.stateDb.BaseStmt",
+            "packages.mermaid.src.diagrams.state.stateDb.RootStmt"
+        ],
+        "children": {}
+    },
+    "er": {
+        "path": "packages/mermaid/src/diagrams/er",
+        "components": [
+            "packages.mermaid.src.diagrams.er.erDb.ErDB",
+            "packages.mermaid.src.diagrams.er.erTypes.EntityNode",
+            "packages.mermaid.src.diagrams.er.erTypes.EntityClass",
+            "packages.mermaid.src.diagrams.er.erTypes.Attribute",
+            "packages.mermaid.src.diagrams.er.erTypes.Relationship",
+            "packages.mermaid.src.diagrams.er.erTypes.RelSpec"
+        ],
+        "children": {}
+    },
+    "git": {
+        "path": "packages/mermaid/src/diagrams/git",
+        "components": [
+            "packages.mermaid.src.diagrams.git.gitGraphAst.GitGraphState",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.GitGraphDB",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.GitGraph",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.Commit",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.BranchDB",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.CommitDB",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.MergeDB",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.CherryPickDB",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.GitGraphDBParseProvider",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.GitGraphDBRenderProvider",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.BranchAst",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.CommitAst",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.MergeAst",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.CheckoutAst",
+            "packages.mermaid.src.diagrams.git.gitGraphTypes.CherryPickingAst",
+            "packages.mermaid.src.diagrams.git.gitGraphRenderer.CommitPosition",
+            "packages.mermaid.src.diagrams.git.gitGraphRenderer.CommitPositionOffset",
+            "packages.mermaid.src.diagrams.git.gitGraphRenderer.BranchPosition"
+        ],
+        "children": {}
+    },
+    "pie": {
+        "path": "packages/mermaid/src/diagrams/pie",
+        "components": [
+            "packages.mermaid.src.diagrams.pie.pieTypes.PieDB",
+            "packages.mermaid.src.diagrams.pie.pieTypes.PieFields",
+            "packages.mermaid.src.diagrams.pie.pieTypes.D3Section",
+            "packages.mermaid.src.diagrams.pie.pieTypes.PieStyleOptions"
+        ],
+        "children": {}
+    },
+    "mindmap": {
+        "path": "packages/mermaid/src/diagrams/mindmap",
+        "components": [
+            "packages.mermaid.src.diagrams.mindmap.mindmapDb.MindmapDB",
+            "packages.mermaid.src.diagrams.mindmap.mindmapTypes.MindmapNode",
+            "packages.mermaid.src.diagrams.mindmap.mindmapRenderer.EdgeSingular"
+        ],
+        "children": {}
+    },
+    "quadrant-chart": {
+        "path": "packages/mermaid/src/diagrams/quadrant-chart",
+        "components": [
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantBuilder",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantBuilderConfig",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantBuilderData",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantBuilderThemeConfig",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantBuildType",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantPointType",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantPointInputType",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantTextType",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantLineType",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.QuadrantQuadrantsType",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.CalculateSpaceData",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantBuilder.StylesObject",
+            "packages.mermaid.src.diagrams.quadrant-chart.quadrantDb.LexTextObj"
+        ],
+        "children": {}
+    },
+    "radar": {
+        "path": "packages/mermaid/src/diagrams/radar",
+        "components": [
+            "packages.mermaid.src.diagrams.radar.types.RadarDB",
+            "packages.mermaid.src.diagrams.radar.types.RadarData",
+            "packages.mermaid.src.diagrams.radar.types.RadarOptions",
+            "packages.mermaid.src.diagrams.radar.types.RadarStyleOptions",
+            "packages.mermaid.src.diagrams.radar.types.RadarAxis",
+            "packages.mermaid.src.diagrams.radar.types.RadarCurve"
+        ],
+        "children": {}
+    },
+    "sankey": {
+        "path": "packages/mermaid/src/diagrams/sankey",
+        "components": [
+            "packages.mermaid.src.diagrams.sankey.sankeyDB.SankeyNode",
+            "packages.mermaid.src.diagrams.sankey.sankeyDB.SankeyLink"
+        ],
+        "children": {}
+    },
+    "timeline": {
+        "path": "packages/mermaid/src/diagrams/timeline",
+        "components": [
+            "packages.mermaid.src.diagrams.timeline.timelineRenderer.TimelineTask",
+            "packages.mermaid.src.diagrams.timeline.timelineRenderer.Block"
+        ],
+        "children": {}
+    },
+    "treemap": {
+        "path": "packages/mermaid/src/diagrams/treemap",
+        "components": [
+            "packages.mermaid.src.diagrams.treemap.db.TreeMapDB",
+            "packages.mermaid.src.diagrams.treemap.types.TreemapDB",
+            "packages.mermaid.src.diagrams.treemap.types.TreemapNode",
+            "packages.mermaid.src.diagrams.treemap.types.TreemapItem",
+            "packages.mermaid.src.diagrams.treemap.types.TreemapRow",
+            "packages.mermaid.src.diagrams.treemap.types.TreemapData",
+            "packages.mermaid.src.diagrams.treemap.types.TreemapStyleOptions",
+            "packages.mermaid.src.diagrams.treemap.types.TreemapDiagramConfig",
+            "packages.mermaid.src.diagrams.treemap.types.TreemapAst"
+        ],
+        "children": {}
+    },
+    "xychart": {
+        "path": "packages/mermaid/src/diagrams/xychart",
+        "components": [
+            "packages.mermaid.src.diagrams.xychart.xychartDb.NormalTextType",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.index.XYChartBuilder",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.orchestrator.Orchestrator",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.textDimensionCalculator.TextDimensionCalculator",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.textDimensionCalculator.TextDimensionCalculatorWithFont",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.XYChartData",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.XYChartConfig",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.XYChartAxisConfig",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.XYChartThemeConfig",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.XYChartAxisThemeConfig",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.BarPlotData",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.LinePlotData",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.BandAxisDataType",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.LinearAxisDataType",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.ChartComponent",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.Dimension",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.Point",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.PathElem",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.RectElem",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.TextElem",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.interfaces.BoundingRect",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.axis.index.Axis",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.axis.baseAxis.BaseAxis",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.axis.bandAxis.BandAxis",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.axis.linearAxis.LinearAxis",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.plot.index.BasePlot",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.plot.index.Plot",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.plot.barPlot.BarPlot",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.plot.linePlot.LinePlot",
+            "packages.mermaid.src.diagrams.xychart.chartBuilder.components.chartTitle.ChartTitle"
+        ],
+        "children": {}
+    },
+    "architecture": {
+        "path": "packages/mermaid/src/diagrams/architecture",
+        "components": [
+            "packages.mermaid.src.diagrams.architecture.architectureDb.ArchitectureDB",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.ArchitectureDB",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.ArchitectureService",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.ArchitectureGroup",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.ArchitectureJunction",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.ArchitectureEdge",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.NodeSingular",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.EdgeSingular",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.EdgeSingularData",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.ArchitectureState",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.ArchitectureDataStructures",
+            "packages.mermaid.src.diagrams.architecture.architectureTypes.ArchitectureStyleOptions"
+        ],
+        "children": {}
+    },
+    "block": {
+        "path": "packages/mermaid/src/diagrams/block",
+        "components": [
+            "packages.mermaid.src.diagrams.block.blockTypes.Block",
+            "packages.mermaid.src.diagrams.block.blockTypes.ClassDef",
+            "packages.mermaid.src.diagrams.block.layout.BlockPosition",
+            "packages.mermaid.src.diagrams.block.styles.BlockChartStyleOptions"
+        ],
+        "children": {}
+    },
+    "c4": {
+        "path": "packages/mermaid/src/diagrams/c4",
+        "components": [
+            "packages.mermaid.src.diagrams.c4.c4Renderer.Bounds",
+            "packages.mermaid.src.diagrams.c4.c4Renderer.Point"
+        ],
+        "children": {}
+    },
+    "requirement": {
+        "path": "packages/mermaid/src/diagrams/requirement",
+        "components": [
+            "packages.mermaid.src.diagrams.requirement.requirementDb.RequirementDB",
+            "packages.mermaid.src.diagrams.requirement.types.Requirement",
+            "packages.mermaid.src.diagrams.requirement.types.RequirementClass",
+            "packages.mermaid.src.diagrams.requirement.types.Element",
+            "packages.mermaid.src.diagrams.requirement.types.Relation"
+        ],
+        "children": {}
+    },
+    "packet": {
+        "path": "packages/mermaid/src/diagrams/packet",
+        "components": [
+            "packages.mermaid.src.diagrams.packet.db.PacketDB",
+            "packages.mermaid.src.diagrams.packet.types.PacketDB",
+            "packages.mermaid.src.diagrams.packet.types.PacketData",
+            "packages.mermaid.src.diagrams.packet.types.PacketStyleOptions"
+        ],
+        "children": {}
+    },
+    "info": {
+        "path": "packages/mermaid/src/diagrams/info",
+        "components": [
+            "packages.mermaid.src.diagrams.info.infoTypes.InfoDB",
+            "packages.mermaid.src.diagrams.info.infoTypes.InfoFields"
+        ],
+        "children": {}
+    },
+    "common-types": {
+        "path": "packages/mermaid/src/diagrams/common",
+        "components": [
+            "packages.mermaid.src.diagrams.common.commonTypes.TextData",
+            "packages.mermaid.src.diagrams.common.commonTypes.TextObject",
+            "packages.mermaid.src.diagrams.common.commonTypes.RectData",
+            "packages.mermaid.src.diagrams.common.commonTypes.Bound"
+        ],
+        "children": {}
+    },
+    "mermaid-layout-elk": {
+        "path": "packages/mermaid-layout-elk/src",
+        "components": [
+            "packages.mermaid-layout-elk.src.render.LabelData",
+            "packages.mermaid-layout-elk.src.render.NodeWithVertex",
+            "packages.mermaid-layout-elk.src.find-common-ancestor.TreeData"
+        ],
+        "children": {}
+    },
+    "mermaid-zenuml": {
+        "path": "packages/mermaid-zenuml/src",
+        "components": [
+            "packages.mermaid-zenuml.src.zenuml.d.ZenUml",
+            "packages.mermaid-zenuml.src.zenuml.d.RenderOptions"
+        ],
+        "children": {}
+    },
+    "parser-common": {
+        "path": "packages/parser/src/language/common",
+        "components": [
+            "packages.parser.src.language.common.tokenBuilder.AbstractMermaidTokenBuilder",
+            "packages.parser.src.language.common.tokenBuilder.CommonTokenBuilder",
+            "packages.parser.src.language.common.valueConverter.AbstractMermaidValueConverter",
+            "packages.parser.src.language.common.valueConverter.CommonValueConverter"
+        ],
+        "children": {}
+    }
+}

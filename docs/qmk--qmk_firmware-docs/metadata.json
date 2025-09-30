@@ -1,0 +1,30 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T16:22:37.137043",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/qmk--qmk_firmware",
+        "commit_id": "1a58fce043e7f2e2b938dee03945dabc29e48d73"
+    },
+    "statistics": {
+        "total_components": 12031,
+        "leaf_nodes": 44,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "flashers.md",
+        "painter_qff.md",
+        "community_modules.md",
+        "json_encoders.md",
+        "build_targets.md",
+        "userspace.md",
+        "path.md",
+        "painter_qgf.md",
+        "keyboard.md",
+        "uf2conv.md",
+        "search.md"
+    ]
+}

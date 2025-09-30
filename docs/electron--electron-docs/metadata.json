@@ -1,0 +1,27 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-17T06:01:45.122760",
+        "main_model": "claude-sonnet-4",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/electron--electron",
+        "commit_id": "828fd59a72e673acf03f878b4f488a40fca46dfe"
+    },
+    "statistics": {
+        "total_components": 1529,
+        "leaf_nodes": 130,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "system_integration.md",
+        "networking.md",
+        "type_definitions.md",
+        "ui_components.md",
+        "process_management.md",
+        "build_and_testing.md",
+        "web_view_system.md",
+        "ipc_communication.md"
+    ]
+}

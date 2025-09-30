@@ -1,0 +1,190 @@
+{
+    "compiler_core": {
+        "path": "packages/svelte/src/compiler/phases",
+        "components": [
+            "packages.svelte.src.compiler.phases.1-parse.index.Parser",
+            "packages.svelte.src.compiler.phases.2-analyze.types.d.AnalysisState",
+            "packages.svelte.src.compiler.phases.3-transform.client.types.d.ClientTransformState",
+            "packages.svelte.src.compiler.phases.3-transform.client.types.d.ComponentClientTransformState",
+            "packages.svelte.src.compiler.phases.3-transform.server.types.d.ServerTransformState",
+            "packages.svelte.src.compiler.phases.3-transform.server.types.d.ComponentServerTransformState",
+            "packages.svelte.src.compiler.phases.3-transform.types.d.TransformState",
+            "packages.svelte.src.compiler.phases.scope.Binding",
+            "packages.svelte.src.compiler.phases.scope.Scope",
+            "packages.svelte.src.compiler.phases.scope.ScopeRoot",
+            "packages.svelte.src.compiler.phases.types.d.Analysis",
+            "packages.svelte.src.compiler.phases.types.d.ComponentAnalysis",
+            "packages.svelte.src.compiler.phases.types.d.Template"
+        ],
+        "children": {}
+    },
+    "compiler_types": {
+        "path": "packages/svelte/src/compiler/types",
+        "components": [
+            "packages.svelte.src.compiler.types.template.d.Root",
+            "packages.svelte.src.compiler.types.template.d.Fragment",
+            "packages.svelte.src.compiler.types.template.d.Component",
+            "packages.svelte.src.compiler.types.template.d.RegularElement",
+            "packages.svelte.src.compiler.types.template.d.Text",
+            "packages.svelte.src.compiler.types.template.d.Comment",
+            "packages.svelte.src.compiler.types.template.d.ExpressionTag",
+            "packages.svelte.src.compiler.types.template.d.Attribute",
+            "packages.svelte.src.compiler.types.template.d.BindDirective",
+            "packages.svelte.src.compiler.types.template.d.OnDirective",
+            "packages.svelte.src.compiler.types.template.d.UseDirective",
+            "packages.svelte.src.compiler.types.template.d.TransitionDirective",
+            "packages.svelte.src.compiler.types.template.d.AnimateDirective",
+            "packages.svelte.src.compiler.types.template.d.ClassDirective",
+            "packages.svelte.src.compiler.types.template.d.StyleDirective",
+            "packages.svelte.src.compiler.types.template.d.IfBlock",
+            "packages.svelte.src.compiler.types.template.d.EachBlock",
+            "packages.svelte.src.compiler.types.template.d.AwaitBlock",
+            "packages.svelte.src.compiler.types.template.d.KeyBlock",
+            "packages.svelte.src.compiler.types.template.d.SnippetBlock",
+            "packages.svelte.src.compiler.types.template.d.RenderTag",
+            "packages.svelte.src.compiler.types.index.d.CompileOptions",
+            "packages.svelte.src.compiler.types.index.d.CompileResult"
+        ],
+        "children": {}
+    },
+    "css_types": {
+        "path": "packages/svelte/src/compiler/types/css.d.ts",
+        "components": [
+            "packages.svelte.src.compiler.types.css.d.StyleSheet",
+            "packages.svelte.src.compiler.types.css.d.Rule",
+            "packages.svelte.src.compiler.types.css.d.Declaration",
+            "packages.svelte.src.compiler.types.css.d.SelectorList",
+            "packages.svelte.src.compiler.types.css.d.ComplexSelector",
+            "packages.svelte.src.compiler.types.css.d.TypeSelector",
+            "packages.svelte.src.compiler.types.css.d.ClassSelector",
+            "packages.svelte.src.compiler.types.css.d.IdSelector",
+            "packages.svelte.src.compiler.types.css.d.AttributeSelector",
+            "packages.svelte.src.compiler.types.css.d.PseudoClassSelector",
+            "packages.svelte.src.compiler.types.css.d.PseudoElementSelector"
+        ],
+        "children": {}
+    },
+    "client_runtime": {
+        "path": "packages/svelte/src/internal/client",
+        "components": [
+            "packages.svelte.src.internal.client.reactivity.types.d.Signal",
+            "packages.svelte.src.internal.client.reactivity.types.d.Value",
+            "packages.svelte.src.internal.client.reactivity.types.d.Derived",
+            "packages.svelte.src.internal.client.reactivity.types.d.Effect",
+            "packages.svelte.src.internal.client.reactivity.types.d.Reaction",
+            "packages.svelte.src.internal.client.reactivity.batch.Batch",
+            "packages.svelte.src.internal.client.types.d.TransitionManager",
+            "packages.svelte.src.internal.client.types.d.AnimationManager"
+        ],
+        "children": {}
+    },
+    "server_runtime": {
+        "path": "packages/svelte/src/internal/server",
+        "components": [
+            "packages.svelte.src.internal.server.payload.Payload",
+            "packages.svelte.src.internal.server.payload.HeadPayload",
+            "packages.svelte.src.internal.server.types.d.Component",
+            "packages.svelte.src.internal.server.types.d.RenderOutput"
+        ],
+        "children": {}
+    },
+    "component_system": {
+        "path": "packages/svelte/src/index.d.ts",
+        "components": [
+            "packages.svelte.src.index.d.SvelteComponent",
+            "packages.svelte.src.index.d.Component",
+            "packages.svelte.src.index.d.SvelteComponentTyped",
+            "packages.svelte.src.index.d.ComponentConstructorOptions",
+            "packages.svelte.src.index.d.Snippet",
+            "packages.svelte.src.index.d.EventDispatcher",
+            "packages.svelte.src.index.d.DispatchOptions"
+        ],
+        "children": {}
+    },
+    "stores": {
+        "path": "packages/svelte/src/store/public.d.ts",
+        "components": [
+            "packages.svelte.src.store.public.d.Readable",
+            "packages.svelte.src.store.public.d.Writable"
+        ],
+        "children": {}
+    },
+    "motion": {
+        "path": "packages/svelte/src/motion",
+        "components": [
+            "packages.svelte.src.motion.public.d.Spring",
+            "packages.svelte.src.motion.public.d.Tweened",
+            "packages.svelte.src.motion.spring.Spring",
+            "packages.svelte.src.motion.tweened.Tween",
+            "packages.svelte.src.motion.private.d.SpringOpts",
+            "packages.svelte.src.motion.private.d.TweenedOptions"
+        ],
+        "children": {}
+    },
+    "transitions": {
+        "path": "packages/svelte/src/transition/public.d.ts",
+        "components": [
+            "packages.svelte.src.transition.public.d.TransitionConfig",
+            "packages.svelte.src.transition.public.d.FadeParams",
+            "packages.svelte.src.transition.public.d.FlyParams",
+            "packages.svelte.src.transition.public.d.SlideParams",
+            "packages.svelte.src.transition.public.d.ScaleParams",
+            "packages.svelte.src.transition.public.d.BlurParams",
+            "packages.svelte.src.transition.public.d.DrawParams",
+            "packages.svelte.src.transition.public.d.CrossfadeParams"
+        ],
+        "children": {}
+    },
+    "actions": {
+        "path": "packages/svelte/src/action/public.d.ts",
+        "components": [
+            "packages.svelte.src.action.public.d.Action",
+            "packages.svelte.src.action.public.d.ActionReturn"
+        ],
+        "children": {}
+    },
+    "animations": {
+        "path": "packages/svelte/src/animate/public.d.ts",
+        "components": [
+            "packages.svelte.src.animate.public.d.AnimationConfig",
+            "packages.svelte.src.animate.public.d.FlipParams"
+        ],
+        "children": {}
+    },
+    "reactive_data_structures": {
+        "path": "packages/svelte/src/reactivity",
+        "components": [
+            "packages.svelte.src.reactivity.map.SvelteMap",
+            "packages.svelte.src.reactivity.set.SvelteSet",
+            "packages.svelte.src.reactivity.date.SvelteDate",
+            "packages.svelte.src.reactivity.url.SvelteURL",
+            "packages.svelte.src.reactivity.url-search-params.SvelteURLSearchParams",
+            "packages.svelte.src.reactivity.media-query.MediaQuery",
+            "packages.svelte.src.reactivity.reactive-value.ReactiveValue"
+        ],
+        "children": {}
+    },
+    "html_elements": {
+        "path": "packages/svelte/elements.d.ts",
+        "components": [
+            "packages.svelte.elements.d.HTMLAttributes",
+            "packages.svelte.elements.d.SVGAttributes",
+            "packages.svelte.elements.d.DOMAttributes",
+            "packages.svelte.elements.d.AriaAttributes",
+            "packages.svelte.elements.d.SvelteHTMLElements",
+            "packages.svelte.elements.d.SvelteWindowAttributes",
+            "packages.svelte.elements.d.SvelteDocumentAttributes"
+        ],
+        "children": {}
+    },
+    "preprocessor": {
+        "path": "packages/svelte/src/compiler/preprocess",
+        "components": [
+            "packages.svelte.src.compiler.preprocess.public.d.SveltePreprocessor",
+            "packages.svelte.src.compiler.preprocess.public.d.PreprocessorGroup",
+            "packages.svelte.src.compiler.preprocess.public.d.Processed",
+            "packages.svelte.src.compiler.preprocess.index.PreprocessResult"
+        ],
+        "children": {}
+    }
+}

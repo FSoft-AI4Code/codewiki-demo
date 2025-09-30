@@ -1,0 +1,165 @@
+{
+    "grpc_core": {
+        "path": "src/python/grpcio/grpc",
+        "components": [
+            "src.python.grpcio.grpc.__init__.UnaryUnaryClientInterceptor",
+            "src.python.grpcio.grpc.__init__.Call",
+            "src.python.grpcio.grpc.__init__.UnaryStreamMultiCallable",
+            "src.python.grpcio.grpc.__init__.HandlerCallDetails",
+            "src.python.grpcio.grpc.__init__.StreamStreamMultiCallable",
+            "src.python.grpcio.grpc.__init__.ServerInterceptor",
+            "src.python.grpcio.grpc.__init__.StreamStreamClientInterceptor",
+            "src.python.grpcio.grpc.__init__.StreamUnaryClientInterceptor",
+            "src.python.grpcio.grpc.__init__.AuthMetadataContext",
+            "src.python.grpcio.grpc.__init__.ClientCallDetails",
+            "src.python.grpcio.grpc.__init__.Future",
+            "src.python.grpcio.grpc.__init__.StatusCode",
+            "src.python.grpcio.grpc.__init__.Server",
+            "src.python.grpcio.grpc.__init__.Compression",
+            "src.python.grpcio.grpc.__init__.ServiceRpcHandler",
+            "src.python.grpcio.grpc.__init__.ChannelConnectivity",
+            "src.python.grpcio.grpc.__init__.LocalConnectionType",
+            "src.python.grpcio.grpc.__init__.StreamUnaryMultiCallable",
+            "src.python.grpcio.grpc.__init__.RpcMethodHandler",
+            "src.python.grpcio.grpc.__init__.UnaryUnaryMultiCallable",
+            "src.python.grpcio.grpc.__init__.AuthMetadataPluginCallback",
+            "src.python.grpcio.grpc.__init__.Channel",
+            "src.python.grpcio.grpc.__init__.UnaryStreamClientInterceptor",
+            "src.python.grpcio.grpc.__init__.ServicerContext",
+            "src.python.grpcio.grpc._channel.Channel",
+            "src.python.grpcio.grpc._observability.ObservabilityPlugin",
+            "src.python.grpcio.grpc._server._ServerStage",
+            "src.python.grpcio.grpc._server._HandlerCallDetails"
+        ],
+        "children": {}
+    },
+    "grpc_aio": {
+        "path": "src/python/grpcio/grpc/aio",
+        "components": [
+            "src.python.grpcio.grpc.aio._base_call.UnaryStreamCall",
+            "src.python.grpcio.grpc.aio._base_call.UnaryUnaryCall",
+            "src.python.grpcio.grpc.aio._base_call.StreamUnaryCall",
+            "src.python.grpcio.grpc.aio._base_call.StreamStreamCall",
+            "src.python.grpcio.grpc.aio._base_channel.Channel",
+            "src.python.grpcio.grpc.aio._base_channel.UnaryStreamMultiCallable",
+            "src.python.grpcio.grpc.aio._base_channel.UnaryUnaryMultiCallable",
+            "src.python.grpcio.grpc.aio._base_channel.StreamStreamMultiCallable",
+            "src.python.grpcio.grpc.aio._base_channel.StreamUnaryMultiCallable",
+            "src.python.grpcio.grpc.aio._base_server.ServicerContext",
+            "src.python.grpcio.grpc.aio._base_server.Server",
+            "src.python.grpcio.grpc.aio._call._APIStyle",
+            "src.python.grpcio.grpc.aio._interceptor.StreamUnaryClientInterceptor",
+            "src.python.grpcio.grpc.aio._interceptor.ServerInterceptor",
+            "src.python.grpcio.grpc.aio._interceptor.StreamStreamClientInterceptor",
+            "src.python.grpcio.grpc.aio._interceptor.UnaryUnaryClientInterceptor",
+            "src.python.grpcio.grpc.aio._interceptor.UnaryStreamClientInterceptor"
+        ],
+        "children": {}
+    },
+    "grpc_framework": {
+        "path": "src/python/grpcio/grpc/framework",
+        "components": [
+            "src.python.grpcio.grpc.framework.common.cardinality.Cardinality",
+            "src.python.grpcio.grpc.framework.common.style.Service",
+            "src.python.grpcio.grpc.framework.foundation.callable_util.Kind",
+            "src.python.grpcio.grpc.framework.foundation.future.Future",
+            "src.python.grpcio.grpc.framework.foundation.stream.Consumer",
+            "src.python.grpcio.grpc.framework.foundation.stream_util.IterableConsumer",
+            "src.python.grpcio.grpc.framework.foundation.stream_util.TransformingConsumer",
+            "src.python.grpcio.grpc.framework.foundation.stream_util.ThreadSwitchingConsumer",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.Kind",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.ProtocolReceiver",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.OperationContext",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.End",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.Outcome",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.Subscription",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.Servicer",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.Operator",
+            "src.python.grpcio.grpc.framework.interfaces.base.base.Completion",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.GenericStub",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.StreamStreamMultiCallable",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.ServicerContext",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.DynamicStub",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.StreamUnaryMultiCallable",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.UnaryStreamMultiCallable",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.UnaryUnaryMultiCallable",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.MethodImplementation",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.ResponseReceiver",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.MultiMethodImplementation",
+            "src.python.grpcio.grpc.framework.interfaces.face.face.Kind"
+        ],
+        "children": {}
+    },
+    "grpc_csharp_tools": {
+        "path": "src/csharp/Grpc.Tools",
+        "components": [
+            "src.csharp.Grpc.Tools.GeneratorServices.CppGeneratorServices",
+            "src.csharp.Grpc.Tools.GeneratorServices.CSharpGeneratorServices",
+            "src.csharp.Grpc.Tools.ProtoCompile.ProtoCompile",
+            "src.csharp.Grpc.Tools.ProtoCompile.ProtocResponseFileBuilder",
+            "src.csharp.Grpc.Tools.ProtoCompilerOutputs.ProtoCompilerOutputs",
+            "src.csharp.Grpc.Tools.ProtoReadDependencies.ProtoReadDependencies",
+            "src.csharp.Grpc.Tools.ProtoToolsPlatform.ProtoToolsPlatform"
+        ],
+        "children": {}
+    },
+    "grpc_health_checking": {
+        "path": "src/python/grpcio_health_checking",
+        "components": [
+            "src.python.grpcio_health_checking.grpc_health.v1._async.HealthServicer"
+        ],
+        "children": {}
+    },
+    "grpc_reflection": {
+        "path": "src/python/grpcio_reflection",
+        "components": [
+            "src.python.grpcio_reflection.grpc_reflection.v1alpha._async.ReflectionServicer",
+            "src.python.grpcio_reflection.grpc_reflection.v1alpha._base.BaseReflectionServicer",
+            "src.python.grpcio_reflection.grpc_reflection.v1alpha.proto_reflection_descriptor_database.ProtoReflectionDescriptorDatabase"
+        ],
+        "children": {}
+    },
+    "grpc_channelz": {
+        "path": "src/python/grpcio_channelz",
+        "components": [
+            "src.python.grpcio_channelz.grpc_channelz.v1._async.ChannelzServicer"
+        ],
+        "children": {}
+    },
+    "grpc_testing": {
+        "path": "src/python/grpcio_testing",
+        "components": [
+            "src.python.grpcio_testing.grpc_testing.__init__.UnaryStreamServerRpc",
+            "src.python.grpcio_testing.grpc_testing.__init__.StreamUnaryChannelRpc",
+            "src.python.grpcio_testing.grpc_testing.__init__.UnaryStreamChannelRpc",
+            "src.python.grpcio_testing.grpc_testing.__init__.Time",
+            "src.python.grpcio_testing.grpc_testing.__init__.StreamStreamChannelRpc",
+            "src.python.grpcio_testing.grpc_testing.__init__.StreamStreamServerRpc",
+            "src.python.grpcio_testing.grpc_testing.__init__.UnaryUnaryServerRpc",
+            "src.python.grpcio_testing.grpc_testing.__init__.UnaryUnaryChannelRpc",
+            "src.python.grpcio_testing.grpc_testing.__init__.StreamUnaryServerRpc",
+            "src.python.grpcio_testing.grpc_testing._channel._channel_state.State",
+            "src.python.grpcio_testing.grpc_testing._common.ChannelHandler",
+            "src.python.grpcio_testing.grpc_testing._common.Serverish",
+            "src.python.grpcio_testing.grpc_testing._common.ChannelRpcHandler",
+            "src.python.grpcio_testing.grpc_testing._common.ServerRpcHandler"
+        ],
+        "children": {}
+    },
+    "grpc_observability": {
+        "path": "src/python/grpcio_observability",
+        "components": [
+            "src.python.grpcio_observability.grpc_observability._observability.TracingData",
+            "src.python.grpcio_observability.grpc_observability._observability.StatsData",
+            "src.python.grpcio_observability.grpc_observability._observability.Exporter",
+            "src.python.grpcio_observability.grpc_observability._observability.OptionalLabelType",
+            "src.python.grpcio_observability.grpc_observability._open_census_exporter.StackDriverAsyncTransport",
+            "src.python.grpcio_observability.grpc_observability._open_census_exporter.OpenCensusExporter",
+            "src.python.grpcio_observability.grpc_observability._open_telemetry_measures.Metric",
+            "src.python.grpcio_observability.grpc_observability._open_telemetry_plugin.OpenTelemetryPlugin",
+            "src.python.grpcio_observability.grpc_observability._open_telemetry_plugin.OpenTelemetryLabelInjector",
+            "src.python.grpcio_observability.grpc_observability._open_telemetry_plugin.OpenTelemetryPluginOption"
+        ],
+        "children": {}
+    }
+}

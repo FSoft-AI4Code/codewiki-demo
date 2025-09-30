@@ -1,0 +1,23 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T16:03:30.777404",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/strapi--strapi",
+        "commit_id": "318e33b8c2c2d8af588acb73383750664a9336e3"
+    },
+    "statistics": {
+        "total_components": 6639,
+        "leaf_nodes": 374,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "content-type-builder.md",
+        "admin.md",
+        "database.md",
+        "upload.md"
+    ]
+}

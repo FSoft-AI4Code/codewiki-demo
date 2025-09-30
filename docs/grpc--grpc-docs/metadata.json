@@ -1,0 +1,31 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-16T18:55:07.861606",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/grpc--grpc",
+        "commit_id": "bb96be017584c206eb3036eb7da14f5ccdc57e8d"
+    },
+    "statistics": {
+        "total_components": 16174,
+        "leaf_nodes": 393,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "grpc_framework_common.md",
+        "grpc_csharp_tools.md",
+        "grpc_reflection.md",
+        "grpc_framework_foundation.md",
+        "grpc_core.md",
+        "grpc_aio.md",
+        "grpc_framework_interfaces.md",
+        "grpc_framework.md",
+        "grpc_testing.md",
+        "grpc_channelz.md",
+        "grpc_observability.md",
+        "grpc_health_checking.md"
+    ]
+}

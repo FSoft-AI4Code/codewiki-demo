@@ -1,0 +1,23 @@
+{
+    "generation_info": {
+        "timestamp": "2025-09-30T09:59:25.535437",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/anhnh2002--titan-sight",
+        "commit_id": null
+    },
+    "statistics": {
+        "total_components": 14,
+        "leaf_nodes": 10,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "caching-system.md",
+        "search-providers.md",
+        "data-models.md",
+        "ai-integration.md"
+    ]
+}

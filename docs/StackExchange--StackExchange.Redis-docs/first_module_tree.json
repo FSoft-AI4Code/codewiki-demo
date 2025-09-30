@@ -1,0 +1,412 @@
+{
+    "ConnectionManagement": {
+        "path": "src/StackExchange.Redis/ConnectionMultiplexer.cs",
+        "components": [
+            "src.StackExchange.Redis.ConnectionMultiplexer.ConnectionMultiplexer",
+            "src.StackExchange.Redis.ConnectionMultiplexer.TimerToken",
+            "src.StackExchange.Redis.ConnectionMultiplexer.ServerSnapshotFiltered",
+            "src.StackExchange.Redis.ConnectionMultiplexer.ServerSnapshot",
+            "src.StackExchange.Redis.ConnectionMultiplexer.Enumerator",
+            "src.StackExchange.Redis.PhysicalBridge.PhysicalBridge",
+            "src.StackExchange.Redis.PhysicalBridge.BridgeStatus",
+            "src.StackExchange.Redis.PhysicalConnection.PhysicalConnection",
+            "src.StackExchange.Redis.PhysicalConnection.ConnectionStatus",
+            "src.StackExchange.Redis.ServerEndPoint.ServerEndPoint",
+            "src.StackExchange.Redis.ServerSelectionStrategy.ServerSelectionStrategy",
+            "src.StackExchange.Redis.ConnectionCounters.ConnectionCounters"
+        ],
+        "children": {
+            "ConnectionMultiplexer": {
+                "components": [
+                    "src.StackExchange.Redis.ConnectionMultiplexer.ConnectionMultiplexer",
+                    "src.StackExchange.Redis.ConnectionMultiplexer.TimerToken",
+                    "src.StackExchange.Redis.ConnectionMultiplexer.ServerSnapshotFiltered",
+                    "src.StackExchange.Redis.ConnectionMultiplexer.ServerSnapshot",
+                    "src.StackExchange.Redis.ConnectionMultiplexer.Enumerator"
+                ],
+                "children": {}
+            },
+            "PhysicalBridge": {
+                "components": [
+                    "src.StackExchange.Redis.PhysicalBridge.PhysicalBridge",
+                    "src.StackExchange.Redis.PhysicalBridge.BridgeStatus"
+                ],
+                "children": {}
+            },
+            "PhysicalConnection": {
+                "components": [
+                    "src.StackExchange.Redis.PhysicalConnection.PhysicalConnection",
+                    "src.StackExchange.Redis.PhysicalConnection.ConnectionStatus"
+                ],
+                "children": {}
+            },
+            "ServerEndPoint": {
+                "components": [
+                    "src.StackExchange.Redis.ServerEndPoint.ServerEndPoint"
+                ],
+                "children": {}
+            },
+            "ServerSelectionStrategy": {
+                "components": [
+                    "src.StackExchange.Redis.ServerSelectionStrategy.ServerSelectionStrategy"
+                ],
+                "children": {}
+            },
+            "ConnectionCounters": {
+                "components": [
+                    "src.StackExchange.Redis.ConnectionCounters.ConnectionCounters"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "DatabaseOperations": {
+        "path": "src/StackExchange.Redis/RedisDatabase.cs",
+        "components": [
+            "src.StackExchange.Redis.RedisDatabase.RedisDatabase",
+            "src.StackExchange.Redis.RedisDatabase.StringGetWithExpiryMessage",
+            "src.StackExchange.Redis.RedisDatabase.ExecuteMessage",
+            "src.StackExchange.Redis.RedisDatabase.ScriptLoadMessage",
+            "src.StackExchange.Redis.RedisDatabase.SortedSetScanResultProcessor",
+            "src.StackExchange.Redis.RedisDatabase.KeyMigrateCommandMessage",
+            "src.StackExchange.Redis.RedisDatabase.SetScanResultProcessor",
+            "src.StackExchange.Redis.RedisDatabase.SingleStreamReadCommandMessage",
+            "src.StackExchange.Redis.RedisDatabase.StringGetWithExpiryProcessor",
+            "src.StackExchange.Redis.RedisDatabase.ScriptEvalMessage",
+            "src.StackExchange.Redis.RedisDatabase.HashScanResultProcessor",
+            "src.StackExchange.Redis.RedisDatabase.SingleStreamReadGroupCommandMessage",
+            "src.StackExchange.Redis.RedisDatabase.ScanEnumerable",
+            "src.StackExchange.Redis.RedisDatabase.MultiStreamReadCommandMessage",
+            "src.StackExchange.Redis.RedisDatabase.SortedSetCombineAndStoreCommandMessage",
+            "src.StackExchange.Redis.RedisDatabase.MultiStreamReadGroupCommandMessage"
+        ],
+        "children": {
+            "CoreDatabaseOperations": {
+                "components": [
+                    "src.StackExchange.Redis.RedisDatabase.RedisDatabase",
+                    "src.StackExchange.Redis.RedisDatabase.ExecuteMessage"
+                ],
+                "children": {}
+            },
+            "ScanOperations": {
+                "components": [
+                    "src.StackExchange.Redis.RedisDatabase.ScanEnumerable",
+                    "src.StackExchange.Redis.RedisDatabase.SortedSetScanResultProcessor",
+                    "src.StackExchange.Redis.RedisDatabase.SetScanResultProcessor",
+                    "src.StackExchange.Redis.RedisDatabase.HashScanResultProcessor"
+                ],
+                "children": {}
+            },
+            "StreamOperations": {
+                "components": [
+                    "src.StackExchange.Redis.RedisDatabase.SingleStreamReadCommandMessage",
+                    "src.StackExchange.Redis.RedisDatabase.SingleStreamReadGroupCommandMessage",
+                    "src.StackExchange.Redis.RedisDatabase.MultiStreamReadCommandMessage",
+                    "src.StackExchange.Redis.RedisDatabase.MultiStreamReadGroupCommandMessage"
+                ],
+                "children": {}
+            },
+            "ScriptOperations": {
+                "components": [
+                    "src.StackExchange.Redis.RedisDatabase.ScriptLoadMessage",
+                    "src.StackExchange.Redis.RedisDatabase.ScriptEvalMessage"
+                ],
+                "children": {}
+            },
+            "SpecializedOperations": {
+                "components": [
+                    "src.StackExchange.Redis.RedisDatabase.StringGetWithExpiryMessage",
+                    "src.StackExchange.Redis.RedisDatabase.StringGetWithExpiryProcessor",
+                    "src.StackExchange.Redis.RedisDatabase.KeyMigrateCommandMessage",
+                    "src.StackExchange.Redis.RedisDatabase.SortedSetCombineAndStoreCommandMessage"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "ValueTypes": {
+        "path": "src/StackExchange.Redis",
+        "components": [
+            "src.StackExchange.Redis.RedisValue.RedisValue",
+            "src.StackExchange.Redis.RedisKey.RedisKey",
+            "src.StackExchange.Redis.RedisResult.SingleRedisResult",
+            "src.StackExchange.Redis.RedisResult.ArrayRedisResult",
+            "src.StackExchange.Redis.RedisChannel.RedisChannel",
+            "src.StackExchange.Redis.RedisFeatures.RedisFeatures"
+        ],
+        "children": {}
+    },
+    "MessageSystem": {
+        "path": "src/StackExchange.Redis/Message.cs",
+        "components": [
+            "src.StackExchange.Redis.Message.HelloMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValuesKeyMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandValueChannelMessage",
+            "src.StackExchange.Redis.Message.CommandValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandValueMessage",
+            "src.StackExchange.Redis.Message.CommandChannelMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandMessage",
+            "src.StackExchange.Redis.Message.CommandKeyMessage",
+            "src.StackExchange.Redis.Message.CommandSlotValuesMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyValueValueValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyValuesMessage",
+            "src.StackExchange.Redis.Message.CommandValueValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValueValueValueValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandValueKeyMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValueValueValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValueValueValuesMessage",
+            "src.StackExchange.Redis.Message.SelectMessage",
+            "src.StackExchange.Redis.Message.CommandKeysMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyValueValueValueValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandChannelValueMessage",
+            "src.StackExchange.Redis.Message.CommandKeyKeyValueValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.LoggingMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValuesMessage",
+            "src.StackExchange.Redis.Message.CommandKeyValueValueValueValueValueMessage",
+            "src.StackExchange.Redis.Message.CommandValuesMessage",
+            "src.StackExchange.Redis.Message.UnknownMessage"
+        ],
+        "children": {}
+    },
+    "ResultProcessing": {
+        "path": "src/StackExchange.Redis/ResultProcessor.cs",
+        "components": [
+            "src.StackExchange.Redis.ResultProcessor.Int64ArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.SortedSetEntryProcessor",
+            "src.StackExchange.Redis.ResultProcessor.NullableDoubleArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StreamPendingInfoProcessor",
+            "src.StackExchange.Redis.ResultProcessor.Int64Processor",
+            "src.StackExchange.Redis.ResultProcessor.SortedSetEntryArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.Int32EnumArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisStreamInterleavedProcessor",
+            "src.StackExchange.Redis.ResultProcessor.HashEntryArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.TracerProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RoleProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisTypeProcessor",
+            "src.StackExchange.Redis.ResultProcessor.PubSubNumSubProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ClusterNodesRawProcessor",
+            "src.StackExchange.Redis.ResultProcessor.NullableDoubleProcessor",
+            "src.StackExchange.Redis.ResultProcessor.SentinelArrayOfArraysProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisKeyArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisValueGeoPositionProcessor",
+            "src.StackExchange.Redis.ResultProcessor.TieBreakerProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisValueProcessor",
+            "src.StackExchange.Redis.ResultProcessor.TimingProcessor",
+            "src.StackExchange.Redis.ResultProcessor.SentinelGetReplicaAddressesProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ByteArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StreamConsumerInfoProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StringPairInterleavedProcessor",
+            "src.StackExchange.Redis.ResultProcessor.LongestCommonSubsequenceProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ExpireResultArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.SentinelGetSentinelAddressesProcessor",
+            "src.StackExchange.Redis.ResultProcessor.SingleStreamProcessor",
+            "src.StackExchange.Redis.ResultProcessor.SentinelGetPrimaryAddressByNameProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StreamInfoProcessor",
+            "src.StackExchange.Redis.ResultProcessor.NullableInt64Processor",
+            "src.StackExchange.Redis.ResultProcessor.DoubleProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StreamPendingMessagesProcessor",
+            "src.StackExchange.Redis.ResultProcessor.TimerMessage",
+            "src.StackExchange.Redis.ResultProcessor.RedisValueGeoPositionArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisChannelArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StreamAutoClaimIdsOnlyProcessor",
+            "src.StackExchange.Redis.ResultProcessor.BooleanProcessor",
+            "src.StackExchange.Redis.ResultProcessor.DateTimeProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ConnectionIdentityProcessor",
+            "src.StackExchange.Redis.ResultProcessor.BooleanArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StreamNameValueEntryProcessor",
+            "src.StackExchange.Redis.ResultProcessor.AutoConfigureProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ClusterNodesProcessor",
+            "src.StackExchange.Redis.ResultProcessor.SortedSetPopResultProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StringArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ChannelState",
+            "src.StackExchange.Redis.ResultProcessor.StreamGroupInfoProcessor",
+            "src.StackExchange.Redis.ResultProcessor.LeaseProcessor",
+            "src.StackExchange.Redis.ResultProcessor.Int32EnumProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ListPopResultProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StreamAutoClaimProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ScriptResultProcessor",
+            "src.StackExchange.Redis.ResultProcessor.Int64DefaultValueProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisValueFromArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.DemandZeroOrOneProcessor",
+            "src.StackExchange.Redis.ResultProcessor.StringProcessor",
+            "src.StackExchange.Redis.ResultProcessor.LeaseFromArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisValueArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.TimeSpanProcessor",
+            "src.StackExchange.Redis.ResultProcessor.GeoRadiusResultArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.NullableStringArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ExpectBasicStringProcessor",
+            "src.StackExchange.Redis.ResultProcessor.NullableDateTimeProcessor",
+            "src.StackExchange.Redis.ResultProcessor.RedisKeyProcessor",
+            "src.StackExchange.Redis.ResultProcessor.ScriptLoadProcessor",
+            "src.StackExchange.Redis.ResultProcessor.InfoProcessor",
+            "src.StackExchange.Redis.ResultProcessor.PersistResultArrayProcessor",
+            "src.StackExchange.Redis.ResultProcessor.MultiStreamProcessor",
+            "src.StackExchange.Redis.ResultProcessor.TrackSubscriptionsProcessor"
+        ],
+        "children": {}
+    },
+    "ServerManagement": {
+        "path": "src/StackExchange.Redis/RedisServer.cs",
+        "components": [
+            "src.StackExchange.Redis.RedisServer.RedisServer",
+            "src.StackExchange.Redis.RedisServer.KeysScanEnumerable",
+            "src.StackExchange.Redis.RedisServer.ScanResultProcessor",
+            "src.StackExchange.Redis.ClusterConfiguration.SlotRange",
+            "src.StackExchange.Redis.ClusterConfiguration.ClusterNode",
+            "src.StackExchange.Redis.ClusterConfiguration.ClusterConfiguration",
+            "src.StackExchange.Redis.ServerCounters.ServerCounters"
+        ],
+        "children": {}
+    },
+    "Configuration": {
+        "path": "src/StackExchange.Redis/ConfigurationOptions.cs",
+        "components": [
+            "src.StackExchange.Redis.ConfigurationOptions.ConfigurationOptions",
+            "src.StackExchange.Redis.Configuration.DefaultOptionsProvider.DefaultOptionsProvider",
+            "src.StackExchange.Redis.Configuration.AzureOptionsProvider.AzureOptionsProvider"
+        ],
+        "children": {}
+    },
+    "CoreInterfaces": {
+        "path": "src/StackExchange.Redis/Interfaces",
+        "components": [
+            "src.StackExchange.Redis.Interfaces.IConnectionMultiplexer.IConnectionMultiplexer",
+            "src.StackExchange.Redis.Interfaces.IConnectionMultiplexer.IInternalConnectionMultiplexer",
+            "src.StackExchange.Redis.Interfaces.IDatabase.IDatabase",
+            "src.StackExchange.Redis.Interfaces.IDatabaseAsync.IDatabaseAsync",
+            "src.StackExchange.Redis.Interfaces.IServer.IServer",
+            "src.StackExchange.Redis.Interfaces.ISubscriber.ISubscriber",
+            "src.StackExchange.Redis.Interfaces.ITransaction.ITransaction",
+            "src.StackExchange.Redis.Interfaces.IBatch.IBatch",
+            "src.StackExchange.Redis.Interfaces.IRedis.IRedis",
+            "src.StackExchange.Redis.Interfaces.IRedisAsync.IRedisAsync",
+            "src.StackExchange.Redis.Interfaces.ICompletable.ICompletable",
+            "src.StackExchange.Redis.Interfaces.IMultiMessage.IMultiMessage",
+            "src.StackExchange.Redis.Interfaces.IScanningCursor.IScanningCursor",
+            "src.StackExchange.Redis.Interfaces.IReconnectRetryPolicy.IReconnectRetryPolicy"
+        ],
+        "children": {
+            "ConnectionManagementInterfaces": {
+                "components": [
+                    "src.StackExchange.Redis.Interfaces.IConnectionMultiplexer.IConnectionMultiplexer",
+                    "src.StackExchange.Redis.Interfaces.IConnectionMultiplexer.IInternalConnectionMultiplexer"
+                ],
+                "children": {}
+            },
+            "DatabaseOperationsInterfaces": {
+                "components": [
+                    "src.StackExchange.Redis.Interfaces.IDatabase.IDatabase",
+                    "src.StackExchange.Redis.Interfaces.IDatabaseAsync.IDatabaseAsync"
+                ],
+                "children": {
+                    "IDatabase": {
+                        "components": [
+                            "src.StackExchange.Redis.Interfaces.IDatabase.IDatabase"
+                        ],
+                        "children": {}
+                    },
+                    "IDatabaseAsync": {
+                        "components": [
+                            "src.StackExchange.Redis.Interfaces.IDatabaseAsync.IDatabaseAsync"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "ServerManagementInterfaces": {
+                "components": [
+                    "src.StackExchange.Redis.Interfaces.IServer.IServer"
+                ],
+                "children": {}
+            },
+            "PubSubInterfaces": {
+                "components": [
+                    "src.StackExchange.Redis.Interfaces.ISubscriber.ISubscriber"
+                ],
+                "children": {}
+            },
+            "TransactionBatchInterfaces": {
+                "components": [
+                    "src.StackExchange.Redis.Interfaces.ITransaction.ITransaction",
+                    "src.StackExchange.Redis.Interfaces.IBatch.IBatch"
+                ],
+                "children": {}
+            },
+            "UtilityInterfaces": {
+                "components": [
+                    "src.StackExchange.Redis.Interfaces.ICompletable.ICompletable",
+                    "src.StackExchange.Redis.Interfaces.IMultiMessage.IMultiMessage",
+                    "src.StackExchange.Redis.Interfaces.IScanningCursor.IScanningCursor",
+                    "src.StackExchange.Redis.Interfaces.IReconnectRetryPolicy.IReconnectRetryPolicy",
+                    "src.StackExchange.Redis.Interfaces.IRedis.IRedis",
+                    "src.StackExchange.Redis.Interfaces.IRedisAsync.IRedisAsync"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "TransactionSupport": {
+        "path": "src/StackExchange.Redis/RedisTransaction.cs",
+        "components": [
+            "src.StackExchange.Redis.RedisTransaction.RedisTransaction",
+            "src.StackExchange.Redis.RedisTransaction.QueuedProcessor",
+            "src.StackExchange.Redis.RedisTransaction.QueuedMessage",
+            "src.StackExchange.Redis.RedisTransaction.TransactionProcessor",
+            "src.StackExchange.Redis.RedisTransaction.TransactionMessage"
+        ],
+        "children": {}
+    },
+    "PubSubSupport": {
+        "path": "src/StackExchange.Redis/RedisSubscriber.cs",
+        "components": [
+            "src.StackExchange.Redis.RedisSubscriber.RedisSubscriber",
+            "src.StackExchange.Redis.RedisSubscriber.Subscription",
+            "src.StackExchange.Redis.RedisSubscriber.ConnectionMultiplexer",
+            "src.StackExchange.Redis.ChannelMessageQueue.ChannelMessage",
+            "src.StackExchange.Redis.ChannelMessageQueue.ChannelMessageQueue"
+        ],
+        "children": {}
+    },
+    "APIValueTypes": {
+        "path": "src/StackExchange.Redis/APITypes",
+        "components": [
+            "src.StackExchange.Redis.APITypes.HashEntry.HashEntry",
+            "src.StackExchange.Redis.APITypes.SortedSetEntry.SortedSetEntry",
+            "src.StackExchange.Redis.APITypes.GeoEntry.GeoEntry",
+            "src.StackExchange.Redis.APITypes.GeoPosition.GeoPosition",
+            "src.StackExchange.Redis.APITypes.GeoRadiusResult.GeoRadiusResult",
+            "src.StackExchange.Redis.APITypes.GeoSearchShape.GeoSearchBox",
+            "src.StackExchange.Redis.APITypes.GeoSearchShape.GeoSearchCircle",
+            "src.StackExchange.Redis.APITypes.StreamEntry.StreamEntry",
+            "src.StackExchange.Redis.APITypes.StreamPosition.StreamPosition",
+            "src.StackExchange.Redis.APITypes.StreamConsumer.StreamConsumer",
+            "src.StackExchange.Redis.APITypes.StreamConsumerInfo.StreamConsumerInfo",
+            "src.StackExchange.Redis.APITypes.StreamGroupInfo.StreamGroupInfo",
+            "src.StackExchange.Redis.APITypes.StreamInfo.StreamInfo",
+            "src.StackExchange.Redis.APITypes.StreamPendingInfo.StreamPendingInfo",
+            "src.StackExchange.Redis.APITypes.StreamPendingMessageInfo.StreamPendingMessageInfo",
+            "src.StackExchange.Redis.APITypes.StreamAutoClaimResult.StreamAutoClaimResult",
+            "src.StackExchange.Redis.APITypes.StreamAutoClaimIdsOnlyResult.StreamAutoClaimIdsOnlyResult",
+            "src.StackExchange.Redis.APITypes.ListPopResult.ListPopResult",
+            "src.StackExchange.Redis.APITypes.SortedSetPopResult.SortedSetPopResult",
+            "src.StackExchange.Redis.APITypes.NameValueEntry.NameValueEntry",
+            "src.StackExchange.Redis.APITypes.RedisValueWithExpiry.RedisValueWithExpiry",
+            "src.StackExchange.Redis.APITypes.RedisStream.RedisStream",
+            "src.StackExchange.Redis.APITypes.LCSMatchResult.LCSMatchResult",
+            "src.StackExchange.Redis.APITypes.LCSMatchResult.LCSMatch",
+            "src.StackExchange.Redis.APITypes.LatencyHistoryEntry.LatencyHistoryEntry",
+            "src.StackExchange.Redis.APITypes.LatencyLatestEntry.LatencyLatestEntry",
+            "src.StackExchange.Redis.APITypes.ClientKillFilter.ClientKillFilter"
+        ],
+        "children": {}
+    }
+}

@@ -1,0 +1,182 @@
+{
+    "core_api": {
+        "path": "src/backend/base/langflow/api",
+        "components": [
+            "src.backend.base.langflow.api.v1.schemas.ApiKeyCreateRequest",
+            "src.backend.base.langflow.api.v1.schemas.FlowDataRequest",
+            "src.backend.base.langflow.api.v1.schemas.RunResponse",
+            "src.backend.base.langflow.api.v1.schemas.InitResponse",
+            "src.backend.base.langflow.api.v1.schemas.ComponentListRead",
+            "src.backend.base.langflow.api.v1.schemas.TaskResponse",
+            "src.backend.base.langflow.api.v1.schemas.BuiltResponse",
+            "src.backend.base.langflow.api.v1.schemas.ConfigResponse",
+            "src.backend.base.langflow.api.v1.base.CacheResponse",
+            "src.backend.base.langflow.api.v1.base.ValidatePromptRequest",
+            "src.backend.base.langflow.api.v1.base.FrontendNodeRequest"
+        ],
+        "children": {}
+    },
+    "graph_system": {
+        "path": "src/lfx/src/lfx/graph",
+        "components": [
+            "src.lfx.src.lfx.graph.vertex.base.Vertex",
+            "src.lfx.src.lfx.graph.vertex.schema.NodeData",
+            "src.lfx.src.lfx.graph.edge.schema.EdgeData",
+            "src.lfx.src.lfx.graph.graph.schema.GraphData",
+            "src.lfx.src.lfx.graph.vertex.vertex_types.CustomComponentVertex",
+            "src.lfx.src.lfx.graph.vertex.vertex_types.InterfaceVertex"
+        ],
+        "children": {}
+    },
+    "component_system": {
+        "path": "src/lfx/src/lfx/custom/custom_component",
+        "components": [
+            "src.lfx.src.lfx.custom.custom_component.base_component.BaseComponent",
+            "src.lfx.src.lfx.custom.custom_component.custom_component.CustomComponent",
+            "src.lfx.src.lfx.custom.custom_component.component_with_cache.ComponentWithCache"
+        ],
+        "children": {}
+    },
+    "llm_models": {
+        "path": "src/lfx/src/lfx/components",
+        "components": [
+            "src.lfx.src.lfx.components.openai.openai.OpenAIModelComponent",
+            "src.lfx.src.lfx.components.anthropic.anthropic.AnthropicModelComponent",
+            "src.lfx.src.lfx.components.google.google_generative_ai.GoogleGenerativeAIComponent",
+            "src.lfx.src.lfx.components.ollama.ollama.ChatOllamaComponent",
+            "src.lfx.src.lfx.components.groq.groq.GroqModel",
+            "src.lfx.src.lfx.base.models.model.LCModelComponent"
+        ],
+        "children": {}
+    },
+    "embeddings": {
+        "path": "src/lfx/src/lfx/components",
+        "components": [
+            "src.lfx.src.lfx.components.openai.openai_embeddings.OpenAIEmbeddingsComponent",
+            "src.lfx.src.lfx.components.google.google_generative_ai_embeddings.GoogleGenerativeAIEmbeddingsComponent",
+            "src.lfx.src.lfx.components.ollama.ollama_embeddings.OllamaEmbeddingsComponent",
+            "src.lfx.src.lfx.base.embeddings.model.LCEmbeddingsModel"
+        ],
+        "children": {}
+    },
+    "vector_stores": {
+        "path": "src/lfx/src/lfx/components/vectorstores",
+        "components": [
+            "src.lfx.src.lfx.components.vectorstores.chroma.ChromaVectorStoreComponent",
+            "src.lfx.src.lfx.components.vectorstores.pinecone.PineconeVectorStoreComponent",
+            "src.lfx.src.lfx.components.vectorstores.astradb.AstraDBVectorStoreComponent",
+            "src.lfx.src.lfx.components.vectorstores.qdrant.QdrantVectorStoreComponent",
+            "src.lfx.src.lfx.base.vectorstores.model.LCVectorStoreComponent"
+        ],
+        "children": {}
+    },
+    "agents": {
+        "path": "src/lfx/src/lfx/base/agents",
+        "components": [
+            "src.lfx.src.lfx.base.agents.agent.LCToolsAgentComponent",
+            "src.lfx.src.lfx.base.agents.context.AgentContext",
+            "src.lfx.src.lfx.base.agents.events.ChainEventHandler",
+            "src.lfx.src.lfx.components.agents.agent.AgentComponent"
+        ],
+        "children": {}
+    },
+    "memory": {
+        "path": "src/backend/base/langflow/memory.py",
+        "components": [
+            "src.backend.base.langflow.memory.LCBuiltinChatMemory",
+            "src.lfx.src.lfx.base.memory.model.LCChatMemoryComponent",
+            "src.lfx.src.lfx.base.memory.memory.BaseMemoryComponent"
+        ],
+        "children": {}
+    },
+    "tools": {
+        "path": "src/lfx/src/lfx/components/tools",
+        "components": [
+            "src.lfx.src.lfx.components.tools.python_repl.PythonREPLToolComponent",
+            "src.lfx.src.lfx.components.tools.calculator.CalculatorToolComponent",
+            "src.lfx.src.lfx.components.tools.google_search_api.GoogleSearchAPIComponent",
+            "src.lfx.src.lfx.base.tools.component_tool.ComponentToolkit"
+        ],
+        "children": {}
+    },
+    "data_processing": {
+        "path": "src/lfx/src/lfx/components/processing",
+        "components": [
+            "src.lfx.src.lfx.components.processing.create_data.CreateDataComponent",
+            "src.lfx.src.lfx.components.processing.parse_data.ParseDataComponent",
+            "src.lfx.src.lfx.components.processing.filter_data.FilterDataComponent",
+            "src.lfx.src.lfx.components.processing.merge_data.MergeDataComponent",
+            "src.lfx.src.lfx.components.processing.structured_output.StructuredOutputComponent"
+        ],
+        "children": {}
+    },
+    "io_components": {
+        "path": "src/lfx/src/lfx/base/io",
+        "components": [
+            "src.lfx.src.lfx.base.io.chat.ChatComponent",
+            "src.lfx.src.lfx.base.io.text.TextComponent",
+            "src.lfx.src.lfx.components.input_output.text_output.TextOutputComponent"
+        ],
+        "children": {}
+    },
+    "database_models": {
+        "path": "src/backend/base/langflow/services/database/models",
+        "components": [
+            "src.backend.base.langflow.services.database.models.flow.model.FlowRead",
+            "src.backend.base.langflow.services.database.models.user.model.UserCreate",
+            "src.backend.base.langflow.services.database.models.api_key.model.ApiKey",
+            "src.backend.base.langflow.services.database.models.message.model.MessageRead",
+            "src.backend.base.langflow.services.database.models.variable.model.Variable"
+        ],
+        "children": {}
+    },
+    "services": {
+        "path": "src/backend/base/langflow/services",
+        "components": [
+            "src.backend.base.langflow.services.base.Service",
+            "src.backend.base.langflow.services.cache.base.CacheService",
+            "src.backend.base.langflow.services.factory.ServiceFactory",
+            "src.backend.base.langflow.services.enhanced_manager.ServiceManager"
+        ],
+        "children": {}
+    },
+    "schema_types": {
+        "path": "src/backend/base/langflow/schema",
+        "components": [
+            "src.backend.base.langflow.schema.content_block.ContentBlock",
+            "src.backend.base.langflow.schema.content_types.TextContent",
+            "src.backend.base.langflow.schema.content_types.JSONContent",
+            "src.backend.base.langflow.schema.table.TableSchema",
+            "src.backend.base.langflow.schema.log.LogFunctionType"
+        ],
+        "children": {}
+    },
+    "frontend_core": {
+        "path": "src/frontend/src/types",
+        "components": [
+            "src.frontend.src.types.chat.index.TextContent",
+            "src.frontend.src.types.chat.index.JSONContent",
+            "src.frontend.src.types.components.index.Props",
+            "src.frontend.src.types.zustand.auth.index.AuthStoreType"
+        ],
+        "children": {}
+    },
+    "template_system": {
+        "path": "src/lfx/src/lfx/template",
+        "components": [
+            "src.lfx.src.lfx.template.frontend_node.base.FrontendNode",
+            "src.lfx.src.lfx.template.frontend_node.custom_components.ComponentFrontendNode",
+            "src.lfx.src.lfx.template.field.base.UndefinedType"
+        ],
+        "children": {}
+    },
+    "server_main": {
+        "path": "src/backend/base/langflow/main.py",
+        "components": [
+            "src.backend.base.langflow.main.JavaScriptMIMETypeMiddleware",
+            "src.backend.base.langflow.main.RequestCancelledMiddleware",
+            "src.backend.base.langflow.server.LangflowUvicornWorker"
+        ],
+        "children": {}
+    }
+}

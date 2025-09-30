@@ -1,0 +1,1841 @@
+{
+    "storage_engine": {
+        "path": "be/src/storage",
+        "components": [
+            "be.src.storage.chunk_helper.ColumnBuilder",
+            "be.src.storage.column_aggregate_func.ReplaceNullableColumnAggregator",
+            "be.src.storage.column_in_predicate.BinaryColumnInPredicate",
+            "be.src.storage.column_not_in_predicate.ColumnNotInPredicate",
+            "be.src.storage.column_null_predicate.ColumnNotNullPredicate",
+            "be.src.storage.column_predicate_cmp.BinaryColumnGtPredicate",
+            "be.src.storage.column_predicate_dict_conjuct.DictConjuctPredicateOperator",
+            "be.src.storage.column_predicate_rewriter.RewritePredicateTreeVisitor",
+            "be.src.storage.convert_helper.DateV2ToTimestampTypeConverter",
+            "be.src.storage.empty_iterator.EmptyIterator",
+            "be.src.storage.key_coder.KeyCoderResolver",
+            "be.src.storage.lake.async_delta_writer.AsyncDeltaWriterImpl",
+            "be.src.storage.lake.compaction_policy.SizeTieredCompactionPolicy",
+            "be.src.storage.lake.delta_writer.DeltaWriterImpl",
+            "be.src.storage.lake.meta_file.Finder",
+            "be.src.storage.lake.rowset_update_state.RowidSortEntry",
+            "be.src.storage.lake.schema_change.SchemaChangeParams",
+            "be.src.storage.lake.tablet_manager.Finder",
+            "be.src.storage.lake.txn_log_applier.PrimaryKeyTxnLogApplier",
+            "be.src.storage.load_chunk_spiller.BlockGroupIterator",
+            "be.src.storage.local_tablet_reader.RowidSortEntry",
+            "be.src.storage.memtable_flush_executor.MemtableFlushTask",
+            "be.src.storage.merge_iterator.MaskMergeIterator",
+            "be.src.storage.olap_server.pair_hash",
+            "be.src.storage.persistent_index.BucketToMove",
+            "be.src.storage.persistent_index_compaction_manager.PkIndexMajorCompactionTask",
+            "be.src.storage.persistent_index_load_executor.PersistentIndexLoadTask",
+            "be.src.storage.predicate_parser.CanPushDownVisitor",
+            "be.src.storage.primary_index.FixSliceHashIndex",
+            "be.src.storage.primary_key_dump.PrimaryKeyChunkDumper",
+            "be.src.storage.protobuf_file._FixedFileHeader",
+            "be.src.storage.rowset.binary_dict_page.SliceContainerAdaptor",
+            "be.src.storage.rowset.bitmap_index_evaluator.BitmapIndexSeeker",
+            "be.src.storage.rowset.bitmap_index_writer.BitmapUpdateContext",
+            "be.src.storage.rowset.bloom_filter_index_writer.OriginalBloomFilterIndexWriterImpl",
+            "be.src.storage.rowset.column_writer.ByteIterator",
+            "be.src.storage.rowset.encoding_info.TypeEncodingTraits",
+            "be.src.storage.rowset.json_column_iterator.JsonMergeIterator",
+            "be.src.storage.rowset.parsed_page.ByteIterator",
+            "be.src.storage.rowset.rowset_writer.SegmentFileWriter",
+            "be.src.storage.rowset.segment.SegmentZoneMapPruner",
+            "be.src.storage.rowset.segment_iterator.IndexOnlyPredicateChecker",
+            "be.src.storage.rowset.segment_options.PredicateTreeConverter",
+            "be.src.storage.rowset.storage_page_decoder.DictDictDecoder",
+            "be.src.storage.rowset.zone_map_index.ZoneMap",
+            "be.src.storage.rowset_merger.MergeEntryCmp",
+            "be.src.storage.rowset_update_state.RowidSortEntry",
+            "be.src.storage.schema_change.MergeElement",
+            "be.src.storage.schema_change_utils.ConvertTypeMapHash",
+            "be.src.storage.segment_flush_executor.SegmentFlushTask",
+            "be.src.storage.segment_replicate_executor.SegmentReplicateTask",
+            "be.src.storage.size_tiered_compaction_policy.LevelComparator",
+            "be.src.storage.sstable.comparator.BytewiseComparatorImpl",
+            "be.src.storage.sstable.filter_policy.BloomFilterPolicy",
+            "be.src.storage.sstable.iterator.EmptyIterator",
+            "be.src.storage.sstable.merger.MergingIterator",
+            "be.src.storage.storage_engine.ManualCompactionTask",
+            "be.src.storage.table_reader.TabletMultiGetPtrCmp",
+            "be.src.storage.tablet_updates.CompactionEntry",
+            "be.src.storage.types.ScalarTypeInfoImplBase",
+            "be.src.storage.version_graph.TimestampedVersionPtrCompare"
+        ],
+        "children": {}
+    },
+    "query_execution": {
+        "path": "be/src/exec",
+        "components": [
+            "be.src.exec.agg_runtime_filter_builder.AggInRuntimeFilterBuilderImpl",
+            "be.src.exec.aggregate.agg_hash_variant.AggHashMapVariantTypeTraits",
+            "be.src.exec.aggregate.compress_serializer.CompressSerializer",
+            "be.src.exec.aggregator.AllocateState",
+            "be.src.exec.arrow_to_starrocks_converter.ArrowConverter",
+            "be.src.exec.connector_scan_node.ConnectorScanner",
+            "be.src.exec.dictionary_cache_writer.RefreshDictionaryCacheTask",
+            "be.src.exec.file_scanner.orc_scanner.ORCFileStream",
+            "be.src.exec.hash_join_components.PartitionChunkChannel",
+            "be.src.exec.hdfs_scanner.hdfs_scanner.CountedSeekableInputStream",
+            "be.src.exec.hdfs_scanner.hdfs_scanner_orc.SplitContext",
+            "be.src.exec.hdfs_scanner.hdfs_scanner_text.HdfsScannerCSVReader",
+            "be.src.exec.hdfs_scanner.jni_scanner.HiveJniScanner",
+            "be.src.exec.iceberg.iceberg_delete_builder.IcebergColumnMeta",
+            "be.src.exec.join.join_hash_map.JoinHashMapSelector",
+            "be.src.exec.olap_scan_prepare.ExtendScanKeyVisitor",
+            "be.src.exec.partition.partition_hash_variant.PartitionHashMapVariantTypeTraits",
+            "be.src.exec.pipeline.adaptive.event.DependsAllEvent",
+            "be.src.exec.pipeline.fragment_context.RpcRunnable",
+            "be.src.exec.pipeline.pipeline.OutputAmplificationAddCalculator",
+            "be.src.exec.pipeline.scan.connector_scan_operator.ConnectorScanOperatorIOTasksMemLimiter",
+            "be.src.exec.pipeline.sink.export_sink_operator.ExportSinkIOBuffer",
+            "be.src.exec.pipeline.sink.file_sink_operator.FileSinkIOBuffer",
+            "be.src.exec.pipeline.sink.mysql_table_sink_operator.MysqlTableSinkIOBuffer",
+            "be.src.exec.schema_scanner.schema_be_bvars_scanner.MyDumper",
+            "be.src.exec.schema_scanner.schema_be_metrics_scanner.SchemaCoreMetricsVisitor",
+            "be.src.exec.short_circuit.MysqlResultMemorySink",
+            "be.src.exec.sorted_streaming_aggregator.AppendWithMask",
+            "be.src.exec.sorting.compare_column.ColumnCompare",
+            "be.src.exec.sorting.merge_cascade.CursorAlgo",
+            "be.src.exec.sorting.merge_column.EqualRange",
+            "be.src.exec.sorting.merge_path.MergeIterator",
+            "be.src.exec.sorting.sort_column.VerticalColumnSorter",
+            "be.src.exec.sorting.sort_permute.PermutationTraits",
+            "be.src.exec.spill.data_stream.BlockSpillOutputDataStream",
+            "be.src.exec.spill.file_block_manager.FileBlock",
+            "be.src.exec.spill.input_stream.OrderedInputStream",
+            "be.src.exec.spill.log_block_manager.LogBlockReader",
+            "be.src.exec.tablet_info.VectorCompare",
+            "be.src.exec.tablet_sink_index_channel.OlapTableSink",
+            "be.src.exec.workgroup.work_group.WorkGroupMetrics"
+        ],
+        "children": {}
+    },
+    "sql_parser_optimizer": {
+        "path": "fe/fe-core/src/main/java/com/starrocks/sql",
+        "components": [
+            "fe.fe-core.src.main.java.com.starrocks.sql.Explain.OperatorStr",
+            "fe.fe-core.src.main.java.com.starrocks.sql.OptimisticVersion.OptimisticVersion",
+            "fe.fe-core.src.main.java.com.starrocks.sql.PrepareStmtPlanner.PrepareStmtPlanner",
+            "fe.fe-core.src.main.java.com.starrocks.sql.RankingWindowUtils.RankingWindowUtils",
+            "fe.fe-core.src.main.java.com.starrocks.sql.ShortCircuitPlanner.ShortCircuitPlanner",
+            "fe.fe-core.src.main.java.com.starrocks.sql.ShortCircuitPlannerHybrid.ShortCircuitPlannerHybrid",
+            "fe.fe-core.src.main.java.com.starrocks.sql.StatementPlanner.StatementPlanner",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AdminStmtAnalyzer.AdminStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AggregateTypeAnalyzer.AggregateTypeAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AlterDatabaseRenameStatementAnalyzer.AlterDatabaseRenameStatementAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AlterDbQuotaAnalyzer.AlterDbQuotaAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AlterLoadAnalyzer.AlterLoadAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AlterRoutineLoadAnalyzer.AlterRoutineLoadAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AlterTableStatementAnalyzer.AlterTableStatementAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AnalyticAnalyzer.AnalyticAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AnalyzeStmtAnalyzer.AnalyzeStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AnalyzerUtils.AnalyzerUtils",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AstToSQLBuilder.AstToSQLBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AstToStringBuilder.AstToStringBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AuthenticationAnalyzer.AuthenticationAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.AuthorizationAnalyzer.AuthorizationAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.Authorizer.AccessControlChecker",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.BackupRestoreAnalyzer.BackupRestoreAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.BasicDbStmtAnalyzer.BasicDbStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CTASAnalyzer.CTASAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CallProcedureAnalyzer.CallProcedureAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CancelAlterTableStatementAnalyzer.CancelAlterTableStatementAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CancelCompactionStmtAnalyzer.CancelCompactionStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CancelLoadStmtAnalyzer.CancelLoadStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CatalogAnalyzer.CatalogAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ClusterSnapshotAnalyzer.ClusterSnapshotAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ColumnDefAnalyzer.ColumnDefAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CreateDbAnalyzer.CreateDbAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CreateFunctionAnalyzer.UDFSecurityManager",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CreateRoutineLoadAnalyzer.CreateRoutineLoadAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CreateTableAnalyzer.CreateTableAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.CreateTableLikeAnalyzer.CreateTableLikeAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.DMLStmtAnalyzer.DMLStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.DataCacheStmtAnalyzer.DataCacheStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.DeleteAnalyzer.DeleteAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.DictionaryAnalyzer.DictionaryAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.DistributionDescAnalyzer.DistributionDescAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.DropStmtAnalyzer.DropStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ExportStmtAnalyzer.ExportStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ExpressionAnalyzer.ResolveSlotVisitor",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.FeNameFormat.FeNameFormat",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.FileAnalyzer.FileAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.FunctionAnalyzer.FunctionAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.FunctionNameAnalyzer.FunctionNameAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.GroupProviderStatementAnalyzer.GroupProviderStatementAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.IndexAnalyzer.IndexAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.InsertAnalyzer.InsertAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.LoadStmtAnalyzer.LoadStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.PartitionFunctionChecker.PartitionFunctionChecker",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.PauseRoutineLoadAnalyzer.PauseRoutineLoadAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.PipeAnalyzer.PipeAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.PluginAnalyzer.PluginAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.PolymorphicFunctionAnalyzer.PolymorphicFunctionAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.QueryAnalyzer.Visitor",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.RecoverPartitionAnalyzer.RecoverPartitionAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.RecoverTableAnalyzer.RecoverTableAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.RefreshTableStatementAnalyzer.RefreshTableStatementAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.RepositoryAnalyzer.RepositoryAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ResourceAnalyzer.ResourceAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ResourceGroupAnalyzer.ResourceGroupAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ResumeRoutineLoadAnalyzer.ResumeRoutineLoadAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.Scope.Scope",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.SecurityIntegrationStatementAnalyzer.SecurityIntegrationStatementAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.SelectAnalyzer.SlotRefTableNameCleaner",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.SetStmtAnalyzer.SetStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.SetUserPropertyAnalyzer.SetUserPropertyAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ShowAlterStmtAnalyzer.ShowAlterStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ShowLoadStmtAnalyzer.ShowLoadStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ShowLoadWarningsStmtAnalyzer.ShowLoadWarningsStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ShowSnapshotAnalyzer.ShowSnapshotAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ShowStmtAnalyzer.ShowStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ShowTabletStmtAnalyzer.ShowTabletStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ShowTransactionStmtAnalyzer.ShowTransactionStmtAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ShowUserPropertyAnalyzer.ShowUserPropertyAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.StopRoutineLoadAnalyzer.StopRoutineLoadAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.StorageVolumeAnalyzer.StorageVolumeAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.TaskAnalyzer.TaskAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.TransactionAnalyzer.TransactionAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.TranslateAnalyzer.TranslateAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.TruncateTableAnalyzer.TruncateTableAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.UpdateAnalyzer.UpdateAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.UserAuthOptionAnalyzer.UserAuthOptionAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.ViewAnalyzer.ViewAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.analyzer.WarehouseAnalyzer.WarehouseAnalyzer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.CTEUtils.CTEUtils",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.ConstantOperatorUtils.ConstantOperatorUtils",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.EnumeratePlan.EnumeratePlan",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.LogicalPlanPrinter.LogicalPlanPrinter",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.MaterializationContext.RewriteOrdering",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.MvPlanContextBuilder.MvPlanContextBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.OptExpression.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.OptimizerFactory.OptimizerFactory",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.OptimizerTraceUtil.OptimizerTraceUtil",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.PropertyDeriverBase.PropertyDeriverBase",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.SubqueryUtils.SubqueryUtils",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.base.Property.Property",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.cost.CostModel.CostModel",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.operator.ColumnFilterConverter.ColumnFilterConverter",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.operator.OpRuleBit.OpRuleBit",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.operator.OperatorBuilderFactory.OperatorBuilderFactory",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.operator.OperatorVisitor.OperatorVisitor",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.rule.join.JoinReorderFactory.JoinReorderFactory",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.rule.mv.MVUtils.MVUtils",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.rule.mv.MaterializedViewRewriter.MaterializedViewRewriter",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.rule.transformation.materialization.PredicateExtractor.PredicateExtractorContext",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.statistics.BinaryPredicateStatisticCalculator.BinaryPredicateStatisticCalculator",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.statistics.ColumnStatistic.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.statistics.ExpressionStatisticCalculator.ExpressionStatisticCalculator",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.statistics.PredicateStatisticsCalculator.PredicateStatisticsCalculator",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.statistics.Statistics.Statistics",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.task.TaskContext.TaskContext",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.transformer.WindowTransformer.WindowTransformer",
+            "fe.fe-core.src.main.java.com.starrocks.sql.optimizer.validate.PlanValidator.Checker",
+            "fe.fe-core.src.main.java.com.starrocks.sql.parser.AstBuilder.AstBuilderFactory",
+            "fe.fe-core.src.main.java.com.starrocks.sql.parser.HintFactory.HintFactory",
+            "fe.fe-core.src.main.java.com.starrocks.sql.parser.SyntaxSugars.SyntaxSugars",
+            "fe.fe-core.src.main.java.com.starrocks.sql.plan.PlanFragmentBuilder.PlanFragmentBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.sql.plan.ScalarOperatorToExpr.ScalarOperatorToExpr"
+        ],
+        "children": {
+            "parser": {
+                "components": [
+                    "AstBuilder.AstBuilderFactory",
+                    "HintFactory.HintFactory",
+                    "SyntaxSugars.SyntaxSugars"
+                ],
+                "children": {}
+            },
+            "analyzer": {
+                "components": [
+                    "QueryAnalyzer.Visitor",
+                    "ExpressionAnalyzer.ResolveSlotVisitor",
+                    "DMLStmtAnalyzer.DMLStmtAnalyzer",
+                    "SelectAnalyzer.SlotRefTableNameCleaner",
+                    "InsertAnalyzer.InsertAnalyzer",
+                    "UpdateAnalyzer.UpdateAnalyzer",
+                    "DeleteAnalyzer.DeleteAnalyzer",
+                    "CreateTableAnalyzer.CreateTableAnalyzer",
+                    "AlterTableStatementAnalyzer.AlterTableStatementAnalyzer",
+                    "DropStmtAnalyzer.DropStmtAnalyzer",
+                    "FunctionAnalyzer.FunctionAnalyzer",
+                    "AggregateTypeAnalyzer.AggregateTypeAnalyzer",
+                    "AnalyticAnalyzer.AnalyticAnalyzer",
+                    "ViewAnalyzer.ViewAnalyzer",
+                    "IndexAnalyzer.IndexAnalyzer",
+                    "CTASAnalyzer.CTASAnalyzer",
+                    "AnalyzerUtils.AnalyzerUtils",
+                    "AstToSQLBuilder.AstToSQLBuilder",
+                    "AstToStringBuilder.AstToStringBuilder",
+                    "FeNameFormat.FeNameFormat"
+                ],
+                "children": {}
+            },
+            "optimizer": {
+                "components": [
+                    "OptimizerFactory.OptimizerFactory",
+                    "OptExpression.Builder",
+                    "PropertyDeriverBase.PropertyDeriverBase",
+                    "CostModel.CostModel",
+                    "ColumnFilterConverter.ColumnFilterConverter",
+                    "OperatorBuilderFactory.OperatorBuilderFactory",
+                    "OperatorVisitor.OperatorVisitor",
+                    "JoinReorderFactory.JoinReorderFactory",
+                    "MaterializedViewRewriter.MaterializedViewRewriter",
+                    "MVUtils.MVUtils",
+                    "CTEUtils.CTEUtils",
+                    "SubqueryUtils.SubqueryUtils",
+                    "ConstantOperatorUtils.ConstantOperatorUtils",
+                    "EnumeratePlan.EnumeratePlan",
+                    "LogicalPlanPrinter.LogicalPlanPrinter",
+                    "OptimizerTraceUtil.OptimizerTraceUtil",
+                    "Statistics.Statistics",
+                    "ColumnStatistic.Builder",
+                    "BinaryPredicateStatisticCalculator.BinaryPredicateStatisticCalculator",
+                    "ExpressionStatisticCalculator.ExpressionStatisticCalculator",
+                    "PredicateStatisticsCalculator.PredicateStatisticsCalculator",
+                    "TaskContext.TaskContext",
+                    "WindowTransformer.WindowTransformer",
+                    "PlanValidator.Checker"
+                ],
+                "children": {}
+            },
+            "planner": {
+                "components": [
+                    "PlanFragmentBuilder.PlanFragmentBuilder",
+                    "ScalarOperatorToExpr.ScalarOperatorToExpr"
+                ],
+                "children": {}
+            },
+            "statement_planner": {
+                "components": [
+                    "StatementPlanner.StatementPlanner",
+                    "PrepareStmtPlanner.PrepareStmtPlanner",
+                    "ShortCircuitPlanner.ShortCircuitPlanner",
+                    "ShortCircuitPlannerHybrid.ShortCircuitPlannerHybrid",
+                    "Explain.OperatorStr",
+                    "OptimisticVersion.OptimisticVersion",
+                    "RankingWindowUtils.RankingWindowUtils"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "frontend_server": {
+        "path": "fe/fe-core/src/main/java/com/starrocks",
+        "components": [
+            "fe.fe-core.src.main.java.com.starrocks.StarRocksFEServer.StarRocksFEServer",
+            "fe.fe-core.src.main.java.com.starrocks.alter.AlterHelper.AlterHelper",
+            "fe.fe-core.src.main.java.com.starrocks.alter.CompactionHandler.CompactionHandler",
+            "fe.fe-core.src.main.java.com.starrocks.alter.SchemaChangeData.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.alter.SystemHandler.Visitor",
+            "fe.fe-core.src.main.java.com.starrocks.alter.dynamictablet.DynamicTabletUtils.DynamicTabletUtils",
+            "fe.fe-core.src.main.java.com.starrocks.authentication.AuthenticationHandler.AuthenticationHandler",
+            "fe.fe-core.src.main.java.com.starrocks.authentication.AuthenticationProviderFactory.AuthenticationProviderFactory",
+            "fe.fe-core.src.main.java.com.starrocks.authorization.ColumnPrivilege.ColumnPrivilege",
+            "fe.fe-core.src.main.java.com.starrocks.backup.AsynchronousCmdExecutor.AsynchronousCmdExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.BrokerTable.BrokerTable",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.Column.Column",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnId.CaseInsensitiveComparator",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnStats.ColumnStats",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnType.ColumnType",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.DistributionInfo.DistributionInfo",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.DistributionInfoBuilder.DistributionInfoBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.FileTable.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.HiveTable.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.HudiTable.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.IcebergTable.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.Index.Index",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.InternalCatalog.InternalCatalog",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.MapType.MapTypeDeserializer",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.MaterializedIndexMeta.MaterializedIndexMeta",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.MaterializedView.BasePartitionInfo",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.MetadataViewer.MetadataViewer",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.MvRefreshArbiter.MvRefreshArbiter",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.Partition.Partition",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionInfo.PartitionInfo",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionInfoBuilder.PartitionInfoBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionKey.PartitionKey",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.ResourceGroupBuilder.ResourceGroupBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.ScalarFunction.ScalarFunctionBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.SchemaInfo.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.StructType.StructTypeDeserializer",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.Tablet.Tablet",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.Type.Type",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.system.SystemId.SystemId",
+            "fe.fe-core.src.main.java.com.starrocks.catalog.system.SystemTable.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.common.Config.Config",
+            "fe.fe-core.src.main.java.com.starrocks.common.ConfigBase.ConfigBase",
+            "fe.fe-core.src.main.java.com.starrocks.common.FeConstants.FeConstants",
+            "fe.fe-core.src.main.java.com.starrocks.common.Id.Id",
+            "fe.fe-core.src.main.java.com.starrocks.common.SchemaConstants.SchemaConstants",
+            "fe.fe-core.src.main.java.com.starrocks.common.StarRocksFEMetaVersion.StarRocksFEMetaVersion",
+            "fe.fe-core.src.main.java.com.starrocks.common.Status.Status",
+            "fe.fe-core.src.main.java.com.starrocks.common.io.DeepCopy.DeepCopy",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.ArrowUtil.ArrowUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.CompressionUtils.CompressionUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.ConsistentHashRing.VNode",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.DateUtils.DateUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.DebugUtil.DebugUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.DnsCache.DnsCache",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.HTTPLogBuilder.HTTPLogBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.KafkaUtil.KafkaUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.ListUtil.ListUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.LoadPriority.LoadPriority",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.LogUtil.LogUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.NetUtils.NetUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.ParseUtil.ParseUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.PlainHashRing.PlainHashRing",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.PlatformName.PlatformName",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.ProcResultUtils.ProcResultUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.PulsarUtil.PulsarUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.QueryStatisticsFormatter.QueryStatisticsFormatter",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.RangeUtils.RangeUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.RuntimeProfile.JsonProfileFormatter",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.RuntimeProfileParser.RuntimeProfileParser",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.SRStringUtils.SRStringUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.SqlCredentialRedactor.SqlCredentialRedactor",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.SqlUtils.SqlUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.StringUtils.StringUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.ThreadUtil.ThreadUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.TimeUtils.TimeUtils",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.UUIDUtil.UUIDUtil",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.Util.Util",
+            "fe.fe-core.src.main.java.com.starrocks.common.util.WriteQuorum.WriteQuorum",
+            "fe.fe-core.src.main.java.com.starrocks.connector.AsyncTaskQueue.AsyncTaskQueue",
+            "fe.fe-core.src.main.java.com.starrocks.connector.ColumnTypeConverter.ColumnTypeConverter",
+            "fe.fe-core.src.main.java.com.starrocks.connector.ConnectorFactory.ConnectorFactory",
+            "fe.fe-core.src.main.java.com.starrocks.connector.ConnectorTableInfo.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.DirectoryBasedUpdateArbitrator.DirectoryBasedUpdateArbitrator",
+            "fe.fe-core.src.main.java.com.starrocks.connector.GetRemoteFilesParams.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.ObjectBasedUpdateArbitrator.ObjectBasedUpdateArbitrator",
+            "fe.fe-core.src.main.java.com.starrocks.connector.PartitionInfo.PartitionInfo",
+            "fe.fe-core.src.main.java.com.starrocks.connector.RemoteFileInfo.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.TableUpdateArbitrator.UpdateContext",
+            "fe.fe-core.src.main.java.com.starrocks.credential.CloudConfigurationFactory.CloudConfigurationFactory",
+            "fe.fe-core.src.main.java.com.starrocks.credential.CredentialUtil.CredentialUtil",
+            "fe.fe-core.src.main.java.com.starrocks.datacache.DataCacheExprRewriter.DataCacheExprRewriter",
+            "fe.fe-core.src.main.java.com.starrocks.datacache.DataCacheSelectExecutor.DataCacheSelectExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.encryption.EncryptionUtil.EncryptionUtil",
+            "fe.fe-core.src.main.java.com.starrocks.failpoint.FailPoint.FailPoint",
+            "fe.fe-core.src.main.java.com.starrocks.fs.FileSystem.FileSystem",
+            "fe.fe-core.src.main.java.com.starrocks.fs.HdfsUtil.HdfsUtil",
+            "fe.fe-core.src.main.java.com.starrocks.ha.BDBHA.BDBHA",
+            "fe.fe-core.src.main.java.com.starrocks.ha.StateChangeExecutor.SingletonHolder",
+            "fe.fe-core.src.main.java.com.starrocks.http.HttpUtils.HttpUtils",
+            "fe.fe-core.src.main.java.com.starrocks.http.WebUtils.WebUtils",
+            "fe.fe-core.src.main.java.com.starrocks.http.meta.MetaService.MetaService",
+            "fe.fe-core.src.main.java.com.starrocks.journal.JournalFactory.JournalFactory",
+            "fe.fe-core.src.main.java.com.starrocks.lake.LakeTableHelper.LakeTableHelper",
+            "fe.fe-core.src.main.java.com.starrocks.lake.StorageInfo.StorageInfo",
+            "fe.fe-core.src.main.java.com.starrocks.lake.TxnInfoHelper.TxnInfoHelper",
+            "fe.fe-core.src.main.java.com.starrocks.lake.Utils.Utils",
+            "fe.fe-core.src.main.java.com.starrocks.load.DeleteInfo.DeleteInfo",
+            "fe.fe-core.src.main.java.com.starrocks.load.EtlJobInfo.EtlJobInfo",
+            "fe.fe-core.src.main.java.com.starrocks.load.EtlSubmitResult.EtlSubmitResult",
+            "fe.fe-core.src.main.java.com.starrocks.load.ExportJob.ExportUpdateInfo",
+            "fe.fe-core.src.main.java.com.starrocks.load.FunctionalExprProvider.FunctionalExprProvider",
+            "fe.fe-core.src.main.java.com.starrocks.load.Load.CSVOptions",
+            "fe.fe-core.src.main.java.com.starrocks.load.LoadConstants.LoadConstants",
+            "fe.fe-core.src.main.java.com.starrocks.load.PartitionUtils.PartitionUtils",
+            "fe.fe-core.src.main.java.com.starrocks.load.loadv2.LoadMgr.EstimateStats",
+            "fe.fe-core.src.main.java.com.starrocks.load.pipe.PipePiece.PipePiece",
+            "fe.fe-core.src.main.java.com.starrocks.load.routineload.ScheduleRule.ScheduleRule",
+            "fe.fe-core.src.main.java.com.starrocks.load.streamload.StreamLoadHttpHeader.StreamLoadHttpHeader",
+            "fe.fe-core.src.main.java.com.starrocks.metric.CounterMetric.CounterMetric",
+            "fe.fe-core.src.main.java.com.starrocks.metric.LeaderAwareMetric.LeaderAwareMetric",
+            "fe.fe-core.src.main.java.com.starrocks.metric.MaterializedViewMetricsRegistry.MetricsCleaner",
+            "fe.fe-core.src.main.java.com.starrocks.metric.PrometheusRegistryHelper.PrometheusRegistryHelper",
+            "fe.fe-core.src.main.java.com.starrocks.metric.ResourceGroupMetricMgr.ResourceGroupMetricMgr",
+            "fe.fe-core.src.main.java.com.starrocks.metric.WarehouseMetricMgr.WarehouseMetricMgr",
+            "fe.fe-core.src.main.java.com.starrocks.monitor.jvm.JvmInfo.Fields",
+            "fe.fe-core.src.main.java.com.starrocks.mv.MVMetaVersionRepairer.MVMetaVersionRepairer",
+            "fe.fe-core.src.main.java.com.starrocks.mv.analyzer.MVPartitionExprEqChecker.MVPartitionExprEqChecker",
+            "fe.fe-core.src.main.java.com.starrocks.mysql.MysqlCodec.MysqlCodec",
+            "fe.fe-core.src.main.java.com.starrocks.mysql.MysqlPassword.MysqlPassword",
+            "fe.fe-core.src.main.java.com.starrocks.mysql.MysqlProto.MysqlProto",
+            "fe.fe-core.src.main.java.com.starrocks.mysql.privilege.Password.Password",
+            "fe.fe-core.src.main.java.com.starrocks.persist.BackendIdsUpdateInfo.BackendIdsUpdateInfo",
+            "fe.fe-core.src.main.java.com.starrocks.persist.ClusterInfo.ClusterInfo",
+            "fe.fe-core.src.main.java.com.starrocks.persist.EditLogDeserializer.EditLogDeserializer",
+            "fe.fe-core.src.main.java.com.starrocks.persist.ImpersonatePrivInfo.ImpersonatePrivInfo",
+            "fe.fe-core.src.main.java.com.starrocks.persist.LinkDbInfo.LinkDbInfo",
+            "fe.fe-core.src.main.java.com.starrocks.persist.OperationType.OperationType",
+            "fe.fe-core.src.main.java.com.starrocks.persist.PartitionPersistInfo.PartitionPersistInfo",
+            "fe.fe-core.src.main.java.com.starrocks.persist.TableInfo.TableInfo",
+            "fe.fe-core.src.main.java.com.starrocks.persist.gson.GsonUtils.GsonUtils",
+            "fe.fe-core.src.main.java.com.starrocks.persist.metablock.SRMetaBlockLoader.SRMetaBlockLoader",
+            "fe.fe-core.src.main.java.com.starrocks.planner.DescriptorTable.ReferencedPartitionInfo",
+            "fe.fe-core.src.main.java.com.starrocks.planner.FileScanNode.ParamCreateContext",
+            "fe.fe-core.src.main.java.com.starrocks.planner.JoinNode.JoinNode",
+            "fe.fe-core.src.main.java.com.starrocks.planner.ScanNode.ScanNode",
+            "fe.fe-core.src.main.java.com.starrocks.plugin.PluginClassLoader.PluginClassLoader",
+            "fe.fe-core.src.main.java.com.starrocks.qe.ColocatedBackendSelector.BucketSeqToScanRange",
+            "fe.fe-core.src.main.java.com.starrocks.qe.ConnectContext.Listener",
+            "fe.fe-core.src.main.java.com.starrocks.qe.CoordinatorMonitor.SingletonHolder",
+            "fe.fe-core.src.main.java.com.starrocks.qe.DefaultCoordinator.Factory",
+            "fe.fe-core.src.main.java.com.starrocks.qe.ExecuteAsExecutor.ExecuteAsExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.qe.GlobalVariable.GlobalVariable",
+            "fe.fe-core.src.main.java.com.starrocks.qe.QueryDetailQueue.QueryDetailQueue",
+            "fe.fe-core.src.main.java.com.starrocks.qe.QueryQueueManager.SingletonHolder",
+            "fe.fe-core.src.main.java.com.starrocks.qe.QueryStatisticsItem.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.qe.SessionVariableConstants.SessionVariableConstants",
+            "fe.fe-core.src.main.java.com.starrocks.qe.SetDefaultRoleExecutor.SetDefaultRoleExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.qe.SetRoleExecutor.SetRoleExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.qe.ShowMaterializedViewStatus.ExtraMessage",
+            "fe.fe-core.src.main.java.com.starrocks.qe.ShowResultSetMetaData.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.qe.SimpleScheduler.SimpleScheduler",
+            "fe.fe-core.src.main.java.com.starrocks.qe.SqlModeHelper.SqlModeHelper",
+            "fe.fe-core.src.main.java.com.starrocks.qe.TranslateExecutor.TranslateExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.qe.VariableVarConverters.VariableVarConverters",
+            "fe.fe-core.src.main.java.com.starrocks.qe.WorkerProviderHelper.WorkerProviderHelper",
+            "fe.fe-core.src.main.java.com.starrocks.qe.feedback.NodeExecStats.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.qe.feedback.OperatorTuningGuides.OptimizedRecord",
+            "fe.fe-core.src.main.java.com.starrocks.qe.feedback.PlanAdvisorExecutor.PlanAdvisorExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.CandidateWorkerProvider.Factory",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.Coordinator.Factory",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.DefaultWorkerProvider.Factory",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.WorkerProvider.Factory",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.assignment.BackendSelectorFactory.BackendSelectorFactory",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.dag.FragmentSequence.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.dag.JobSpec.Factory",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.dag.ScheduleNextTurnRunner.ScheduleNextTurnRunner",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.slot.BaseSlotTracker.ExtraMessage",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.slot.LogicalSlot.ConnectContextListener",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.slot.SlotEstimatorFactory.SlotEstimatorFactory",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.warehouse.WarehouseMetricEntity.WarehouseMetricEntity",
+            "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.warehouse.WarehouseQueryQueueMetrics.WarehouseQueryQueueMetrics",
+            "fe.fe-core.src.main.java.com.starrocks.replication.ReplicationJob.PartitionInfo",
+            "fe.fe-core.src.main.java.com.starrocks.rpc.BackendServiceClient.SingletonHolder",
+            "fe.fe-core.src.main.java.com.starrocks.rpc.BrpcProxy.SingletonHolder",
+            "fe.fe-core.src.main.java.com.starrocks.rpc.ConfigurableSerDesFactory.ConfigurableSerDesFactory",
+            "fe.fe-core.src.main.java.com.starrocks.rpc.ConfigurableTProtocolFactory.ConfigurableTProtocolFactory",
+            "fe.fe-core.src.main.java.com.starrocks.rpc.PExecBatchPlanFragmentsRequest.PExecBatchPlanFragmentsRequest",
+            "fe.fe-core.src.main.java.com.starrocks.rpc.PTriggerProfileReportRequest.PTriggerProfileReportRequest",
+            "fe.fe-core.src.main.java.com.starrocks.rpc.ThriftClientAttachmentHandler.ThriftClientAttachmentHandler",
+            "fe.fe-core.src.main.java.com.starrocks.rpc.ThriftRPCRequestExecutor.ThriftRPCRequestExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.scheduler.Constants.Constants",
+            "fe.fe-core.src.main.java.com.starrocks.scheduler.TableWithPartitions.TableWithPartitions",
+            "fe.fe-core.src.main.java.com.starrocks.scheduler.mv.BinlogConsumeStateVO.BinlogIdVO",
+            "fe.fe-core.src.main.java.com.starrocks.scheduler.mv.IMTCreator.IMTCreator",
+            "fe.fe-core.src.main.java.com.starrocks.scheduler.mv.MVTraceUtils.MVTraceUtils",
+            "fe.fe-core.src.main.java.com.starrocks.scheduler.persist.DropTaskRunsLog.DropTaskRunsLog",
+            "fe.fe-core.src.main.java.com.starrocks.server.CatalogMgr.ResourceMappingCatalog",
+            "fe.fe-core.src.main.java.com.starrocks.server.GlobalStateMgr.SingletonHolder",
+            "fe.fe-core.src.main.java.com.starrocks.server.GracefulExitFlag.GracefulExitFlag",
+            "fe.fe-core.src.main.java.com.starrocks.server.TableFactoryProvider.TableFactoryProvider",
+            "fe.fe-core.src.main.java.com.starrocks.server.WarehouseEventListener.WarehouseEventListener",
+            "fe.fe-core.src.main.java.com.starrocks.service.FrontendOptions.FrontendOptions",
+            "fe.fe-core.src.main.java.com.starrocks.service.InformationSchemaDataSource.InformationSchemaDataSource",
+            "fe.fe-core.src.main.java.com.starrocks.sql.spm.BaselinePlan.Info",
+            "fe.fe-core.src.main.java.com.starrocks.sql.spm.SPMAst2SQLBuilder.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.sql.spm.SPMFunctions.SPMFunctions",
+            "fe.fe-core.src.main.java.com.starrocks.sql.spm.SPMStmtExecutor.SPMStmtExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.sql.spm.SPMUpdateExprVisitor.SPMUpdateExprVisitor",
+            "fe.fe-core.src.main.java.com.starrocks.sql.util.TieredList.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.sql.util.TieredMap.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.staros.StarMgrServer.SingletonHolder",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.AnalyzeMgr.SerializeData",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.StatisticSQLBuilder.StatisticSQLBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.StatisticUtils.StatisticUtils",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.StatisticsCollectJob.ComparatorWithPriority",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.StatisticsCollectJobFactory.StatisticsCollectJobFactory",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.StatsConstants.StatsConstants",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.base.ColumnStats.ColumnStats",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.base.ComplexTypeColumnStats.ComplexTypeColumnStats",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.base.PrimitiveTypeColumnStats.PrimitiveTypeColumnStats",
+            "fe.fe-core.src.main.java.com.starrocks.statistic.base.SubFieldColumnStats.SubFieldColumnStats",
+            "fe.fe-core.src.main.java.com.starrocks.system.BackendResourceStat.SingletonHolder",
+            "fe.fe-core.src.main.java.com.starrocks.system.HeartbeatFlags.HeartbeatFlags",
+            "fe.fe-core.src.main.java.com.starrocks.task.AgentTaskExecutor.AgentTaskExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.task.AgentTaskQueue.AgentTaskQueue",
+            "fe.fe-core.src.main.java.com.starrocks.task.CreateReplicaTask.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.task.LeaderTaskExecutor.TaskChecker",
+            "fe.fe-core.src.main.java.com.starrocks.task.LoadEtlTask.LoadEtlTask",
+            "fe.fe-core.src.main.java.com.starrocks.task.TabletMetadataUpdateAgentTaskFactory.TabletMetadataUpdateAgentTaskFactory",
+            "fe.fe-core.src.main.java.com.starrocks.task.TabletTaskExecutor.TabletTaskExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.transaction.ExplicitTxnState.ExplicitTxnStateItem",
+            "fe.fe-core.src.main.java.com.starrocks.transaction.RemoteTransactionMgr.RemoteTransactionMgr",
+            "fe.fe-core.src.main.java.com.starrocks.transaction.TabletCommitInfo.TabletCommitInfo",
+            "fe.fe-core.src.main.java.com.starrocks.transaction.TabletFailInfo.TabletFailInfo",
+            "fe.fe-core.src.main.java.com.starrocks.transaction.TransactionStmtExecutor.TransactionStmtExecutor",
+            "fe.fe-core.src.main.java.com.starrocks.warehouse.IdleStatus.WarehouseStatus"
+        ],
+        "children": {
+            "catalog": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.Column.Column",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnId.CaseInsensitiveComparator",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnStats.ColumnStats",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnType.ColumnType",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.DistributionInfo.DistributionInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.DistributionInfoBuilder.DistributionInfoBuilder",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.Index.Index",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.InternalCatalog.InternalCatalog",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.MapType.MapTypeDeserializer",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.MaterializedIndexMeta.MaterializedIndexMeta",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.MaterializedView.BasePartitionInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.Partition.Partition",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionInfo.PartitionInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionInfoBuilder.PartitionInfoBuilder",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionKey.PartitionKey",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.ScalarFunction.ScalarFunctionBuilder",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.SchemaInfo.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.StructType.StructTypeDeserializer",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.Tablet.Tablet",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.Type.Type",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.system.SystemId.SystemId",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.system.SystemTable.Builder"
+                ],
+                "children": {
+                    "column_management": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.Column.Column",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnId.CaseInsensitiveComparator",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnStats.ColumnStats",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.ColumnType.ColumnType",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.Type.Type"
+                        ],
+                        "children": {}
+                    },
+                    "partition_management": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.Partition.Partition",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionInfo.PartitionInfo",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionInfoBuilder.PartitionInfoBuilder",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.PartitionKey.PartitionKey"
+                        ],
+                        "children": {}
+                    },
+                    "distribution_management": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.DistributionInfo.DistributionInfo",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.DistributionInfoBuilder.DistributionInfoBuilder"
+                        ],
+                        "children": {}
+                    },
+                    "table_structure": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.SchemaInfo.Builder",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.Index.Index",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.Tablet.Tablet",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.ScalarFunction.ScalarFunctionBuilder"
+                        ],
+                        "children": {}
+                    },
+                    "complex_types": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.MapType.MapTypeDeserializer",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.StructType.StructTypeDeserializer"
+                        ],
+                        "children": {}
+                    },
+                    "system_catalog": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.InternalCatalog.InternalCatalog",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.system.SystemId.SystemId",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.system.SystemTable.Builder"
+                        ],
+                        "children": {}
+                    },
+                    "materialized_views": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.MaterializedIndexMeta.MaterializedIndexMeta",
+                            "fe.fe-core.src.main.java.com.starrocks.catalog.MaterializedView.BasePartitionInfo"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "connector_catalog": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.BrokerTable.BrokerTable",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.FileTable.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.HiveTable.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.HudiTable.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.catalog.IcebergTable.Builder"
+                ],
+                "children": {}
+            },
+            "server_lifecycle": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.StarRocksFEServer.StarRocksFEServer",
+                    "fe.fe-core.src.main.java.com.starrocks.server.GlobalStateMgr.SingletonHolder",
+                    "fe.fe-core.src.main.java.com.starrocks.server.GracefulExitFlag.GracefulExitFlag",
+                    "fe.fe-core.src.main.java.com.starrocks.service.FrontendOptions.FrontendOptions"
+                ],
+                "children": {}
+            },
+            "alter": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.alter.AlterHelper.AlterHelper",
+                    "fe.fe-core.src.main.java.com.starrocks.alter.CompactionHandler.CompactionHandler",
+                    "fe.fe-core.src.main.java.com.starrocks.alter.SchemaChangeData.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.alter.SystemHandler.Visitor",
+                    "fe.fe-core.src.main.java.com.starrocks.alter.dynamictablet.DynamicTabletUtils.DynamicTabletUtils"
+                ],
+                "children": {}
+            },
+            "authentication_authorization": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.authentication.AuthenticationHandler.AuthenticationHandler",
+                    "fe.fe-core.src.main.java.com.starrocks.authentication.AuthenticationProviderFactory.AuthenticationProviderFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.authorization.ColumnPrivilege.ColumnPrivilege"
+                ],
+                "children": {}
+            },
+            "backup_restore": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.backup.AsynchronousCmdExecutor.AsynchronousCmdExecutor"
+                ],
+                "children": {}
+            },
+            "common_config": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.common.Config.Config",
+                    "fe.fe-core.src.main.java.com.starrocks.common.ConfigBase.ConfigBase",
+                    "fe.fe-core.src.main.java.com.starrocks.common.FeConstants.FeConstants",
+                    "fe.fe-core.src.main.java.com.starrocks.common.Id.Id",
+                    "fe.fe-core.src.main.java.com.starrocks.common.SchemaConstants.SchemaConstants",
+                    "fe.fe-core.src.main.java.com.starrocks.common.StarRocksFEMetaVersion.StarRocksFEMetaVersion",
+                    "fe.fe-core.src.main.java.com.starrocks.common.Status.Status"
+                ],
+                "children": {
+                    "config_management": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.common.Config.Config",
+                            "fe.fe-core.src.main.java.com.starrocks.common.ConfigBase.ConfigBase"
+                        ],
+                        "children": {}
+                    },
+                    "system_constants": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.common.FeConstants.FeConstants",
+                            "fe.fe-core.src.main.java.com.starrocks.common.SchemaConstants.SchemaConstants",
+                            "fe.fe-core.src.main.java.com.starrocks.common.Id.Id"
+                        ],
+                        "children": {}
+                    },
+                    "version_management": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.common.StarRocksFEMetaVersion.StarRocksFEMetaVersion"
+                        ],
+                        "children": {}
+                    },
+                    "status_handling": {
+                        "components": [
+                            "fe.fe-core.src.main.java.com.starrocks.common.Status.Status"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "common_utilities": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.ArrowUtil.ArrowUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.CompressionUtils.CompressionUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.ConsistentHashRing.VNode",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.DateUtils.DateUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.DebugUtil.DebugUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.DnsCache.DnsCache",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.HTTPLogBuilder.HTTPLogBuilder",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.KafkaUtil.KafkaUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.ListUtil.ListUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.LoadPriority.LoadPriority",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.LogUtil.LogUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.NetUtils.NetUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.ParseUtil.ParseUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.PlainHashRing.PlainHashRing",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.PlatformName.PlatformName",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.ProcResultUtils.ProcResultUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.PulsarUtil.PulsarUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.QueryStatisticsFormatter.QueryStatisticsFormatter",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.RangeUtils.RangeUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.RuntimeProfile.JsonProfileFormatter",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.RuntimeProfileParser.RuntimeProfileParser",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.SRStringUtils.SRStringUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.SqlCredentialRedactor.SqlCredentialRedactor",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.SqlUtils.SqlUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.StringUtils.StringUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.ThreadUtil.ThreadUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.TimeUtils.TimeUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.UUIDUtil.UUIDUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.Util.Util",
+                    "fe.fe-core.src.main.java.com.starrocks.common.util.WriteQuorum.WriteQuorum"
+                ],
+                "children": {}
+            },
+            "connector_framework": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.AsyncTaskQueue.AsyncTaskQueue",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.ColumnTypeConverter.ColumnTypeConverter",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.ConnectorFactory.ConnectorFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.ConnectorTableInfo.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.DirectoryBasedUpdateArbitrator.DirectoryBasedUpdateArbitrator",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.GetRemoteFilesParams.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.ObjectBasedUpdateArbitrator.ObjectBasedUpdateArbitrator",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.PartitionInfo.PartitionInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.RemoteFileInfo.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.TableUpdateArbitrator.UpdateContext"
+                ],
+                "children": {}
+            },
+            "credential_cloud": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.credential.CloudConfigurationFactory.CloudConfigurationFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.credential.CredentialUtil.CredentialUtil"
+                ],
+                "children": {}
+            },
+            "datacache": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.datacache.DataCacheExprRewriter.DataCacheExprRewriter",
+                    "fe.fe-core.src.main.java.com.starrocks.datacache.DataCacheSelectExecutor.DataCacheSelectExecutor"
+                ],
+                "children": {}
+            },
+            "encryption": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.encryption.EncryptionUtil.EncryptionUtil"
+                ],
+                "children": {}
+            },
+            "failpoint": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.failpoint.FailPoint.FailPoint"
+                ],
+                "children": {}
+            },
+            "filesystem": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.fs.FileSystem.FileSystem",
+                    "fe.fe-core.src.main.java.com.starrocks.fs.HdfsUtil.HdfsUtil"
+                ],
+                "children": {}
+            },
+            "ha_coordination": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.ha.BDBHA.BDBHA",
+                    "fe.fe-core.src.main.java.com.starrocks.ha.StateChangeExecutor.SingletonHolder"
+                ],
+                "children": {}
+            },
+            "http_layer": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.http.HttpUtils.HttpUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.http.WebUtils.WebUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.http.meta.MetaService.MetaService"
+                ],
+                "children": {}
+            },
+            "journal": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.journal.JournalFactory.JournalFactory"
+                ],
+                "children": {}
+            },
+            "lake_storage": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.lake.LakeTableHelper.LakeTableHelper",
+                    "fe.fe-core.src.main.java.com.starrocks.lake.StorageInfo.StorageInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.lake.TxnInfoHelper.TxnInfoHelper",
+                    "fe.fe-core.src.main.java.com.starrocks.lake.Utils.Utils"
+                ],
+                "children": {}
+            },
+            "load_export": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.load.DeleteInfo.DeleteInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.load.EtlJobInfo.EtlJobInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.load.EtlSubmitResult.EtlSubmitResult",
+                    "fe.fe-core.src.main.java.com.starrocks.load.ExportJob.ExportUpdateInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.load.FunctionalExprProvider.FunctionalExprProvider",
+                    "fe.fe-core.src.main.java.com.starrocks.load.Load.CSVOptions",
+                    "fe.fe-core.src.main.java.com.starrocks.load.LoadConstants.LoadConstants",
+                    "fe.fe-core.src.main.java.com.starrocks.load.PartitionUtils.PartitionUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.load.loadv2.LoadMgr.EstimateStats",
+                    "fe.fe-core.src.main.java.com.starrocks.load.pipe.PipePiece.PipePiece",
+                    "fe.fe-core.src.main.java.com.starrocks.load.routineload.ScheduleRule.ScheduleRule",
+                    "fe.fe-core.src.main.java.com.starrocks.load.streamload.StreamLoadHttpHeader.StreamLoadHttpHeader"
+                ],
+                "children": {}
+            },
+            "metrics": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.metric.CounterMetric.CounterMetric",
+                    "fe.fe-core.src.main.java.com.starrocks.metric.LeaderAwareMetric.LeaderAwareMetric",
+                    "fe.fe-core.src.main.java.com.starrocks.metric.MaterializedViewMetricsRegistry.MetricsCleaner",
+                    "fe.fe-core.src.main.java.com.starrocks.metric.PrometheusRegistryHelper.PrometheusRegistryHelper",
+                    "fe.fe-core.src.main.java.com.starrocks.metric.ResourceGroupMetricMgr.ResourceGroupMetricMgr",
+                    "fe.fe-core.src.main.java.com.starrocks.metric.WarehouseMetricMgr.WarehouseMetricMgr"
+                ],
+                "children": {}
+            },
+            "monitor_jvm": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.monitor.jvm.JvmInfo.Fields"
+                ],
+                "children": {}
+            },
+            "mv_maintenance": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.mv.MVMetaVersionRepairer.MVMetaVersionRepairer",
+                    "fe.fe-core.src.main.java.com.starrocks.mv.analyzer.MVPartitionExprEqChecker.MVPartitionExprEqChecker"
+                ],
+                "children": {}
+            },
+            "mysql_protocol": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.mysql.MysqlCodec.MysqlCodec",
+                    "fe.fe-core.src.main.java.com.starrocks.mysql.MysqlPassword.MysqlPassword",
+                    "fe.fe-core.src.main.java.com.starrocks.mysql.MysqlProto.MysqlProto",
+                    "fe.fe-core.src.main.java.com.starrocks.mysql.privilege.Password.Password"
+                ],
+                "children": {}
+            },
+            "persist_metadata": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.persist.BackendIdsUpdateInfo.BackendIdsUpdateInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.ClusterInfo.ClusterInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.EditLogDeserializer.EditLogDeserializer",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.ImpersonatePrivInfo.ImpersonatePrivInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.LinkDbInfo.LinkDbInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.OperationType.OperationType",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.PartitionPersistInfo.PartitionPersistInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.TableInfo.TableInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.gson.GsonUtils.GsonUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.persist.metablock.SRMetaBlockLoader.SRMetaBlockLoader"
+                ],
+                "children": {}
+            },
+            "planner_nodes": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.planner.DescriptorTable.ReferencedPartitionInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.planner.FileScanNode.ParamCreateContext",
+                    "fe.fe-core.src.main.java.com.starrocks.planner.JoinNode.JoinNode",
+                    "fe.fe-core.src.main.java.com.starrocks.planner.ScanNode.ScanNode"
+                ],
+                "children": {}
+            },
+            "plugin": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.plugin.PluginClassLoader.PluginClassLoader"
+                ],
+                "children": {}
+            },
+            "query_execution": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.qe.ColocatedBackendSelector.BucketSeqToScanRange",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.ConnectContext.Listener",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.DefaultCoordinator.Factory",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.ExecuteAsExecutor.ExecuteAsExecutor",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.GlobalVariable.GlobalVariable",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.QueryDetailQueue.QueryDetailQueue",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.QueryQueueManager.SingletonHolder",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.QueryStatisticsItem.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.SessionVariableConstants.SessionVariableConstants",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.SetDefaultRoleExecutor.SetDefaultRoleExecutor",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.SetRoleExecutor.SetRoleExecutor",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.ShowMaterializedViewStatus.ExtraMessage",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.ShowResultSetMetaData.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.SimpleScheduler.SimpleScheduler",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.SqlModeHelper.SqlModeHelper",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.TranslateExecutor.TranslateExecutor",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.VariableVarConverters.VariableVarConverters",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.WorkerProviderHelper.WorkerProviderHelper"
+                ],
+                "children": {}
+            },
+            "query_feedback": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.qe.feedback.NodeExecStats.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.feedback.OperatorTuningGuides.OptimizedRecord",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.feedback.PlanAdvisorExecutor.PlanAdvisorExecutor"
+                ],
+                "children": {}
+            },
+            "query_scheduler": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.CandidateWorkerProvider.Factory",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.Coordinator.Factory",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.DefaultWorkerProvider.Factory",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.WorkerProvider.Factory",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.assignment.BackendSelectorFactory.BackendSelectorFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.dag.FragmentSequence.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.dag.JobSpec.Factory",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.dag.ScheduleNextTurnRunner.ScheduleNextTurnRunner",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.slot.BaseSlotTracker.ExtraMessage",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.slot.LogicalSlot.ConnectContextListener",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.slot.SlotEstimatorFactory.SlotEstimatorFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.warehouse.WarehouseMetricEntity.WarehouseMetricEntity",
+                    "fe.fe-core.src.main.java.com.starrocks.qe.scheduler.warehouse.WarehouseQueryQueueMetrics.WarehouseQueryQueueMetrics"
+                ],
+                "children": {}
+            },
+            "replication": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.replication.ReplicationJob.PartitionInfo"
+                ],
+                "children": {}
+            },
+            "rpc_layer": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.rpc.BackendServiceClient.SingletonHolder",
+                    "fe.fe-core.src.main.java.com.starrocks.rpc.BrpcProxy.SingletonHolder",
+                    "fe.fe-core.src.main.java.com.starrocks.rpc.ConfigurableSerDesFactory.ConfigurableSerDesFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.rpc.ConfigurableTProtocolFactory.ConfigurableTProtocolFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.rpc.PExecBatchPlanFragmentsRequest.PExecBatchPlanFragmentsRequest",
+                    "fe.fe-core.src.main.java.com.starrocks.rpc.PTriggerProfileReportRequest.PTriggerProfileReportRequest",
+                    "fe.fe-core.src.main.java.com.starrocks.rpc.ThriftClientAttachmentHandler.ThriftClientAttachmentHandler",
+                    "fe.fe-core.src.main.java.com.starrocks.rpc.ThriftRPCRequestExecutor.ThriftRPCRequestExecutor"
+                ],
+                "children": {}
+            },
+            "scheduler": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.scheduler.Constants.Constants",
+                    "fe.fe-core.src.main.java.com.starrocks.scheduler.TableWithPartitions.TableWithPartitions",
+                    "fe.fe-core.src.main.java.com.starrocks.scheduler.mv.BinlogConsumeStateVO.BinlogIdVO",
+                    "fe.fe-core.src.main.java.com.starrocks.scheduler.mv.IMTCreator.IMTCreator",
+                    "fe.fe-core.src.main.java.com.starrocks.scheduler.mv.MVTraceUtils.MVTraceUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.scheduler.persist.DropTaskRunsLog.DropTaskRunsLog"
+                ],
+                "children": {}
+            },
+            "server_catalog_mgr": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.server.CatalogMgr.ResourceMappingCatalog",
+                    "fe.fe-core.src.main.java.com.starrocks.server.TableFactoryProvider.TableFactoryProvider",
+                    "fe.fe-core.src.main.java.com.starrocks.server.WarehouseEventListener.WarehouseEventListener"
+                ],
+                "children": {}
+            },
+            "service_layer": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.service.InformationSchemaDataSource.InformationSchemaDataSource"
+                ],
+                "children": {}
+            },
+            "spm": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.sql.spm.BaselinePlan.Info",
+                    "fe.fe-core.src.main.java.com.starrocks.sql.spm.SPMAst2SQLBuilder.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.sql.spm.SPMFunctions.SPMFunctions",
+                    "fe.fe-core.src.main.java.com.starrocks.sql.spm.SPMStmtExecutor.SPMStmtExecutor",
+                    "fe.fe-core.src.main.java.com.starrocks.sql.spm.SPMUpdateExprVisitor.SPMUpdateExprVisitor"
+                ],
+                "children": {}
+            },
+            "sql_util_structures": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.sql.util.TieredList.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.sql.util.TieredMap.Builder"
+                ],
+                "children": {}
+            },
+            "staros_integration": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.staros.StarMgrServer.SingletonHolder"
+                ],
+                "children": {}
+            },
+            "statistics": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.AnalyzeMgr.SerializeData",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.StatisticSQLBuilder.StatisticSQLBuilder",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.StatisticUtils.StatisticUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.StatisticsCollectJob.ComparatorWithPriority",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.StatisticsCollectJobFactory.StatisticsCollectJobFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.StatsConstants.StatsConstants",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.base.ColumnStats.ColumnStats",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.base.ComplexTypeColumnStats.ComplexTypeColumnStats",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.base.PrimitiveTypeColumnStats.PrimitiveTypeColumnStats",
+                    "fe.fe-core.src.main.java.com.starrocks.statistic.base.SubFieldColumnStats.SubFieldColumnStats"
+                ],
+                "children": {}
+            },
+            "system_info": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.system.BackendResourceStat.SingletonHolder",
+                    "fe.fe-core.src.main.java.com.starrocks.system.HeartbeatFlags.HeartbeatFlags"
+                ],
+                "children": {}
+            },
+            "task_execution": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.task.AgentTaskExecutor.AgentTaskExecutor",
+                    "fe.fe-core.src.main.java.com.starrocks.task.AgentTaskQueue.AgentTaskQueue",
+                    "fe.fe-core.src.main.java.com.starrocks.task.CreateReplicaTask.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.task.LeaderTaskExecutor.TaskChecker",
+                    "fe.fe-core.src.main.java.com.starrocks.task.LoadEtlTask.LoadEtlTask",
+                    "fe.fe-core.src.main.java.com.starrocks.task.TabletMetadataUpdateAgentTaskFactory.TabletMetadataUpdateAgentTaskFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.task.TabletTaskExecutor.TabletTaskExecutor"
+                ],
+                "children": {}
+            },
+            "transaction": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.transaction.ExplicitTxnState.ExplicitTxnStateItem",
+                    "fe.fe-core.src.main.java.com.starrocks.transaction.RemoteTransactionMgr.RemoteTransactionMgr",
+                    "fe.fe-core.src.main.java.com.starrocks.transaction.TabletCommitInfo.TabletCommitInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.transaction.TabletFailInfo.TabletFailInfo",
+                    "fe.fe-core.src.main.java.com.starrocks.transaction.TransactionStmtExecutor.TransactionStmtExecutor"
+                ],
+                "children": {}
+            },
+            "warehouse": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.warehouse.IdleStatus.WarehouseStatus"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "backend_server": {
+        "path": "be/src",
+        "components": [
+            "be.src.agent.publish_version.TabletPublishVersionTask",
+            "be.src.agent.task_worker_pool.VersionCmp",
+            "be.src.cache.datacache_utils.stat",
+            "be.src.column.column_helper.UpdateColumnNullInfoVisitor",
+            "be.src.common.daemon.JemallocStats",
+            "be.src.common.greplog.GrepLogContext",
+            "be.src.common.logconfig.timeval",
+            "be.src.common.minidump.sigaction",
+            "be.src.connector.connector.ConnectorManagerInit",
+            "be.src.exprs.agg.factory.aggregate_resolver_approx.ApproxTopKBuilder",
+            "be.src.exprs.agg.factory.aggregate_resolver_avg.ArrayAggDispatcher",
+            "be.src.exprs.agg.factory.aggregate_resolver_minmaxany.MaxMinByDispatcher",
+            "be.src.exprs.agg.factory.aggregate_resolver_others.PercentileDiscDispatcher",
+            "be.src.exprs.agg.factory.aggregate_resolver_stream.RetractMinMaxDispatcher",
+            "be.src.exprs.agg.factory.aggregate_resolver_sumcount.DistinctDispatcher",
+            "be.src.exprs.agg.factory.aggregate_resolver_utility.HistogramDispatcher",
+            "be.src.exprs.agg.factory.aggregate_resolver_variance.StdDispatcher",
+            "be.src.exprs.agg.factory.aggregate_resolver_window.WindowDispatcher",
+            "be.src.exprs.arithmetic_expr.VectorizedModArithmeticExpr",
+            "be.src.exprs.array_element_expr.ArrayElementExpr",
+            "be.src.exprs.array_expr.ArrayExpr",
+            "be.src.exprs.array_functions.ArrayHasImpl",
+            "be.src.exprs.arrow_function_call.ArrowCallStubCtx",
+            "be.src.exprs.binary_predicate.BinaryPredicateBuilder",
+            "be.src.exprs.case_expr.VectorizedCaseExpr",
+            "be.src.exprs.cast_expr.VectorizedCastExpr",
+            "be.src.exprs.compound_predicate.VectorizedNotCompoundPredicate",
+            "be.src.exprs.condition_expr.VectorizedIfNullExpr",
+            "be.src.exprs.expr.MemLayoutData",
+            "be.src.exprs.function_context.ColumnBuilder",
+            "be.src.exprs.geo_functions.StContainsState",
+            "be.src.exprs.in_predicate.InConstPredicateBuilder",
+            "be.src.exprs.is_null_predicate.VectorizedIsNotNullPredicate",
+            "be.src.exprs.java_function_call_expr.UDFFunctionCallHelper",
+            "be.src.exprs.jit.jit_engine.JITObjectCache",
+            "be.src.exprs.json_functions.NativeJsonState",
+            "be.src.exprs.locate.LocateCaseSensitiveUTF8",
+            "be.src.exprs.map_element_expr.MapElementExpr",
+            "be.src.exprs.ngram.NgramFunctionImpl",
+            "be.src.exprs.percentile_functions.LCPercentileExtracter",
+            "be.src.exprs.runtime_filter_bank.FilterIniter",
+            "be.src.exprs.split.SplitState",
+            "be.src.exprs.string_functions.AdaptiveTrimFunction",
+            "be.src.exprs.subfield_expr.SubfieldExpr",
+            "be.src.exprs.table_function.java_udtf_function.JavaUDTFState",
+            "be.src.exprs.table_function.table_function_factory.TableFunctionMapHash",
+            "be.src.exprs.time_functions.TeradataFormatState",
+            "be.src.exprs.utility_functions.EncoderVisitor",
+            "be.src.formats.parquet.column_converter.NumericToNumericConverter",
+            "be.src.formats.parquet.encoding.EncodingTraits",
+            "be.src.formats.parquet.metadata.ApplicationVersionParser",
+            "be.src.formats.parquet.parquet_file_writer.Chunk",
+            "be.src.formats.parquet.stored_column_reader.RequiredStoredColumnReader",
+            "be.src.formats.parquet.stored_column_reader_with_index.Column",
+            "be.src.fs.azure.fs_azblob.AzBlobInputStream",
+            "be.src.fs.fs_memory.MemoryInputStream",
+            "be.src.fs.fs_posix.PosixFileSystem",
+            "be.src.fs.fs_s3.S3FileSystem",
+            "be.src.fs.fs_starlet.StarletFileSystem",
+            "be.src.fs.hdfs.fs_hdfs.HdfsFileSystem",
+            "be.src.http.action.metrics_action.PrometheusMetricsVisitor",
+            "be.src.http.action.stream_load.evhttp_request",
+            "be.src.http.action.transaction_stream_load.ResourceHandler",
+            "be.src.http.ev_http_server.evhttp",
+            "be.src.http.http_request.evkeyvalq",
+            "be.src.http.utils.stat",
+            "be.src.io.cache_input_stream.ReadFromRemoteIORange",
+            "be.src.io.direct_s3_output_stream.StringViewStream",
+            "be.src.io.fd_input_stream.stat",
+            "be.src.io.fd_output_stream.ScopedFdCloser",
+            "be.src.io.io_profiler.IOStatEntry",
+            "be.src.runtime.fragment_mgr.RuntimeProfile",
+            "be.src.runtime.global_dict.decoder.GlobalDictDecoderBase",
+            "be.src.runtime.jdbc_driver_manager.JDBCDriverEntry",
+            "be.src.runtime.lake_tablets_channel.TxnLogCollector",
+            "be.src.runtime.load_channel_mgr.ChannelOpenTask",
+            "be.src.runtime.load_path_mgr.stat",
+            "be.src.runtime.local_pass_through_buffer.PassThroughSenderChannel",
+            "be.src.runtime.local_tablets_channel.Context",
+            "be.src.runtime.mysql_table_writer.ViewerBuilder",
+            "be.src.runtime.runtime_filter_cache.RfEvent",
+            "be.src.runtime.runtime_filter_worker.RuntimeFilterWorkerEvent",
+            "be.src.runtime.sender_queue.ClosureDeleter",
+            "be.src.runtime.type_pack.Packer",
+            "be.src.runtime.user_function_cache.UserFunctionCacheEntry",
+            "be.src.serde.column_array_serde.NullableColumnSerde",
+            "be.src.serde.column_array_serde.ObjectColumnSerde",
+            "be.src.serde.column_array_serde.MapColumnSerde",
+            "be.src.serde.column_array_serde.JsonColumnSerde",
+            "be.src.serde.column_array_serde.ArrayColumnSerde",
+            "be.src.serde.column_array_serde.ColumnDeserializingVisitor",
+            "be.src.serde.column_array_serde.ColumnSerializingVisitor",
+            "be.src.serde.column_array_serde.VariantColumnSerde",
+            "be.src.serde.column_array_serde.StructColumnSerde",
+            "be.src.serde.column_array_serde.ConstColumnSerde",
+            "be.src.serde.column_array_serde.ColumnSerializedSizeVisitor",
+            "be.src.service.internal_service.WrapClosure",
+            "be.src.service.service_be.lake_service.RequestContext",
+            "be.src.types.bitmap_value.IterCtx",
+            "be.src.types.int256.DivisionInfo",
+            "be.src.types.logical_type.ScalarFieldTypeToLogicalTypeMapping",
+            "be.src.udf.java.java_native_method.GetColumnAddrVistor",
+            "be.src.udf.python.callstub.ArrowFlightWithRW",
+            "be.src.udf.udf_call_stub.SchemaNameGenerator",
+            "be.src.util.arrow.starrocks_column_to_arrow.ColumnToArrowConverter",
+            "be.src.util.bfd_parser.BfdFindCtx",
+            "be.src.util.cidr.in_addr",
+            "be.src.util.compression.block_compression.Lz4fBlockCompression",
+            "be.src.util.compression.stream_compression.ZstandardStreamCompression",
+            "be.src.util.core_local.CoreDataAllocatorImpl",
+            "be.src.util.cpu_info.statfs",
+            "be.src.util.json_converter.SimdJsonConverter",
+            "be.src.util.mem_info.statfs",
+            "be.src.util.monotime.timeval",
+            "be.src.util.network_util.sockaddr_in6",
+            "be.src.util.slice.SliceInit",
+            "be.src.util.stack_util.StackTraceTaskHash",
+            "be.src.util.static_asserts.UnusedClass",
+            "be.src.util.system_metrics.CpuMetrics",
+            "be.src.util.thread.ThreadDescriptor",
+            "be.src.util.threadpool.FunctionRunnable",
+            "be.src.util.thrift_rpc_helper.ThriftMsgTypeTraits",
+            "be.src.util.time.tm",
+            "be.src.util.trace.TraceEntry"
+        ],
+        "children": {
+            "agent_task_management": {
+                "components": [
+                    "be.src.agent.publish_version.TabletPublishVersionTask",
+                    "be.src.agent.task_worker_pool.VersionCmp"
+                ],
+                "children": {}
+            },
+            "expression_system": {
+                "components": [
+                    "be.src.exprs.arithmetic_expr.VectorizedModArithmeticExpr",
+                    "be.src.exprs.array_element_expr.ArrayElementExpr",
+                    "be.src.exprs.array_expr.ArrayExpr",
+                    "be.src.exprs.array_functions.ArrayHasImpl",
+                    "be.src.exprs.arrow_function_call.ArrowCallStubCtx",
+                    "be.src.exprs.binary_predicate.BinaryPredicateBuilder",
+                    "be.src.exprs.case_expr.VectorizedCaseExpr",
+                    "be.src.exprs.cast_expr.VectorizedCastExpr",
+                    "be.src.exprs.compound_predicate.VectorizedNotCompoundPredicate",
+                    "be.src.exprs.condition_expr.VectorizedIfNullExpr",
+                    "be.src.exprs.expr.MemLayoutData",
+                    "be.src.exprs.function_context.ColumnBuilder",
+                    "be.src.exprs.geo_functions.StContainsState",
+                    "be.src.exprs.in_predicate.InConstPredicateBuilder",
+                    "be.src.exprs.is_null_predicate.VectorizedIsNotNullPredicate",
+                    "be.src.exprs.java_function_call_expr.UDFFunctionCallHelper",
+                    "be.src.exprs.jit.jit_engine.JITObjectCache",
+                    "be.src.exprs.json_functions.NativeJsonState",
+                    "be.src.exprs.locate.LocateCaseSensitiveUTF8",
+                    "be.src.exprs.map_element_expr.MapElementExpr",
+                    "be.src.exprs.ngram.NgramFunctionImpl",
+                    "be.src.exprs.percentile_functions.LCPercentileExtracter",
+                    "be.src.exprs.runtime_filter_bank.FilterIniter",
+                    "be.src.exprs.split.SplitState",
+                    "be.src.exprs.string_functions.AdaptiveTrimFunction",
+                    "be.src.exprs.subfield_expr.SubfieldExpr",
+                    "be.src.exprs.table_function.java_udtf_function.JavaUDTFState",
+                    "be.src.exprs.table_function.table_function_factory.TableFunctionMapHash",
+                    "be.src.exprs.time_functions.TeradataFormatState",
+                    "be.src.exprs.utility_functions.EncoderVisitor"
+                ],
+                "children": {}
+            },
+            "aggregate_functions": {
+                "components": [
+                    "be.src.exprs.agg.factory.aggregate_resolver_approx.ApproxTopKBuilder",
+                    "be.src.exprs.agg.factory.aggregate_resolver_avg.ArrayAggDispatcher",
+                    "be.src.exprs.agg.factory.aggregate_resolver_minmaxany.MaxMinByDispatcher",
+                    "be.src.exprs.agg.factory.aggregate_resolver_others.PercentileDiscDispatcher",
+                    "be.src.exprs.agg.factory.aggregate_resolver_stream.RetractMinMaxDispatcher",
+                    "be.src.exprs.agg.factory.aggregate_resolver_sumcount.DistinctDispatcher",
+                    "be.src.exprs.agg.factory.aggregate_resolver_utility.HistogramDispatcher",
+                    "be.src.exprs.agg.factory.aggregate_resolver_variance.StdDispatcher",
+                    "be.src.exprs.agg.factory.aggregate_resolver_window.WindowDispatcher"
+                ],
+                "children": {}
+            },
+            "file_systems": {
+                "components": [
+                    "be.src.fs.azure.fs_azblob.AzBlobInputStream",
+                    "be.src.fs.fs_memory.MemoryInputStream",
+                    "be.src.fs.fs_posix.PosixFileSystem",
+                    "be.src.fs.fs_s3.S3FileSystem",
+                    "be.src.fs.fs_starlet.StarletFileSystem",
+                    "be.src.fs.hdfs.fs_hdfs.HdfsFileSystem"
+                ],
+                "children": {}
+            },
+            "parquet_format": {
+                "components": [
+                    "be.src.formats.parquet.column_converter.NumericToNumericConverter",
+                    "be.src.formats.parquet.encoding.EncodingTraits",
+                    "be.src.formats.parquet.metadata.ApplicationVersionParser",
+                    "be.src.formats.parquet.parquet_file_writer.Chunk",
+                    "be.src.formats.parquet.stored_column_reader.RequiredStoredColumnReader",
+                    "be.src.formats.parquet.stored_column_reader_with_index.Column"
+                ],
+                "children": {}
+            },
+            "http_server": {
+                "components": [
+                    "be.src.http.action.metrics_action.PrometheusMetricsVisitor",
+                    "be.src.http.action.stream_load.evhttp_request",
+                    "be.src.http.action.transaction_stream_load.ResourceHandler",
+                    "be.src.http.ev_http_server.evhttp",
+                    "be.src.http.http_request.evkeyvalq",
+                    "be.src.http.utils.stat"
+                ],
+                "children": {}
+            },
+            "io_system": {
+                "components": [
+                    "be.src.io.cache_input_stream.ReadFromRemoteIORange",
+                    "be.src.io.direct_s3_output_stream.StringViewStream",
+                    "be.src.io.fd_input_stream.stat",
+                    "be.src.io.fd_output_stream.ScopedFdCloser",
+                    "be.src.io.io_profiler.IOStatEntry"
+                ],
+                "children": {}
+            },
+            "runtime_system": {
+                "components": [
+                    "be.src.runtime.fragment_mgr.RuntimeProfile",
+                    "be.src.runtime.global_dict.decoder.GlobalDictDecoderBase",
+                    "be.src.runtime.jdbc_driver_manager.JDBCDriverEntry",
+                    "be.src.runtime.lake_tablets_channel.TxnLogCollector",
+                    "be.src.runtime.load_channel_mgr.ChannelOpenTask",
+                    "be.src.runtime.local_pass_through_buffer.PassThroughSenderChannel",
+                    "be.src.runtime.local_tablets_channel.Context",
+                    "be.src.runtime.mysql_table_writer.ViewerBuilder",
+                    "be.src.runtime.runtime_filter_cache.RfEvent",
+                    "be.src.runtime.runtime_filter_worker.RuntimeFilterWorkerEvent",
+                    "be.src.runtime.sender_queue.ClosureDeleter",
+                    "be.src.runtime.type_pack.Packer",
+                    "be.src.runtime.user_function_cache.UserFunctionCacheEntry"
+                ],
+                "children": {}
+            },
+            "column_serialization": {
+                "components": [
+                    "be.src.serde.column_array_serde.NullableColumnSerde",
+                    "be.src.serde.column_array_serde.ObjectColumnSerde",
+                    "be.src.serde.column_array_serde.MapColumnSerde",
+                    "be.src.serde.column_array_serde.JsonColumnSerde",
+                    "be.src.serde.column_array_serde.ArrayColumnSerde",
+                    "be.src.serde.column_array_serde.ColumnDeserializingVisitor",
+                    "be.src.serde.column_array_serde.ColumnSerializingVisitor",
+                    "be.src.serde.column_array_serde.VariantColumnSerde",
+                    "be.src.serde.column_array_serde.StructColumnSerde",
+                    "be.src.serde.column_array_serde.ConstColumnSerde",
+                    "be.src.serde.column_array_serde.ColumnSerializedSizeVisitor"
+                ],
+                "children": {}
+            },
+            "service_layer": {
+                "components": [
+                    "be.src.service.internal_service.WrapClosure",
+                    "be.src.service.service_be.lake_service.RequestContext"
+                ],
+                "children": {}
+            },
+            "type_system": {
+                "components": [
+                    "be.src.types.bitmap_value.IterCtx",
+                    "be.src.types.int256.DivisionInfo",
+                    "be.src.types.logical_type.ScalarFieldTypeToLogicalTypeMapping"
+                ],
+                "children": {}
+            },
+            "udf_system": {
+                "components": [
+                    "be.src.udf.java.java_native_method.GetColumnAddrVistor",
+                    "be.src.udf.python.callstub.ArrowFlightWithRW",
+                    "be.src.udf.udf_call_stub.SchemaNameGenerator"
+                ],
+                "children": {}
+            },
+            "arrow_conversion": {
+                "components": [
+                    "be.src.util.arrow.starrocks_column_to_arrow.ColumnToArrowConverter"
+                ],
+                "children": {}
+            },
+            "utility_functions": {
+                "components": [
+                    "be.src.util.bfd_parser.BfdFindCtx",
+                    "be.src.util.cidr.in_addr",
+                    "be.src.util.compression.block_compression.Lz4fBlockCompression",
+                    "be.src.util.compression.stream_compression.ZstandardStreamCompression",
+                    "be.src.util.core_local.CoreDataAllocatorImpl",
+                    "be.src.util.cpu_info.statfs",
+                    "be.src.util.json_converter.SimdJsonConverter",
+                    "be.src.util.mem_info.statfs",
+                    "be.src.util.monotime.timeval",
+                    "be.src.util.network_util.sockaddr_in6",
+                    "be.src.util.slice.SliceInit",
+                    "be.src.util.stack_util.StackTraceTaskHash",
+                    "be.src.util.static_asserts.UnusedClass",
+                    "be.src.util.system_metrics.CpuMetrics",
+                    "be.src.util.thread.ThreadDescriptor",
+                    "be.src.util.threadpool.FunctionRunnable",
+                    "be.src.util.thrift_rpc_helper.ThriftMsgTypeTraits",
+                    "be.src.util.time.tm",
+                    "be.src.util.trace.TraceEntry"
+                ],
+                "children": {}
+            },
+            "cache_system": {
+                "components": [
+                    "be.src.cache.datacache_utils.stat"
+                ],
+                "children": {}
+            },
+            "column_helper": {
+                "components": [
+                    "be.src.column.column_helper.UpdateColumnNullInfoVisitor"
+                ],
+                "children": {}
+            },
+            "common_system": {
+                "components": [
+                    "be.src.common.daemon.JemallocStats",
+                    "be.src.common.greplog.GrepLogContext",
+                    "be.src.common.logconfig.timeval",
+                    "be.src.common.minidump.sigaction"
+                ],
+                "children": {}
+            },
+            "connector_system": {
+                "components": [
+                    "be.src.connector.connector.ConnectorManagerInit"
+                ],
+                "children": {}
+            },
+            "load_path_management": {
+                "components": [
+                    "be.src.runtime.load_path_mgr.stat"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "connectors": {
+        "path": "fe/fe-core/src/main/java/com/starrocks/connector",
+        "components": [
+            "fe.fe-core.src.main.java.com.starrocks.connector.delta.DeltaLakeComparators.DeltaLakeComparators",
+            "fe.fe-core.src.main.java.com.starrocks.connector.delta.DeltaUtils.DeltaUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.delta.ScalarOperationToDeltaLakeExpr.ExtractLiteralValue",
+            "fe.fe-core.src.main.java.com.starrocks.connector.delta.ScanFileUtils.Records",
+            "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.ElasticsearchConnector.ElasticsearchConnector",
+            "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.EsRestClient.EsIndex",
+            "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.EsUtil.EsUtil",
+            "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.QueryBuilders.QueryBuilders",
+            "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.QueryConverter.ExtractColumnName",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.DLFProxyMetaStoreClient.DLFProxyMetaStoreClient",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.HiveClassNames.HiveClassNames",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.HiveConnectorScanRangeSource.ScanRangeIterator",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.HiveMetastoreApiConverter.HiveMetastoreApiConverter",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.HivePartition.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.HiveWriteUtils.HiveWriteUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.Partition.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.AWSCatalogMetastoreClient.AWSCatalogMetastoreClient",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.converters.CatalogToHiveConverter.CatalogToHiveConverter",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.converters.ConverterUtils.ConverterUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.converters.GlueInputConverter.GlueInputConverter",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.converters.HiveToCatalogConverter.HiveToCatalogConverter",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.metastore.DefaultExecutorServiceFactory.DefaultExecutorServiceFactory",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.AWSGlueConfig.AWSGlueConfig",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.BatchDeletePartitionsHelper.BatchDeletePartitionsHelper",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.ExpressionHelper.ExpressionHelper",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.LoggingHelper.LoggingHelper",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.MetastoreClientUtils.MetastoreClientUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.PartitionUtils.PartitionUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergApiConverter.IcebergApiConverter",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergGetRemoteFilesParams.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergMetadata.IcebergSinkExtra",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergPartitionUtils.IcebergPartitionUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergUtil.IcebergUtil",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.Partition.Partition",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.ScalarOperatorToIcebergExpr.ExtractLiteralValue",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.io.IcebergCachingFileIO.IcebergCachingFileIO",
+            "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.rest.OAuth2SecurityConfig.OAuth2SecurityConfigBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.jdbc.JDBCConnector.JDBCConnector",
+            "fe.fe-core.src.main.java.com.starrocks.connector.jdbc.Partition.Partition",
+            "fe.fe-core.src.main.java.com.starrocks.connector.kudu.KuduPredicateConverter.ExtractColumnName",
+            "fe.fe-core.src.main.java.com.starrocks.connector.metadata.MetadataTable.Builder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.metadata.MetadataTableFactoryProvider.MetadataTableFactoryProvider",
+            "fe.fe-core.src.main.java.com.starrocks.connector.odps.EntityConvertUtils.EntityConvertUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.odps.OdpsConnector.OdpsConnector",
+            "fe.fe-core.src.main.java.com.starrocks.connector.odps.OdpsPartition.OdpsPartition",
+            "fe.fe-core.src.main.java.com.starrocks.connector.odps.OdpsProperties.Property",
+            "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.AstBuilder.AstBuilder",
+            "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.ComplexFunctionCallTransformer.ComplexFunctionCallTransformer",
+            "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.PlaceholderExpr.PlaceholderExpr",
+            "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.Trino2SRFunctionCallTransformer.Trino2SRFunctionCallTransformer",
+            "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.TrinoParser.TrinoParser",
+            "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.TrinoParserUtils.TrinoParserUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.DeltaLakePartitionTraits.DeltaLakePartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.HivePartitionTraits.HivePartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.HudiPartitionTraits.HudiPartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.IcebergPartitionTraits.IcebergPartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.JDBCPartitionTraits.JDBCPartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.KuduPartitionTraits.KuduPartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.OdpsPartitionTraits.OdpsPartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.OlapPartitionTraits.OlapPartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.PaimonPartitionTraits.PaimonPartitionTraits",
+            "fe.fe-core.src.main.java.com.starrocks.connector.statistics.StatisticsUtils.StatisticsUtils",
+            "fe.fe-core.src.main.java.com.starrocks.connector.trino.TrinoViewColumnTypeConverter.TrinoViewColumnTypeConverter",
+            "fe.fe-core.src.main.java.com.starrocks.connector.trino.TrinoViewDefinition.TrinoViewDefinition",
+            "fe.fe-core.src.main.java.com.starrocks.connector.unified.UnifiedConnector.UnifiedConnector"
+        ],
+        "children": {
+            "delta_lake_connector": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.delta.DeltaLakeComparators.DeltaLakeComparators",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.delta.DeltaUtils.DeltaUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.delta.ScalarOperationToDeltaLakeExpr.ExtractLiteralValue",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.delta.ScanFileUtils.Records"
+                ],
+                "children": {}
+            },
+            "elasticsearch_connector": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.ElasticsearchConnector.ElasticsearchConnector",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.EsRestClient.EsIndex",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.EsUtil.EsUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.QueryBuilders.QueryBuilders",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.elasticsearch.QueryConverter.ExtractColumnName"
+                ],
+                "children": {}
+            },
+            "hive_connector": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.DLFProxyMetaStoreClient.DLFProxyMetaStoreClient",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.HiveClassNames.HiveClassNames",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.HiveConnectorScanRangeSource.ScanRangeIterator",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.HiveMetastoreApiConverter.HiveMetastoreApiConverter",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.HivePartition.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.HiveWriteUtils.HiveWriteUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.Partition.Builder"
+                ],
+                "children": {}
+            },
+            "hive_glue_support": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.AWSCatalogMetastoreClient.AWSCatalogMetastoreClient",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.converters.CatalogToHiveConverter.CatalogToHiveConverter",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.converters.ConverterUtils.ConverterUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.converters.GlueInputConverter.GlueInputConverter",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.converters.HiveToCatalogConverter.HiveToCatalogConverter",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.metastore.DefaultExecutorServiceFactory.DefaultExecutorServiceFactory",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.AWSGlueConfig.AWSGlueConfig",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.BatchDeletePartitionsHelper.BatchDeletePartitionsHelper",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.ExpressionHelper.ExpressionHelper",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.LoggingHelper.LoggingHelper",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.MetastoreClientUtils.MetastoreClientUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.hive.glue.util.PartitionUtils.PartitionUtils"
+                ],
+                "children": {}
+            },
+            "iceberg_connector": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergApiConverter.IcebergApiConverter",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergGetRemoteFilesParams.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergMetadata.IcebergSinkExtra",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergPartitionUtils.IcebergPartitionUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.IcebergUtil.IcebergUtil",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.Partition.Partition",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.ScalarOperatorToIcebergExpr.ExtractLiteralValue",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.io.IcebergCachingFileIO.IcebergCachingFileIO",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.iceberg.rest.OAuth2SecurityConfig.OAuth2SecurityConfigBuilder"
+                ],
+                "children": {}
+            },
+            "jdbc_connector": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.jdbc.JDBCConnector.JDBCConnector",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.jdbc.Partition.Partition"
+                ],
+                "children": {}
+            },
+            "kudu_connector": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.kudu.KuduPredicateConverter.ExtractColumnName"
+                ],
+                "children": {}
+            },
+            "odps_connector": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.odps.EntityConvertUtils.EntityConvertUtils",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.odps.OdpsConnector.OdpsConnector",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.odps.OdpsPartition.OdpsPartition",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.odps.OdpsProperties.Property"
+                ],
+                "children": {}
+            },
+            "trino_parser": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.AstBuilder.AstBuilder",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.ComplexFunctionCallTransformer.ComplexFunctionCallTransformer",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.PlaceholderExpr.PlaceholderExpr",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.Trino2SRFunctionCallTransformer.Trino2SRFunctionCallTransformer",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.TrinoParser.TrinoParser",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.parser.trino.TrinoParserUtils.TrinoParserUtils"
+                ],
+                "children": {}
+            },
+            "partition_traits": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.DeltaLakePartitionTraits.DeltaLakePartitionTraits",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.HivePartitionTraits.HivePartitionTraits",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.HudiPartitionTraits.HudiPartitionTraits",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.IcebergPartitionTraits.IcebergPartitionTraits",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.JDBCPartitionTraits.JDBCPartitionTraits",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.KuduPartitionTraits.KuduPartitionTraits",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.OdpsPartitionTraits.OdpsPartitionTraits",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.OlapPartitionTraits.OlapPartitionTraits",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.partitiontraits.PaimonPartitionTraits.PaimonPartitionTraits"
+                ],
+                "children": {}
+            },
+            "metadata_management": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.metadata.MetadataTable.Builder",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.metadata.MetadataTableFactoryProvider.MetadataTableFactoryProvider"
+                ],
+                "children": {}
+            },
+            "connector_statistics": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.statistics.StatisticsUtils.StatisticsUtils"
+                ],
+                "children": {}
+            },
+            "trino_view_support": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.trino.TrinoViewColumnTypeConverter.TrinoViewColumnTypeConverter",
+                    "fe.fe-core.src.main.java.com.starrocks.connector.trino.TrinoViewDefinition.TrinoViewDefinition"
+                ],
+                "children": {}
+            },
+            "unified_connector": {
+                "components": [
+                    "fe.fe-core.src.main.java.com.starrocks.connector.unified.UnifiedConnector.UnifiedConnector"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "java_extensions": {
+        "path": "java-extensions",
+        "components": [
+            "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.gcp.TemporaryGCPAccessTokenProvider.TemporaryGCPAccessTokenProvider",
+            "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.share.credential.CloudConfigurationConstants.CloudConfigurationConstants",
+            "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.share.iceberg.IcebergAwsClientFactory.IcebergAwsClientFactory",
+            "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.share.iceberg.IcebergPartitionUtils.IcebergPartitionUtils",
+            "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.share.iceberg.SerializableTable.SerializableConfSupplier",
+            "java-extensions.hive-reader.src.main.java.com.starrocks.hive.reader.HiveScanner.HiveScanner",
+            "java-extensions.hive-reader.src.main.java.com.starrocks.hive.reader.HiveScannerFactory.HiveScannerFactory",
+            "java-extensions.hudi-reader.src.main.java.com.starrocks.hudi.reader.HudiScannerUtils.HudiScannerUtils",
+            "java-extensions.hudi-reader.src.main.java.com.starrocks.hudi.reader.HudiSliceScanner.HudiSliceScanner",
+            "java-extensions.hudi-reader.src.main.java.com.starrocks.hudi.reader.HudiSliceScannerFactory.HudiSliceScannerFactory",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergFilesTableScanner.IcebergFilesTableScanner",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergHistoryTableScanner.IcebergHistoryTableScanner",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergManifestsTableScanner.IcebergManifestsTableScanner",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergMetadataLogEntriesScanner.IcebergMetadataLogEntriesScanner",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergMetadataScanner.IcebergMetadataScanner",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergMetadataScannerFactory.IcebergMetadataScannerFactory",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergPartitionsTableScanner.IcebergPartitionsTableScanner",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergRefsTableScanner.IcebergRefsTableScanner",
+            "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergSnapshotsTableScanner.IcebergSnapshotsTableScanner",
+            "java-extensions.java-utils.src.main.java.com.starrocks.utils.NativeMethodHelper.NativeMethodHelper",
+            "java-extensions.java-utils.src.main.java.com.starrocks.utils.Platform.Platform",
+            "java-extensions.jdbc-bridge.src.main.java.com.starrocks.jdbcbridge.DataSourceCache.DataSourceCacheItem",
+            "java-extensions.jdbc-bridge.src.main.java.com.starrocks.jdbcbridge.JDBCBridge.JDBCBridge",
+            "java-extensions.jdbc-bridge.src.main.java.com.starrocks.jdbcbridge.JDBCUtil.JDBCUtil",
+            "java-extensions.kudu-reader.src.main.java.com.starrocks.kudu.reader.KuduScannerUtils.KuduScannerUtils",
+            "java-extensions.kudu-reader.src.main.java.com.starrocks.kudu.reader.KuduSplitScanner.KuduSplitScanner",
+            "java-extensions.kudu-reader.src.main.java.com.starrocks.kudu.reader.KuduSplitScannerFactory.KuduSplitScannerFactory",
+            "java-extensions.kudu-reader.src.main.java.com.starrocks.kudu.reader.KuduTypeUtils.KuduTypeUtils",
+            "java-extensions.odps-reader.src.main.java.com.starrocks.odps.reader.OdpsSplitScanner.OdpsSplitScanner",
+            "java-extensions.odps-reader.src.main.java.com.starrocks.odps.reader.OdpsSplitScannerFactory.OdpsSplitScannerFactory",
+            "java-extensions.paimon-reader.src.main.java.com.starrocks.paimon.reader.PaimonScannerUtils.PaimonScannerUtils",
+            "java-extensions.paimon-reader.src.main.java.com.starrocks.paimon.reader.PaimonSplitScanner.PaimonSplitScanner",
+            "java-extensions.paimon-reader.src.main.java.com.starrocks.paimon.reader.PaimonSplitScannerFactory.PaimonSplitScannerFactory",
+            "java-extensions.paimon-reader.src.main.java.com.starrocks.paimon.reader.PaimonTypeUtils.PaimonTypeUtils",
+            "java-extensions.udf-examples.src.main.java.com.starrocks.example.udf.JsonAgg.JsonAgg",
+            "java-extensions.udf-examples.src.main.java.com.starrocks.example.udf.UDFAdd.UDFAdd",
+            "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.CallStubGenerator.CallStubGenerator",
+            "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.FunctionStates.FunctionStates",
+            "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.UDFClassAnalyzer.UDFClassAnalyzer",
+            "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.UDFClassLoader.UDFClassLoader",
+            "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.UDFHelper.UDFHelper"
+        ],
+        "children": {
+            "hadoop_extensions": {
+                "components": [
+                    "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.gcp.TemporaryGCPAccessTokenProvider.TemporaryGCPAccessTokenProvider",
+                    "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.share.credential.CloudConfigurationConstants.CloudConfigurationConstants",
+                    "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.share.iceberg.IcebergAwsClientFactory.IcebergAwsClientFactory",
+                    "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.share.iceberg.IcebergPartitionUtils.IcebergPartitionUtils",
+                    "java-extensions.hadoop-ext.src.main.java.com.starrocks.connector.share.iceberg.SerializableTable.SerializableConfSupplier"
+                ],
+                "children": {}
+            },
+            "hive_reader": {
+                "components": [
+                    "java-extensions.hive-reader.src.main.java.com.starrocks.hive.reader.HiveScanner.HiveScanner",
+                    "java-extensions.hive-reader.src.main.java.com.starrocks.hive.reader.HiveScannerFactory.HiveScannerFactory"
+                ],
+                "children": {}
+            },
+            "hudi_reader": {
+                "components": [
+                    "java-extensions.hudi-reader.src.main.java.com.starrocks.hudi.reader.HudiScannerUtils.HudiScannerUtils",
+                    "java-extensions.hudi-reader.src.main.java.com.starrocks.hudi.reader.HudiSliceScanner.HudiSliceScanner",
+                    "java-extensions.hudi-reader.src.main.java.com.starrocks.hudi.reader.HudiSliceScannerFactory.HudiSliceScannerFactory"
+                ],
+                "children": {}
+            },
+            "iceberg_metadata_reader": {
+                "components": [
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergFilesTableScanner.IcebergFilesTableScanner",
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergHistoryTableScanner.IcebergHistoryTableScanner",
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergManifestsTableScanner.IcebergManifestsTableScanner",
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergMetadataLogEntriesScanner.IcebergMetadataLogEntriesScanner",
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergMetadataScanner.IcebergMetadataScanner",
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergMetadataScannerFactory.IcebergMetadataScannerFactory",
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergPartitionsTableScanner.IcebergPartitionsTableScanner",
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergRefsTableScanner.IcebergRefsTableScanner",
+                    "java-extensions.iceberg-metadata-reader.src.main.java.com.starrocks.connector.iceberg.IcebergSnapshotsTableScanner.IcebergSnapshotsTableScanner"
+                ],
+                "children": {}
+            },
+            "java_utils": {
+                "components": [
+                    "java-extensions.java-utils.src.main.java.com.starrocks.utils.NativeMethodHelper.NativeMethodHelper",
+                    "java-extensions.java-utils.src.main.java.com.starrocks.utils.Platform.Platform"
+                ],
+                "children": {}
+            },
+            "jdbc_bridge": {
+                "components": [
+                    "java-extensions.jdbc-bridge.src.main.java.com.starrocks.jdbcbridge.DataSourceCache.DataSourceCacheItem",
+                    "java-extensions.jdbc-bridge.src.main.java.com.starrocks.jdbcbridge.JDBCBridge.JDBCBridge",
+                    "java-extensions.jdbc-bridge.src.main.java.com.starrocks.jdbcbridge.JDBCUtil.JDBCUtil"
+                ],
+                "children": {}
+            },
+            "kudu_reader": {
+                "components": [
+                    "java-extensions.kudu-reader.src.main.java.com.starrocks.kudu.reader.KuduScannerUtils.KuduScannerUtils",
+                    "java-extensions.kudu-reader.src.main.java.com.starrocks.kudu.reader.KuduSplitScanner.KuduSplitScanner",
+                    "java-extensions.kudu-reader.src.main.java.com.starrocks.kudu.reader.KuduSplitScannerFactory.KuduSplitScannerFactory",
+                    "java-extensions.kudu-reader.src.main.java.com.starrocks.kudu.reader.KuduTypeUtils.KuduTypeUtils"
+                ],
+                "children": {}
+            },
+            "odps_reader": {
+                "components": [
+                    "java-extensions.odps-reader.src.main.java.com.starrocks.odps.reader.OdpsSplitScanner.OdpsSplitScanner",
+                    "java-extensions.odps-reader.src.main.java.com.starrocks.odps.reader.OdpsSplitScannerFactory.OdpsSplitScannerFactory"
+                ],
+                "children": {}
+            },
+            "paimon_reader": {
+                "components": [
+                    "java-extensions.paimon-reader.src.main.java.com.starrocks.paimon.reader.PaimonScannerUtils.PaimonScannerUtils",
+                    "java-extensions.paimon-reader.src.main.java.com.starrocks.paimon.reader.PaimonSplitScanner.PaimonSplitScanner",
+                    "java-extensions.paimon-reader.src.main.java.com.starrocks.paimon.reader.PaimonSplitScannerFactory.PaimonSplitScannerFactory",
+                    "java-extensions.paimon-reader.src.main.java.com.starrocks.paimon.reader.PaimonTypeUtils.PaimonTypeUtils"
+                ],
+                "children": {}
+            },
+            "udf_system": {
+                "components": [
+                    "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.CallStubGenerator.CallStubGenerator",
+                    "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.FunctionStates.FunctionStates",
+                    "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.UDFClassAnalyzer.UDFClassAnalyzer",
+                    "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.UDFClassLoader.UDFClassLoader",
+                    "java-extensions.udf-extensions.src.main.java.com.starrocks.udf.UDFHelper.UDFHelper"
+                ],
+                "children": {}
+            },
+            "udf_examples": {
+                "components": [
+                    "java-extensions.udf-examples.src.main.java.com.starrocks.example.udf.JsonAgg.JsonAgg",
+                    "java-extensions.udf-examples.src.main.java.com.starrocks.example.udf.UDFAdd.UDFAdd"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "format_support": {
+        "path": "format-sdk",
+        "components": [
+            "format-sdk.src.main.cpp.convert.starrocks_arrow_converter.RecordBatchToChunkConverterImpl",
+            "format-sdk.src.main.cpp.convert.starrocks_arrow_converter.ChunkToRecordBatchConverterImpl",
+            "format-sdk.src.main.cpp.format.starrocks_format_reader.StarRocksFormatReaderImpl",
+            "format-sdk.src.main.cpp.format.starrocks_format_writer.ArrowArray",
+            "format-sdk.src.main.cpp.jni_wrapper.ArrowArray",
+            "format-sdk.src.main.java.com.starrocks.format.Config.Builder",
+            "format-sdk.src.main.java.com.starrocks.format.DataAccessor.ThrowingSupplier",
+            "format-sdk.src.main.java.com.starrocks.format.StarRocksReader.StarRocksReader",
+            "format-sdk.src.main.java.com.starrocks.format.StarRocksWriter.StarRocksWriter",
+            "format-sdk.src.main.java.com.starrocks.format.jni.LibraryHelper.LibraryHelper",
+            "format-sdk.src.main.java.com.starrocks.format.rest.ResponseContent.ResponseContent",
+            "format-sdk.src.main.java.com.starrocks.format.rest.RestClient.ThrowingFunction",
+            "format-sdk.src.main.java.com.starrocks.format.rest.model.QueryPlan.QueryPlan",
+            "format-sdk.src.main.java.com.starrocks.format.rest.model.TablePartition.TablePartition"
+        ],
+        "children": {}
+    },
+    "system_utilities": {
+        "path": "be/src/util",
+        "components": [
+            "be.src.util.compression.block_compression.Lz4fBlockCompression",
+            "be.src.util.compression.stream_compression.ZstandardStreamCompression",
+            "be.src.util.core_local.CoreDataAllocatorImpl",
+            "be.src.util.cpu_info.statfs",
+            "be.src.util.json_converter.SimdJsonConverter",
+            "be.src.util.mem_info.statfs",
+            "be.src.util.monotime.timeval",
+            "be.src.util.network_util.sockaddr_in6",
+            "be.src.util.slice.SliceInit",
+            "be.src.util.stack_util.StackTraceTaskHash",
+            "be.src.util.static_asserts.UnusedClass",
+            "be.src.util.system_metrics.CpuMetrics",
+            "be.src.util.thread.ThreadDescriptor",
+            "be.src.util.threadpool.FunctionRunnable",
+            "be.src.util.thrift_rpc_helper.ThriftMsgTypeTraits",
+            "be.src.util.time.tm",
+            "be.src.util.trace.TraceEntry"
+        ],
+        "children": {}
+    }
+}

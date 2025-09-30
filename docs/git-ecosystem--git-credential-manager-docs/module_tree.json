@@ -1,0 +1,745 @@
+{
+    "Core Application Framework": {
+        "path": "src/shared/Core",
+        "components": [
+            "src.shared.Core.Application.Application",
+            "src.shared.Core.CommandContext.ICommandContext",
+            "src.shared.Core.CommandContext.CommandContext",
+            "src.shared.Core.Commands.ProviderCommand.ICommandProvider",
+            "src.shared.Core.Commands.ProviderCommand.ProviderCommand",
+            "src.shared.Core.Settings.Settings",
+            "src.shared.Core.Settings.ISettings",
+            "src.shared.Core.Settings.ProxyConfiguration",
+            "src.shared.Core.StandardStreams.IStandardStreams",
+            "src.shared.Core.StandardStreams.StandardStreams",
+            "src.shared.Core.ITerminal.ITerminal",
+            "src.shared.Core.Trace.Trace",
+            "src.shared.Core.Trace.ITrace",
+            "src.shared.Core.Trace.DebugTraceWriter",
+            "src.shared.Core.Trace2.Trace2",
+            "src.shared.Core.Trace2.ITrace2",
+            "src.shared.Core.Trace2Settings",
+            "src.shared.Core.Trace2Message",
+            "src.shared.Core.Trace2CollectorWriter",
+            "src.shared.Core.Trace2FileWriter",
+            "src.shared.Core.Trace2StreamWriter",
+            "src.shared.Core.InputArguments.InputArguments",
+            "src.shared.Core.EnvironmentBase.IEnvironment"
+        ],
+        "children": {
+            "Application Management": {
+                "components": [
+                    "src.shared.Core.Application.Application",
+                    "src.shared.Core.CommandContext.ICommandContext",
+                    "src.shared.Core.CommandContext.CommandContext",
+                    "src.shared.Core.Commands.ProviderCommand.ICommandProvider",
+                    "src.shared.Core.Commands.ProviderCommand.ProviderCommand",
+                    "src.shared.Core.InputArguments.InputArguments"
+                ],
+                "children": {}
+            },
+            "Configuration and Settings": {
+                "components": [
+                    "src.shared.Core.Settings.Settings",
+                    "src.shared.Core.Settings.ISettings",
+                    "src.shared.Core.Settings.ProxyConfiguration"
+                ],
+                "children": {}
+            },
+            "I/O and Communication": {
+                "components": [
+                    "src.shared.Core.StandardStreams.IStandardStreams",
+                    "src.shared.Core.StandardStreams.StandardStreams",
+                    "src.shared.Core.ITerminal.ITerminal",
+                    "src.shared.Core.EnvironmentBase.IEnvironment"
+                ],
+                "children": {}
+            },
+            "Tracing and Diagnostics": {
+                "components": [
+                    "src.shared.Core.Trace.Trace",
+                    "src.shared.Core.Trace.ITrace",
+                    "src.shared.Core.Trace.DebugTraceWriter",
+                    "src.shared.Core.Trace2.Trace2",
+                    "src.shared.Core.Trace2.ITrace2",
+                    "src.shared.Core.Trace2Settings",
+                    "src.shared.Core.Trace2Message",
+                    "src.shared.Core.Trace2CollectorWriter",
+                    "src.shared.Core.Trace2FileWriter",
+                    "src.shared.Core.Trace2StreamWriter"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Authentication System": {
+        "path": "src/shared/Core/Authentication",
+        "components": [
+            "src.shared.Core.Authentication.BasicAuthentication.BasicAuthentication",
+            "src.shared.Core.Authentication.BasicAuthentication.IBasicAuthentication",
+            "src.shared.Core.Authentication.OAuthAuthentication.OAuthAuthentication",
+            "src.shared.Core.Authentication.OAuthAuthentication.IOAuthAuthentication",
+            "src.shared.Core.Authentication.OAuth.OAuth2Client.IOAuth2Client",
+            "src.shared.Core.Authentication.OAuth.OAuth2Client.OAuth2Client",
+            "src.shared.Core.Authentication.OAuth.OAuth2TokenResult.OAuth2TokenResult",
+            "src.shared.Core.Authentication.OAuth.OAuth2AuthorizationCodeResult.OAuth2AuthorizationCodeResult",
+            "src.shared.Core.Authentication.OAuth.OAuth2DeviceCodeResult.OAuth2DeviceCodeResult",
+            "src.shared.Core.Authentication.OAuth.OAuth2ServerEndpoints.OAuth2ServerEndpoints",
+            "src.shared.Core.Authentication.OAuth.OAuth2CryptographicGenerator.IOAuth2CodeGenerator",
+            "src.shared.Core.Authentication.OAuth.OAuth2CryptographicGenerator.OAuth2CryptographicCodeGenerator",
+            "src.shared.Core.Authentication.OAuth.IOAuth2WebBrowser.IOAuth2WebBrowser",
+            "src.shared.Core.Authentication.OAuth.OAuth2SystemWebBrowser.OAuth2SystemWebBrowser",
+            "src.shared.Core.Authentication.OAuth.Json.TokenEndpointResponseJson.TokenEndpointResponseJson",
+            "src.shared.Core.Authentication.OAuth.Json.DeviceAuthorizationEndpointResponseJson.DeviceAuthorizationEndpointResponseJson",
+            "src.shared.Core.Authentication.MicrosoftAuthentication.MicrosoftAuthentication",
+            "src.shared.Core.Authentication.MicrosoftAuthentication.IMicrosoftAuthentication",
+            "src.shared.Core.Authentication.WindowsIntegratedAuthentication.WindowsIntegratedAuthentication",
+            "src.shared.Core.Authentication.WindowsIntegratedAuthentication.IWindowsIntegratedAuthentication"
+        ],
+        "children": {
+            "OAuth Authentication": {
+                "components": [
+                    "src.shared.Core.Authentication.OAuthAuthentication.OAuthAuthentication",
+                    "src.shared.Core.Authentication.OAuthAuthentication.IOAuthAuthentication",
+                    "src.shared.Core.Authentication.OAuth.OAuth2Client.IOAuth2Client",
+                    "src.shared.Core.Authentication.OAuth.OAuth2Client.OAuth2Client",
+                    "src.shared.Core.Authentication.OAuth.OAuth2TokenResult.OAuth2TokenResult",
+                    "src.shared.Core.Authentication.OAuth.OAuth2AuthorizationCodeResult.OAuth2AuthorizationCodeResult",
+                    "src.shared.Core.Authentication.OAuth.OAuth2DeviceCodeResult.OAuth2DeviceCodeResult",
+                    "src.shared.Core.Authentication.OAuth.OAuth2ServerEndpoints.OAuth2ServerEndpoints",
+                    "src.shared.Core.Authentication.OAuth.OAuth2CryptographicGenerator.IOAuth2CodeGenerator",
+                    "src.shared.Core.Authentication.OAuth.OAuth2CryptographicGenerator.OAuth2CryptographicCodeGenerator",
+                    "src.shared.Core.Authentication.OAuth.IOAuth2WebBrowser.IOAuth2WebBrowser",
+                    "src.shared.Core.Authentication.OAuth.OAuth2SystemWebBrowser.OAuth2SystemWebBrowser",
+                    "src.shared.Core.Authentication.OAuth.Json.TokenEndpointResponseJson.TokenEndpointResponseJson",
+                    "src.shared.Core.Authentication.OAuth.Json.DeviceAuthorizationEndpointResponseJson.DeviceAuthorizationEndpointResponseJson"
+                ],
+                "children": {}
+            },
+            "Microsoft Authentication": {
+                "components": [
+                    "src.shared.Core.Authentication.MicrosoftAuthentication.MicrosoftAuthentication",
+                    "src.shared.Core.Authentication.MicrosoftAuthentication.IMicrosoftAuthentication"
+                ],
+                "children": {}
+            },
+            "Basic Authentication": {
+                "components": [
+                    "src.shared.Core.Authentication.BasicAuthentication.BasicAuthentication",
+                    "src.shared.Core.Authentication.BasicAuthentication.IBasicAuthentication"
+                ],
+                "children": {}
+            },
+            "Windows Integrated Authentication": {
+                "components": [
+                    "src.shared.Core.Authentication.WindowsIntegratedAuthentication.WindowsIntegratedAuthentication",
+                    "src.shared.Core.Authentication.WindowsIntegratedAuthentication.IWindowsIntegratedAuthentication"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "GitHub Provider": {
+        "path": "src/shared/GitHub",
+        "components": [
+            "src.shared.GitHub.GitHubHostProvider.GitHubHostProvider",
+            "src.shared.GitHub.GitHubAuthentication.GitHubAuthentication",
+            "src.shared.GitHub.GitHubAuthentication.IGitHubAuthentication",
+            "src.shared.GitHub.GitHubOAuth2Client.GitHubOAuth2Client",
+            "src.shared.GitHub.GitHubRestApi.GitHubRestApi",
+            "src.shared.GitHub.GitHubRestApi.IGitHubRestApi",
+            "src.shared.GitHub.AuthenticationResult.AuthenticationResult",
+            "src.shared.GitHub.GitHubAuthChallenge.GitHubAuthChallenge"
+        ],
+        "children": {
+            "GitHub Authentication": {
+                "components": [
+                    "src.shared.GitHub.GitHubAuthentication.GitHubAuthentication",
+                    "src.shared.GitHub.GitHubAuthentication.IGitHubAuthentication"
+                ],
+                "children": {}
+            },
+            "GitHub REST API": {
+                "components": [
+                    "src.shared.GitHub.GitHubRestApi.GitHubRestApi",
+                    "src.shared.GitHub.GitHubRestApi.IGitHubRestApi"
+                ],
+                "children": {}
+            },
+            "GitHub OAuth2 Client": {
+                "components": [
+                    "src.shared.GitHub.GitHubOAuth2Client.GitHubOAuth2Client"
+                ],
+                "children": {}
+            },
+            "GitHub Host Provider": {
+                "components": [
+                    "src.shared.GitHub.GitHubHostProvider.GitHubHostProvider"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "GitLab Provider": {
+        "path": "src/shared/GitLab",
+        "components": [
+            "src.shared.GitLab.GitLabHostProvider.GitLabHostProvider",
+            "src.shared.GitLab.GitLabAuthentication.GitLabAuthentication",
+            "src.shared.GitLab.GitLabAuthentication.IGitLabAuthentication",
+            "src.shared.GitLab.GitLabOAuth2Client.GitLabOAuth2Client"
+        ],
+        "children": {
+            "GitLab Authentication": {
+                "components": [
+                    "src.shared.GitLab.GitLabAuthentication.GitLabAuthentication",
+                    "src.shared.GitLab.GitLabAuthentication.IGitLabAuthentication"
+                ],
+                "children": {}
+            },
+            "GitLab OAuth2 Client": {
+                "components": [
+                    "src.shared.GitLab.GitLabOAuth2Client.GitLabOAuth2Client"
+                ],
+                "children": {}
+            },
+            "GitLab UI Components": {
+                "components": [
+                    "src.shared.GitLab.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+                    "src.shared.GitLab.UI.Views.CredentialsView.axaml.CredentialsView"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Bitbucket Provider": {
+        "path": "src/shared/Atlassian.Bitbucket",
+        "components": [
+            "src.shared.Atlassian.Bitbucket.BitbucketHostProvider.BitbucketHostProvider",
+            "src.shared.Atlassian.Bitbucket.BitbucketAuthentication.BitbucketAuthentication",
+            "src.shared.Atlassian.Bitbucket.BitbucketAuthentication.IBitbucketAuthentication",
+            "src.shared.Atlassian.Bitbucket.Cloud.BitbucketOAuth2Client.BitbucketOAuth2Client",
+            "src.shared.Atlassian.Bitbucket.Cloud.BitbucketRestApi.BitbucketRestApi",
+            "src.shared.Atlassian.Bitbucket.DataCenter.BitbucketOAuth2Client.BitbucketOAuth2Client",
+            "src.shared.Atlassian.Bitbucket.DataCenter.BitbucketRestApi.BitbucketRestApi",
+            "src.shared.Atlassian.Bitbucket.OAuth2ClientRegistry.OAuth2ClientRegistry",
+            "src.shared.Atlassian.Bitbucket.BitbucketRestApiRegistry.BitbucketRestApiRegistry",
+            "src.shared.Atlassian.Bitbucket.IRegistry.IRegistry",
+            "src.shared.Atlassian.Bitbucket.IBitbucketRestApi.IBitbucketRestApi",
+            "src.shared.Atlassian.Bitbucket.IUserInfo.IUserInfo"
+        ],
+        "children": {
+            "Bitbucket Authentication": {
+                "components": [
+                    "src.shared.Atlassian.Bitbucket.BitbucketAuthentication.BitbucketAuthentication",
+                    "src.shared.Atlassian.Bitbucket.BitbucketAuthentication.IBitbucketAuthentication"
+                ],
+                "children": {}
+            },
+            "Bitbucket Cloud Components": {
+                "components": [
+                    "src.shared.Atlassian.Bitbucket.Cloud.BitbucketOAuth2Client.BitbucketOAuth2Client",
+                    "src.shared.Atlassian.Bitbucket.Cloud.BitbucketRestApi.BitbucketRestApi"
+                ],
+                "children": {}
+            },
+            "Bitbucket Data Center Components": {
+                "components": [
+                    "src.shared.Atlassian.Bitbucket.DataCenter.BitbucketOAuth2Client.BitbucketOAuth2Client",
+                    "src.shared.Atlassian.Bitbucket.DataCenter.BitbucketRestApi.BitbucketRestApi"
+                ],
+                "children": {}
+            },
+            "Bitbucket Registries": {
+                "components": [
+                    "src.shared.Atlassian.Bitbucket.OAuth2ClientRegistry.OAuth2ClientRegistry",
+                    "src.shared.Atlassian.Bitbucket.BitbucketRestApiRegistry.BitbucketRestApiRegistry",
+                    "src.shared.Atlassian.Bitbucket.IRegistry.IRegistry"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Azure Repos Provider": {
+        "path": "src/shared/Microsoft.AzureRepos",
+        "components": [
+            "src.shared.Microsoft.AzureRepos.AzureReposHostProvider.AzureReposHostProvider",
+            "src.shared.Microsoft.AzureRepos.AzureDevOpsRestApi.AzureDevOpsRestApi",
+            "src.shared.Microsoft.AzureRepos.AzureDevOpsRestApi.IAzureDevOpsRestApi",
+            "src.shared.Microsoft.AzureRepos.AzureDevOpsAuthorityCache.AzureDevOpsAuthorityCache",
+            "src.shared.Microsoft.AzureRepos.AzureDevOpsAuthorityCache.IAzureDevOpsAuthorityCache",
+            "src.shared.Microsoft.AzureRepos.AzureReposBindingManager.AzureReposBindingManager",
+            "src.shared.Microsoft.AzureRepos.AzureReposBindingManager.IAzureReposBindingManager"
+        ],
+        "children": {
+            "AzureReposHostProvider": {
+                "components": [
+                    "src.shared.Microsoft.AzureRepos.AzureReposHostProvider.AzureReposHostProvider"
+                ],
+                "children": {}
+            },
+            "AzureDevOpsRestApi": {
+                "components": [
+                    "src.shared.Microsoft.AzureRepos.AzureDevOpsRestApi.AzureDevOpsRestApi",
+                    "src.shared.Microsoft.AzureRepos.AzureDevOpsRestApi.IAzureDevOpsRestApi"
+                ],
+                "children": {}
+            },
+            "AzureDevOpsAuthorityCache": {
+                "components": [
+                    "src.shared.Microsoft.AzureRepos.AzureDevOpsAuthorityCache.AzureDevOpsAuthorityCache",
+                    "src.shared.Microsoft.AzureRepos.AzureDevOpsAuthorityCache.IAzureDevOpsAuthorityCache"
+                ],
+                "children": {}
+            },
+            "AzureReposBindingManager": {
+                "components": [
+                    "src.shared.Microsoft.AzureRepos.AzureReposBindingManager.AzureReposBindingManager",
+                    "src.shared.Microsoft.AzureRepos.AzureReposBindingManager.IAzureReposBindingManager",
+                    "src.shared.Microsoft.AzureRepos.AzureReposBindingManager.AzureReposBinding"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Credential Management": {
+        "path": "src/shared/Core",
+        "components": [
+            "src.shared.Core.ICredentialStore.ICredentialStore",
+            "src.shared.Core.CredentialStore.CredentialStore",
+            "src.shared.Core.CredentialCacheStore.CredentialCacheStore",
+            "src.shared.Core.NullCredentialStore.NullCredentialStore",
+            "src.shared.Core.PlaintextCredentialStore.PlaintextCredentialStore",
+            "src.shared.Core.Credential.GitCredential",
+            "src.shared.Core.Credential.ICredential",
+            "src.shared.Core.FileCredential.FileCredential",
+            "src.shared.Core.ISessionManager.ISessionManager"
+        ],
+        "children": {
+            "Credential Storage": {
+                "components": [
+                    "src.shared.Core.ICredentialStore.ICredentialStore",
+                    "src.shared.Core.CredentialStore.CredentialStore",
+                    "src.shared.Core.CredentialCacheStore.CredentialCacheStore",
+                    "src.shared.Core.NullCredentialStore.NullCredentialStore",
+                    "src.shared.Core.PlaintextCredentialStore.PlaintextCredentialStore"
+                ],
+                "children": {}
+            },
+            "Credential Models": {
+                "components": [
+                    "src.shared.Core.Credential.GitCredential",
+                    "src.shared.Core.Credential.ICredential",
+                    "src.shared.Core.FileCredential.FileCredential"
+                ],
+                "children": {}
+            },
+            "Session Management Integration": {
+                "components": [
+                    "src.shared.Core.ISessionManager.ISessionManager"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Git Integration": {
+        "path": "src/shared/Core",
+        "components": [
+            "src.shared.Core.Git.IGit",
+            "src.shared.Core.Git.GitProcess",
+            "src.shared.Core.Git.GitRemote",
+            "src.shared.Core.GitConfiguration.IGitConfiguration",
+            "src.shared.Core.GitConfiguration.GitProcessConfiguration",
+            "src.shared.Core.GitConfigurationEntry.GitConfigurationEntry",
+            "src.shared.Core.GitConfigurationKeyComparer.GitConfigurationKeyComparer",
+            "src.shared.Core.GitVersion.GitVersion",
+            "src.shared.Core.GitStreamReader.GitStreamReader",
+            "src.shared.Core.Gpg.IGpg",
+            "src.shared.Core.Gpg.Gpg",
+            "src.shared.Core.Commands.GetCommand.GetCommand",
+            "src.shared.Core.Commands.StoreCommand.StoreCommand",
+            "src.shared.Core.Commands.EraseCommand.EraseCommand",
+            "src.shared.Core.Commands.ConfigureCommand.ConfigureCommand",
+            "src.shared.Core.Commands.UnconfigureCommand.UnconfigureCommand",
+            "src.shared.Core.Commands.DiagnoseCommand.DiagnoseCommand"
+        ],
+        "children": {
+            "GitProcess": {
+                "components": [
+                    "src.shared.Core.Git.IGit",
+                    "src.shared.Core.Git.GitProcess",
+                    "src.shared.Core.Git.GitRemote",
+                    "src.shared.Core.GitVersion.GitVersion"
+                ],
+                "children": {}
+            },
+            "GitConfiguration": {
+                "components": [
+                    "src.shared.Core.GitConfiguration.IGitConfiguration",
+                    "src.shared.Core.GitConfiguration.GitProcessConfiguration",
+                    "src.shared.Core.GitConfigurationEntry.GitConfigurationEntry",
+                    "src.shared.Core.GitConfigurationKeyComparer.GitConfigurationKeyComparer"
+                ],
+                "children": {}
+            },
+            "GitStreamReader": {
+                "components": [
+                    "src.shared.Core.GitStreamReader.GitStreamReader"
+                ],
+                "children": {}
+            },
+            "Gpg": {
+                "components": [
+                    "src.shared.Core.Gpg.IGpg",
+                    "src.shared.Core.Gpg.Gpg"
+                ],
+                "children": {}
+            },
+            "GitCommands": {
+                "components": [
+                    "src.shared.Core.Commands.GetCommand.GetCommand",
+                    "src.shared.Core.Commands.StoreCommand.StoreCommand",
+                    "src.shared.Core.Commands.EraseCommand.EraseCommand",
+                    "src.shared.Core.Commands.ConfigureCommand.ConfigureCommand",
+                    "src.shared.Core.Commands.UnconfigureCommand.UnconfigureCommand",
+                    "src.shared.Core.Commands.DiagnoseCommand.DiagnoseCommand"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Host Provider Framework": {
+        "path": "src/shared/Core",
+        "components": [
+            "src.shared.Core.HostProvider.IHostProvider",
+            "src.shared.Core.HostProviderRegistry.IHostProviderRegistry",
+            "src.shared.Core.HostProviderRegistry.HostProviderRegistry",
+            "src.shared.Core.GenericHostProvider.GenericHostProvider",
+            "src.shared.Core.GenericOAuthConfig.GenericOAuthConfig"
+        ],
+        "children": {
+            "Host Provider Registry": {
+                "components": [
+                    "src.shared.Core.HostProviderRegistry.IHostProviderRegistry",
+                    "src.shared.Core.HostProviderRegistry.HostProviderRegistry"
+                ],
+                "children": {}
+            },
+            "Generic Host Provider": {
+                "components": [
+                    "src.shared.Core.GenericHostProvider.GenericHostProvider"
+                ],
+                "children": {}
+            },
+            "Generic OAuth Configuration": {
+                "components": [
+                    "src.shared.Core.GenericOAuthConfig.GenericOAuthConfig"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Cross-Platform Support": {
+        "path": "src/shared/Core/Interop",
+        "components": [
+            "src.shared.Core.FileSystem.IFileSystem",
+            "src.shared.Core.Interop.Windows.WindowsFileSystem.WindowsFileSystem",
+            "src.shared.Core.Interop.Windows.WindowsEnvironment.WindowsEnvironment",
+            "src.shared.Core.Interop.Windows.WindowsSessionManager.WindowsSessionManager",
+            "src.shared.Core.Interop.Windows.WindowsTerminal.WindowsTerminal",
+            "src.shared.Core.Interop.Windows.WindowsCredentialManager.WindowsCredentialManager",
+            "src.shared.Core.Interop.Windows.DpapiCredentialStore.DpapiCredentialStore",
+            "src.shared.Core.Interop.Windows.WindowsSystemPrompts.WindowsSystemPrompts",
+            "src.shared.Core.Interop.Windows.WindowsProcessManager.WindowsProcessManager",
+            "src.shared.Core.Interop.MacOS.MacOSFileSystem.MacOSFileSystem",
+            "src.shared.Core.Interop.MacOS.MacOSEnvironment.MacOSEnvironment",
+            "src.shared.Core.Interop.MacOS.MacOSSessionManager.MacOSSessionManager",
+            "src.shared.Core.Interop.MacOS.MacOSTerminal.MacOSTerminal",
+            "src.shared.Core.Interop.MacOS.MacOSKeychain.MacOSKeychain",
+            "src.shared.Core.Interop.MacOS.MacOSPreferences.MacOSPreferences",
+            "src.shared.Core.Interop.MacOS.MacOSSettings.MacOSSettings",
+            "src.shared.Core.Interop.Linux.LinuxFileSystem.LinuxFileSystem",
+            "src.shared.Core.Interop.Linux.LinuxSessionManager.LinuxSessionManager",
+            "src.shared.Core.Interop.Linux.LinuxTerminal.LinuxTerminal",
+            "src.shared.Core.Interop.Linux.SecretServiceCollection.SecretServiceCollection",
+            "src.shared.Core.Interop.Linux.SecretServiceCredential.SecretServiceCredential",
+            "src.shared.Core.Interop.Posix.PosixEnvironment.PosixEnvironment",
+            "src.shared.Core.Interop.Posix.GpgPassCredentialStore.GpgPassCredentialStore",
+            "src.shared.Core.ISystemPrompts.ISystemPrompts"
+        ],
+        "children": {
+            "Windows Platform Components": {
+                "components": [
+                    "src.shared.Core.Interop.Windows.WindowsFileSystem.WindowsFileSystem",
+                    "src.shared.Core.Interop.Windows.WindowsEnvironment.WindowsEnvironment",
+                    "src.shared.Core.Interop.Windows.WindowsSessionManager.WindowsSessionManager",
+                    "src.shared.Core.Interop.Windows.WindowsTerminal.WindowsTerminal",
+                    "src.shared.Core.Interop.Windows.WindowsCredentialManager.WindowsCredentialManager",
+                    "src.shared.Core.Interop.Windows.DpapiCredentialStore.DpapiCredentialStore",
+                    "src.shared.Core.Interop.Windows.WindowsSystemPrompts.WindowsSystemPrompts",
+                    "src.shared.Core.Interop.Windows.WindowsProcessManager.WindowsProcessManager"
+                ],
+                "children": {}
+            },
+            "macOS Platform Components": {
+                "components": [
+                    "src.shared.Core.Interop.MacOS.MacOSFileSystem.MacOSFileSystem",
+                    "src.shared.Core.Interop.MacOS.MacOSEnvironment.MacOSEnvironment",
+                    "src.shared.Core.Interop.MacOS.MacOSSessionManager.MacOSSessionManager",
+                    "src.shared.Core.Interop.MacOS.MacOSTerminal.MacOSTerminal",
+                    "src.shared.Core.Interop.MacOS.MacOSKeychain.MacOSKeychain",
+                    "src.shared.Core.Interop.MacOS.MacOSPreferences.MacOSPreferences",
+                    "src.shared.Core.Interop.MacOS.MacOSSettings.MacOSSettings"
+                ],
+                "children": {}
+            },
+            "Linux Platform Components": {
+                "components": [
+                    "src.shared.Core.Interop.Linux.LinuxFileSystem.LinuxFileSystem",
+                    "src.shared.Core.Interop.Linux.LinuxSessionManager.LinuxSessionManager",
+                    "src.shared.Core.Interop.Linux.LinuxTerminal.LinuxTerminal",
+                    "src.shared.Core.Interop.Linux.SecretServiceCollection.SecretServiceCollection",
+                    "src.shared.Core.Interop.Linux.SecretServiceCredential.SecretServiceCredential"
+                ],
+                "children": {}
+            },
+            "POSIX Platform Components": {
+                "components": [
+                    "src.shared.Core.Interop.Posix.PosixEnvironment.PosixEnvironment",
+                    "src.shared.Core.Interop.Posix.GpgPassCredentialStore.GpgPassCredentialStore"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "UI Framework": {
+        "path": "src/shared/Core/UI",
+        "components": [
+            "src.shared.Core.UI.AvaloniaApp.axaml.AvaloniaApp",
+            "src.shared.Core.UI.HelperApplication.HelperApplication",
+            "src.shared.Core.UI.Dispatcher.Dispatcher",
+            "src.shared.Core.UI.Dispatcher.IDispatcherJob",
+            "src.shared.Core.UI.RelayCommand.RelayCommand",
+            "src.shared.Core.UI.ViewModels.WindowViewModel.WindowViewModel",
+            "src.shared.Core.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+            "src.shared.Core.UI.ViewModels.DefaultAccountViewModel.DefaultAccountViewModel",
+            "src.shared.Core.UI.ViewModels.DeviceCodeViewModel.DeviceCodeViewModel",
+            "src.shared.Core.UI.ViewModels.OAuthViewModel.OAuthViewModel",
+            "src.shared.Core.UI.Views.CredentialsView.axaml.CredentialsView",
+            "src.shared.Core.UI.Views.DefaultAccountView.axaml.DefaultAccountView",
+            "src.shared.Core.UI.Views.DeviceCodeView.axaml.DeviceCodeView",
+            "src.shared.Core.UI.Views.OAuthView.axaml.OAuthView",
+            "src.shared.Core.UI.Controls.DialogWindow.axaml.DialogWindow",
+            "src.shared.Core.UI.Controls.ProgressWindow.axaml.ProgressWindow",
+            "src.shared.Core.UI.Controls.AboutWindow.axaml.AboutWindow",
+            "src.shared.Core.UI.Controls.IFocusable.IFocusable"
+        ],
+        "children": {
+            "Application Management": {
+                "components": [
+                    "src.shared.Core.UI.AvaloniaApp.axaml.AvaloniaApp",
+                    "src.shared.Core.UI.HelperApplication.HelperApplication",
+                    "src.shared.Core.UI.Dispatcher.Dispatcher",
+                    "src.shared.Core.UI.Dispatcher.IDispatcherJob"
+                ],
+                "children": {}
+            },
+            "ViewModels": {
+                "components": [
+                    "src.shared.Core.UI.ViewModels.WindowViewModel.WindowViewModel",
+                    "src.shared.Core.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+                    "src.shared.Core.UI.ViewModels.DefaultAccountViewModel.DefaultAccountViewModel",
+                    "src.shared.Core.UI.ViewModels.DeviceCodeViewModel.DeviceCodeViewModel",
+                    "src.shared.Core.UI.ViewModels.OAuthViewModel.OAuthViewModel"
+                ],
+                "children": {}
+            },
+            "Views": {
+                "components": [
+                    "src.shared.Core.UI.Views.CredentialsView.axaml.CredentialsView",
+                    "src.shared.Core.UI.Views.DefaultAccountView.axaml.DefaultAccountView",
+                    "src.shared.Core.UI.Views.DeviceCodeView.axaml.DeviceCodeView",
+                    "src.shared.Core.UI.Views.OAuthView.axaml.OAuthView"
+                ],
+                "children": {}
+            },
+            "Controls": {
+                "components": [
+                    "src.shared.Core.UI.Controls.DialogWindow.axaml.DialogWindow",
+                    "src.shared.Core.UI.Controls.ProgressWindow.axaml.ProgressWindow",
+                    "src.shared.Core.UI.Controls.AboutWindow.axaml.AboutWindow",
+                    "src.shared.Core.UI.Controls.IFocusable.IFocusable"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Platform UI Components": {
+        "path": "src/shared",
+        "components": [
+            "src.shared.GitHub.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+            "src.shared.GitHub.UI.ViewModels.DeviceCodeViewModel.DeviceCodeViewModel",
+            "src.shared.GitHub.UI.ViewModels.TwoFactorViewModel.TwoFactorViewModel",
+            "src.shared.GitHub.UI.ViewModels.SelectAccountViewModel.SelectAccountViewModel",
+            "src.shared.GitHub.UI.Views.CredentialsView.axaml.CredentialsView",
+            "src.shared.GitHub.UI.Views.DeviceCodeView.axaml.DeviceCodeView",
+            "src.shared.GitHub.UI.Views.TwoFactorView.axaml.TwoFactorView",
+            "src.shared.GitHub.UI.Views.SelectAccountView.axaml.SelectAccountView",
+            "src.shared.GitHub.UI.Controls.SixDigitInput.axaml.SixDigitInput",
+            "src.shared.GitHub.UI.Controls.HorizontalShadowDivider.axaml.HorizontalShadowDivider",
+            "src.shared.GitLab.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+            "src.shared.GitLab.UI.Views.CredentialsView.axaml.CredentialsView",
+            "src.shared.Atlassian.Bitbucket.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+            "src.shared.Atlassian.Bitbucket.UI.Views.CredentialsView.axaml.CredentialsView"
+        ],
+        "children": {
+            "GitHub UI Components": {
+                "components": [
+                    "src.shared.GitHub.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+                    "src.shared.GitHub.UI.ViewModels.DeviceCodeViewModel.DeviceCodeViewModel",
+                    "src.shared.GitHub.UI.ViewModels.TwoFactorViewModel.TwoFactorViewModel",
+                    "src.shared.GitHub.UI.ViewModels.SelectAccountViewModel.SelectAccountViewModel",
+                    "src.shared.GitHub.UI.Views.CredentialsView.axaml.CredentialsView",
+                    "src.shared.GitHub.UI.Views.DeviceCodeView.axaml.DeviceCodeView",
+                    "src.shared.GitHub.UI.Views.TwoFactorView.axaml.TwoFactorView",
+                    "src.shared.GitHub.UI.Views.SelectAccountView.axaml.SelectAccountView",
+                    "src.shared.GitHub.UI.Controls.SixDigitInput.axaml.SixDigitInput",
+                    "src.shared.GitHub.UI.Controls.HorizontalShadowDivider.axaml.HorizontalShadowDivider"
+                ],
+                "children": {}
+            },
+            "GitLab UI Components": {
+                "components": [
+                    "src.shared.GitLab.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+                    "src.shared.GitLab.UI.Views.CredentialsView.axaml.CredentialsView"
+                ],
+                "children": {}
+            },
+            "Bitbucket UI Components": {
+                "components": [
+                    "src.shared.Atlassian.Bitbucket.UI.ViewModels.CredentialsViewModel.CredentialsViewModel",
+                    "src.shared.Atlassian.Bitbucket.UI.Views.CredentialsView.axaml.CredentialsView"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Diagnostics": {
+        "path": "src/shared/Core/Diagnostics",
+        "components": [
+            "src.shared.Core.Diagnostics.IDiagnosticProvider.IDiagnosticProvider",
+            "src.shared.Core.Diagnostics.Diagnostic.IDiagnostic",
+            "src.shared.Core.Diagnostics.Diagnostic.DiagnosticResult",
+            "src.shared.Core.Diagnostics.EnvironmentDiagnostic.EnvironmentDiagnostic",
+            "src.shared.Core.Diagnostics.FileSystemDiagnostic.FileSystemDiagnostic",
+            "src.shared.Core.Diagnostics.GitDiagnostic.GitDiagnostic",
+            "src.shared.Core.Diagnostics.CredentialStoreDiagnostic.CredentialStoreDiagnostic",
+            "src.shared.Core.Diagnostics.NetworkingDiagnostic.NetworkingDiagnostic",
+            "src.shared.Core.Diagnostics.MicrosoftAuthenticationDiagnostic.MicrosoftAuthenticationDiagnostic",
+            "src.shared.GitHub.Diagnostics.GitHubApiDiagnostic.GitHubApiDiagnostic"
+        ],
+        "children": {
+            "EnvironmentDiagnostic": {
+                "components": [
+                    "src.shared.Core.Diagnostics.EnvironmentDiagnostic.EnvironmentDiagnostic"
+                ],
+                "children": {}
+            },
+            "FileSystemDiagnostic": {
+                "components": [
+                    "src.shared.Core.Diagnostics.FileSystemDiagnostic.FileSystemDiagnostic"
+                ],
+                "children": {}
+            },
+            "GitDiagnostic": {
+                "components": [
+                    "src.shared.Core.Diagnostics.GitDiagnostic.GitDiagnostic"
+                ],
+                "children": {}
+            },
+            "CredentialStoreDiagnostic": {
+                "components": [
+                    "src.shared.Core.Diagnostics.CredentialStoreDiagnostic.CredentialStoreDiagnostic"
+                ],
+                "children": {}
+            },
+            "NetworkingDiagnostic": {
+                "components": [
+                    "src.shared.Core.Diagnostics.NetworkingDiagnostic.NetworkingDiagnostic"
+                ],
+                "children": {}
+            },
+            "MicrosoftAuthenticationDiagnostic": {
+                "components": [
+                    "src.shared.Core.Diagnostics.MicrosoftAuthenticationDiagnostic.MicrosoftAuthenticationDiagnostic"
+                ],
+                "children": {}
+            },
+            "GitHubApiDiagnostic": {
+                "components": [
+                    "src.shared.GitHub.Diagnostics.GitHubApiDiagnostic.GitHubApiDiagnostic"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Configuration Service": {
+        "path": "src/shared/Core",
+        "components": [
+            "src.shared.Core.ConfigurationService.IConfigurationService",
+            "src.shared.Core.ConfigurationService.ConfigurationService",
+            "src.shared.Core.ConfigurationService.IConfigurableComponent"
+        ],
+        "children": {}
+    },
+    "Utilities": {
+        "path": "src/shared/Core",
+        "components": [
+            "src.shared.Core.HttpClientFactory.IHttpClientFactory",
+            "src.shared.Core.HttpClientFactory.HttpClientFactory",
+            "src.shared.Core.ProcessManager.IProcessManager",
+            "src.shared.Core.ProcessManager.ProcessManager",
+            "src.shared.Core.ChildProcess.ChildProcess",
+            "src.shared.Core.IniFile.IniFile",
+            "src.shared.Core.IniFile.IniProperty",
+            "src.shared.Core.IniFile.IniSection",
+            "src.shared.Core.IniFile.IniSectionName",
+            "src.shared.Core.CurlCookie.CurlCookieParser",
+            "src.shared.Core.TerminalMenu.TerminalMenu",
+            "src.shared.Core.TerminalMenu.TerminalMenuItem"
+        ],
+        "children": {
+            "HTTP-Communication": {
+                "components": [
+                    "src.shared.Core.HttpClientFactory.IHttpClientFactory",
+                    "src.shared.Core.HttpClientFactory.HttpClientFactory",
+                    "src.shared.Core.CurlCookie.CurlCookieParser"
+                ],
+                "children": {}
+            },
+            "Process-Management": {
+                "components": [
+                    "src.shared.Core.ProcessManager.IProcessManager",
+                    "src.shared.Core.ProcessManager.ProcessManager",
+                    "src.shared.Core.ChildProcess.ChildProcess"
+                ],
+                "children": {}
+            },
+            "Configuration-Parsing": {
+                "components": [
+                    "src.shared.Core.IniFile.IniFile",
+                    "src.shared.Core.IniFile.IniProperty",
+                    "src.shared.Core.IniFile.IniSection",
+                    "src.shared.Core.IniFile.IniSectionName"
+                ],
+                "children": {}
+            },
+            "User-Interface-Utilities": {
+                "components": [
+                    "src.shared.Core.TerminalMenu.TerminalMenu",
+                    "src.shared.Core.TerminalMenu.TerminalMenuItem"
+                ],
+                "children": {}
+            }
+        }
+    }
+}

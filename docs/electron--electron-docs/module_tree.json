@@ -1,0 +1,88 @@
+{
+    "build_and_testing": {
+        "components": [
+            "build.webpack.webpack.config.base.AccessDependenciesPlugin",
+            "script.lib.native_tests.TestBinary",
+            "script.lib.native_tests.TestsList",
+            "script.run-clang-format.ExitStatus",
+            "spec.lib.screen-helpers.ScreenCapture"
+        ],
+        "children": {}
+    },
+    "ipc_communication": {
+        "components": [
+            "lib.browser.ipc-main-impl.IpcMainImpl",
+            "lib.renderer.api.ipc-renderer.IpcRenderer",
+            "lib.renderer.ipc-renderer-internal.IpcRendererInternal",
+            "lib.browser.message-port-main.MessagePortMain",
+            "lib.browser.api.message-channel.MessageChannelMain"
+        ],
+        "children": {}
+    },
+    "networking": {
+        "components": [
+            "lib.common.api.net-client-request.ClientRequest",
+            "lib.common.api.net-client-request.IncomingMessage",
+            "lib.common.api.net-client-request.ChunkedBodyStream",
+            "lib.common.api.net-client-request.SlurpStream"
+        ],
+        "children": {}
+    },
+    "process_management": {
+        "components": [
+            "lib.browser.api.utility-process.ForkUtilityProcess",
+            "lib.utility.parent-port.ParentPort"
+        ],
+        "children": {}
+    },
+    "system_integration": {
+        "components": [
+            "lib.browser.api.power-monitor.PowerMonitor",
+            "lib.browser.api.auto-updater.auto-updater-win.AutoUpdater",
+            "lib.browser.api.crash-reporter.CrashReporter"
+        ],
+        "children": {}
+    },
+    "type_definitions": {
+        "components": [
+            "typings.internal-electron.d.IpcMainEvent",
+            "typings.internal-electron.d.WebFrameMain",
+            "typings.internal-electron.d.BrowserWindow",
+            "typings.internal-electron.d.WebContents",
+            "typings.internal-ambient.d.Process",
+            "typings.internal-ambient.d.Global"
+        ],
+        "children": {}
+    },
+    "ui_components": {
+        "components": [
+            "lib.browser.api.browser-view.BrowserView",
+            "lib.browser.api.touch-bar.TouchBar",
+            "lib.browser.api.touch-bar.TouchBarButton",
+            "lib.browser.api.touch-bar.TouchBarColorPicker",
+            "lib.browser.api.touch-bar.TouchBarGroup",
+            "lib.browser.api.touch-bar.TouchBarLabel",
+            "lib.browser.api.touch-bar.TouchBarPopover",
+            "lib.browser.api.touch-bar.TouchBarSlider",
+            "lib.browser.api.touch-bar.TouchBarSpacer",
+            "lib.browser.api.touch-bar.TouchBarSegmentedControl",
+            "lib.browser.api.touch-bar.TouchBarScrubber",
+            "lib.browser.api.touch-bar.TouchBarOtherItemsProxy",
+            "lib.browser.api.share-menu.ShareMenu"
+        ],
+        "children": {}
+    },
+    "web_view_system": {
+        "components": [
+            "lib.renderer.web-view.web-view-impl.WebViewImpl",
+            "lib.renderer.web-view.web-view-impl.WebViewImplHooks",
+            "lib.renderer.web-view.web-view-attributes.WebViewAttribute",
+            "lib.renderer.web-view.web-view-attributes.SrcAttribute",
+            "lib.renderer.web-view.web-view-attributes.PartitionAttribute",
+            "lib.renderer.web-view.web-view-attributes.PreloadAttribute",
+            "lib.renderer.web-view.guest-view-internal.GuestViewDelegate",
+            "lib.browser.guest-view-manager.GuestInstance"
+        ],
+        "children": {}
+    }
+}

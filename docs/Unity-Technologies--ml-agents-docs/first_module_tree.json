@@ -1,0 +1,141 @@
+{
+    "unity_runtime_core": {
+        "path": "com.unity.ml-agents/Runtime",
+        "components": [
+            "com.unity.ml-agents.Runtime.Agent.AgentVectorActuator",
+            "com.unity.ml-agents.Runtime.Agent.AgentParameters",
+            "com.unity.ml-agents.Runtime.DecisionRequester.DecisionRequester",
+            "com.unity.ml-agents.Runtime.SimpleMultiAgentGroup.SimpleMultiAgentGroup"
+        ],
+        "children": {}
+    },
+    "unity_actuators": {
+        "path": "com.unity.ml-agents/Runtime/Actuators",
+        "components": [
+            "com.unity.ml-agents.Runtime.Actuators.ActionSegment.ActionSegment",
+            "com.unity.ml-agents.Runtime.Actuators.ActionSpec.ActionSpec",
+            "com.unity.ml-agents.Runtime.Actuators.IActionReceiver.IActionReceiver",
+            "com.unity.ml-agents.Runtime.Actuators.IHeuristicProvider.IHeuristicProvider",
+            "com.unity.ml-agents.Runtime.Actuators.VectorActuator.VectorActuator"
+        ],
+        "children": {}
+    },
+    "unity_sensors": {
+        "path": "com.unity.ml-agents/Runtime/Sensors",
+        "components": [
+            "com.unity.ml-agents.Runtime.Sensors.ObservationSpec.ObservationSpec",
+            "com.unity.ml-agents.Runtime.Sensors.CameraSensor.CameraSensor",
+            "com.unity.ml-agents.Runtime.Sensors.CameraSensorComponent.CameraSensorComponent",
+            "com.unity.ml-agents.Runtime.Sensors.RayPerceptionSensorComponent2D.RayPerceptionSensorComponent2D",
+            "com.unity.ml-agents.Runtime.Sensors.RayPerceptionSensorComponent3D.RayPerceptionSensorComponent3D",
+            "com.unity.ml-agents.Runtime.Sensors.VectorSensorComponent.VectorSensorComponent",
+            "com.unity.ml-agents.Runtime.Sensors.BufferSensor.BufferSensor",
+            "com.unity.ml-agents.Runtime.Sensors.BufferSensorComponent.BufferSensorComponent"
+        ],
+        "children": {}
+    },
+    "unity_communication": {
+        "path": "com.unity.ml-agents/Runtime/Communicator",
+        "components": [
+            "com.unity.ml-agents.Runtime.Communicator.ICommunicator.ICommunicator",
+            "com.unity.ml-agents.Runtime.Communicator.RpcCommunicator.RpcCommunicator",
+            "com.unity.ml-agents.Runtime.Grpc.CommunicatorObjects.UnityToExternalGrpc.UnityToExternalProtoClient"
+        ],
+        "children": {}
+    },
+    "unity_policies": {
+        "path": "com.unity.ml-agents/Runtime/Policies",
+        "components": [
+            "com.unity.ml-agents.Runtime.Policies.IPolicy.IPolicy",
+            "com.unity.ml-agents.Runtime.Policies.HeuristicPolicy.HeuristicPolicy",
+            "com.unity.ml-agents.Runtime.Policies.RemotePolicy.RemotePolicy",
+            "com.unity.ml-agents.Runtime.Policies.SentisPolicy.SentisPolicy"
+        ],
+        "children": {}
+    },
+    "unity_inference": {
+        "path": "com.unity.ml-agents/Runtime/Inference",
+        "components": [
+            "com.unity.ml-agents.Runtime.Inference.ModelRunner.ModelRunner",
+            "com.unity.ml-agents.Runtime.Inference.TensorGenerator.TensorGenerator",
+            "com.unity.ml-agents.Runtime.Inference.TensorApplier.TensorApplier",
+            "com.unity.ml-agents.Runtime.Inference.SentisModelParamLoader.SentisModelParamLoader"
+        ],
+        "children": {}
+    },
+    "unity_side_channels": {
+        "path": "com.unity.ml-agents/Runtime/SideChannels",
+        "components": [
+            "com.unity.ml-agents.Runtime.SideChannels.EngineConfigurationChannel.EngineConfigurationChannel",
+            "com.unity.ml-agents.Runtime.SideChannels.EnvironmentParametersChannel.EnvironmentParametersChannel",
+            "com.unity.ml-agents.Runtime.SideChannels.StatsSideChannel.StatsSideChannel",
+            "com.unity.ml-agents.Runtime.SideChannels.IncomingMessage.IncomingMessage",
+            "com.unity.ml-agents.Runtime.SideChannels.OutgoingMessage.OutgoingMessage"
+        ],
+        "children": {}
+    },
+    "python_environment": {
+        "path": "ml-agents-envs/mlagents_envs",
+        "components": [
+            "ml-agents-envs.mlagents_envs.base_env.BaseEnv",
+            "ml-agents-envs.mlagents_envs.communicator.Communicator",
+            "ml-agents-envs.mlagents_envs.communicator_objects.unity_to_external_pb2_grpc.UnityToExternalProto",
+            "ml-agents-envs.mlagents_envs.envs.unity_gym_env.UnityToGymWrapper"
+        ],
+        "children": {}
+    },
+    "python_side_channels": {
+        "path": "ml-agents-envs/mlagents_envs/side_channel",
+        "components": [
+            "ml-agents-envs.mlagents_envs.side_channel.engine_configuration_channel.ConfigurationType",
+            "ml-agents-envs.mlagents_envs.side_channel.environment_parameters_channel.EnvironmentDataTypes",
+            "ml-agents-envs.mlagents_envs.side_channel.float_properties_channel.FloatPropertiesChannel",
+            "ml-agents-envs.mlagents_envs.side_channel.raw_bytes_channel.RawBytesChannel"
+        ],
+        "children": {}
+    },
+    "training_core": {
+        "path": "ml-agents/mlagents/trainers",
+        "components": [
+            "ml-agents.mlagents.trainers.trainer.trainer.Trainer",
+            "ml-agents.mlagents.trainers.trainer.rl_trainer.RLTrainer",
+            "ml-agents.mlagents.trainers.env_manager.EnvManager",
+            "ml-agents.mlagents.trainers.simple_env_manager.SimpleEnvManager",
+            "ml-agents.mlagents.trainers.policy.policy.Policy"
+        ],
+        "children": {}
+    },
+    "training_algorithms": {
+        "path": "ml-agents/mlagents/trainers",
+        "components": [
+            "ml-agents.mlagents.trainers.ppo.trainer.PPOTrainer",
+            "ml-agents.mlagents.trainers.ppo.optimizer_torch.PPOSettings",
+            "ml-agents.mlagents.trainers.sac.trainer.SACTrainer",
+            "ml-agents.mlagents.trainers.sac.optimizer_torch.SACSettings",
+            "ml-agents.mlagents.trainers.poca.trainer.POCATrainer",
+            "ml-agents.mlagents.trainers.poca.optimizer_torch.POCASettings"
+        ],
+        "children": {}
+    },
+    "training_infrastructure": {
+        "path": "ml-agents/mlagents/trainers",
+        "components": [
+            "ml-agents.mlagents.trainers.settings.TrainerSettings",
+            "ml-agents.mlagents.trainers.settings.NetworkSettings",
+            "ml-agents.mlagents.trainers.settings.RunOptions",
+            "ml-agents.mlagents.trainers.optimizer.torch_optimizer.TorchOptimizer",
+            "ml-agents.mlagents.trainers.torch_entities.networks.SharedActorCritic"
+        ],
+        "children": {}
+    },
+    "reward_systems": {
+        "path": "ml-agents/mlagents/trainers/torch_entities/components/reward_providers",
+        "components": [
+            "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.base_reward_provider.BaseRewardProvider",
+            "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.extrinsic_reward_provider.ExtrinsicRewardProvider",
+            "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.curiosity_reward_provider.CuriosityRewardProvider",
+            "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.gail_reward_provider.GAILRewardProvider"
+        ],
+        "children": {}
+    }
+}
