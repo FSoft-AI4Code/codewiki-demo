@@ -1,0 +1,45 @@
+{
+    "generation_info": {
+        "timestamp": "2025-10-13T13:57:05.140582",
+        "main_model": "kimi-k2-instruct",
+        "generator_version": "1.0.0",
+        "repo_path": "./output/temp/storybookjs--storybook",
+        "commit_id": "f739234e9972691f757430404d8988e40b2dcf4c"
+    },
+    "statistics": {
+        "total_components": 7036,
+        "leaf_nodes": 310,
+        "max_depth": 2
+    },
+    "files_generated": [
+        "overview.md",
+        "module_tree.json",
+        "first_module_tree.json",
+        "storybook_configuration.md",
+        "preview_api.md",
+        "instrumenter_types.md",
+        "component_story_format.md",
+        "consolidated-imports.md",
+        "webpack_builder.md",
+        "outline_addon.md",
+        "controls_addon.md",
+        "backgrounds_addon.md",
+        "core_ui_library.md",
+        "core_addon_types.md",
+        "cli_automigration.md",
+        "docs_addon.md",
+        "actions_addon.md",
+        "angular_framework.md",
+        "theming.md",
+        "manager_api_and_ui.md",
+        "instrumenter_core.md",
+        "package_manager_abstraction.md",
+        "themes_addon.md",
+        "viewport_addon.md",
+        "eslint-plugin.md",
+        "instrumenter.md",
+        "renderer-to-framework.md",
+        "a11y_addon.md",
+        "measure_addon.md"
+    ]
+}

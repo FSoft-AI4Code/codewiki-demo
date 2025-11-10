@@ -2,117 +2,122 @@
 
 ## Overview
 
-The Button module is a core component of the Material Design Components library for Android, providing a comprehensive set of button implementations that follow Material Design principles. This module offers flexible, customizable button components with support for various states, icons, shapes, and interactive behaviors.
+The Button module is a core component of the Material Design Components library for Android, providing enhanced button functionality with Material Design principles. This module extends the standard Android button capabilities with advanced styling, theming, and interaction features that align with Material Design guidelines.
+
+## Purpose
+
+The Button module serves as the foundation for creating interactive buttons in Android applications following Material Design principles. It provides:
+
+- **Material Design Compliance**: Implements Material Design button specifications including elevation, shape, color, and state behaviors
+- **Enhanced Functionality**: Supports checkable buttons, icon integration, and advanced styling options
+- **Flexible Grouping**: Enables creation of button groups with connected styling and overflow handling
+- **Accessibility**: Built-in accessibility features and proper state management
+- **Theming Integration**: Seamless integration with Material Design themes and color systems
 
 ## Architecture
 
-The Button module is structured around several key components that work together to provide a complete button system:
+The Button module is structured around three main components that work together to provide comprehensive button functionality:
 
 ```mermaid
 graph TD
-    A[MaterialButton] --> B[MaterialButtonHelper]
-    A --> C[ShapeAppearanceModel]
-    A --> D[State Management]
-    E[MaterialButtonGroup] --> F[Layout Management]
-    E --> G[Overflow Handling]
-    E --> H[Shape Coordination]
-    I[MaterialSplitButton] --> J[Two-Button Container]
-    
-    B --> K[Background Management]
-    B --> L[Ripple Effects]
-    B --> M[Stroke & Corner Handling]
-    
-    D --> N[Checked State]
-    D --> O[Pressed State]
-    D --> P[Saved State]
+    A[MaterialButton] --> B[MaterialButtonGroup]
+    A --> C[MaterialSplitButton]
+    B --> D[Layout Management]
+    B --> E[Overflow Handling]
+    B --> F[Connected Styling]
+    C --> G[Split Button Logic]
+    C --> H[Two-Button Container]
 ```
 
-## Core Components
+### Core Components
 
-### MaterialButton
-The primary button implementation that extends AppCompatButton and provides Material Design styling and behavior. Key features include:
+#### 1. MaterialButton
+The primary button implementation that extends AppCompatButton with Material Design features:
+- **Shape Management**: Custom shape appearance with corner radius and stroke support
+- **Icon Integration**: Flexible icon positioning and styling
+- **State Handling**: Checkable state with proper visual feedback
+- **Theming**: Integration with Material Design color schemes
+- **Accessibility**: Enhanced accessibility features and proper state announcements
 
-- **Icon Support**: Configurable icon positioning (start, end, top, text-start, text-end, text-top)
-- **Shape Customization**: Corner radius, stroke width and color, background tint
-- **State Management**: Checkable interface with checked/unchecked states
-- **Accessibility**: Full accessibility support with proper announcements
-- **Animation**: Spring-based animations for size changes and corner morphing
+#### 2. MaterialButtonGroup
+A container for managing multiple MaterialButtons as a cohesive group:
+- **Layout Management**: Handles spacing, margins, and connected styling
+- **Overflow Handling**: Supports multiple overflow modes (none, menu, wrap)
+- **Shape Morphing**: Coordinates corner radius between adjacent buttons
+- **Size Animation**: Manages button size changes with spring animations
 
-### MaterialButtonGroup
-A container for managing multiple MaterialButtons as a cohesive group with features like:
-
-- **Connected Styling**: Automatic shape coordination between adjacent buttons
-- **Overflow Handling**: Three modes (none, menu, wrap) for handling space constraints
-- **Spacing Control**: Configurable spacing with stroke overlap prevention
-- **Layout Management**: Horizontal and vertical orientations with proper margin adjustments
-
-### MaterialSplitButton
-A specialized two-button container that creates split button functionality:
-
-- **Dual Button Layout**: Leading button with label/icon and trailing button with chevron
-- **Expandable Behavior**: Trailing button acts as a toggle with animated state changes
+#### 3. MaterialSplitButton
+A specialized two-button container for split button functionality:
+- **Dual Button Layout**: Manages exactly two buttons in a split configuration
+- **Toggle Behavior**: Handles the trailing button's checkable state
 - **Accessibility**: Proper content descriptions for expanded/collapsed states
 
 ## Key Features
 
-### Visual Customization
-- **Shape Appearance**: Full control over corner sizes and shapes
-- **Color States**: Support for color state lists for backgrounds, strokes, and icons
-- **Icon Handling**: Tinting, sizing, and positioning with gravity options
-- **Typography**: Integration with Material typography scales
+### Material Design Integration
+- **Elevation Management**: Proper elevation handling for different button states
+- **Ripple Effects**: Material Design ripple animations
+- **Color Theming**: Integration with Material Design color systems
+- **Shape System**: Support for Material Design shape appearance
 
-### Interactive Behaviors
-- **Checkable Interface**: Toggle button functionality with state change listeners
-- **Ripple Effects**: Material Design ripple animations with customizable colors
-- **Spring Animations**: Physics-based animations for size and corner changes
-- **Touch Feedback**: Proper pressed state handling and visual feedback
+### Advanced Styling
+- **Icon Support**: Multiple icon gravity options (start, end, top, text positions)
+- **Stroke Customization**: Configurable stroke color and width
+- **Corner Radius**: Flexible corner radius configuration
+- **Background Tint**: Material Design background tint support
 
-### Layout Flexibility
-- **Weight Support**: Integration with LinearLayout weight system
-- **Overflow Management**: Intelligent handling of space constraints
-- **Responsive Design**: Adapts to different screen sizes and orientations
-- **Margin Optimization**: Automatic stroke overlap prevention
+### Group Functionality
+- **Connected Styling**: Seamless visual connection between grouped buttons
+- **Overflow Modes**: Multiple strategies for handling button overflow
+- **Responsive Layout**: Adaptive layout based on available space
+- **State Coordination**: Coordinated state management across button groups
 
-## Integration with Other Modules
+## Dependencies
 
-The Button module integrates with several other Material Design Components:
+The Button module integrates with several other Material Design modules:
 
-- **[Shape Module](shape.md)**: Uses ShapeAppearanceModel for corner and shape customization
-- **[Theme Module](theme.md)**: Leverages theme attributes for consistent styling
-- **[Motion Module](motion.md)**: Utilizes spring animations and motion curves
-- **[Color Module](color.md)**: Integrates with Material color system for theming
+- **[Shape Module](shape.md)**: For shape appearance and corner radius management
+- **[Theme Module](theme.md)**: For Material Design theming integration
+- **[Motion Module](motion.md)**: For spring animations and transitions
+- **[Internal Utilities](internal.md)**: For theme enforcement and view utilities
 
 ## Usage Patterns
 
-### Basic Button
+### Single MaterialButton
 ```xml
 <com.google.android.material.button.MaterialButton
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:text="Button"
-    app:icon="@drawable/ic_icon" />
+    android:text="Material Button"
+    app:icon="@drawable/ic_icon"
+    app:iconGravity="start"
+    app:cornerRadius="8dp"
+    app:strokeColor="@color/stroke_color"
+    app:strokeWidth="2dp" />
 ```
 
-### Button Group
+### MaterialButtonGroup
 ```xml
 <com.google.android.material.button.MaterialButtonGroup
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    app:spacing="4dp"
+    app:innerCornerSize="8dp">
     
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Option 1" />
+        android:text="Button 1" />
         
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Option 2" />
+        android:text="Button 2" />
         
 </com.google.android.material.button.MaterialButtonGroup>
 ```
 
-### Split Button
+### MaterialSplitButton
 ```xml
 <com.google.android.material.button.MaterialSplitButton
     android:layout_width="wrap_content"
@@ -121,47 +126,50 @@ The Button module integrates with several other Material Design Components:
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Action"
-        app:icon="@drawable/ic_action" />
+        android:text="Split Button"
+        app:icon="@drawable/ic_edit" />
         
     <Button
         style="?attr/materialSplitButtonIconFilledStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:icon="@drawable/m3_split_button_chevron_avd" />
+        app:icon="@drawable/m3_split_button_chevron" />
         
 </com.google.android.material.button.MaterialSplitButton>
 ```
 
-## Performance Considerations
+## Detailed Sub-modules
 
-- **Background Management**: Efficient background drawable handling with state caching
-- **Layout Optimization**: Smart measurement and layout passes to minimize recalculations
-- **Animation Performance**: Hardware-accelerated animations with proper invalidation
-- **Memory Management**: Proper cleanup of listeners and callbacks
+For detailed information about specific sub-modules, refer to:
 
-## Accessibility
+- **[MaterialButton Component](material-button.md)**: Detailed documentation for the core MaterialButton implementation, including state management, icon handling, and shape customization
+- **[MaterialButtonGroup Component](material-button-group.md)**: Comprehensive guide to button grouping, overflow handling, and connected styling
+- **[MaterialSplitButton Component](material-split-button.md)**: Specific documentation for split button functionality and two-button container implementation
 
-The Button module provides comprehensive accessibility support:
+## Best Practices
 
-- **Screen Reader Support**: Proper content descriptions and role announcements
-- **Keyboard Navigation**: Full keyboard accessibility with proper focus handling
-- **High Contrast**: Support for high contrast modes and color adjustments
-- **Touch Targets**: Minimum touch target sizes as per Material Design guidelines
+### Performance Considerations
+- Use appropriate overflow modes to handle large button groups
+- Leverage shape morphing for visual consistency
+- Implement proper state management for checkable buttons
 
-## Sub-modules
+### Accessibility
+- Provide meaningful content descriptions
+- Use proper accessibility class names
+- Ensure proper state announcements
 
-For detailed information about specific components, see:
+### Theming
+- Follow Material Design color guidelines
+- Use appropriate elevation levels
+- Maintain consistent corner radius across related buttons
 
-- [MaterialButton Core](materialbutton-core.md) - Core button functionality and state management
-- [MaterialButtonGroup](materialbutton-group.md) - Group container and layout management
-- [MaterialSplitButton](materialsplit-button.md) - Split button implementation
+## Integration with Other Modules
 
-## Related Modules
+The Button module works seamlessly with other Material Design components:
 
-The Button module works closely with:
+- **AppBar Integration**: Buttons can be integrated into app bars and toolbars
+- **Card Integration**: Buttons work naturally within Material cards
+- **Dialog Integration**: Proper styling within Material dialogs
+- **Theme Integration**: Automatic adaptation to Material themes
 
-- [Shape Module](shape.md) - For corner and shape customization
-- [Theme Module](theme.md) - For consistent theming and styling
-- [Motion Module](motion.md) - For animations and transitions
-- [Color Module](color.md) - For color theming and state lists
+This comprehensive button system provides developers with powerful tools for creating consistent, accessible, and visually appealing button interfaces that follow Material Design principles while offering extensive customization options.

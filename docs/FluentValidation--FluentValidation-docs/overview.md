@@ -1,156 +1,142 @@
 # FluentValidation Repository Overview
 
 ## Purpose
+FluentValidation is a popular .NET validation library that provides a fluent interface for building strongly-typed validation rules. The repository contains the core library and its extensions, enabling developers to create expressive, maintainable validation logic for .NET applications.
 
-The FluentValidation repository is a comprehensive .NET validation library that provides a fluent interface for building strongly-typed validation rules. It serves as the core implementation of the FluentValidation framework, offering a declarative and extensible approach to object validation with support for complex scenarios including nested objects, collections, conditional validation, and localization.
-
-## Architecture
-
-The repository follows a modular architecture with clear separation of concerns:
+## End-to-End Architecture
 
 ```mermaid
 graph TB
-    subgraph "Core Validation Engine"
-        IValidator[IValidator<T>]
-        ValidationContext[ValidationContext<T>]
-        ValidationResult[ValidationResult]
-        ValidatorDescriptor[ValidatorDescriptor<T>]
+    subgraph "Client Application"
+        Client[Client Code]
     end
     
-    subgraph "Validation Rules"
-        IValidationRule[IValidationRule<T,TProperty>]
-        PropertyRule[PropertyRule<T,TProperty>]
-        CollectionPropertyRule[CollectionPropertyRule<T,TElement>]
+    subgraph "FluentValidation Library"
+        subgraph "Core & Validation Execution"
+            IValidator[IValidator<T>]
+            ValidationContext[ValidationContext<T>]
+            ValidationResult[ValidationResult]
+            ValidatorSelector[ValidatorSelector System]
+            AssemblyScanner[AssemblyScanner]
+        end
+        
+        subgraph "Fluent API & Rule Definition"
+            RuleBuilder[RuleBuilder<T,TProperty>]
+            PropertyRule[PropertyRule]
+            ConditionBuilder[ConditionBuilder]
+            CollectionRule[CollectionPropertyRule]
+        end
+        
+        subgraph "Built-in Validators"
+            ComparisonValidators[Comparison Validators]
+            StringValidators[String Validators]
+            NullValidators[Null/Empty Validators]
+            CustomValidators[Custom/Predicate Validators]
+            ComplexValidators[Complex Object Validators]
+        end
+        
+        subgraph "Localization"
+            LanguageManager[LanguageManager]
+            MessageFormatter[MessageFormatter]
+            Languages[60+ Languages]
+        end
+        
+        subgraph "DI Extensions"
+            ServiceProviderFactory[ServiceProviderValidatorFactory]
+        end
     end
     
-    subgraph "Property Validators"
-        IPropertyValidator[IPropertyValidator<T,TProperty>]
-        NotNullValidator[NotNullValidator]
-        LengthValidator[LengthValidator]
-        EmailValidator[EmailValidator]
-    end
-    
-    subgraph "Rule Building"
-        RuleBuilder[RuleBuilder<T,TProperty>]
-        ConditionBuilder[ConditionBuilder<T>]
-        AbstractValidator[AbstractValidator<T>]
-    end
-    
-    subgraph "Supporting Modules"
-        ValidatorSelection[Validator Selection]
-        Localization[Localization]
-        PropertyChain[Property Chain]
-        AssemblyScanning[Assembly Scanning]
-    end
-    
-    IValidator --> ValidationContext
-    IValidator --> ValidationResult
-    IValidationRule --> PropertyRule
-    IValidationRule --> CollectionPropertyRule
-    PropertyRule --> IPropertyValidator
-    RuleBuilder --> IValidationRule
-    AbstractValidator --> RuleBuilder
-    ValidatorSelection --> IValidator
-    Localization --> ValidationResult
-    PropertyChain --> ValidationResult
+    Client -->|Uses| IValidator
+    IValidator -->|Creates| ValidationContext
+    IValidator -->|Executes| PropertyRule
+    PropertyRule -->|Uses| RuleBuilder
+    PropertyRule -->|Applies| ComparisonValidators
+    PropertyRule -->|Applies| StringValidators
+    PropertyRule -->|Applies| NullValidators
+    PropertyRule -->|Applies| CustomValidators
+    PropertyRule -->|Applies| ComplexValidators
+    PropertyRule -->|Uses| ConditionBuilder
+    PropertyRule -->|Uses| CollectionRule
+    ValidationContext -->|Produces| ValidationResult
+    ValidationContext -->|Uses| ValidatorSelector
+    ValidationContext -->|Uses| LanguageManager
+    LanguageManager -->|Formats| MessageFormatter
+    LanguageManager -->|Supports| Languages
+    ServiceProviderFactory -->|Creates| IValidator
+    AssemblyScanner -->|Discovers| IValidator
 ```
 
 ## Core Modules
 
-### 1. Core Validation Engine (`src/FluentValidation`)
-The foundational module providing:
-- **IValidator<T>**: Primary validation interface
-- **ValidationContext<T>**: Execution context management
-- **ValidationResult**: Result aggregation and failure reporting
-- **ValidatorDescriptor<T>**: Metadata inspection capabilities
+### 1. Core & Validation Execution (`src/FluentValidation/`)
+The foundational layer providing:
+- **Validation Context Management**: Execution environment for validation operations
+- **Validator Selection System**: Controls which rules execute based on criteria
+- **Assembly Scanning**: Discovers validators in assemblies for DI registration
+- **Validation Results**: Encapsulates validation outcomes and failures
+- **Configuration**: Global options and behavior settings
 
-### 2. Validation Rules (`src/FluentValidation/Internal`)
-Implements the rule-based validation system:
-- **PropertyRule<T,TProperty>**: Individual property validation
-- **CollectionPropertyRule<T,TElement>**: Collection element validation
-- **RuleComponent<T,TProperty>**: Validator composition within rules
-- **IncludeRule<T>**: External validator inclusion
+### 2. Fluent API & Rule Definition (`src/FluentValidation/Internal/`)
+Provides the fluent interface for defining validation rules:
+- **Rule Builder System**: Type-safe fluent interface for rule construction
+- **Rule Implementation**: Core rule classes handling validation execution
+- **Rule Components**: Individual validation steps within rule chains
+- **Condition System**: Supports When/Unless conditions for dynamic validation
+- **Collection Rules**: Specialized validation for collection elements
+- **Property Chain Management**: Handles nested object validation paths
 
-### 3. Property Validators (`src/FluentValidation/Validators`)
-Contains built-in validation logic:
-- **Null Validators**: NotNullValidator, NullValidator
-- **String Validators**: LengthValidator, RegularExpressionValidator, EmailValidator
-- **Comparison Validators**: GreaterThanValidator, LessThanValidator, BetweenValidator
-- **Specialized Validators**: CreditCardValidator, EnumValidator, ChildValidatorAdaptor
+### 3. Built-in Validators (`src/FluentValidation/Validators/`)
+Comprehensive set of pre-built validators:
+- **Comparison Validators**: Equal, NotEqual, GreaterThan, LessThan, Between
+- **String Validators**: Length, Regex, Email, CreditCard, Enum validation
+- **Null and Empty Validators**: NotNull, Null, NotEmpty, Empty
+- **Custom and Predicate Validators**: User-defined validation logic
+- **Complex Object Validators**: Child validators and polymorphic validation
+- **Enum and Numeric Validators**: Enum validation and precision/scale checks
 
-### 4. Rule Building (`src/FluentValidation/Internal`)
-Provides fluent API construction:
-- **RuleBuilder<T,TProperty>**: Rule configuration interface
-- **ConditionBuilder<T>**: Conditional logic management
-- **AbstractValidator<T>**: Base validator implementation
+### 4. Localization (`src/FluentValidation/Resources/`)
+Internationalization support with:
+- **Language Management**: Multi-language support with culture fallback
+- **Message Formatting**: Template-based message construction
+- **60+ Supported Languages**: Comprehensive language coverage
+- **Custom Translations**: Support for user-defined translations
 
-### 5. Validator Selection (`src/FluentValidation/Internal`)
-Controls rule execution through selection strategies:
-- **DefaultValidatorSelector**: Standard execution behavior
-- **MemberNameValidatorSelector**: Property-specific validation
-- **RulesetValidatorSelector**: Ruleset-based execution
-- **CompositeValidatorSelector**: Combined selection logic
-
-### 6. Localization (`src/FluentValidation/Resources`)
-Multi-language support system:
-- **LanguageManager**: 50+ language translations
-- **MessageFormatter**: Dynamic message construction
-- **MessageBuilderContext**: Context-aware formatting
+### 5. Dependency Injection Extensions (`src/FluentValidation.DependencyInjectionExtensions/`)
+Integration with dependency injection:
+- **ServiceProviderValidatorFactory**: Bridge between FluentValidation and DI containers
+- **Automatic Registration**: Validator discovery and registration in DI containers
 
 ## Key Features
 
-- **Type-Safe Validation**: Compile-time validation rule construction
-- **Fluent API**: Intuitive, chainable rule definition syntax
-- **Async Support**: Full asynchronous validation capabilities
-- **Nested Validation**: Complex object graph validation
-- **Conditional Logic**: When/Unless conditional rule execution
-- **Localization**: Multi-language error message support
-- **Extensibility**: Custom validator and rule creation
-- **Performance**: Optimized expression compilation and caching
+- **Type Safety**: Full generic support with compile-time validation
+- **Fluent Interface**: Expressive, readable rule definition
+- **Async Support**: Complete async/await support for validation operations
+- **Extensibility**: Plugin architecture for custom validators and conditions
+- **Performance**: Optimized with caching and efficient execution paths
+- **Localization**: Built-in support for 60+ languages
+- **DI Integration**: Seamless integration with modern DI containers
+- **Testing Support**: Designed for unit testing and mocking
 
-## Validation Flow
+## Usage Flow
 
 ```mermaid
 sequenceDiagram
     participant Client
-    participant AbstractValidator
-    participant RuleBuilder
-    participant ValidationRule
-    participant PropertyValidator
-    participant ValidationResult
+    participant Validator
+    participant Rule
+    participant BuiltInValidator
+    participant Localization
+    participant Results
     
-    Client->>AbstractValidator: RuleFor(x => x.Property)
-    AbstractValidator->>RuleBuilder: Create rule builder
-    Client->>RuleBuilder: SetValidator(validator)
-    RuleBuilder->>ValidationRule: Configure rule
-    Client->>AbstractValidator: Validate(instance)
-    AbstractValidator->>ValidationRule: Execute validation
-    ValidationRule->>PropertyValidator: Validate property
-    PropertyValidator->>ValidationResult: Add failures if any
-    ValidationResult-->>Client: Return validation result
+    Client->>Validator: Validate(instance)
+    Validator->>Rule: Execute rules
+    Rule->>BuiltInValidator: Apply validator
+    BuiltInValidator->>Localization: Get error message
+    Localization-->>BuiltInValidator: Localized message
+    BuiltInValidator-->>Rule: Validation result
+    Rule-->>Validator: Rule results
+    Validator-->>Results: Aggregate results
+    Results-->>Client: ValidationResult
 ```
 
-## Integration Points
-
-The repository provides seamless integration with:
-- **ASP.NET Core**: Model validation integration
-- **Dependency Injection**: Service provider support
-- **Entity Framework**: Data annotation alternatives
-- **Testing Frameworks**: Unit testing support
-
-## Performance Characteristics
-
-- **Expression Compilation**: Cached compiled expressions for property access
-- **Rule Optimization**: Efficient rule execution with early termination support
-- **Memory Management**: Minimal allocations during validation execution
-- **Thread Safety**: Thread-safe validator instances for concurrent usage
-
-## Extension Capabilities
-
-Developers can extend the framework through:
-- **Custom Property Validators**: Implementing IPropertyValidator<T,TProperty>
-- **Custom Rules**: Extending validation rule base classes
-- **Custom Selectors**: Implementing IValidatorSelector for custom execution logic
-- **Localization**: Adding custom language translations
-
-This repository serves as the definitive implementation of the FluentValidation framework, providing a robust, extensible, and performant validation solution for .NET applications.
+This repository provides a complete, production-ready validation framework for .NET applications, offering both simplicity for basic scenarios and advanced features for complex validation requirements.

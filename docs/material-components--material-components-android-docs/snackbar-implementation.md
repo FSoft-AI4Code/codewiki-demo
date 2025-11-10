@@ -2,197 +2,241 @@
 
 ## Introduction
 
-The snackbar-implementation module provides the core Snackbar functionality within the Material Design Components library. This module implements the primary Snackbar class that displays lightweight feedback messages to users, extending the BaseTransientBottomBar foundation to provide Material Design-compliant snackbar behavior with action buttons, customizable styling, and accessibility features.
+The snackbar-implementation module provides the core functionality for displaying Material Design snackbars - lightweight feedback messages that appear at the bottom of the screen. This module implements the main Snackbar class and its associated components, offering a flexible and accessible way to show brief messages with optional actions to users.
 
-## Architecture Overview
+## Overview
 
-The snackbar-implementation module is built upon a hierarchical architecture that separates concerns between transient bottom bar management, content layout, and specific snackbar functionality:
+Snackbars are transient UI elements that provide feedback about operations without interrupting the user flow. They automatically disappear after a timeout or can be dismissed through various interactions. The implementation supports accessibility features, theming, and integration with CoordinatorLayout for enhanced behavior.
+
+## Architecture
+
+### Core Components
 
 ```mermaid
-graph TB
-    subgraph "Snackbar Module Hierarchy"
-        A[BaseTransientBottomBar] --> B[Snackbar]
-        B --> C[SnackbarLayout]
-        B --> D[Snackbar.Callback]
-        E[SnackbarContentLayout] --> B
-        F[ContentViewCallback] --> A
-    end
+classDiagram
+    class Snackbar {
+        -AccessibilityManager accessibilityManager
+        -boolean hasAction
+        -BaseCallback callback
+        +make() Snackbar
+        +setText() Snackbar
+        +setAction() Snackbar
+        +setDuration() int
+        +show() void
+        +dismiss() void
+    }
     
-    subgraph "Key Components"
-        B --> G[Message TextView]
-        B --> H[Action Button]
-        B --> I[Accessibility Manager]
-        C --> J[Custom Measurement]
-        D --> K[Event Handling]
-    end
+    class Callback {
+        +DISMISS_EVENT_SWIPE: int
+        +DISMISS_EVENT_ACTION: int
+        +DISMISS_EVENT_TIMEOUT: int
+        +DISMISS_EVENT_MANUAL: int
+        +DISMISS_EVENT_CONSECUTIVE: int
+        +onShown(Snackbar): void
+        +onDismissed(Snackbar, int): void
+    }
+    
+    class SnackbarLayout {
+        +SnackbarLayout(Context)
+        +SnackbarLayout(Context, AttributeSet)
+        +onMeasure(int, int): void
+    }
+    
+    class BaseTransientBottomBar {
+        <<abstract>>
+        +show() void
+        +dismiss() void
+        +isShown() boolean
+        +addCallback(BaseCallback) void
+        +removeCallback(BaseCallback) void
+    }
+    
+    class BaseCallback {
+        <<abstract>>
+        +onShown(T): void
+        +onDismissed(T, int): void
+    }
+    
+    Snackbar --|> BaseTransientBottomBar
+    Callback --|> BaseCallback
+    SnackbarLayout --|> BaseTransientBottomBar.SnackbarBaseLayout
+    Snackbar ..> Callback : uses
+    Snackbar ..> SnackbarLayout : uses
 ```
 
-## Core Components
+### Module Dependencies
+
+```mermaid
+graph TD
+    A[snackbar-implementation] --> B[base-transient-bottom-bar]
+    A --> C[content-layout]
+    A --> D[CoordinatorLayout]
+    A --> E[AccessibilityManager]
+    A --> F[Material Theming]
+    
+    B --> G[Animation System]
+    B --> H[View Hierarchy]
+    C --> I[Layout Inflation]
+    C --> J[TextView & Button]
+    
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+```
+
+## Component Details
 
 ### Snackbar Class
 
-The `Snackbar` class is the main entry point for creating and displaying snackbar notifications. It extends `BaseTransientBottomBar<Snackbar>` to inherit core transient bottom bar functionality while adding snackbar-specific features:
+The main `Snackbar` class extends `BaseTransientBottomBar` and provides the primary API for creating and displaying snackbars. Key features include:
 
-- **Message Display**: Text content with customizable styling and max lines
-- **Action Integration**: Optional action buttons with click handling
-- **Accessibility Support**: Enhanced accessibility features for screen readers
-- **Duration Management**: Smart duration calculation based on content and accessibility settings
-- **Styling Options**: Background tint, text colors, and theme integration
+- **Message Display**: Set and update text content with `setText()`
+- **Action Integration**: Add interactive buttons with `setAction()`
+- **Duration Control**: Support for short, long, and indefinite durations
+- **Theming Support**: Background tinting, text color customization
+- **Accessibility**: Integration with AccessibilityManager for timeout recommendations
+- **Layout Management**: Automatic parent view discovery and CoordinatorLayout integration
+
+### Callback System
+
+The `Callback` class provides backwards-compatible event handling for snackbar lifecycle events:
+
+- **Dismiss Events**: Track how the snackbar was dismissed (swipe, action, timeout, manual, consecutive)
+- **Visibility Events**: Monitor when snackbars are shown or hidden
+- **Event Codes**: Standardized constants for different dismissal reasons
 
 ### SnackbarLayout
 
-`SnackbarLayout` extends `BaseTransientBottomBar.SnackbarBaseLayout` to provide custom measurement behavior for snackbar content. Key features include:
+A specialized layout class that extends `BaseTransientBottomBar.SnackbarBaseLayout`:
 
-- **Custom Measurement Logic**: Handles MATCH_PARENT width children by remeasuring with available width
-- **Backwards Compatibility**: Maintains compatibility with legacy snackbar implementations
-- **Layout Optimization**: Ensures proper width distribution for message and action components
+- **Custom Measurement**: Handles MATCH_PARENT child width requirements
+- **Backwards Compatibility**: Maintains compatibility with existing implementations
+- **Layout Optimization**: Ensures proper width allocation for child views
 
-### Snackbar.Callback
-
-`Snackbar.Callback` extends `BaseCallback<Snackbar>` to provide event handling for snackbar lifecycle events:
-
-- **Dismiss Event Types**: SWIPE, ACTION, TIMEOUT, MANUAL, CONSECUTIVE
-- **Lifecycle Notifications**: onShown() and onDismissed() callbacks
-- **Backwards Compatibility**: Maintains API compatibility with legacy callback implementations
-
-## Data Flow Architecture
+## Data Flow
 
 ```mermaid
 sequenceDiagram
     participant App
     participant Snackbar
     participant BaseTransientBottomBar
-    participant SnackbarContentLayout
     participant ViewSystem
+    participant AccessibilityManager
     
     App->>Snackbar: make(view, text, duration)
     Snackbar->>Snackbar: findSuitableParent(view)
-    Snackbar->>SnackbarContentLayout: inflate content layout
+    Snackbar->>Snackbar: create ContentViewCallback
+    Snackbar->>BaseTransientBottomBar: initialize
+    BaseTransientBottomBar->>ViewSystem: inflate layout
+    Snackbar->>AccessibilityManager: check accessibility settings
     Snackbar->>Snackbar: setText(text)
-    Snackbar->>Snackbar: setDuration(duration)
     App->>Snackbar: show()
     Snackbar->>BaseTransientBottomBar: show()
-    BaseTransientBottomBar->>ViewSystem: add to view hierarchy
-    ViewSystem-->>BaseTransientBottomBar: view attached
-    BaseTransientBottomBar-->>App: snackbar shown
+    BaseTransientBottomBar->>ViewSystem: animate in
+    ViewSystem->>App: onShown callback
     
-    Note over Snackbar: User interaction or timeout
-    Snackbar->>BaseTransientBottomBar: dispatchDismiss(event)
-    BaseTransientBottomBar->>ViewSystem: remove from hierarchy
-    ViewSystem-->>BaseTransientBottomBar: view detached
-    BaseTransientBottomBar-->>App: callback notification
-```
-
-## Component Interactions
-
-```mermaid
-graph LR
-    subgraph "Snackbar Creation Flow"
-        A[makeInternal] --> B[findSuitableParent]
-        B --> C{CoordinatorLayout?}
-        C -->|Yes| D[Use CoordinatorLayout]
-        C -->|No| E{FrameLayout with android.R.id.content?}
-        E -->|Yes| F[Use Content View]
-        E -->|No| G[Use Fallback]
-        D --> H[Inflate Content]
-        F --> H
-        G --> H
-        H --> I[Create Snackbar]
+    alt User clicks action
+        App->>Snackbar: action click
+        Snackbar->>BaseTransientBottomBar: dispatchDismiss(ACTION)
+    else Timeout
+        BaseTransientBottomBar->>BaseTransientBottomBar: timeout reached
+        BaseTransientBottomBar->>ViewSystem: animate out
     end
     
-    subgraph "Content Layout Decision"
-        J[hasSnackbarContentStyleAttrs] --> K{Style Attributes Available?}
-        K -->|Yes| L[Use mtrl_layout_snackbar_include]
-        K -->|No| M[Use design_layout_snackbar_include]
-    end
+    ViewSystem->>App: onDismissed callback
 ```
 
-## Key Features and Behaviors
+## Key Features
 
-### Accessibility Integration
+### 1. Automatic Parent Discovery
 
-The Snackbar implementation includes sophisticated accessibility features:
-
-- **Touch Exploration Detection**: Automatically extends duration when touch exploration is enabled
-- **Content Flags**: Uses accessibility manager flags for controls, icons, and text
-- **Recommended Timeout**: Leverages system-recommended timeouts on Android Q+
-
-### Action Button Management
+The snackbar implementation includes intelligent parent view discovery:
 
 ```mermaid
-stateDiagram-v2
-    [*] --> NoAction
-    NoAction --> HasAction: setAction(text, listener)
-    HasAction --> ActionVisible: valid text and listener
-    ActionVisible --> ActionClicked: user click
-    ActionClicked --> Dismiss: dispatchDismiss(ACTION)
-    HasAction --> NoAction: empty text or null listener
-    NoAction --> ActionGone: setVisibility(GONE)
+flowchart TD
+    A[Start with provided view] --> B{Is CoordinatorLayout?}
+    B -->|Yes| C[Use as parent]
+    B -->|No| D{Is FrameLayout with android.R.id.content?}
+    D -->|Yes| C
+    D -->|No| E[Continue up view tree]
+    E --> F{Parent found?}
+    F -->|Yes| B
+    F -->|No| G[Use fallback FrameLayout]
 ```
 
-### Duration Calculation Logic
+### 2. Accessibility Integration
 
-The duration calculation considers multiple factors:
+The implementation provides enhanced accessibility support:
 
-1. **User-specified duration**: LENGTH_SHORT, LENGTH_LONG, or custom milliseconds
-2. **Action presence**: Whether an action button is displayed
-3. **Accessibility settings**: Touch exploration and content flags
-4. **System recommendations**: Android Q+ accessibility timeout recommendations
+- **Timeout Recommendations**: Uses AccessibilityManager for appropriate duration on Android Q+
+- **Touch Exploration**: Extends duration when touch exploration is enabled
+- **Content Flags**: Considers controls, icons, and text content for timeout calculations
 
-## Integration with Other Modules
+### 3. Theming and Styling
 
-The snackbar-implementation module integrates with several other Material Design components:
+Supports comprehensive theming options:
 
-- **[base-transient-bottom-bar](base-transient-bottom-bar.md)**: Inherits core transient bottom bar functionality
-- **[content-layout-system](content-layout-system.md)**: Uses SnackbarContentLayout for content arrangement
-- **[CoordinatorLayout](coordinatorlayout.md)**: Leverages CoordinatorLayout for enhanced behavior when available
+- **Background Tinting**: `setBackgroundTint()` and `setBackgroundTintList()`
+- **Text Styling**: `setTextColor()`, `setTextMaxLines()`
+- **Action Styling**: `setActionTextColor()`, `setMaxInlineActionWidth()`
+- **Style Attributes**: Automatic detection of `snackbarButtonStyle` and `snackbarTextViewStyle`
 
-## Styling and Theming
+### 4. Layout Variants
 
-The module supports Material Design theming through:
+The implementation supports two layout variants:
 
-- **Style Attributes**: `snackbarButtonStyle` and `snackbarTextViewStyle`
-- **Background Tinting**: Programmatic background color customization
-- **Text Styling**: Color state lists and direct color application
-- **Layout Parameters**: Max inline action width configuration
+- **Material Layout**: `mtrl_layout_snackbar_include` (with style attributes)
+- **Legacy Layout**: `design_layout_snackbar_include` (backwards compatibility)
 
-## Usage Patterns
+## Integration Patterns
 
-### Basic Snackbar
+### Basic Usage
+
 ```java
-Snackbar.make(view, "Message text", Snackbar.LENGTH_SHORT).show();
-```
-
-### Snackbar with Action
-```java
-Snackbar.make(view, "Message text", Snackbar.LENGTH_LONG)
+Snackbar.make(view, "Message text", Snackbar.LENGTH_SHORT)
     .setAction("Action", v -> { /* action logic */ })
     .show();
 ```
 
-### Styled Snackbar
+### Advanced Configuration
+
 ```java
-Snackbar.make(view, "Message text", Snackbar.LENGTH_SHORT)
-    .setTextColor(Color.WHITE)
-    .setActionTextColor(Color.YELLOW)
-    .setBackgroundTint(Color.BLUE)
-    .show();
+Snackbar snackbar = Snackbar.make(coordinatorLayout, "Message", Snackbar.LENGTH_LONG)
+    .setAction("Undo", undoListener)
+    .setActionTextColor(Color.RED)
+    .setBackgroundTint(Color.DKGRAY)
+    .setTextMaxLines(2)
+    .setMaxInlineActionWidth(200);
+
+snackbar.addCallback(new Snackbar.Callback() {
+    @Override
+    public void onDismissed(Snackbar snackbar, int event) {
+        // Handle dismissal
+    }
+});
+
+snackbar.show();
 ```
 
-## Performance Considerations
+## Related Modules
 
-- **View Recycling**: Efficient view hierarchy traversal for parent finding
-- **Lazy Initialization**: Accessibility manager retrieved only when needed
-- **Measurement Optimization**: Custom measurement logic minimizes layout passes
-- **Memory Management**: Proper cleanup of callbacks and listeners
+- **[base-transient-bottom-bar](base-transient-bottom-bar.md)**: Provides the base functionality for transient bottom bar components
+- **[content-layout](content-layout.md)**: Handles the internal layout structure of snackbars
+- **[CoordinatorLayout Integration](coordinatorlayout.md)**: Enables advanced behaviors like swipe-to-dismiss
 
-## Error Handling
+## Best Practices
 
-The implementation includes robust error handling:
+1. **Parent Selection**: Use CoordinatorLayout as parent for enhanced features
+2. **Duration Selection**: Choose appropriate duration based on message complexity
+3. **Action Design**: Keep action text concise and meaningful
+4. **Accessibility**: Test with accessibility services enabled
+5. **Theming**: Leverage Material theming attributes for consistent appearance
+6. **Callback Usage**: Use callbacks for cleanup and analytics tracking
 
-- **Parent Validation**: Throws IllegalArgumentException for invalid view hierarchies
-- **Null Safety**: Comprehensive null checking for parameters and dependencies
-- **Resource Validation**: Checks for valid style attributes before application
-- **Compatibility Handling**: Graceful fallback for missing style attributes
+## Technical Considerations
 
-This comprehensive implementation ensures that snackbars provide consistent, accessible, and performant user feedback across all Android applications using Material Design Components.
+- **Memory Management**: Snackbars are automatically managed and cleaned up
+- **Animation Performance**: Uses hardware acceleration for smooth transitions
+- **Thread Safety**: All operations must be performed on the main thread
+- **View Hierarchy**: Efficient parent discovery minimizes view tree traversal
+- **Resource Cleanup**: Proper cleanup of callbacks and listeners
+
+This implementation provides a robust, accessible, and themeable solution for displaying transient feedback messages in Android applications following Material Design guidelines.

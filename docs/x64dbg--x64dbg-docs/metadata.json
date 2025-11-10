@@ -1,6 +1,6 @@
 {
     "generation_info": {
-        "timestamp": "2025-09-16T18:34:45.501247",
+        "timestamp": "2025-10-14T10:24:40.827373",
         "main_model": "kimi-k2-instruct",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/x64dbg--x64dbg",
@@ -15,26 +15,10 @@
         "overview.md",
         "module_tree.json",
         "first_module_tree.json",
-        "TCP Connections.md",
-        "Hex Viewer MainWindow.md",
-        "Symbol Source Base.md",
-        "Reference Management.md",
-        "Exception Handler Info.md",
-        "Comment System.md",
-        "Zeh Symbol Table.md",
-        "Bookmark System.md",
-        "Pattern Highlighter.md",
-        "Label System.md",
+        "commands.md",
+        "datainst_helper.md",
+        "Plugin Framework.md",
         "Memory Management.md",
-        "Simple Script.md",
-        "Expression Functions.md",
-        "Common Actions.md",
-        "Symbol Resolution.md",
-        "Module Management.md",
-        "Argument Management.md",
-        "PDB Symbol Loading.md",
-        "Type System.md",
-        "Breakpoints View.md",
-        "Script API Symbol.md"
+        "README.md"
     ]
 }

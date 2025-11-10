@@ -2,238 +2,230 @@
 
 ## Introduction
 
-The flashers module is a critical component of the QMK (Quantum Mechanical Keyboard) firmware ecosystem, responsible for handling the firmware flashing process to various keyboard microcontrollers and bootloaders. This module provides a unified interface for detecting connected bootloader devices and flashing firmware files using appropriate tools and protocols.
+The flashers module is a critical component of the QMK (Quantum Mechanical Keyboard) firmware ecosystem, responsible for handling the firmware flashing process to various keyboard microcontrollers. This module provides a unified interface for detecting bootloaders and flashing firmware files to keyboards across different hardware platforms and bootloader types.
 
-## Module Purpose
-
-The primary purpose of the flashers module is to:
-- Detect and identify connected keyboard bootloaders automatically
-- Provide a standardized interface for flashing firmware to different microcontroller types
-- Handle various bootloader protocols (DFU, Caterina, HID, UF2, etc.)
-- Manage platform-specific differences (Windows, Linux, macOS, WSL)
-- Ensure safe flashing operations with proper error handling
+The module abstracts the complexity of working with multiple bootloader protocols, USB device detection, and platform-specific flashing tools, making it easier for users to update their keyboard firmware regardless of their hardware configuration.
 
 ## Architecture Overview
+
+The flashers module implements a bootloader detection and firmware flashing system with the following architectural components:
 
 ```mermaid
 graph TB
     subgraph "Flashers Module Architecture"
-        A["flasher() - Main Entry Point"]
-        B["_find_bootloader() - Device Detection"]
-        C["_find_usb_device() - USB Device Search"]
-        D["_find_serial_port() - Serial Port Detection"]
-        E["_find_uf2_devices() - UF2 Device Discovery"]
-        
-        F["Flash Functions"]
-        F1["_flash_atmel_dfu"]
-        F2["_flash_caterina"]
-        F3["_flash_hid_bootloader"]
-        F4["_flash_dfu_util"]
-        F5["_flash_uf2"]
-        F6["_flash_isp"]
-        F7["_flash_mdloader"]
-        F8["_flash_wb32_dfu_updater"]
-        
-        G["Utility Functions"]
-        G1["_check_dfu_programmer_version"]
-        G2["DelayedKeyboardInterrupt"]
+        A["flasher() Entry Point"]
+        B["_find_bootloader()"]
+        C["Bootloader Detection"]
+        D["Platform-specific Flashers"]
+        E["USB Device Detection"]
+        F["Tool Availability Check"]
         
         A --> B
         B --> C
-        B --> D
-        B --> E
-        A --> F
-        F --> F1
-        F --> F2
-        F --> F3
-        F --> F4
-        F --> F5
-        F --> F6
-        F --> F7
-        F --> F8
-        
-        C --> G2
-        G1 --> F1
+        C --> D
+        C --> E
+        D --> F
     end
+    
+    subgraph "Supported Bootloaders"
+        G["atmel-dfu"]
+        H["caterina"]
+        I["hid-bootloader"]
+        J["stm32-dfu"]
+        K["uf2-compatible"]
+        L["usbasploader"]
+        M["md-boot"]
+    end
+    
+    C --> G
+    C --> H
+    C --> I
+    C --> J
+    C --> K
+    C --> L
+    C --> M
 ```
 
 ## Core Components
 
-### DelayedKeyboardInterrupt
+### 1. DelayedKeyboardInterrupt
 
-A context manager that provides safe handling of keyboard interrupts during critical operations, particularly USB device detection which can be sensitive to interruptions.
+A context manager that provides safe handling of keyboard interrupts (Ctrl-C) during critical operations, particularly USB device detection. This prevents corruption or incomplete operations when users attempt to interrupt the flashing process.
 
-**Purpose**: Prevents corruption or incomplete operations when users press Ctrl+C during flashing
-**Usage**: Automatically applied during USB device detection operations
+**Purpose**: Ensures atomic operations during USB communication
+**Usage**: Wrapped around PyUSB operations to prevent interruption
+
+### 2. _find_bootloader()
+
+The core bootloader detection function that continuously scans for known bootloader signatures via USB VID:PID pairs. It implements a timeout mechanism (10 minutes) to prevent infinite loops and supports multiple bootloader types.
+
+**Key Features**:
+- USB device enumeration using PyUSB
+- WSL compatibility through PowerShell integration
+- Support for UF2 bootloader detection via external utility
+- Timeout protection (600 seconds)
+
+### 3. flasher()
+
+The main entry point for firmware flashing operations. This function orchestrates the entire flashing process by:
+1. Converting file paths to POSIX format for cross-platform compatibility
+2. Detecting the active bootloader
+3. Selecting and executing the appropriate flashing method
+4. Handling errors and providing user feedback
+
+## Data Flow
 
 ```mermaid
 sequenceDiagram
     participant User
-    participant DelayedKeyboardInterrupt
-    participant USBOperation
+    participant flasher
+    participant _find_bootloader
+    participant USB
+    participant FlashTool
     
-    User->>DelayedKeyboardInterrupt: Enter context
-    DelayedKeyboardInterrupt->>DelayedKeyboardInterrupt: Store old signal handler
-    DelayedKeyboardInterrupt->>DelayedKeyboardInterrupt: Set custom handler
-    
-    Note over USBOperation: Critical USB operation
-    User->>DelayedKeyboardInterrupt: Ctrl+C pressed
-    DelayedKeyboardInterrupt->>DelayedKeyboardInterrupt: Store interrupt info
-    
-    USBOperation-->>DelayedKeyboardInterrupt: Operation complete
-    DelayedKeyboardInterrupt->>DelayedKeyboardInterrupt: Restore old handler
-    alt Interrupt was received
-        DelayedKeyboardInterrupt->>User: Process stored interrupt
+    User->>flasher: firmware file + mcu
+    flasher->>flasher: normalize file path
+    flasher->>_find_bootloader: detect bootloader
+    loop Bootloader Detection
+        _find_bootloader->>USB: scan for VID:PID
+        USB-->>_find_bootloader: device found/not found
+        alt WSL Environment
+            _find_bootloader->>_find_bootloader: PowerShell detection
+        end
+        _find_bootloader->>_find_bootloader: sleep 0.1s
     end
+    _find_bootloader-->>flasher: bootloader type + details
+    flasher->>FlashTool: execute flashing
+    FlashTool-->>flasher: success/failure
+    flasher-->>User: result tuple (error, message)
 ```
 
 ## Bootloader Support Matrix
 
 The module supports multiple bootloader types, each with specific characteristics:
 
+| Bootloader | MCU Detection | Flashing Tool | Platform Support |
+|------------|---------------|---------------|------------------|
+| atmel-dfu | PID-based MCU ID | dfu-programmer | Cross-platform |
+| caterina | Serial port detection | avrdude + avr109 | Cross-platform |
+| hid-bootloader | VID:PID detection | teensy_loader_cli/hid_bootloader_cli | Cross-platform |
+| stm32-dfu | VID:PID detection | dfu-util | Cross-platform |
+| uf2-compatible | UF2 signature | uf2conv.py | Cross-platform |
+| usbasploader | ISP protocol | avrdude + usbasp/usbtiny | Cross-platform |
+| md-boot | Mass storage | mdloader | Cross-platform |
+
+## Component Dependencies
+
 ```mermaid
 graph LR
-    subgraph "Supported Bootloaders"
-        A["atmel-dfu"] -->|"MCUs"| B["atmega16u2/32u2<br/>atmega16u4/32u4<br/>at90usb64/162/128"]
-        C["caterina"] -->|"Protocol"| D["AVR109"]
-        E["hid-bootloader"] -->|"Tools"| F["teensy_loader_cli<br/>hid_bootloader_cli"]
-        G["stm32-dfu"] -->|"Tool"| H["dfu-util"]
-        I["apm32-dfu"] -->|"Tool"| H
-        J["gd32v-dfu"] -->|"Tool"| H
-        K["kiibohd"] -->|"Tool"| H
-        L["wb32-dfu"] -->|"Tool"| M["wb32-dfu-updater_cli"]
-        N["usbasploader"] -->|"Tool"| O["avrdude"]
-        P["usbtinyisp"] -->|"Tool"| O
-        Q["md-boot"] -->|"Tool"| R["mdloader"]
-        S["_uf2_compatible_"] -->|"Tool"| T["uf2conv.py"]
+    subgraph "External Dependencies"
+        A["PyUSB"]
+        B["serial.tools"]
+        C["milc.cli"]
+        D["qmk.constants"]
     end
+    
+    subgraph "Flashers Module"
+        E["DelayedKeyboardInterrupt"]
+        F["_find_bootloader"]
+        G["flasher"]
+        H["Platform-specific flashers"]
+    end
+    
+    A --> F
+    B --> F
+    C --> G
+    C --> H
+    D --> F
+    
+    E --> F
+    F --> G
+    G --> H
 ```
 
-## Data Flow Architecture
+## Platform-Specific Implementations
 
-```mermaid
-flowchart TD
-    Start(["Start Flashing Process"])
-    Input["MCU Type & Firmware File"]
-    
-    Start --> Input
-    Input --> FindBootloader{"Find Bootloader"}
-    
-    FindBootloader -->|"Found"| IdentifyBootloader{"Identify Bootloader Type"}
-    FindBootloader -->|"Not Found"| Error1["Error: No Bootloader"]
-    
-    IdentifyBootloader -->|"atmel-dfu"| FlashAtmelDFU["_flash_atmel_dfu"]
-    IdentifyBootloader -->|"caterina"| FlashCaterina["_flash_caterina"]
-    IdentifyBootloader -->|"hid-bootloader"| FlashHID["_flash_hid_bootloader"]
-    IdentifyBootloader -->|"dfu-util variants"| FlashDFU["_flash_dfu_util"]
-    IdentifyBootloader -->|"uf2"| FlashUF2["_flash_uf2"]
-    IdentifyBootloader -->|"isp variants"| FlashISP["_flash_isp"]
-    IdentifyBootloader -->|"md-boot"| FlashMD["_flash_mdloader"]
-    IdentifyBootloader -->|"wb32-dfu"| FlashWB32["_flash_wb32_dfu_updater"]
-    
-    FlashAtmelDFU --> Success{"Success?"}
-    FlashCaterina --> Success
-    FlashHID --> Success
-    FlashDFU --> Success
-    FlashUF2 --> Success
-    FlashISP --> Success
-    FlashMD --> Success
-    FlashWB32 --> Success
-    
-    Success -->|"Yes"| Complete(["Flashing Complete"])
-    Success -->|"No"| Error2["Error: Flashing Failed"]
-    Error1 --> ReturnError["Return Error Tuple"]
-    Error2 --> ReturnError
-    Complete --> ReturnSuccess["Return Success Tuple"]
-```
+### Windows Support
+- PowerShell integration for WSL environments
+- Windows-specific serial port handling
+- COM port enumeration using `serial.tools.list_ports_windows`
 
-## Platform-Specific Handling
-
-The module includes special handling for different operating systems:
-
-### Windows Subsystem for Linux (WSL)
-- Uses PowerShell commands for USB device detection
-- Falls back to Windows-specific serial port enumeration
-- Handles path conversion for Windows compatibility
-
-### Windows
-- Uses Windows-specific serial port tools
-- Implements special timing for port accessibility checks
-
-### POSIX Systems (Linux/macOS)
-- Standard USB and serial port detection
-- File permission checks for serial port access
+### POSIX Support
+- Native USB device access
+- Serial port permission handling
+- POSIX-compliant serial port enumeration
 
 ## Error Handling and Recovery
 
 The module implements comprehensive error handling:
 
 1. **Bootloader Detection Timeout**: 10-minute maximum search time
-2. **Serial Port Detection Timeout**: 8-second timeout for Caterina
-3. **Tool Availability Checks**: Verifies required flashing tools are installed
-4. **Graceful Degradation**: Provides meaningful error messages for troubleshooting
+2. **Serial Port Availability**: 8-second timeout for Caterina bootloaders
+3. **Tool Availability**: Graceful degradation when flashing tools are missing
+4. **Interrupt Handling**: Safe Ctrl-C handling during USB operations
+5. **File Format Validation**: UF2 file format verification
 
 ## Integration with QMK Ecosystem
 
-The flashers module integrates with other QMK components:
+The flashers module integrates with other QMK modules:
 
-- **Constants Module**: Uses `BOOTLOADER_VIDS_PIDS` for device identification
-- **CLI Module**: Leverages `milc.cli` for command execution and output handling
-- **UF2 Conversion**: Delegates to [uf2conv module](uf2conv.md) for UF2 device handling
+- **[keyboard.md](keyboard.md)**: Uses keyboard detection and layout information
+- **[path.md](path.md)**: File path normalization and validation
+- **[constants](constants.md)**: Bootloader VID:PID definitions
 
-## Usage Patterns
+## Usage Examples
 
-### Basic Flashing Flow
+### Basic Firmware Flashing
 ```python
 from qmk.flashers import flasher
 
 # Flash firmware to detected bootloader
-error, message = flasher(mcu_type, firmware_file)
+error, message = flasher(mcu='atmega32u4', file=Path('firmware.hex'))
 if error:
     print(f"Flashing failed: {message}")
-else:
-    print("Flashing successful!")
 ```
 
-### Device Detection
-The module automatically handles the device detection process:
-1. Iterates through known VID:PID pairs
-2. Checks for UF2 devices separately
-3. Identifies bootloader type and capabilities
-4. Returns appropriate flashing function
+### Bootloader Detection
+```python
+from qmk.flashers import _find_bootloader
 
-## Security and Safety Considerations
+# Detect connected bootloader
+bootloader_type, details = _find_bootloader()
+print(f"Detected: {bootloader_type}")
+```
 
-1. **Interrupt Safety**: Uses `DelayedKeyboardInterrupt` to prevent corruption
-2. **Tool Verification**: Checks tool availability before attempting flashing
-3. **Timeout Protection**: Prevents infinite loops in device detection
-4. **File Path Handling**: Converts paths to POSIX format for cross-platform compatibility
+## Security Considerations
 
-## Dependencies
+1. **USB Device Access**: Requires appropriate system permissions
+2. **File Path Handling**: POSIX conversion prevents path injection
+3. **Tool Execution**: External tool calls with proper argument validation
+4. **Interrupt Safety**: Prevents corruption during critical operations
 
-### External Dependencies
-- **pyusb**: USB device detection and communication
-- **serial**: Serial port enumeration and communication
-- **milc**: CLI framework for command execution
+## Performance Characteristics
 
-### Internal Dependencies
-- **qmk.constants**: Bootloader VID:PID definitions
-- **util.uf2conv**: UF2 file format handling
+- **Bootloader Detection**: Polling interval of 100ms
+- **Timeout Values**: Configurable per bootloader type
+- **USB Scanning**: Efficient VID:PID matching
+- **Memory Usage**: Minimal memory footprint during detection
 
 ## Future Enhancements
 
-The module is designed for extensibility:
-- New bootloader types can be added by implementing corresponding flash functions
-- Platform-specific handling can be extended for new operating systems
-- Additional safety checks and validation can be incorporated
+Potential areas for improvement:
+
+1. **Async Detection**: Non-blocking bootloader detection
+2. **Progress Callbacks**: Real-time flashing progress reporting
+3. **Multi-device Support**: Simultaneous flashing of multiple keyboards
+4. **Enhanced Logging**: Detailed operation logging for debugging
+5. **Protocol Abstraction**: Generic bootloader protocol interface
 
 ## Troubleshooting
 
-Common issues and their solutions:
+Common issues and solutions:
 
-1. **"No bootloader found"**: Ensure device is in bootloader mode
+1. **"Bootloader not found"**: Ensure keyboard is in bootloader mode
 2. **"Tool not available"**: Install required flashing tools (dfu-programmer, avrdude, etc.)
-3. **"Port not writable"**: Check permissions or try running with elevated privileges
-4. **"UF2 format required"**: Convert firmware to UF2 format before flashing
+3. **"Permission denied"**: Check USB device permissions and user groups
+4. **"Timeout exceeded"**: Reset keyboard and try again
+5. **WSL issues**: Ensure USB/IP forwarding is properly configured
 
-The module provides detailed error messages that guide users toward resolution, often referencing the `qmk doctor` command for system diagnostics.
+This documentation provides a comprehensive overview of the flashers module, its architecture, and its role within the QMK ecosystem. The module serves as a critical bridge between firmware files and physical keyboards, abstracting the complexity of various bootloader protocols and platform-specific requirements.

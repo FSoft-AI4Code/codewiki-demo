@@ -2,82 +2,120 @@
 
 ## Purpose
 
-GraphRAG is a modular, end-to-end system that turns unstructured text into a **queryable knowledge graph** and provides **multiple search strategies** (local, global, basic RAG, DRIFT) to retrieve and synthesize information.  
-It is designed for scenarios where documents are too large or too numerous for simple vector search, and where users need **multi-hop, community-level, or iterative** answers backed by explicit citations.
+GraphRAG (Graph-based Retrieval-Augmented Generation) is a modular, end-to-end system that transforms unstructured text documents into a structured, searchable knowledge graph. By combining large-language-model (LLM) extraction, community detection, and vector search, GraphRAG enables both local (entity-centric) and global (community-level) question-answering over large document corpora.
 
 ## End-to-End Architecture
 
 ```mermaid
-graph TD
-    %% ===== INPUT =====
-    Docs[Raw Documents] --> Chunk[Text Chunker]
-    
-    %% ===== INDEXING PIPELINE =====
-    Chunk --> Extract[Graph Extractor<br/>(Entities & Relationships)]
-    Extract --> EmbedTxt[Text Embedder]
-    Extract --> EmbedGraph[Graph Embedder]
-    Extract --> CommDetect[Community Detector]
-    CommDetect --> CommSumm[Community Report Generator]
-    
-    %% ===== STORAGE =====
-    EmbedTxt --> VS[Vector Store<br/>(LanceDB / Azure AI / Cosmos)]
-    EmbedGraph --> VS
-    CommSumm --> VS
-    Extract --> Cache[Pipeline Cache]
-    CommSumm --> Cache
-    
-    %% ===== QUERY TIME =====
-    Q[User Query] --> QB{Query Router}
-    QB --> |Local| LS[Local Search<br/>Entity-centric]
-    QB --> |Global| GS[Global Search<br/>Community Map-Reduce]
-    QB --> |Basic| BS[Basic RAG<br/>Vector only]
-    QB --> |Drift| DS[DRIFT Search<br/>Iterative]
-    
-    VS --> LS
-    VS --> GS
-    VS --> BS
-    VS --> DS
-    
-    LS --> LLM[Language Model]
-    GS --> LLM
-    BS --> LLM
-    DS --> LLM
-    
-    LLM --> A[Answer + Citations]
+graph LR
+    subgraph "Ingestion"
+        A[Raw Documents] --> B[Text Splitting]
+        B --> C[LLM Extraction]
+    end
+
+    subgraph "Graph Construction"
+        C --> D[Entities & Relationships]
+        D --> E[Community Detection]
+        E --> F[Community Reports]
+    end
+
+    subgraph "Storage & Indexing"
+        F --> G[Pipeline Storage]
+        G --> H[Vector Stores]
+        H --> I[Pipeline Cache]
+    end
+
+    subgraph "Query"
+        J[User Query] --> K{Search Type}
+        K -->|Local| L[Local Search]
+        K -->|Global| M[Global Search]
+        K -->|DRIFT| N[DRIFT Search]
+        L & M & N --> O[LLM Generation]
+        O --> P[Answer]
+    end
+
+    G --> L
+    G --> M
+    G --> N
+    H --> L
+    H --> N
 ```
 
-## Core Modules & Quick Links
+```mermaid
+graph TD
+    subgraph "Configuration"
+        GC[GraphRagConfig]
+    end
 
-| Module | Responsibility | Key Classes / Docs |
-|--------|----------------|--------------------|
-| **data_models** | Typed entities, relationships, communities, reports | [Community](data_models/community_models.md), [Entity](data_models/core_entities.md) |
-| **configuration** | Central, validated config for every component | [GraphRagConfig](configuration/configuration.md) |
-| **index_operations** | Graph extraction, embedding, community summarization | [GraphExtractor](index_operations/graph_extraction.md), [TextEmbedder](index_operations/text_embedding.md) |
-| **storage** | Pluggable backends (file, blob, Cosmos, memory) | [PipelineStorage](storage/storage.md) |
-| **caching** | LLM-response & intermediate-result cache | [PipelineCache](caching/caching.md) |
-| **language_models** | Unified chat & embedding model interface | [ChatModel](language_models/language_model_protocol.md), [ModelFactory](language_models/language_model_factory.md) |
-| **vector_stores** | Vector DB abstraction (LanceDB, Azure AI, Cosmos) | [BaseVectorStore](vector_stores/base.md) |
-| **query_system** | Local, Global, Basic, DRIFT search strategies | [LocalSearch](query_system/structured_search.md), [GlobalSearch](query_system/structured_search.md) |
-| **pipeline_infrastructure** | Orchestrates indexing workflows | [Pipeline](pipeline_infrastructure/typing.md), [PipelineFactory](pipeline_infrastructure/workflows.md) |
-| **callbacks** | Progress, logging, telemetry hooks | [WorkflowCallbacks](callbacks/workflow_management.md) |
-| **unified-search-app** | Streamlit demo UI | [KnowledgeModel](unified_search_app/knowledge_loader.md) |
+    subgraph "Indexing Pipeline"
+        IP[PipelineFactory] --> WF1[Text Processing]
+        WF1 --> WF2[Graph Extraction]
+        WF2 --> WF3[Community Summaries]
+        WF3 --> WF4[Embedding Generation]
+    end
+
+    subgraph "Query Engine"
+        QE[Query Engine] --> LS[LocalSearch]
+        QE --> GS[GlobalSearch]
+        QE --> DS[DRIFTSearch]
+    end
+
+    subgraph "Supporting Services"
+        LLM[Language Model Abstraction]
+        PS[Pipeline Storage]
+        PC[Pipeline Cache]
+        VS[Vector Stores]
+        CB[Callbacks]
+    end
+
+    GC --> IP
+    GC --> QE
+    LLM --> IP
+    LLM --> QE
+    PS --> IP
+    PS --> QE
+    PC --> IP
+    PC --> QE
+    VS --> QE
+    CB --> IP
+    CB --> QE
+```
+
+## Core Modules
+
+| Module | Path | Responsibility |
+|--------|------|----------------|
+| **Configuration** | `graphrag/config/` | Centralized, type-safe config for models, storage, cache, vector stores, and search modes |
+| **Core Data Model** | `graphrag/data_model/` | Domain objects: `Document` → `TextUnit` → `Entity`/`Relationship` → `Community` → `CommunityReport` |
+| **Language Model Abstraction** | `graphrag/language_model/` | Provider-agnostic interface (OpenAI, Azure OpenAI) for chat & embedding models |
+| **Pipeline Storage** | `graphrag/storage/` | Pluggable backends: file-system, Azure Blob, CosmosDB, memory |
+| **Pipeline Caching** | `graphrag/cache/` | Hierarchical caching of intermediate results (JSON, memory, no-op) |
+| **Vector Stores** | `graphrag/vector_stores/` | Unified ANN search over LanceDB, Azure AI Search, CosmosDB |
+| **Indexing Pipeline** | `graphrag/index/` | Workflow orchestration: text-split → extract → community → embed |
+| **Query Engine** | `graphrag/query/` | Local, global & DRIFT search strategies with context builders |
+| **Callbacks** | `graphrag/callbacks/` | Real-time progress, token usage and lifecycle events |
 
 ## Quick Start Flow
 
-1. **Index**  
-   `PipelineFactory` → `Pipeline` → `index_operations` → store in `VectorStore` + `PipelineStorage`
+1. **Configure**: Populate `GraphRagConfig` with LLM credentials, storage paths, vector-store URI.
+2. **Index**: Run `PipelineFactory.create_pipeline(...)` → workflows store graphs & embeddings.
+3. **Query**: Instantiate `LocalSearch` / `GlobalSearch` / `DRIFTSearch` with same config → ask questions.
 
-2. **Query**  
-   `SearchType` → `LocalSearch` / `GlobalSearch` / `BasicSearch` / `DRIFTSearch` → `LanguageModel` → `SearchResult`
+## Key Design Principles
 
-3. **Observe**  
-   `WorkflowCallbacks` → console / custom telemetry
+- **Modular**: Each module is swappable (e.g., bring your own LLM, vector DB, or storage).
+- **Type-safe**: Pydantic models enforce schema from config to data to queries.
+- **Async-first**: All I/O (storage, LLM, vector search) is `async` for concurrency.
+- **Observable**: Rich callback system for progress, tokens, errors.
+- **Cloud-ready**: Native Azure integrations (Blob, CosmosDB, Azure AI Search, Azure OpenAI).
 
-## Extensibility Points
+## Documentation Index
 
-- **New vector DB**: implement `BaseVectorStore` and register with `VectorStoreFactory`  
-- **New LLM provider**: implement `ChatModel` or `EmbeddingModel` and register with `ModelFactory`  
-- **New search strategy**: subclass `BaseSearch` and add to `SearchType` enum  
-- **Custom workflow**: register with `PipelineFactory` under a new `IndexingMethod`
-
-All configuration is centralized in `GraphRagConfig`, enabling full control without code changes.
+- [Configuration](Configuration.md) – complete config reference & validation rules  
+- [Core Data Model](Core%20Data%20Model.md) – graph schema and serialization details  
+- [Indexing Pipeline](Indexing%20Pipeline.md) – workflow descriptions and extension points  
+- [Query Engine](Query%20Engine.md) – search algorithms and context-building strategies  
+- [Language Model Abstraction](Language%20Model%20Abstraction.md) – adding new LLM providers  
+- [Vector Stores](Vector%20Stores.md) – backend-specific tuning and auth guides  
+- [Pipeline Storage & Caching](Pipeline%20Storage.md) – choosing and configuring storage layers  
+- [Callbacks](Callbacks.md) – monitoring, logging, and custom telemetry

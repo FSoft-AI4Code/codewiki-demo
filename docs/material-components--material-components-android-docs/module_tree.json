@@ -2,14 +2,14 @@
     "appbar": {
         "path": "lib/java/com/google/android/material/appbar/",
         "components": [
-            "lib.java.com.google.android.material.appbar.AppBarLayout.SavedState",
-            "lib.java.com.google.android.material.appbar.AppBarLayout.ScrollingViewBehavior",
-            "lib.java.com.google.android.material.appbar.AppBarLayout.LiftOnScrollListener",
-            "lib.java.com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener",
-            "lib.java.com.google.android.material.appbar.AppBarLayout.BaseOnOffsetChangedListener",
-            "lib.java.com.google.android.material.appbar.AppBarLayout.LayoutParams",
             "lib.java.com.google.android.material.appbar.AppBarLayout.BaseBehavior",
+            "lib.java.com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener",
             "lib.java.com.google.android.material.appbar.AppBarLayout.DragCallback",
+            "lib.java.com.google.android.material.appbar.AppBarLayout.LayoutParams",
+            "lib.java.com.google.android.material.appbar.AppBarLayout.ScrollingViewBehavior",
+            "lib.java.com.google.android.material.appbar.AppBarLayout.SavedState",
+            "lib.java.com.google.android.material.appbar.AppBarLayout.LiftOnScrollListener",
+            "lib.java.com.google.android.material.appbar.AppBarLayout.BaseOnOffsetChangedListener",
             "lib.java.com.google.android.material.appbar.AppBarLayout.Behavior",
             "lib.java.com.google.android.material.appbar.CollapsingToolbarLayout.StaticLayoutBuilderConfigurer",
             "lib.java.com.google.android.material.appbar.CollapsingToolbarLayout.LayoutParams",
@@ -18,16 +18,16 @@
             "lib.java.com.google.android.material.appbar.ViewUtilsLollipop.ViewUtilsLollipop"
         ],
         "children": {
-            "appbarlayout-core": {
+            "appbar-layout": {
                 "components": [
-                    "lib.java.com.google.android.material.appbar.AppBarLayout.SavedState",
-                    "lib.java.com.google.android.material.appbar.AppBarLayout.ScrollingViewBehavior",
-                    "lib.java.com.google.android.material.appbar.AppBarLayout.LiftOnScrollListener",
-                    "lib.java.com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener",
-                    "lib.java.com.google.android.material.appbar.AppBarLayout.BaseOnOffsetChangedListener",
-                    "lib.java.com.google.android.material.appbar.AppBarLayout.LayoutParams",
                     "lib.java.com.google.android.material.appbar.AppBarLayout.BaseBehavior",
+                    "lib.java.com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener",
                     "lib.java.com.google.android.material.appbar.AppBarLayout.DragCallback",
+                    "lib.java.com.google.android.material.appbar.AppBarLayout.LayoutParams",
+                    "lib.java.com.google.android.material.appbar.AppBarLayout.ScrollingViewBehavior",
+                    "lib.java.com.google.android.material.appbar.AppBarLayout.SavedState",
+                    "lib.java.com.google.android.material.appbar.AppBarLayout.LiftOnScrollListener",
+                    "lib.java.com.google.android.material.appbar.AppBarLayout.BaseOnOffsetChangedListener",
                     "lib.java.com.google.android.material.appbar.AppBarLayout.Behavior"
                 ],
                 "children": {}
@@ -39,20 +39,72 @@
                 ],
                 "children": {}
             },
-            "behavior-system": {
+            "appbar-behaviors": {
                 "components": [
                     "lib.java.com.google.android.material.appbar.HeaderBehavior.HeaderBehavior",
                     "lib.java.com.google.android.material.appbar.ViewOffsetBehavior.ViewOffsetBehavior"
                 ],
                 "children": {}
             },
-            "utility-components": {
+            "appbar-utilities": {
                 "components": [
                     "lib.java.com.google.android.material.appbar.ViewUtilsLollipop.ViewUtilsLollipop"
                 ],
                 "children": {}
             }
         }
+    },
+    "badge": {
+        "path": "lib/java/com/google/android/material/badge/",
+        "components": [
+            "lib.java.com.google.android.material.badge.BadgeState.State"
+        ],
+        "children": {}
+    },
+    "behavior": {
+        "path": "lib/java/com/google/android/material/behavior/",
+        "components": [
+            "lib.java.com.google.android.material.behavior.HideBottomViewOnScrollBehavior.HideBottomViewOnScrollBehavior",
+            "lib.java.com.google.android.material.behavior.HideBottomViewOnScrollBehavior.OnScrollStateChangedListener",
+            "lib.java.com.google.android.material.behavior.HideViewOnScrollBehavior.OnScrollStateChangedListener",
+            "lib.java.com.google.android.material.behavior.HideViewOnScrollBehavior.HideViewOnScrollBehavior"
+        ],
+        "children": {
+            "scroll-behaviors": {
+                "components": [
+                    "lib.java.com.google.android.material.behavior.HideBottomViewOnScrollBehavior.HideBottomViewOnScrollBehavior",
+                    "lib.java.com.google.android.material.behavior.HideBottomViewOnScrollBehavior.OnScrollStateChangedListener",
+                    "lib.java.com.google.android.material.behavior.HideViewOnScrollBehavior.OnScrollStateChangedListener",
+                    "lib.java.com.google.android.material.behavior.HideViewOnScrollBehavior.HideViewOnScrollBehavior"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "bottom-app-bar": {
+        "path": "lib/java/com/google/android/material/bottomappbar/",
+        "components": [
+            "lib.java.com.google.android.material.bottomappbar.BottomAppBar.SavedState",
+            "lib.java.com.google.android.material.bottomappbar.BottomAppBar.AnimationListener",
+            "lib.java.com.google.android.material.bottomappbar.BottomAppBar.Behavior"
+        ],
+        "children": {}
+    },
+    "bottom-navigation": {
+        "path": "lib/java/com/google/android/material/bottomnavigation/",
+        "components": [
+            "lib.java.com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemReselectedListener",
+            "lib.java.com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener"
+        ],
+        "children": {}
+    },
+    "bottom-sheet": {
+        "path": "lib/java/com/google/android/material/bottomsheet/",
+        "components": [
+            "lib.java.com.google.android.material.bottomsheet.BottomSheetBehavior.SavedState",
+            "lib.java.com.google.android.material.bottomsheet.BottomSheetBehavior.StateSettlingTracker"
+        ],
+        "children": {}
     },
     "button": {
         "path": "lib/java/com/google/android/material/button/",
@@ -63,20 +115,20 @@
             "lib.java.com.google.android.material.button.MaterialSplitButton.MaterialSplitButton"
         ],
         "children": {
-            "materialbutton-core": {
+            "material-button": {
                 "components": [
                     "lib.java.com.google.android.material.button.MaterialButton.OnCheckedChangeListener",
                     "lib.java.com.google.android.material.button.MaterialButton.SavedState"
                 ],
                 "children": {}
             },
-            "materialbutton-group": {
+            "material-button-group": {
                 "components": [
                     "lib.java.com.google.android.material.button.MaterialButtonGroup.LayoutParams"
                 ],
                 "children": {}
             },
-            "materialsplit-button": {
+            "material-split-button": {
                 "components": [
                     "lib.java.com.google.android.material.button.MaterialSplitButton.MaterialSplitButton"
                 ],
@@ -91,26 +143,29 @@
         ],
         "children": {}
     },
-    "chip": {
-        "path": "lib/java/com/google/android/material/chip/",
+    "carousel": {
+        "path": "lib/java/com/google/android/material/carousel/",
         "components": [
-            "lib.java.com.google.android.material.chip.ChipDrawable.Delegate",
-            "lib.java.com.google.android.material.chip.ChipGroup.OnCheckedStateChangeListener",
-            "lib.java.com.google.android.material.chip.ChipGroup.LayoutParams",
-            "lib.java.com.google.android.material.chip.ChipGroup.OnCheckedChangeListener"
+            "lib.java.com.google.android.material.carousel.CarouselLayoutManager.LayoutDirection",
+            "lib.java.com.google.android.material.carousel.CarouselStrategyHelper.CarouselStrategyHelper",
+            "lib.java.com.google.android.material.carousel.KeylineState.Builder"
         ],
         "children": {
-            "chipdrawable-core": {
+            "carousel-layout-manager": {
                 "components": [
-                    "lib.java.com.google.android.material.chip.ChipDrawable.Delegate"
+                    "lib.java.com.google.android.material.carousel.CarouselLayoutManager.LayoutDirection"
                 ],
                 "children": {}
             },
-            "chipgroup-core": {
+            "carousel-strategy-helper": {
                 "components": [
-                    "lib.java.com.google.android.material.chip.ChipGroup.OnCheckedStateChangeListener",
-                    "lib.java.com.google.android.material.chip.ChipGroup.LayoutParams",
-                    "lib.java.com.google.android.material.chip.ChipGroup.OnCheckedChangeListener"
+                    "lib.java.com.google.android.material.carousel.CarouselStrategyHelper.CarouselStrategyHelper"
+                ],
+                "children": {}
+            },
+            "keyline-state-builder": {
+                "components": [
+                    "lib.java.com.google.android.material.carousel.KeylineState.Builder"
                 ],
                 "children": {}
             }
@@ -123,182 +178,180 @@
         ],
         "children": {}
     },
-    "floatingactionbutton": {
-        "path": "lib/java/com/google/android/material/floatingactionbutton/",
+    "chip": {
+        "path": "lib/java/com/google/android/material/chip/",
         "components": [
-            "lib.java.com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton.Size",
-            "lib.java.com.google.android.material.floatingactionbutton.FloatingActionButton.Behavior",
-            "lib.java.com.google.android.material.floatingactionbutton.FloatingActionButton.BaseBehavior"
-        ],
-        "children": {}
-    },
-    "bottomappbar": {
-        "path": "lib/java/com/google/android/material/bottomappbar/",
-        "components": [
-            "lib.java.com.google.android.material.bottomappbar.BottomAppBar.SavedState",
-            "lib.java.com.google.android.material.bottomappbar.BottomAppBar.AnimationListener",
-            "lib.java.com.google.android.material.bottomappbar.BottomAppBar.Behavior"
-        ],
-        "children": {}
-    },
-    "bottomnavigation": {
-        "path": "lib/java/com/google/android/material/bottomnavigation/",
-        "components": [
-            "lib.java.com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemSelectedListener",
-            "lib.java.com.google.android.material.bottomnavigation.BottomNavigationView.OnNavigationItemReselectedListener"
-        ],
-        "children": {}
-    },
-    "bottomsheet": {
-        "path": "lib/java/com/google/android/material/bottomsheet/",
-        "components": [
-            "lib.java.com.google.android.material.bottomsheet.BottomSheetBehavior.SavedState",
-            "lib.java.com.google.android.material.bottomsheet.BottomSheetBehavior.StateSettlingTracker"
-        ],
-        "children": {}
-    },
-    "navigation": {
-        "path": "lib/java/com/google/android/material/navigation/",
-        "components": [
-            "lib.java.com.google.android.material.navigation.DrawerLayoutUtils.DrawerLayoutUtils",
-            "lib.java.com.google.android.material.navigation.NavigationBarPresenter.SavedState",
-            "lib.java.com.google.android.material.navigation.NavigationBarView.SavedState",
-            "lib.java.com.google.android.material.navigation.NavigationView.SavedState"
+            "lib.java.com.google.android.material.chip.ChipDrawable.Delegate",
+            "lib.java.com.google.android.material.chip.ChipGroup.OnCheckedStateChangeListener",
+            "lib.java.com.google.android.material.chip.ChipGroup.OnCheckedChangeListener",
+            "lib.java.com.google.android.material.chip.ChipGroup.LayoutParams"
         ],
         "children": {
-            "navigation-view-core": {
+            "chip-drawable": {
                 "components": [
-                    "lib.java.com.google.android.material.navigation.NavigationView.SavedState"
+                    "lib.java.com.google.android.material.chip.ChipDrawable.Delegate"
                 ],
                 "children": {}
             },
-            "navigation-bar-core": {
+            "chip-group": {
                 "components": [
-                    "lib.java.com.google.android.material.navigation.NavigationBarView.SavedState",
-                    "lib.java.com.google.android.material.navigation.NavigationBarPresenter.SavedState"
-                ],
-                "children": {}
-            },
-            "drawer-utils": {
-                "components": [
-                    "lib.java.com.google.android.material.navigation.DrawerLayoutUtils.DrawerLayoutUtils"
+                    "lib.java.com.google.android.material.chip.ChipGroup.OnCheckedStateChangeListener",
+                    "lib.java.com.google.android.material.chip.ChipGroup.OnCheckedChangeListener",
+                    "lib.java.com.google.android.material.chip.ChipGroup.LayoutParams"
                 ],
                 "children": {}
             }
         }
     },
-    "textfield": {
-        "path": "lib/java/com/google/android/material/textfield/",
+    "circular-reveal": {
+        "path": "lib/java/com/google/android/material/circularreveal/",
         "components": [
-            "lib.java.com.google.android.material.textfield.EditTextUtils.EditTextUtils",
-            "lib.java.com.google.android.material.textfield.IconHelper.IconHelper",
-            "lib.java.com.google.android.material.textfield.TextInputEditText.TextInputEditText",
-            "lib.java.com.google.android.material.textfield.TextInputLayout.OnEndIconChangedListener"
+            "lib.java.com.google.android.material.circularreveal.CircularRevealCompat.CircularRevealCompat",
+            "lib.java.com.google.android.material.circularreveal.CircularRevealGridLayout.CircularRevealGridLayout",
+            "lib.java.com.google.android.material.circularreveal.CircularRevealLinearLayout.CircularRevealLinearLayout",
+            "lib.java.com.google.android.material.circularreveal.CircularRevealRelativeLayout.CircularRevealRelativeLayout",
+            "lib.java.com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout.CircularRevealCoordinatorLayout"
         ],
         "children": {}
     },
-    "tabs": {
-        "path": "lib/java/com/google/android/material/tabs/",
+    "color": {
+        "path": "lib/java/com/google/android/material/color/",
         "components": [
-            "lib.java.com.google.android.material.tabs.TabItem.TabItem",
-            "lib.java.com.google.android.material.tabs.TabLayout.ViewPagerOnTabSelectedListener",
-            "lib.java.com.google.android.material.tabs.TabLayout.PagerAdapterObserver"
+            "lib.java.com.google.android.material.color.ColorContrast.ColorContrast",
+            "lib.java.com.google.android.material.color.ColorContrastOptions.Builder",
+            "lib.java.com.google.android.material.color.ColorResourcesLoaderCreator.ColorResourcesLoaderCreator",
+            "lib.java.com.google.android.material.color.ColorResourcesTableCreator.ColorResourcesTableCreator",
+            "lib.java.com.google.android.material.color.ColorResourcesTableCreator.StringStyledSpan",
+            "lib.java.com.google.android.material.color.DynamicColors.DynamicColors",
+            "lib.java.com.google.android.material.color.DynamicColorsOptions.Builder",
+            "lib.java.com.google.android.material.color.HarmonizedColors.HarmonizedColors",
+            "lib.java.com.google.android.material.color.HarmonizedColorsOptions.Builder",
+            "lib.java.com.google.android.material.color.MaterialColorUtilitiesHelper.MaterialColorUtilitiesHelper",
+            "lib.java.com.google.android.material.color.MaterialColors.MaterialColors",
+            "lib.java.com.google.android.material.color.ResourcesLoaderColorResourcesOverride.ResourcesLoaderColorResourcesOverrideSingleton",
+            "lib.java.com.google.android.material.color.ResourcesLoaderUtils.ResourcesLoaderUtils",
+            "lib.java.com.google.android.material.color.ThemeUtils.ThemeUtils",
+            "lib.java.com.google.android.material.color.utilities.Blend.Blend",
+            "lib.java.com.google.android.material.color.utilities.ColorUtils.ColorUtils",
+            "lib.java.com.google.android.material.color.utilities.Contrast.Contrast",
+            "lib.java.com.google.android.material.color.utilities.DislikeAnalyzer.DislikeAnalyzer",
+            "lib.java.com.google.android.material.color.utilities.HctSolver.HctSolver",
+            "lib.java.com.google.android.material.color.utilities.MathUtils.MathUtils",
+            "lib.java.com.google.android.material.color.utilities.QuantizerCelebi.QuantizerCelebi",
+            "lib.java.com.google.android.material.color.utilities.QuantizerWsmeans.QuantizerWsmeans",
+            "lib.java.com.google.android.material.color.utilities.Score.Score"
         ],
         "children": {
-            "tab-item-core": {
+            "dynamic-colors": {
                 "components": [
-                    "lib.java.com.google.android.material.tabs.TabItem.TabItem"
+                    "lib.java.com.google.android.material.color.DynamicColors.DynamicColors",
+                    "lib.java.com.google.android.material.color.DynamicColorsOptions.Builder",
+                    "lib.java.com.google.android.material.color.MaterialColorUtilitiesHelper.MaterialColorUtilitiesHelper"
                 ],
                 "children": {}
             },
-            "tab-layout-core": {
+            "color-harmonization": {
                 "components": [
-                    "lib.java.com.google.android.material.tabs.TabLayout.ViewPagerOnTabSelectedListener",
-                    "lib.java.com.google.android.material.tabs.TabLayout.PagerAdapterObserver"
+                    "lib.java.com.google.android.material.color.HarmonizedColors.HarmonizedColors",
+                    "lib.java.com.google.android.material.color.HarmonizedColorsOptions.Builder"
                 ],
                 "children": {}
             },
-            "tab-view-internals": {
+            "contrast-control": {
                 "components": [
-                    "lib.java.com.google.android.material.tabs.TabLayout.TabView",
-                    "lib.java.com.google.android.material.tabs.TabLayout.SlidingTabIndicator"
+                    "lib.java.com.google.android.material.color.ColorContrast.ColorContrast",
+                    "lib.java.com.google.android.material.color.ColorContrastOptions.Builder"
                 ],
                 "children": {}
             },
-            "tab-integration": {
+            "color-utilities": {
                 "components": [
-                    "lib.java.com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener",
-                    "lib.java.com.google.android.material.tabs.TabLayout.ViewPagerOnTabSelectedListener",
-                    "lib.java.com.google.android.material.tabs.TabLayout.PagerAdapterObserver",
-                    "lib.java.com.google.android.material.tabs.TabLayout.AdapterChangeListener"
+                    "lib.java.com.google.android.material.color.utilities.Blend.Blend",
+                    "lib.java.com.google.android.material.color.utilities.ColorUtils.ColorUtils",
+                    "lib.java.com.google.android.material.color.utilities.Contrast.Contrast",
+                    "lib.java.com.google.android.material.color.utilities.DislikeAnalyzer.DislikeAnalyzer",
+                    "lib.java.com.google.android.material.color.utilities.HctSolver.HctSolver",
+                    "lib.java.com.google.android.material.color.utilities.MathUtils.MathUtils",
+                    "lib.java.com.google.android.material.color.utilities.QuantizerCelebi.QuantizerCelebi",
+                    "lib.java.com.google.android.material.color.utilities.QuantizerWsmeans.QuantizerWsmeans",
+                    "lib.java.com.google.android.material.color.utilities.Score.Score"
+                ],
+                "children": {
+                    "blend": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.Blend.Blend"
+                        ],
+                        "children": {}
+                    },
+                    "math-utils": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.MathUtils.MathUtils"
+                        ],
+                        "children": {}
+                    },
+                    "color-utils": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.ColorUtils.ColorUtils"
+                        ],
+                        "children": {}
+                    },
+                    "hct-solver": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.HctSolver.HctSolver"
+                        ],
+                        "children": {}
+                    },
+                    "contrast": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.Contrast.Contrast"
+                        ],
+                        "children": {}
+                    },
+                    "quantizer-celebi": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.QuantizerCelebi.QuantizerCelebi"
+                        ],
+                        "children": {}
+                    },
+                    "quantizer-wsmeans": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.QuantizerWsmeans.QuantizerWsmeans"
+                        ],
+                        "children": {}
+                    },
+                    "score": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.Score.Score"
+                        ],
+                        "children": {}
+                    },
+                    "dislike-analyzer": {
+                        "components": [
+                            "lib.java.com.google.android.material.color.utilities.DislikeAnalyzer.DislikeAnalyzer"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "resource-override": {
+                "components": [
+                    "lib.java.com.google.android.material.color.ColorResourcesLoaderCreator.ColorResourcesLoaderCreator",
+                    "lib.java.com.google.android.material.color.ColorResourcesTableCreator.ColorResourcesTableCreator",
+                    "lib.java.com.google.android.material.color.ResourcesLoaderColorResourcesOverride.ResourcesLoaderColorResourcesOverrideSingleton",
+                    "lib.java.com.google.android.material.color.ResourcesLoaderUtils.ResourcesLoaderUtils",
+                    "lib.java.com.google.android.material.color.ThemeUtils.ThemeUtils"
+                ],
+                "children": {}
+            },
+            "core-material-colors": {
+                "components": [
+                    "lib.java.com.google.android.material.color.MaterialColors.MaterialColors"
                 ],
                 "children": {}
             }
         }
     },
-    "snackbar": {
-        "path": "lib/java/com/google/android/material/snackbar/",
-        "components": [
-            "lib.java.com.google.android.material.snackbar.BaseTransientBottomBar.ContentViewCallback",
-            "lib.java.com.google.android.material.snackbar.Snackbar.SnackbarLayout",
-            "lib.java.com.google.android.material.snackbar.Snackbar.Callback",
-            "lib.java.com.google.android.material.snackbar.SnackbarContentLayout.SnackbarContentLayout"
-        ],
-        "children": {
-            "base-transient-bottom-bar": {
-                "components": [
-                    "lib.java.com.google.android.material.snackbar.BaseTransientBottomBar.ContentViewCallback"
-                ],
-                "children": {}
-            },
-            "snackbar-implementation": {
-                "components": [
-                    "lib.java.com.google.android.material.snackbar.Snackbar.SnackbarLayout",
-                    "lib.java.com.google.android.material.snackbar.Snackbar.Callback"
-                ],
-                "children": {}
-            },
-            "content-layout-system": {
-                "components": [
-                    "lib.java.com.google.android.material.snackbar.SnackbarContentLayout.SnackbarContentLayout"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "slider": {
-        "path": "lib/java/com/google/android/material/slider/",
-        "components": [
-            "lib.java.com.google.android.material.slider.BaseOnChangeListener.BaseOnChangeListener",
-            "lib.java.com.google.android.material.slider.BaseOnSliderTouchListener.BaseOnSliderTouchListener",
-            "lib.java.com.google.android.material.slider.RangeSlider.OnChangeListener",
-            "lib.java.com.google.android.material.slider.RangeSlider.OnSliderTouchListener",
-            "lib.java.com.google.android.material.slider.SliderOrientation.SliderOrientation"
-        ],
-        "children": {
-            "range-slider": {
-                "components": [
-                    "lib.java.com.google.android.material.slider.RangeSlider.OnChangeListener",
-                    "lib.java.com.google.android.material.slider.RangeSlider.OnSliderTouchListener"
-                ],
-                "children": {}
-            },
-            "slider-events": {
-                "components": [
-                    "lib.java.com.google.android.material.slider.BaseOnChangeListener.BaseOnChangeListener",
-                    "lib.java.com.google.android.material.slider.BaseOnSliderTouchListener.BaseOnSliderTouchListener"
-                ],
-                "children": {}
-            },
-            "slider-orientation": {
-                "components": [
-                    "lib.java.com.google.android.material.slider.SliderOrientation.SliderOrientation"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "datepicker": {
+    "date-picker": {
         "path": "lib/java/com/google/android/material/datepicker/",
         "components": [
             "lib.java.com.google.android.material.datepicker.CalendarConstraints.Builder",
@@ -317,13 +370,14 @@
                 ],
                 "children": {}
             },
-            "date-strings": {
+            "date-formatting": {
                 "components": [
-                    "lib.java.com.google.android.material.datepicker.DateStrings.DateStrings"
+                    "lib.java.com.google.android.material.datepicker.DateStrings.DateStrings",
+                    "lib.java.com.google.android.material.datepicker.UtcDates.UtcDates"
                 ],
                 "children": {}
             },
-            "material-datepicker-core": {
+            "material-date-picker": {
                 "components": [
                     "lib.java.com.google.android.material.datepicker.MaterialDatePicker.Builder",
                     "lib.java.com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener.MaterialPickerOnPositiveButtonClickListener",
@@ -331,264 +385,19 @@
                 ],
                 "children": {}
             },
-            "calendar-display": {
+            "calendar-adapters": {
                 "components": [
                     "lib.java.com.google.android.material.datepicker.MonthsPagerAdapter.ViewHolder",
                     "lib.java.com.google.android.material.datepicker.YearGridAdapter.ViewHolder"
                 ],
                 "children": {}
-            },
-            "date-utilities": {
-                "components": [
-                    "lib.java.com.google.android.material.datepicker.UtcDates.UtcDates"
-                ],
-                "children": {}
             }
         }
     },
-    "color": {
-        "path": "lib/java/com/google/android/material/color/",
+    "dialog": {
+        "path": "lib/java/com/google/android/material/dialog/",
         "components": [
-            "lib.java.com.google.android.material.color.ColorContrast.ColorContrast",
-            "lib.java.com.google.android.material.color.ColorContrastOptions.Builder",
-            "lib.java.com.google.android.material.color.DynamicColors.DynamicColors",
-            "lib.java.com.google.android.material.color.DynamicColorsOptions.Builder",
-            "lib.java.com.google.android.material.color.HarmonizedColors.HarmonizedColors",
-            "lib.java.com.google.android.material.color.HarmonizedColorsOptions.Builder",
-            "lib.java.com.google.android.material.color.MaterialColors.MaterialColors",
-            "lib.java.com.google.android.material.color.ThemeUtils.ThemeUtils"
-        ],
-        "children": {
-            "dynamic-colors-core": {
-                "components": [
-                    "lib.java.com.google.android.material.color.DynamicColors.DynamicColors"
-                ],
-                "children": {}
-            },
-            "dynamic-colors-options": {
-                "components": [
-                    "lib.java.com.google.android.material.color.DynamicColorsOptions.Builder"
-                ],
-                "children": {}
-            },
-            "harmonized-colors-core": {
-                "components": [
-                    "lib.java.com.google.android.material.color.HarmonizedColors.HarmonizedColors"
-                ],
-                "children": {}
-            },
-            "harmonized-colors-options": {
-                "components": [
-                    "lib.java.com.google.android.material.color.HarmonizedColorsOptions.Builder"
-                ],
-                "children": {}
-            },
-            "color-contrast-core": {
-                "components": [
-                    "lib.java.com.google.android.material.color.ColorContrast.ColorContrast"
-                ],
-                "children": {}
-            },
-            "color-contrast-options": {
-                "components": [
-                    "lib.java.com.google.android.material.color.ColorContrastOptions.Builder"
-                ],
-                "children": {}
-            },
-            "material-colors-utilities": {
-                "components": [
-                    "lib.java.com.google.android.material.color.MaterialColors.MaterialColors"
-                ],
-                "children": {}
-            },
-            "theme-utils": {
-                "components": [
-                    "lib.java.com.google.android.material.color.ThemeUtils.ThemeUtils"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "shape": {
-        "path": "lib/java/com/google/android/material/shape/",
-        "components": [
-            "lib.java.com.google.android.material.shape.MaterialShapeUtils.MaterialShapeUtils",
-            "lib.java.com.google.android.material.shape.MaterialShapes.MaterialShapes",
-            "lib.java.com.google.android.material.shape.ShapeAppearanceModel.Builder",
-            "lib.java.com.google.android.material.shape.ShapeAppearancePathProvider.Lazy",
-            "lib.java.com.google.android.material.shape.ShapePathModel.ShapePathModel",
-            "lib.java.com.google.android.material.shape.StateListShapeAppearanceModel.Builder",
-            "lib.java.com.google.android.material.shape.TriangleEdgeTreatment.TriangleEdgeTreatment"
-        ],
-        "children": {
-            "shape-definition": {
-                "components": [
-                    "lib.java.com.google.android.material.shape.ShapeAppearanceModel.Builder",
-                    "lib.java.com.google.android.material.shape.ShapePathModel.ShapePathModel"
-                ],
-                "children": {}
-            },
-            "shape-utilities": {
-                "components": [
-                    "lib.java.com.google.android.material.shape.MaterialShapeUtils.MaterialShapeUtils",
-                    "lib.java.com.google.android.material.shape.MaterialShapes.MaterialShapes"
-                ],
-                "children": {}
-            },
-            "path-generation": {
-                "components": [
-                    "lib.java.com.google.android.material.shape.ShapeAppearancePathProvider.Lazy"
-                ],
-                "children": {}
-            },
-            "state-based-shapes": {
-                "components": [
-                    "lib.java.com.google.android.material.shape.StateListShapeAppearanceModel.Builder"
-                ],
-                "children": {}
-            },
-            "edge-treatments": {
-                "components": [
-                    "lib.java.com.google.android.material.shape.TriangleEdgeTreatment.TriangleEdgeTreatment"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "transition": {
-        "path": "lib/java/com/google/android/material/transition/",
-        "components": [
-            "lib.java.com.google.android.material.transition.MaterialContainerTransform.MaterialContainerTransform",
-            "lib.java.com.google.android.material.transition.MaterialContainerTransform.TransitionDrawable",
-            "lib.java.com.google.android.material.transition.MaterialContainerTransform.ProgressThresholdsGroup",
-            "lib.java.com.google.android.material.transition.MaterialContainerTransform.ProgressThresholds",
-            "lib.java.com.google.android.material.transition.MaterialElevationScale.MaterialElevationScale",
-            "lib.java.com.google.android.material.transition.MaterialFade.MaterialFade",
-            "lib.java.com.google.android.material.transition.MaterialFadeThrough.MaterialFadeThrough",
-            "lib.java.com.google.android.material.transition.MaterialSharedAxis.MaterialSharedAxis",
-            "lib.java.com.google.android.material.transition.MaterialVisibility.MaterialVisibility"
-        ],
-        "children": {
-            "container-transform-system": {
-                "components": [
-                    "lib.java.com.google.android.material.transition.MaterialContainerTransform.MaterialContainerTransform",
-                    "lib.java.com.google.android.material.transition.MaterialContainerTransform.TransitionDrawable",
-                    "lib.java.com.google.android.material.transition.MaterialContainerTransform.ProgressThresholds",
-                    "lib.java.com.google.android.material.transition.MaterialContainerTransform.ProgressThresholdsGroup"
-                ],
-                "children": {}
-            },
-            "visibility-transition-framework": {
-                "components": [
-                    "lib.java.com.google.android.material.transition.MaterialVisibility.MaterialVisibility"
-                ],
-                "children": {}
-            },
-            "animation-providers": {
-                "components": [
-                    "lib.java.com.google.android.material.transition.MaterialFade.MaterialFade",
-                    "lib.java.com.google.android.material.transition.MaterialFadeThrough.MaterialFadeThrough",
-                    "lib.java.com.google.android.material.transition.MaterialSharedAxis.MaterialSharedAxis",
-                    "lib.java.com.google.android.material.transition.MaterialElevationScale.MaterialElevationScale"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "carousel": {
-        "path": "lib/java/com/google/android/material/carousel/",
-        "components": [
-            "lib.java.com.google.android.material.carousel.CarouselLayoutManager.LayoutDirection",
-            "lib.java.com.google.android.material.carousel.CarouselStrategyHelper.CarouselStrategyHelper",
-            "lib.java.com.google.android.material.carousel.KeylineState.Builder"
-        ],
-        "children": {
-            "layout-manager-core": {
-                "components": [
-                    "lib.java.com.google.android.material.carousel.CarouselLayoutManager.LayoutDirection"
-                ],
-                "children": {}
-            },
-            "keyline-system": {
-                "components": [
-                    "lib.java.com.google.android.material.carousel.KeylineState.Builder"
-                ],
-                "children": {}
-            },
-            "strategy-framework": {
-                "components": [
-                    "lib.java.com.google.android.material.carousel.CarouselStrategyHelper.CarouselStrategyHelper"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "search": {
-        "path": "lib/java/com/google/android/material/search/",
-        "components": [
-            "lib.java.com.google.android.material.search.SearchBar.OnLoadAnimationCallback",
-            "lib.java.com.google.android.material.search.SearchBar.SavedState",
-            "lib.java.com.google.android.material.search.SearchBarAnimationHelper.OnLoadAnimationInvocation",
-            "lib.java.com.google.android.material.search.SearchView.Behavior",
-            "lib.java.com.google.android.material.search.SearchView.SavedState",
-            "lib.java.com.google.android.material.search.SearchView.TransitionListener"
-        ],
-        "children": {
-            "searchbar-core": {
-                "components": [
-                    "lib.java.com.google.android.material.search.SearchBar.OnLoadAnimationCallback",
-                    "lib.java.com.google.android.material.search.SearchBar.SavedState"
-                ],
-                "children": {}
-            },
-            "searchview-core": {
-                "components": [
-                    "lib.java.com.google.android.material.search.SearchView.Behavior",
-                    "lib.java.com.google.android.material.search.SearchView.SavedState",
-                    "lib.java.com.google.android.material.search.SearchView.TransitionListener"
-                ],
-                "children": {}
-            },
-            "animation-system": {
-                "components": [
-                    "lib.java.com.google.android.material.search.SearchBarAnimationHelper.OnLoadAnimationInvocation"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "sidesheet": {
-        "path": "lib/java/com/google/android/material/sidesheet/",
-        "components": [
-            "lib.java.com.google.android.material.sidesheet.SheetDialog.SheetDialog",
-            "lib.java.com.google.android.material.sidesheet.SheetUtils.SheetUtils",
-            "lib.java.com.google.android.material.sidesheet.SideSheetBehavior.SavedState"
-        ],
-        "children": {
-            "sheet-dialog-system": {
-                "components": [
-                    "lib.java.com.google.android.material.sidesheet.SheetDialog.SheetDialog"
-                ],
-                "children": {}
-            },
-            "behavior-system": {
-                "components": [
-                    "lib.java.com.google.android.material.sidesheet.SideSheetBehavior.SavedState"
-                ],
-                "children": {}
-            },
-            "utility-components": {
-                "components": [
-                    "lib.java.com.google.android.material.sidesheet.SheetUtils.SheetUtils"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "progressindicator": {
-        "path": "lib/java/com/google/android/material/progressindicator/",
-        "components": [
-            "lib.java.com.google.android.material.progressindicator.BaseProgressIndicator.BaseProgressIndicator"
+            "lib.java.com.google.android.material.dialog.MaterialDialogs.MaterialDialogs"
         ],
         "children": {}
     },
@@ -599,36 +408,709 @@
         ],
         "children": {}
     },
-    "badge": {
-        "path": "lib/java/com/google/android/material/badge/",
+    "fab": {
+        "path": "lib/java/com/google/android/material/floatingactionbutton/",
         "components": [
-            "lib.java.com.google.android.material.badge.BadgeState.State"
-        ],
-        "children": {}
-    },
-    "behavior": {
-        "path": "lib/java/com/google/android/material/behavior/",
-        "components": [
-            "lib.java.com.google.android.material.behavior.HideBottomViewOnScrollBehavior.OnScrollStateChangedListener",
-            "lib.java.com.google.android.material.behavior.HideBottomViewOnScrollBehavior.HideBottomViewOnScrollBehavior",
-            "lib.java.com.google.android.material.behavior.HideViewOnScrollBehavior.OnScrollStateChangedListener",
-            "lib.java.com.google.android.material.behavior.HideViewOnScrollBehavior.HideViewOnScrollBehavior"
+            "lib.java.com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton.Size",
+            "lib.java.com.google.android.material.floatingactionbutton.FloatingActionButton.Behavior",
+            "lib.java.com.google.android.material.floatingactionbutton.FloatingActionButton.BaseBehavior"
         ],
         "children": {
-            "hide-view-on-scroll": {
+            "extended-fab": {
                 "components": [
-                    "lib.java.com.google.android.material.behavior.HideViewOnScrollBehavior.OnScrollStateChangedListener",
-                    "lib.java.com.google.android.material.behavior.HideViewOnScrollBehavior.HideViewOnScrollBehavior"
+                    "lib.java.com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton.Size"
                 ],
                 "children": {}
             },
-            "hide-bottom-view-on-scroll": {
+            "floating-action-button": {
                 "components": [
-                    "lib.java.com.google.android.material.behavior.HideBottomViewOnScrollBehavior.OnScrollStateChangedListener",
-                    "lib.java.com.google.android.material.behavior.HideBottomViewOnScrollBehavior.HideBottomViewOnScrollBehavior"
+                    "lib.java.com.google.android.material.floatingactionbutton.FloatingActionButton.Behavior",
+                    "lib.java.com.google.android.material.floatingactionbutton.FloatingActionButton.BaseBehavior"
                 ],
                 "children": {}
             }
         }
+    },
+    "internal": {
+        "path": "lib/java/com/google/android/material/internal/",
+        "components": [
+            "lib.java.com.google.android.material.internal.CheckableImageButton.SavedState",
+            "lib.java.com.google.android.material.internal.ContextUtils.ContextUtils",
+            "lib.java.com.google.android.material.internal.DescendantOffsetUtils.DescendantOffsetUtils",
+            "lib.java.com.google.android.material.internal.EdgeToEdgeUtils.EdgeToEdgeUtils",
+            "lib.java.com.google.android.material.internal.FadeThroughUtils.FadeThroughUtils",
+            "lib.java.com.google.android.material.internal.ManufacturerUtils.ManufacturerUtils",
+            "lib.java.com.google.android.material.internal.ThemeEnforcement.ThemeEnforcement",
+            "lib.java.com.google.android.material.internal.ToolbarUtils.ToolbarUtils",
+            "lib.java.com.google.android.material.internal.ViewUtils.ViewUtils",
+            "lib.java.com.google.android.material.internal.WindowUtils.WindowUtils"
+        ],
+        "children": {
+            "view-utilities": {
+                "components": [
+                    "lib.java.com.google.android.material.internal.ViewUtils.ViewUtils",
+                    "lib.java.com.google.android.material.internal.CheckableImageButton.SavedState"
+                ],
+                "children": {}
+            },
+            "theme-management": {
+                "components": [
+                    "lib.java.com.google.android.material.internal.ThemeEnforcement.ThemeEnforcement",
+                    "lib.java.com.google.android.material.internal.EdgeToEdgeUtils.EdgeToEdgeUtils"
+                ],
+                "children": {}
+            },
+            "context-operations": {
+                "components": [
+                    "lib.java.com.google.android.material.internal.ContextUtils.ContextUtils",
+                    "lib.java.com.google.android.material.internal.WindowUtils.WindowUtils"
+                ],
+                "children": {}
+            },
+            "layout-positioning": {
+                "components": [
+                    "lib.java.com.google.android.material.internal.DescendantOffsetUtils.DescendantOffsetUtils",
+                    "lib.java.com.google.android.material.internal.ToolbarUtils.ToolbarUtils"
+                ],
+                "children": {}
+            },
+            "system-integration": {
+                "components": [
+                    "lib.java.com.google.android.material.internal.ManufacturerUtils.ManufacturerUtils",
+                    "lib.java.com.google.android.material.internal.FadeThroughUtils.FadeThroughUtils"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "navigation": {
+        "path": "lib/java/com/google/android/material/navigation/",
+        "components": [
+            "lib.java.com.google.android.material.navigation.DrawerLayoutUtils.DrawerLayoutUtils",
+            "lib.java.com.google.android.material.navigation.NavigationBarPresenter.SavedState",
+            "lib.java.com.google.android.material.navigation.NavigationBarView.SavedState",
+            "lib.java.com.google.android.material.navigation.NavigationView.SavedState"
+        ],
+        "children": {
+            "navigation-drawer": {
+                "components": [
+                    "lib.java.com.google.android.material.navigation.NavigationView.SavedState"
+                ],
+                "children": {}
+            },
+            "navigation-bar": {
+                "components": [
+                    "lib.java.com.google.android.material.navigation.NavigationBarView.SavedState",
+                    "lib.java.com.google.android.material.navigation.NavigationBarPresenter.SavedState"
+                ],
+                "children": {}
+            },
+            "navigation-utilities": {
+                "components": [
+                    "lib.java.com.google.android.material.navigation.DrawerLayoutUtils.DrawerLayoutUtils"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "progress-indicator": {
+        "path": "lib/java/com/google/android/material/progressindicator/",
+        "components": [
+            "lib.java.com.google.android.material.loadingindicator.LoadingIndicator.LoadingIndicator",
+            "lib.java.com.google.android.material.progressindicator.BaseProgressIndicator.BaseProgressIndicator"
+        ],
+        "children": {
+            "loading-indicator": {
+                "components": [
+                    "lib.java.com.google.android.material.loadingindicator.LoadingIndicator.LoadingIndicator"
+                ],
+                "children": {}
+            },
+            "base-progress-indicator": {
+                "components": [
+                    "lib.java.com.google.android.material.progressindicator.BaseProgressIndicator.BaseProgressIndicator"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "resources": {
+        "path": "lib/java/com/google/android/material/resources/",
+        "components": [
+            "lib.java.com.google.android.material.resources.MaterialAttributes.MaterialAttributes",
+            "lib.java.com.google.android.material.resources.MaterialResources.MaterialResources",
+            "lib.java.com.google.android.material.resources.TextAppearanceConfig.TextAppearanceConfig",
+            "lib.java.com.google.android.material.resources.TypefaceUtils.TypefaceUtils"
+        ],
+        "children": {
+            "material-attributes": {
+                "components": [
+                    "lib.java.com.google.android.material.resources.MaterialAttributes.MaterialAttributes"
+                ],
+                "children": {}
+            },
+            "material-resources": {
+                "components": [
+                    "lib.java.com.google.android.material.resources.MaterialResources.MaterialResources"
+                ],
+                "children": {}
+            },
+            "text-appearance-config": {
+                "components": [
+                    "lib.java.com.google.android.material.resources.TextAppearanceConfig.TextAppearanceConfig"
+                ],
+                "children": {}
+            },
+            "typeface-utils": {
+                "components": [
+                    "lib.java.com.google.android.material.resources.TypefaceUtils.TypefaceUtils"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "ripple": {
+        "path": "lib/java/com/google/android/material/ripple/",
+        "components": [
+            "lib.java.com.google.android.material.ripple.RippleDrawableCompat.RippleDrawableCompat",
+            "lib.java.com.google.android.material.ripple.RippleUtils.RippleUtils"
+        ],
+        "children": {}
+    },
+    "search": {
+        "path": "lib/java/com/google/android/material/search/",
+        "components": [
+            "lib.java.com.google.android.material.search.SearchBar.OnLoadAnimationCallback",
+            "lib.java.com.google.android.material.search.SearchBar.SavedState",
+            "lib.java.com.google.android.material.search.SearchBarAnimationHelper.OnLoadAnimationInvocation",
+            "lib.java.com.google.android.material.search.SearchView.Behavior",
+            "lib.java.com.google.android.material.search.SearchView.TransitionListener",
+            "lib.java.com.google.android.material.search.SearchView.SavedState"
+        ],
+        "children": {
+            "search-bar": {
+                "components": [
+                    "lib.java.com.google.android.material.search.SearchBar.OnLoadAnimationCallback",
+                    "lib.java.com.google.android.material.search.SearchBar.SavedState"
+                ],
+                "children": {}
+            },
+            "search-view": {
+                "components": [
+                    "lib.java.com.google.android.material.search.SearchView.Behavior",
+                    "lib.java.com.google.android.material.search.SearchView.TransitionListener",
+                    "lib.java.com.google.android.material.search.SearchView.SavedState"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "shape": {
+        "path": "lib/java/com/google/android/material/shape/",
+        "components": [
+            "lib.java.com.google.android.material.shape.InterpolateOnScrollPositionChangeHelper.InterpolateOnScrollPositionChangeHelper",
+            "lib.java.com.google.android.material.shape.MaterialShapeUtils.MaterialShapeUtils",
+            "lib.java.com.google.android.material.shape.MaterialShapes.MaterialShapes",
+            "lib.java.com.google.android.material.shape.ShapeAppearanceModel.Builder",
+            "lib.java.com.google.android.material.shape.ShapeAppearancePathProvider.Lazy",
+            "lib.java.com.google.android.material.shape.ShapePathModel.ShapePathModel",
+            "lib.java.com.google.android.material.shape.StateListShapeAppearanceModel.Builder",
+            "lib.java.com.google.android.material.shape.TriangleEdgeTreatment.TriangleEdgeTreatment"
+        ],
+        "children": {
+            "shape-definition-and-modeling": {
+                "components": [
+                    "lib.java.com.google.android.material.shape.ShapeAppearanceModel.Builder",
+                    "lib.java.com.google.android.material.shape.ShapePathModel.ShapePathModel"
+                ],
+                "children": {}
+            },
+            "shape-utilities-and-helpers": {
+                "components": [
+                    "lib.java.com.google.android.material.shape.MaterialShapeUtils.MaterialShapeUtils",
+                    "lib.java.com.google.android.material.shape.TriangleEdgeTreatment.TriangleEdgeTreatment"
+                ],
+                "children": {}
+            },
+            "shape-rendering-and-animation": {
+                "components": [
+                    "lib.java.com.google.android.material.shape.ShapeAppearancePathProvider.Lazy",
+                    "lib.java.com.google.android.material.shape.InterpolateOnScrollPositionChangeHelper.InterpolateOnScrollPositionChangeHelper"
+                ],
+                "children": {}
+            },
+            "pre-defined-shapes": {
+                "components": [
+                    "lib.java.com.google.android.material.shape.MaterialShapes.MaterialShapes"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "side-sheet": {
+        "path": "lib/java/com/google/android/material/sidesheet/",
+        "components": [
+            "lib.java.com.google.android.material.sidesheet.SheetDialog.SheetDialog",
+            "lib.java.com.google.android.material.sidesheet.SheetUtils.SheetUtils",
+            "lib.java.com.google.android.material.sidesheet.SideSheetBehavior.SavedState"
+        ],
+        "children": {
+            "sheet-dialog-management": {
+                "components": [
+                    "lib.java.com.google.android.material.sidesheet.SheetDialog.SheetDialog"
+                ],
+                "children": {}
+            },
+            "side-sheet-behavior": {
+                "components": [
+                    "lib.java.com.google.android.material.sidesheet.SideSheetBehavior.SavedState"
+                ],
+                "children": {}
+            },
+            "sheet-utilities": {
+                "components": [
+                    "lib.java.com.google.android.material.sidesheet.SheetUtils.SheetUtils"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "slider": {
+        "path": "lib/java/com/google/android/material/slider/",
+        "components": [
+            "lib.java.com.google.android.material.slider.BaseOnChangeListener.BaseOnChangeListener",
+            "lib.java.com.google.android.material.slider.BaseOnSliderTouchListener.BaseOnSliderTouchListener",
+            "lib.java.com.google.android.material.slider.RangeSlider.OnSliderTouchListener",
+            "lib.java.com.google.android.material.slider.RangeSlider.OnChangeListener",
+            "lib.java.com.google.android.material.slider.SliderOrientation.SliderOrientation"
+        ],
+        "children": {
+            "base-listeners": {
+                "components": [
+                    "lib.java.com.google.android.material.slider.BaseOnChangeListener.BaseOnChangeListener",
+                    "lib.java.com.google.android.material.slider.BaseOnSliderTouchListener.BaseOnSliderTouchListener"
+                ],
+                "children": {}
+            },
+            "range-slider": {
+                "components": [
+                    "lib.java.com.google.android.material.slider.RangeSlider.OnSliderTouchListener",
+                    "lib.java.com.google.android.material.slider.RangeSlider.OnChangeListener"
+                ],
+                "children": {}
+            },
+            "orientation": {
+                "components": [
+                    "lib.java.com.google.android.material.slider.SliderOrientation.SliderOrientation"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "snackbar": {
+        "path": "lib/java/com/google/android/material/snackbar/",
+        "components": [
+            "lib.java.com.google.android.material.snackbar.BaseTransientBottomBar.ContentViewCallback",
+            "lib.java.com.google.android.material.snackbar.Snackbar.Callback",
+            "lib.java.com.google.android.material.snackbar.Snackbar.SnackbarLayout",
+            "lib.java.com.google.android.material.snackbar.SnackbarContentLayout.SnackbarContentLayout"
+        ],
+        "children": {
+            "base-transient-bottom-bar": {
+                "components": [
+                    "lib.java.com.google.android.material.snackbar.BaseTransientBottomBar.ContentViewCallback"
+                ],
+                "children": {}
+            },
+            "snackbar-implementation": {
+                "components": [
+                    "lib.java.com.google.android.material.snackbar.Snackbar.Callback",
+                    "lib.java.com.google.android.material.snackbar.Snackbar.SnackbarLayout"
+                ],
+                "children": {}
+            },
+            "content-layout": {
+                "components": [
+                    "lib.java.com.google.android.material.snackbar.SnackbarContentLayout.SnackbarContentLayout"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "tabs": {
+        "path": "lib/java/com/google/android/material/tabs/",
+        "components": [
+            "lib.java.com.google.android.material.tabs.TabItem.TabItem",
+            "lib.java.com.google.android.material.tabs.TabLayout.PagerAdapterObserver",
+            "lib.java.com.google.android.material.tabs.TabLayout.ViewPagerOnTabSelectedListener"
+        ],
+        "children": {}
+    },
+    "text-field": {
+        "path": "lib/java/com/google/android/material/textfield/",
+        "components": [
+            "lib.java.com.google.android.material.textfield.EditTextUtils.EditTextUtils",
+            "lib.java.com.google.android.material.textfield.IconHelper.IconHelper",
+            "lib.java.com.google.android.material.textfield.TextInputEditText.TextInputEditText",
+            "lib.java.com.google.android.material.textfield.TextInputLayout.OnEndIconChangedListener"
+        ],
+        "children": {
+            "text-input-layout": {
+                "components": [
+                    "lib.java.com.google.android.material.textfield.TextInputLayout.OnEndIconChangedListener"
+                ],
+                "children": {}
+            },
+            "text-input-edit-text": {
+                "components": [
+                    "lib.java.com.google.android.material.textfield.TextInputEditText.TextInputEditText"
+                ],
+                "children": {}
+            },
+            "icon-management": {
+                "components": [
+                    "lib.java.com.google.android.material.textfield.IconHelper.IconHelper"
+                ],
+                "children": {}
+            },
+            "text-field-validation": {
+                "components": [
+                    "lib.java.com.google.android.material.textfield.EditTextUtils.EditTextUtils"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "theme": {
+        "path": "lib/java/com/google/android/material/theme/",
+        "components": [
+            "lib.java.com.google.android.material.theme.MaterialComponentsViewInflater.MaterialComponentsViewInflater",
+            "lib.java.com.google.android.material.theme.overlay.MaterialThemeOverlay.MaterialThemeOverlay"
+        ],
+        "children": {}
+    },
+    "transformation": {
+        "path": "lib/java/com/google/android/material/transformation/",
+        "components": [
+            "lib.java.com.google.android.material.transformation.FabTransformationScrimBehavior.FabTransformationScrimBehavior",
+            "lib.java.com.google.android.material.transformation.FabTransformationSheetBehavior.FabTransformationSheetBehavior",
+            "lib.java.com.google.android.material.transformation.TransformationChildCard.TransformationChildCard",
+            "lib.java.com.google.android.material.transformation.TransformationChildLayout.TransformationChildLayout"
+        ],
+        "children": {
+            "fab-transformation-behaviors": {
+                "components": [
+                    "lib.java.com.google.android.material.transformation.FabTransformationScrimBehavior.FabTransformationScrimBehavior",
+                    "lib.java.com.google.android.material.transformation.FabTransformationSheetBehavior.FabTransformationSheetBehavior"
+                ],
+                "children": {}
+            },
+            "transformation-containers": {
+                "components": [
+                    "lib.java.com.google.android.material.transformation.TransformationChildCard.TransformationChildCard",
+                    "lib.java.com.google.android.material.transformation.TransformationChildLayout.TransformationChildLayout"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "transition": {
+        "path": "lib/java/com/google/android/material/transition/",
+        "components": [
+            "lib.java.com.google.android.material.transition.FadeModeEvaluator.FadeModeEvaluator",
+            "lib.java.com.google.android.material.transition.FadeModeEvaluators.FadeModeEvaluators",
+            "lib.java.com.google.android.material.transition.FadeModeResult.FadeModeResult",
+            "lib.java.com.google.android.material.transition.FadeProvider.FadeProvider",
+            "lib.java.com.google.android.material.transition.FadeThroughProvider.FadeThroughProvider",
+            "lib.java.com.google.android.material.transition.FitModeEvaluator.FitModeEvaluator",
+            "lib.java.com.google.android.material.transition.FitModeEvaluators.FitModeEvaluators",
+            "lib.java.com.google.android.material.transition.FitModeResult.FitModeResult",
+            "lib.java.com.google.android.material.transition.Hold.Hold",
+            "lib.java.com.google.android.material.transition.MaskEvaluator.MaskEvaluator",
+            "lib.java.com.google.android.material.transition.MaterialArcMotion.MaterialArcMotion",
+            "lib.java.com.google.android.material.transition.MaterialContainerTransform.ProgressThresholds",
+            "lib.java.com.google.android.material.transition.MaterialContainerTransform.MaterialContainerTransform",
+            "lib.java.com.google.android.material.transition.MaterialContainerTransform.TransitionDrawable",
+            "lib.java.com.google.android.material.transition.MaterialContainerTransform.ProgressThresholdsGroup",
+            "lib.java.com.google.android.material.transition.MaterialElevationScale.MaterialElevationScale",
+            "lib.java.com.google.android.material.transition.MaterialFade.MaterialFade",
+            "lib.java.com.google.android.material.transition.MaterialFadeThrough.MaterialFadeThrough",
+            "lib.java.com.google.android.material.transition.MaterialSharedAxis.MaterialSharedAxis",
+            "lib.java.com.google.android.material.transition.MaterialVisibility.MaterialVisibility",
+            "lib.java.com.google.android.material.transition.ScaleProvider.ScaleProvider",
+            "lib.java.com.google.android.material.transition.SlideDistanceProvider.SlideDistanceProvider",
+            "lib.java.com.google.android.material.transition.TransitionListenerAdapter.TransitionListenerAdapter",
+            "lib.java.com.google.android.material.transition.TransitionUtils.TransitionUtils",
+            "lib.java.com.google.android.material.transition.TransitionUtils.CornerSizeBinaryOperator",
+            "lib.java.com.google.android.material.transition.VisibilityAnimatorProvider.VisibilityAnimatorProvider",
+            "lib.java.com.google.android.material.transition.platform.FadeModeEvaluators.FadeModeEvaluators",
+            "lib.java.com.google.android.material.transition.platform.FitModeEvaluators.FitModeEvaluators",
+            "lib.java.com.google.android.material.transition.platform.MaterialElevationScale.MaterialElevationScale",
+            "lib.java.com.google.android.material.transition.platform.MaterialVisibility.MaterialVisibility",
+            "lib.java.com.google.android.material.transition.platform.TransitionUtils.TransitionUtils"
+        ],
+        "children": {
+            "container-transforms": {
+                "components": [
+                    "lib.java.com.google.android.material.transition.MaterialContainerTransform.MaterialContainerTransform",
+                    "lib.java.com.google.android.material.transition.FadeModeEvaluators.FadeModeEvaluators",
+                    "lib.java.com.google.android.material.transition.FitModeEvaluators.FitModeEvaluators",
+                    "lib.java.com.google.android.material.transition.MaskEvaluator.MaskEvaluator",
+                    "lib.java.com.google.android.material.transition.MaterialContainerTransform.ProgressThresholds",
+                    "lib.java.com.google.android.material.transition.MaterialContainerTransform.TransitionDrawable",
+                    "lib.java.com.google.android.material.transition.MaterialContainerTransform.ProgressThresholdsGroup"
+                ],
+                "children": {
+                    "animation-providers": {
+                        "components": [
+                            "lib.java.com.google.android.material.transition.FadeProvider.FadeProvider",
+                            "lib.java.com.google.android.material.transition.FadeThroughProvider.FadeThroughProvider",
+                            "lib.java.com.google.android.material.transition.ScaleProvider.ScaleProvider",
+                            "lib.java.com.google.android.material.transition.SlideDistanceProvider.SlideDistanceProvider",
+                            "lib.java.com.google.android.material.transition.VisibilityAnimatorProvider.VisibilityAnimatorProvider"
+                        ],
+                        "children": {}
+                    },
+                    "platform-compatibility": {
+                        "components": [
+                            "lib.java.com.google.android.material.transition.platform.FadeModeEvaluators.FadeModeEvaluators",
+                            "lib.java.com.google.android.material.transition.platform.FitModeEvaluators.FitModeEvaluators",
+                            "lib.java.com.google.android.material.transition.platform.MaterialElevationScale.MaterialElevationScale",
+                            "lib.java.com.google.android.material.transition.platform.MaterialVisibility.MaterialVisibility",
+                            "lib.java.com.google.android.material.transition.platform.TransitionUtils.TransitionUtils"
+                        ],
+                        "children": {}
+                    },
+                    "utilities-helpers": {
+                        "components": [
+                            "lib.java.com.google.android.material.transition.TransitionUtils.TransitionUtils",
+                            "lib.java.com.google.android.material.transition.TransitionUtils.CornerSizeBinaryOperator",
+                            "lib.java.com.google.android.material.transition.MaterialArcMotion.MaterialArcMotion",
+                            "lib.java.com.google.android.material.transition.TransitionListenerAdapter.TransitionListenerAdapter",
+                            "lib.java.com.google.android.material.transition.FadeModeEvaluator.FadeModeEvaluator",
+                            "lib.java.com.google.android.material.transition.FadeModeResult.FadeModeResult",
+                            "lib.java.com.google.android.material.transition.FitModeEvaluator.FitModeEvaluator",
+                            "lib.java.com.google.android.material.transition.FitModeResult.FitModeResult"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "visibility-transitions": {
+                "components": [
+                    "lib.java.com.google.android.material.transition.MaterialFade.MaterialFade",
+                    "lib.java.com.google.android.material.transition.MaterialFadeThrough.MaterialFadeThrough",
+                    "lib.java.com.google.android.material.transition.MaterialSharedAxis.MaterialSharedAxis",
+                    "lib.java.com.google.android.material.transition.MaterialElevationScale.MaterialElevationScale",
+                    "lib.java.com.google.android.material.transition.Hold.Hold",
+                    "lib.java.com.google.android.material.transition.MaterialVisibility.MaterialVisibility"
+                ],
+                "children": {}
+            },
+            "animation-providers": {
+                "components": [
+                    "lib.java.com.google.android.material.transition.FadeProvider.FadeProvider",
+                    "lib.java.com.google.android.material.transition.FadeThroughProvider.FadeThroughProvider",
+                    "lib.java.com.google.android.material.transition.ScaleProvider.ScaleProvider",
+                    "lib.java.com.google.android.material.transition.SlideDistanceProvider.SlideDistanceProvider",
+                    "lib.java.com.google.android.material.transition.VisibilityAnimatorProvider.VisibilityAnimatorProvider"
+                ],
+                "children": {}
+            },
+            "platform-compatibility": {
+                "components": [
+                    "lib.java.com.google.android.material.transition.platform.FadeModeEvaluators.FadeModeEvaluators",
+                    "lib.java.com.google.android.material.transition.platform.FitModeEvaluators.FitModeEvaluators",
+                    "lib.java.com.google.android.material.transition.platform.MaterialElevationScale.MaterialElevationScale",
+                    "lib.java.com.google.android.material.transition.platform.MaterialVisibility.MaterialVisibility",
+                    "lib.java.com.google.android.material.transition.platform.TransitionUtils.TransitionUtils"
+                ],
+                "children": {}
+            },
+            "utilities-helpers": {
+                "components": [
+                    "lib.java.com.google.android.material.transition.TransitionUtils.TransitionUtils",
+                    "lib.java.com.google.android.material.transition.TransitionUtils.CornerSizeBinaryOperator",
+                    "lib.java.com.google.android.material.transition.MaterialArcMotion.MaterialArcMotion",
+                    "lib.java.com.google.android.material.transition.TransitionListenerAdapter.TransitionListenerAdapter",
+                    "lib.java.com.google.android.material.transition.FadeModeEvaluator.FadeModeEvaluator",
+                    "lib.java.com.google.android.material.transition.FadeModeResult.FadeModeResult",
+                    "lib.java.com.google.android.material.transition.FitModeEvaluator.FitModeEvaluator",
+                    "lib.java.com.google.android.material.transition.FitModeResult.FitModeResult"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "common-utils": {
+        "path": "lib/java/com/google/android/material/",
+        "components": [
+            "lib.java.com.google.android.material.animation.AnimatableView.Listener",
+            "lib.java.com.google.android.material.animation.AnimatableView.AnimatableView",
+            "lib.java.com.google.android.material.animation.AnimatorSetCompat.AnimatorSetCompat",
+            "lib.java.com.google.android.material.canvas.CanvasCompat.CanvasCompat",
+            "lib.java.com.google.android.material.drawable.DrawableUtils.DrawableUtils",
+            "lib.java.com.google.android.material.floatingtoolbar.FloatingToolbarLayout.FloatingToolbarLayout",
+            "lib.java.com.google.android.material.math.MathUtils.MathUtils",
+            "lib.java.com.google.android.material.motion.MaterialBackAnimationHelper.MaterialBackAnimationHelper",
+            "lib.java.com.google.android.material.motion.MotionUtils.MotionUtils",
+            "lib.java.com.google.android.material.overflow.OverflowLinearLayout.OverflowLinearLayout",
+            "lib.java.com.google.android.material.shadow.ShadowDrawableWrapper.ShadowDrawableWrapper"
+        ],
+        "children": {
+            "animation-utilities": {
+                "components": [
+                    "lib.java.com.google.android.material.animation.AnimatableView.AnimatableView",
+                    "lib.java.com.google.android.material.animation.AnimatableView.Listener",
+                    "lib.java.com.google.android.material.animation.AnimatorSetCompat.AnimatorSetCompat"
+                ],
+                "children": {}
+            },
+            "mathematical-operations": {
+                "components": [
+                    "lib.java.com.google.android.material.math.MathUtils.MathUtils"
+                ],
+                "children": {}
+            },
+            "canvas-compatibility": {
+                "components": [
+                    "lib.java.com.google.android.material.canvas.CanvasCompat.CanvasCompat"
+                ],
+                "children": {}
+            },
+            "drawable-utilities": {
+                "components": [
+                    "lib.java.com.google.android.material.drawable.DrawableUtils.DrawableUtils"
+                ],
+                "children": {}
+            },
+            "motion-system": {
+                "components": [
+                    "lib.java.com.google.android.material.motion.MaterialBackAnimationHelper.MaterialBackAnimationHelper",
+                    "lib.java.com.google.android.material.motion.MotionUtils.MotionUtils"
+                ],
+                "children": {}
+            },
+            "layout-components": {
+                "components": [
+                    "lib.java.com.google.android.material.floatingtoolbar.FloatingToolbarLayout.FloatingToolbarLayout",
+                    "lib.java.com.google.android.material.overflow.OverflowLinearLayout.OverflowLinearLayout"
+                ],
+                "children": {}
+            },
+            "shadow-system": {
+                "components": [
+                    "lib.java.com.google.android.material.shadow.ShadowDrawableWrapper.ShadowDrawableWrapper"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "catalog": {
+        "path": "catalog/java/io/material/catalog/",
+        "components": [
+            "catalog.java.io.material.catalog.adaptive.AdaptiveFeedDemoActivity.AdaptiveFeedDemoActivity",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveFeedDemoActivity.StateContainer",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveFragment.Module",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveHeroDemoActivity.AdaptiveHeroDemoActivity",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveListViewDemoActivity.StateContainer",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveListViewDemoActivity.AdaptiveListViewDemoActivity",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveMusicPlayerDemoActivity.AdaptiveMusicPlayerDemoActivity",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveMusicPlayerDemoModule.AdaptiveMusicPlayerDemoModule",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveMusicPlayerLibraryDemoFragment.StateContainer",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveSupportingPanelDemoActivity.AdaptiveSupportingPanelDemoActivity",
+            "catalog.java.io.material.catalog.adaptive.AdaptiveUtils.AdaptiveUtils",
+            "catalog.java.io.material.catalog.application.CatalogApplicationComponent.Builder",
+            "catalog.java.io.material.catalog.application.CatalogApplicationComponent.CatalogApplicationComponent",
+            "catalog.java.io.material.catalog.application.CatalogApplicationModule.CatalogApplicationModule",
+            "catalog.java.io.material.catalog.application.CatalogDemoModule.CatalogDemoModule",
+            "catalog.java.io.material.catalog.application.legacymultidex.LegacyMultidexCatalogApplication.LegacyMultidexCatalogApplication",
+            "catalog.java.io.material.catalog.bottomappbar.BottomAppBarFragment.Module",
+            "catalog.java.io.material.catalog.bottomnav.BottomNavigationFragment.Module",
+            "catalog.java.io.material.catalog.bottomsheet.BottomSheetFragment.Module",
+            "catalog.java.io.material.catalog.bottomsheet.BottomSheetScrollableContentDemoFragment.BottomSheet",
+            "catalog.java.io.material.catalog.button.ButtonsFragment.Module",
+            "catalog.java.io.material.catalog.card.CardFragment.Module",
+            "catalog.java.io.material.catalog.card.CardSelectionModeActivity.CardSelectionModeActivity",
+            "catalog.java.io.material.catalog.card.SelectableCardsAdapter.DetailsLookup",
+            "catalog.java.io.material.catalog.card.SelectableCardsAdapter.ItemViewHolder",
+            "catalog.java.io.material.catalog.card.SelectableCardsAdapter.KeyProvider",
+            "catalog.java.io.material.catalog.card.SelectableCardsAdapter.Item",
+            "catalog.java.io.material.catalog.carousel.CarouselData.CarouselData",
+            "catalog.java.io.material.catalog.carousel.CarouselDemoUtils.CarouselDemoUtils",
+            "catalog.java.io.material.catalog.carousel.CarouselFragment.Module",
+            "catalog.java.io.material.catalog.checkbox.CheckBoxFragment.Module",
+            "catalog.java.io.material.catalog.chip.ChipFragment.Module",
+            "catalog.java.io.material.catalog.chip.ChipRecyclerviewDemoFragment.MyViewHolder",
+            "catalog.java.io.material.catalog.color.ColorDemoUtils.ColorDemoUtils",
+            "catalog.java.io.material.catalog.color.ColorHarmonizationDemoActivity.ColorHarmonizationDemoActivity",
+            "catalog.java.io.material.catalog.color.ColorsFragment.Module",
+            "catalog.java.io.material.catalog.datepicker.DatePickerDemoLandingFragment.Module",
+            "catalog.java.io.material.catalog.dialog.DialogDemoLandingFragment.Module",
+            "catalog.java.io.material.catalog.divider.DividerFragment.Module",
+            "catalog.java.io.material.catalog.dockedtoolbar.DockedToolbarFragment.Module",
+            "catalog.java.io.material.catalog.draggable.DraggableCoordinatorLayout.DraggableCoordinatorLayout",
+            "catalog.java.io.material.catalog.elevation.ElevationFragment.Module",
+            "catalog.java.io.material.catalog.elevation.ElevationOverlayDemoActivity.ElevationOverlayDemoActivity",
+            "catalog.java.io.material.catalog.elevation.ElevationOverlayDemoActivity.Adapter",
+            "catalog.java.io.material.catalog.elevation.ElevationOverlayDemoActivity.ItemViewHolder",
+            "catalog.java.io.material.catalog.fab.FabFragment.Module",
+            "catalog.java.io.material.catalog.feature.FeatureDemoUtils.FeatureDemoUtils",
+            "catalog.java.io.material.catalog.feature.MemoryView.RuntimeWrapper",
+            "catalog.java.io.material.catalog.feature.MemoryView.MemoryView",
+            "catalog.java.io.material.catalog.feature.ViewScheduler.ViewScheduler",
+            "catalog.java.io.material.catalog.floatingtoolbar.FloatingToolbarFragment.Module",
+            "catalog.java.io.material.catalog.font.FontFragment.Module",
+            "catalog.java.io.material.catalog.imageview.ShapeableImageViewFragment.Module",
+            "catalog.java.io.material.catalog.internal.InternalOptionsMenuPresenter.InternalOptionsMenuPresenter",
+            "catalog.java.io.material.catalog.listitem.ListsFragment.Module",
+            "catalog.java.io.material.catalog.listitem.ListsMainDemoFragment.MarginItemDecoration",
+            "catalog.java.io.material.catalog.listitem.ListsMainDemoFragment.ListsAdapter",
+            "catalog.java.io.material.catalog.listitem.ListsMainDemoFragment.CustomItemViewHolder",
+            "catalog.java.io.material.catalog.listitem.MultiSectionListDemoFragment.ListsAdapter",
+            "catalog.java.io.material.catalog.listitem.MultiSectionListDemoFragment.SubheaderViewHolder",
+            "catalog.java.io.material.catalog.loadingindicator.LoadingIndicatorFragment.Module",
+            "catalog.java.io.material.catalog.main.MainActivity.Module",
+            "catalog.java.io.material.catalog.main.MainActivity.MainActivity",
+            "catalog.java.io.material.catalog.materialswitch.SwitchFragment.Module",
+            "catalog.java.io.material.catalog.materialswitch.SwitchFragment.SwitchFragment",
+            "catalog.java.io.material.catalog.materialswitch.SwitchMainDemoFragment.SwitchMainDemoFragment",
+            "catalog.java.io.material.catalog.menu.MenuFragment.Module",
+            "catalog.java.io.material.catalog.musicplayer.MusicData.MusicData",
+            "catalog.java.io.material.catalog.musicplayer.MusicPlayerDemoModule.MusicPlayerDemoModule",
+            "catalog.java.io.material.catalog.navigationdrawer.CustomNavigationDrawerDemoActivity.CustomNavigationDrawerDemoActivity",
+            "catalog.java.io.material.catalog.navigationdrawer.NavigationDrawerDemoActivity.NavigationDrawerDemoActivity",
+            "catalog.java.io.material.catalog.navigationdrawer.NavigationDrawerFragment.Module",
+            "catalog.java.io.material.catalog.navigationrail.NavigationRailFragment.Module",
+            "catalog.java.io.material.catalog.preferences.CatalogPreferencesHelper.PreferencesFragment",
+            "catalog.java.io.material.catalog.preferences.ThemeOverlayUtils.ThemeOverlayUtils",
+            "catalog.java.io.material.catalog.progressindicator.ProgressIndicatorFragment.Module",
+            "catalog.java.io.material.catalog.radiobutton.RadioButtonFragment.Module",
+            "catalog.java.io.material.catalog.search.SearchBarWithAppBarIconsDemoActivity.SearchBarWithAppBarIconsDemoActivity",
+            "catalog.java.io.material.catalog.search.SearchDemoUtils.SearchDemoUtils",
+            "catalog.java.io.material.catalog.search.SearchFragment.Module",
+            "catalog.java.io.material.catalog.search.SearchMainDemoActivity.SearchMainDemoActivity",
+            "catalog.java.io.material.catalog.search.SearchRecyclerDemoActivity.Module",
+            "catalog.java.io.material.catalog.search.SearchRecyclerDemoActivity.SearchRecyclerDemoActivity",
+            "catalog.java.io.material.catalog.shapetheming.ShapeThemingFragment.Module",
+            "catalog.java.io.material.catalog.sidesheet.SideSheetFragment.Module",
+            "catalog.java.io.material.catalog.slider.SliderFragment.Module",
+            "catalog.java.io.material.catalog.switchmaterial.SwitchFragment.Module",
+            "catalog.java.io.material.catalog.tableofcontents.TocModule.TocModule",
+            "catalog.java.io.material.catalog.tabs.TabsFragment.Module",
+            "catalog.java.io.material.catalog.textfield.TextFieldFragment.Module",
+            "catalog.java.io.material.catalog.timepicker.TimePickerDemoLandingFragment.Module",
+            "catalog.java.io.material.catalog.topappbar.TopAppBarActionBarDemoActivity.TopAppBarActionBarDemoActivity",
+            "catalog.java.io.material.catalog.topappbar.TopAppBarFragment.Module",
+            "catalog.java.io.material.catalog.topappbar.TopAppBarScrollingTransparentStatusDemoActivity.TopAppBarScrollingTransparentStatusDemoActivity",
+            "catalog.java.io.material.catalog.transition.SwitchRowView.SwitchRowView",
+            "catalog.java.io.material.catalog.transition.TransitionContainerTransformEndDemoActivity.TransitionContainerTransformEndDemoActivity",
+            "catalog.java.io.material.catalog.transition.TransitionContainerTransformStartDemoActivity.TransitionContainerTransformStartDemoActivity",
+            "catalog.java.io.material.catalog.transition.TransitionDemoModule.TransitionDemoModule",
+            "catalog.java.io.material.catalog.transition.TransitionFragment.Module",
+            "catalog.java.io.material.catalog.transition.TransitionSharedAxisEndDemoActivity.TransitionSharedAxisEndDemoActivity",
+            "catalog.java.io.material.catalog.transition.TransitionSharedAxisStartDemoActivity.TransitionSharedAxisStartDemoActivity"
+        ],
+        "children": {}
     }
 }

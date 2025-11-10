@@ -2,170 +2,157 @@
 
 ## Purpose
 
-SumatraPDF is a lightweight, open-source document reader for Windows that supports multiple document formats including PDF, ePub, Mobi, XPS, DjVu, CHM, CBZ, and CBR. The repository provides a complete document viewing solution with a focus on speed, simplicity, and minimal resource usage.
+SumatraPDF is a lightweight, open-source document viewer for Windows that supports multiple document formats including PDF, EPUB, MOBI, CBZ/CBR, XPS, DjVu, and CHM files. The repository contains the complete source code for the application, providing a fast, minimal, and portable document reading experience with a focus on simplicity and performance.
 
-## Architecture
-
-The repository follows a modular architecture with clear separation of concerns:
+## End-to-End Architecture
 
 ```mermaid
 graph TB
-    subgraph "Core Application Layer"
-        UI[ui_components]
-        ENG[engines]
-        UTILS[utils]
+    subgraph "User Interface Layer"
+        UI[Core Application & UI]
+        DM[Dark Mode Support]
+        HTML[HTML Rendering]
+        UIA[Accessibility UIA]
     end
     
-    subgraph "Document Processing"
-        MUPDF[mupdf_java_bindings]
-        MUPDF_WRAP[mupdf_wrap_scripts]
-        GUMBO[gumbo_parser]
-        FORMATS[document_formats]
+    subgraph "Document Engine Layer"
+        MUPDF[MuPDF Engine]
+        DJVU[DjVu Engine]
+        EBOOK[E-book Engines]
+        IMAGE[Image & Comic Engine]
+        PS[PostScript Engine]
     end
     
-    subgraph "Platform Layer"
-        WINGUI[wingui]
-        UIA[uia]
-        TOOLS[tools]
+    subgraph "Core Services Layer"
+        UTILS[Core Utilities]
+        SYNC[PDF Synchronization]
+        JNI[MuPDF JNI Bindings]
     end
     
-    subgraph "Foundation"
-        META[metadata]
+    subgraph "External Dependencies"
+        MUPDF_LIB[MuPDF Library]
+        WINDOWS[Windows APIs]
+        JAVA[Java Runtime]
     end
     
-    UI --> ENG
-    ENG --> MUPDF
-    ENG --> FORMATS
-    UTILS --> UI
-    UTILS --> ENG
-    MUPDF_WRAP --> MUPDF
-    WINGUI --> UI
-    UIA --> UI
-    META --> UTILS
+    UI --> MUPDF
+    UI --> DJVU
+    UI --> EBOOK
+    UI --> IMAGE
+    UI --> PS
+    
+    MUPDF --> UTILS
+    DJVU --> UTILS
+    EBOOK --> UTILS
+    IMAGE --> UTILS
+    PS --> UTILS
+    
+    SYNC --> MUPDF
+    JNI --> MUPDF_LIB
+    
+    DM --> WINDOWS
+    HTML --> WINDOWS
+    UIA --> WINDOWS
+    
+    UI --> DM
+    UI --> HTML
+    UI --> UIA
 ```
 
-## Core Modules
+## Core Modules Documentation
 
-### 1. **UI Components** (`ui_components`)
-Comprehensive user interface framework providing:
-- Main window management and document display
-- Command palette with fuzzy search capabilities
-- Dialog system for user interactions
-- Toolbar and menu systems
-- Annotation editing interface
-- Home page with document thumbnails
-- Print system integration
-- Update checking mechanism
+### 1. Core Application and UI Module
+**Path**: `src/`
+- **Purpose**: Central application framework providing main window management, UI components, document navigation, and application services
+- **Key Components**: MainWindow, Toolbar, Menu System, Command Palette, Search & Find, Print System
+- **Documentation**: [core_application_and_ui.md](core_application_and_ui.md)
 
-### 2. **Engines** (`engines`)
-Document processing layer with format-specific engines:
-- **EngineMupdf**: PDF, XPS, and eBook formats via MuPDF
-- **EngineDjVu**: DjVu document support
-- **EngineEbook**: Base for reflowable formats (EPUB, FB2, MOBI, CHM, HTML, TXT, PDB)
-- **EngineImages**: Image files and comic book archives (CBZ, CBR, CB7, CBT)
-- **EnginePs**: PostScript via Ghostscript conversion
+### 2. Document Engine Modules
 
-### 3. **Utils** (`utils`)
-Foundation utilities providing:
-- Multi-format archive handling (ZIP, RAR, 7Z, TAR)
-- Image processing (AVIF, TGA readers)
-- High-performance data structures (dictionaries, string vectors)
-- File system services (file watching, type detection)
-- Text processing (formatting, JSON parsing)
-- Compression and threading utilities
+#### MuPDF Engine Integration
+**Path**: `src/`
+- **Purpose**: Primary document rendering engine supporting PDF, XPS, CBZ, and e-book formats
+- **Key Components**: Page rendering, annotation management, text extraction, link processing
+- **Documentation**: [mupdf_engine_integration.md](mupdf_engine_integration.md)
 
-### 4. **MuPDF Integration** (`mupdf_java_bindings` & `mupdf_wrap_scripts`)
-Complete MuPDF library integration:
-- Java language bindings for document processing
-- Automatic wrapper generation for C++, Python, C#
-- Comprehensive PDF features (forms, annotations, digital signatures)
-- Rendering pipeline with display lists and pixmaps
-- Content extraction and text search
-- Security and signature verification
+#### DjVu Engine Integration
+**Path**: `src/`
+- **Purpose**: Specialized engine for DjVu document format support
+- **Key Components**: Page navigation, document parsing, format-specific features
+- **Documentation**: [djvu_engine_integration.md](djvu_engine_integration.md)
 
-### 5. **Document Formats** (`document_formats`)
-Specialized format support:
-- **CHM Support**: Microsoft Compiled HTML Help files
-- **Mobi Support**: Mobipocket eBook format with compression
-- **PDF Sync**: LaTeX/PDF synchronization for forward/inverse search
+#### E-book Engines
+**Path**: `src/`
+- **Purpose**: Support for EPUB, FictionBook2, Mobi, CHM, and other e-book formats
+- **Key Components**: Format-specific engines, HTML rendering, TOC generation
+- **Documentation**: [ebook_engines.md](ebook_engines.md)
 
-### 6. **Platform Layer** (`wingui`, `uia`, `tools`)
-Windows-specific functionality:
-- **Wingui**: Windows GUI framework with HTML rendering (IE/WebView2)
-- **UIA**: UI Automation support for accessibility tools
-- **Tools**: Archive creation and plugin testing utilities
+#### Image and Comic Book Engine
+**Path**: `src/EngineImages.cpp`
+- **Purpose**: Rendering support for image files and comic book archives (CBZ, CBR, CB7, CBT)
+- **Key Components**: Image caching, archive handling, metadata parsing
+- **Documentation**: [image_and_comic_book_engine.md](image_and_comic_book_engine.md)
 
-### 7. **Metadata System** (`metadata`)
-Type system foundation providing:
-- Strongly-typed metadata definitions
-- C++ type mapping and validation
-- Configuration management
-- Code generation support
+#### PostScript Engine
+**Path**: `src/EnginePs.cpp`
+- **Purpose**: PostScript document rendering support
+- **Key Components**: PS document processing, rendering pipeline
+- **Documentation**: [postscript_engine.md](postscript_engine.md)
+
+### 3. Support Modules
+
+#### PDF Synchronization
+**Path**: `src/PdfSync.cpp`
+- **Purpose**: Bidirectional synchronization between PDF documents and LaTeX source files
+- **Key Components**: SyncTeX support, forward/inverse search, coordinate mapping
+- **Documentation**: [pdf_synchronization.md](pdf_synchronization.md)
+
+#### Windows Dark Mode
+**Path**: `ext/darkmodelib/src/`
+- **Purpose**: Comprehensive dark mode support for Windows 10/11
+- **Key Components**: Theme management, control styling, system integration
+- **Documentation**: [windows_dark_mode.md](windows_dark_mode.md)
+
+#### HTML Rendering Components
+**Path**: `src/wingui/`
+- **Purpose**: HTML content rendering using MSHTML and WebView2 engines
+- **Key Components**: CHM document support, protocol handling, modern web standards
+- **Documentation**: [html_rendering_components.md](html_rendering_components.md)
+
+#### Accessibility UIA Provider
+**Path**: `src/uia/`
+- **Purpose**: UI Automation support for screen readers and assistive technologies
+- **Key Components**: Document provider, text range management, navigation support
+- **Documentation**: [accessibility_uia_provider.md](accessibility_uia_provider.md)
+
+#### Core Utilities
+**Path**: `src/utils/`
+- **Purpose**: Fundamental utility services and data structures
+- **Key Components**: File watching, data structures, parsing utilities, archive handling
+- **Documentation**: [core_utilities.md](core_utilities.md)
+
+#### MuPDF Fitz JNI Bindings
+**Path**: `mupdf/platform/java/src/com/artifex/mupdf/fitz/`
+- **Purpose**: Java Native Interface bindings for MuPDF library
+- **Key Components**: Context management, document handling, rendering, PDF features
+- **Documentation**: [mupdf_fitz_jni_bindings.md](mupdf_fitz_jni_bindings.md)
 
 ## Key Features
 
-### Document Support
-- 20+ document formats including PDF, EPUB, MOBI, XPS, DjVu, CHM, CBZ, CBR
-- Multi-format archive support (ZIP, RAR, 7Z, TAR)
-- Image formats (PNG, JPEG, GIF, TIFF, BMP, TGA, WebP, JP2, HEIC, AVIF)
-
-### Rendering Capabilities
-- Hardware-accelerated rendering via MuPDF
-- Display list caching for performance
-- Zoom, rotation, and coordinate transformation
-- Text extraction with coordinate mapping
-- Search functionality with hit highlighting
-
-### User Interface
-- Tabbed document interface
-- Command palette with fuzzy search
-- Customizable toolbar and menus
-- Annotation editing for PDFs
-- Table of contents navigation
-- Bookmark management
-- Print support
-
-### Accessibility
-- Full UI Automation support
-- Screen reader compatibility
-- Keyboard navigation
-- High contrast mode support
-
-### Security
-- Digital signature verification (PKCS#7)
-- Document encryption support
-- Certificate validation
-- Secure redaction capabilities
+- **Multi-format Support**: PDF, EPUB, MOBI, XPS, DjVu, CHM, CBZ/CBR, and image formats
+- **Lightweight Design**: Fast startup, minimal memory footprint, portable executable
+- **Advanced Features**: Tabbed interface, bookmarks, annotations, search, printing
+- **Accessibility**: Screen reader support, keyboard navigation, high contrast mode
+- **Customization**: Themes, keyboard shortcuts, external viewer integration
+- **Performance**: Efficient caching, lazy loading, multi-threading support
 
 ## Development Architecture
 
-The repository uses a hybrid C++/Java architecture with automatic code generation:
+The repository follows a modular architecture with clear separation of concerns:
 
-```mermaid
-graph LR
-    A[MuPDF C Library] --> B[mupdf_wrap_scripts]
-    B --> C[Generated C++ Wrappers]
-    B --> D[Generated Java Bindings]
-    C --> E[SumatraPDF Core]
-    D --> F[Java Components]
-    E --> G[Windows Application]
-```
+- **Document Engines**: Pluggable engines for different formats
+- **UI Layer**: Windows-native UI with theming support
+- **Core Services**: Shared utilities and system integration
+- **External Bindings**: Java and other language interfaces
 
-## Build System
-
-- CMake-based build system
-- Multi-language support (C++, Java, Python, C#)
-- Cross-platform compatibility (Windows primary)
-- Automated wrapper generation
-- Comprehensive testing framework
-
-## Performance Characteristics
-
-- Lightweight memory footprint
-- Fast document loading
-- Efficient caching strategies
-- Multi-threading support
-- Streaming for large documents
-- GPU acceleration where available
-
-This architecture provides a robust, extensible foundation for document viewing while maintaining the simplicity and speed that characterizes SumatraPDF.
+This design enables maintainability, extensibility, and performance optimization while providing a consistent user experience across all supported document formats.

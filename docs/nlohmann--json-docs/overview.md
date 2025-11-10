@@ -1,24 +1,21 @@
-# nlohmann/json Documentation
+# nlohmann--json Module Documentation
 
 ## Overview
 
-The nlohmann/json library is a modern C++ JSON library that provides an intuitive and easy-to-use API for working with JSON data. This module encompasses the development tools and utilities that support the library's build process, debugging capabilities, and development workflow.
+The nlohmann--json module is a comprehensive JSON library for C++ that provides tools for JSON processing, development utilities, and debugging support. This module encompasses the core JSON library functionality along with essential development and maintenance tools.
 
 ## Architecture
 
-The nlohmann--json module is organized into several specialized tools that facilitate different aspects of library development and usage:
+The module is organized into several key sub-modules that work together to provide a complete JSON processing ecosystem:
 
 ```mermaid
 graph TD
-    A[nlohmann/json Module] --> B[Development Tools]
-    A --> C[Build System]
+    A[nlohmann--json Module] --> B[Core JSON Library]
+    A --> C[Development Tools]
     A --> D[Debugging Support]
     
-    B --> B1[amalgamate.py]
-    B --> B2[serve_header.py]
-    
-    C --> C1[Header Amalgamation]
-    C --> C2[Live Development Server]
+    C --> C1[Amalgamation Tool]
+    C --> C2[Header Server]
     
     D --> D1[GDB Pretty Printer]
     
@@ -28,103 +25,140 @@ graph TD
     style D fill:#fbf,stroke:#333,stroke-width:2px
 ```
 
-## Core Functionality
+## Sub-modules
 
-### 1. Header Amalgamation System
-The amalgamation system combines multiple C++ header files into a single distributable header file. This process:
-- Processes include directives and dependencies
-- Removes duplicate pragma once directives
-- Handles both local and system includes
-- Preserves comment and string contexts
+### 1. Amalgamation Tool (tools/amalgamate/)
+
+The amalgamation tool is responsible for combining multiple C++ source files into a single header file. This process creates a self-contained JSON library that can be easily integrated into projects without complex build configurations.
 
 **Key Components:**
-- [TranslationUnit](amalgamate.md#translationunit-class) - Processes individual source files
-- [Amalgamation](amalgamate.md#amalgamation-class) - Orchestrates the amalgamation process
+- `TranslationUnit`: Processes individual source files and handles include dependencies
+- `Amalgamation`: Orchestrates the amalgamation process and manages file inclusion
 
-### 2. Development Server
-A sophisticated HTTP/HTTPS server that provides live header serving capabilities for development workflows:
-- Monitors file system changes in real-time
-- Automatically rebuilds amalgamated headers
-- Supports multiple working trees simultaneously
-- Provides build metadata injection
+**Features:**
+- Recursive include processing with dependency resolution
+- Comment and string preservation during processing
+- Pragma once directive handling
+- Configurable include paths and source directories
 
-**Key Components:**
-- [DualStackServer](serve_header.md#dualstackserver-class) - HTTP/HTTPS server implementation
-- [WorkTrees](serve_header.md#worktrees-class) - File system monitoring and management
-- [HeaderRequestHandler](serve_header.md#headerrequesthandler-class) - Custom HTTP request handling
+### 2. Header Server (tools/serve_header/)
 
-### 3. Debugging Support
-GDB pretty printer for enhanced debugging of JSON values during development:
-- Automatic type detection for nlohmann::json objects
-- Custom value visualization
-- Namespace pattern matching for versioned ABI
+The header server provides a development web server that dynamically serves amalgamated JSON headers. It monitors file changes and automatically rebuilds headers when source files are modified.
 
 **Key Components:**
-- [JsonValuePrinter](gdb_pretty_printer.md#jsonvalueprinter-class) - Custom GDB value visualization
+- `WorkTree`: Manages individual JSON project directories and tracks build state
+- `WorkTrees`: Monitors multiple project directories and handles file system events
+- `HeaderRequestHandler`: HTTP request handler for serving JSON headers with build metadata
+- `DualStackServer`: HTTP/HTTPS server supporting both IPv4 and IPv6
+- `DirectoryEventBucket`: Batches file system events to optimize rebuild performance
 
-## Module Dependencies
+**Features:**
+- Real-time header amalgamation on file changes
+- Build count and timestamp injection
+- CORS support for cross-origin requests
+- SSL/TLS support for secure serving
+- Event-driven file system monitoring
+
+### 3. GDB Pretty Printer (tools/gdb_pretty_printer/)
+
+Provides enhanced debugging support for JSON values within GDB, allowing developers to inspect JSON data structures more effectively during debugging sessions.
+
+**Key Components:**
+- `JsonValuePrinter`: Custom pretty printer for JSON values in GDB
+- `json_lookup_function`: Registration function for GDB pretty printer integration
+
+**Features:**
+- Automatic JSON type detection and formatting
+- Namespace pattern matching for nlohmann JSON types
+- Union value extraction and display
+- Integration with GDB's default visualizers
+
+## Component Interactions
 
 ```mermaid
 graph LR
-    A[amalgamate.py] --> B[File System]
-    A --> C[JSON Config]
+    subgraph "Development Tools"
+        A[Amalgamation Tool]
+        B[Header Server]
+    end
     
-    D[serve_header.py] --> E[Watchdog]
-    D --> F[HTTP Server]
-    D --> G[SSL/TLS]
-    D --> H[YAML Config]
+    subgraph "Core Components"
+        C[WorkTree]
+        D[TranslationUnit]
+        E[HeaderRequestHandler]
+    end
     
-    I[gdb_pretty_printer.py] --> J[GDB Python API]
+    subgraph "Support Components"
+        F[DirectoryEventBucket]
+        G[JsonValuePrinter]
+    end
     
-    style A fill:#f96,stroke:#333,stroke-width:2px
-    style D fill:#9f6,stroke:#333,stroke-width:2px
-    style I fill:#69f,stroke:#333,stroke-width:2px
+    A --> D
+    D --> A
+    B --> C
+    C --> F
+    E --> C
+    G --> H[Debugger]
+    
+    style A fill:#e1f5fe
+    style B fill:#e1f5fe
+    style C fill:#fff3e0
+    style D fill:#fff3e0
+    style E fill:#fff3e0
 ```
 
-## Usage Patterns
+## Data Flow
 
-### Development Workflow
-1. **Local Development**: Use `serve_header.py` for live header serving during development
-2. **Build Process**: Use `amalgamate.py` to create distributable single headers
-3. **Debugging**: Enable GDB pretty printer for enhanced JSON value inspection
-
-### Integration Points
-- CMake build system integration
-- Continuous integration support
-- Package manager compatibility
-- IDE integration capabilities
-
-## File Structure
-
+```mermaid
+sequenceDiagram
+    participant Dev as Developer
+    participant Server as Header Server
+    participant Amalg as Amalgamation Tool
+    participant FS as File System
+    
+    Dev->>Server: Request JSON header
+    Server->>FS: Check file modification
+    alt File changed
+        Server->>Amalg: Trigger amalgamation
+        Amalg->>FS: Read source files
+        Amalg->>Amalg: Process includes
+        Amalg->>FS: Write amalgamated header
+    end
+    Server->>Dev: Serve header with metadata
 ```
-nlohmann--json/
-├── tools/
-│   ├── amalgamate/
-│   │   └── amalgamate.py          # Header amalgamation tool
-│   ├── serve_header/
-│   │   └── serve_header.py        # Development HTTP server
-│   └── gdb_pretty_printer/
-│       └── nlohmann-json.py       # GDB debugging support
-└── include/                       # Main library headers
-    └── nlohmann/
-        └── json.hpp               # Primary header file
-```
+
+## Integration Points
+
+The module components work together to provide a seamless development experience:
+
+1. **Development Workflow**: The header server monitors source files and automatically triggers amalgamation when changes are detected
+2. **Build Process**: The amalgamation tool creates distributable headers from source components
+3. **Debugging Experience**: The GDB pretty printer enhances debugging capabilities for JSON data structures
+
+## Configuration
+
+The module supports configuration through:
+- YAML configuration files for the header server (serve_header.yml)
+- JSON configuration files for the amalgamation process
+- Command-line arguments for tool customization
+
+## Dependencies
+
+The module has minimal external dependencies:
+- Standard C++ library for core functionality
+- Python standard library for development tools
+- watchdog library for file system monitoring
+- http.server for header serving capabilities
+
+## Usage Scenarios
+
+1. **Library Development**: Developers working on the JSON library can use the header server for real-time testing
+2. **Integration Testing**: The amalgamation tool creates single-file distributions for easy integration
+3. **Debugging**: The GDB pretty printer assists in debugging applications using the JSON library
+4. **Continuous Integration**: The tools can be integrated into CI/CD pipelines for automated builds
 
 ## Related Documentation
 
-For detailed information about specific tools and components, refer to:
-- [amalgamate.py Documentation](amalgamate.md) - Header amalgamation system
-- [serve_header.py Documentation](serve_header.md) - Development server
-- [gdb_pretty_printer Documentation](gdb_pretty_printer.md) - Debugging support
-
-## Performance Considerations
-
-- **Amalgamation**: Single header reduces compile-time overhead but increases file size
-- **Development Server**: File system monitoring may impact I/O performance on large projects
-- **Memory Usage**: Pretty printer adds minimal overhead during debugging sessions
-
-## Security Notes
-
-- Development server supports HTTPS with TLS 1.2+ minimum
-- File system access is restricted to project directories
-- No authentication mechanism in development server (intended for local use only)
+- [Amalgamation Tool Documentation](amalgamation-tool.md) - Detailed documentation of the amalgamation process and configuration
+- [Header Server Documentation](header-server.md) - Complete guide to the development server and its features
+- [GDB Pretty Printer Documentation](gdb-pretty-printer.md) - Debugging support and pretty printing configuration

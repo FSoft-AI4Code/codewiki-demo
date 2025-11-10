@@ -1,266 +1,282 @@
 # Calendar Constraints Module
 
-The calendar-constraints module provides the foundational date validation and boundary management system for Material Design date picker components. It defines the temporal boundaries, validation rules, and configuration options that govern how users can interact with calendar interfaces.
+## Introduction
+
+The calendar-constraints module is a core component of the Material Design date picker system that provides date range validation and boundary management for calendar interfaces. It defines the temporal boundaries within which users can select dates, ensuring that date selection remains within specified limits while maintaining consistency across device configuration changes.
 
 ## Overview
 
-The calendar-constraints module serves as the core constraint engine for the Material Design date picker system. It enables developers to define valid date ranges, restrict selectable dates, and configure calendar behavior while maintaining consistency across different date picker implementations.
+The `CalendarConstraints` class serves as the central configuration object that encapsulates all temporal limitations for date picker components. It provides a comprehensive system for defining valid date ranges, setting initial display months, and validating date selections through customizable validators. The module implements the Parcelable interface to maintain state across configuration changes and activity lifecycle events.
 
-## Core Architecture
+## Architecture
 
-### Component Structure
+### Core Components
 
 ```mermaid
-graph TB
-    subgraph "Calendar Constraints Module"
-        CC[CalendarConstraints]
-        DV[DateValidator Interface]
-        MB[Month Builder]
-        CB[CalendarConstraints.Builder]
-    end
-    
-    subgraph "Dependencies"
-        Month[Month Class]
-        UtcDates[UtcDates Utility]
-        DateStrings[DateStrings Utility]
-    end
-    
-    CC --> DV
-    CC --> Month
-    CC --> CB
-    CB --> UtcDates
-    Month --> UtcDates
-    Month --> DateStrings
-    
-    style CC fill:#e1f5fe
-    style DV fill:#e8f5e9
-    style CB fill:#fff3e0
+classDiagram
+    class CalendarConstraints {
+        -Month start
+        -Month end
+        -DateValidator validator
+        -Month openAt
+        -int firstDayOfWeek
+        -int monthSpan
+        -int yearSpan
+        +isWithinBounds(long date) boolean
+        +getDateValidator() DateValidator
+        +getStart() Month
+        +getEnd() Month
+        +getOpenAt() Month
+        +setOpenAt(Month openAt) void
+        +getFirstDayOfWeek() int
+        +getMonthSpan() int
+        +getYearSpan() int
+        +getStartMs() long
+        +getEndMs() long
+        +getOpenAtMs() Long
+        +clamp(Month month) Month
+    }
+
+    class DateValidator {
+        <<interface>>
+        +isValid(long date) boolean
+    }
+
+    class Builder {
+        -long start
+        -long end
+        -Long openAt
+        -int firstDayOfWeek
+        -DateValidator validator
+        +setStart(long month) Builder
+        +setEnd(long month) Builder
+        +setOpenAt(long month) Builder
+        +setFirstDayOfWeek(int firstDayOfWeek) Builder
+        +setValidator(DateValidator validator) Builder
+        +build() CalendarConstraints
+    }
+
+    class Month {
+        +timeInMillis long
+        +compareTo(Month other) int
+        +getDay(int day) long
+        +daysInMonth int
+        +monthsUntil(Month other) int
+        +year int
+    }
+
+    CalendarConstraints --> DateValidator : uses
+    CalendarConstraints --> Month : contains
+    CalendarConstraints --> Builder : creates
+    Builder ..> CalendarConstraints : builds
+    Builder ..> Month : creates
 ```
 
-### Key Components
+### Module Dependencies
 
-#### CalendarConstraints
-The main constraint container that encapsulates all date boundaries and validation rules. It provides:
-- Start and end date boundaries
-- Date validation through the DateValidator interface
-- Opening month configuration
-- First day of week customization
-- Parcelable support for configuration persistence
+```mermaid
+graph TD
+    CalendarConstraints[CalendarConstraints Module]
+    DatePicker[Date Picker Module]
+    Month[Month Component]
+    UtcDates[UtcDates Utility]
+    DateValidatorPointForward[DateValidatorPointForward]
+    
+    CalendarConstraints --> Month
+    CalendarConstraints --> UtcDates
+    CalendarConstraints --> DateValidatorPointForward
+    DatePicker --> CalendarConstraints
+    
+    style CalendarConstraints fill:#f9f,stroke:#333,stroke-width:4px
+```
 
-#### DateValidator Interface
-A pluggable validation system that allows custom date selection rules:
-- Validates individual dates for selection eligibility
-- Extends Parcelable for state preservation
-- Enables complex business logic integration
-- Supports composite validation patterns
+## Component Details
 
-#### CalendarConstraints.Builder
-A fluent builder pattern implementation that provides:
-- Intuitive constraint configuration
-- Default boundary values (1900-2100)
-- UTC time handling
-- Validation rule composition
-- Error prevention through validation
+### CalendarConstraints Class
 
-## Data Flow Architecture
+The `CalendarConstraints` class is the primary component that encapsulates all date boundary logic. It maintains immutable references to the start and end months, along with an optional open-at month and a date validator. The class provides comprehensive methods for querying date boundaries, validating dates, and managing temporal spans.
+
+Key responsibilities include:
+- **Boundary Management**: Defines the earliest and latest selectable dates
+- **Validation Integration**: Applies custom date validation rules through the DateValidator interface
+- **State Persistence**: Implements Parcelable for configuration change survival
+- **Temporal Calculations**: Computes month and year spans between boundaries
+- **Date Clamping**: Ensures dates fall within specified constraints
+
+### DateValidator Interface
+
+The `DateValidator` interface provides a pluggable validation system that allows custom logic for determining date validity. This interface extends Parcelable to maintain validation state across configuration changes. Implementations can define complex business rules for date selection, such as excluding weekends, holidays, or specific date ranges.
+
+### Builder Pattern Implementation
+
+The `Builder` class implements a comprehensive builder pattern that provides fluent configuration of calendar constraints. It includes default values for common scenarios (January 1900 to December 2100) and supports method chaining for intuitive configuration. The builder handles UTC time conversion and ensures constraint consistency through validation checks.
+
+## Data Flow
 
 ```mermaid
 sequenceDiagram
-    participant App
+    participant Client
     participant Builder
-    participant Constraints
-    participant Validator
+    participant CalendarConstraints
+    participant DateValidator
     participant Month
     
-    App->>Builder: setStart(date)
-    App->>Builder: setEnd(date)
-    App->>Builder: setValidator(validator)
-    App->>Builder: setOpenAt(month)
-    App->>Builder: setFirstDayOfWeek(day)
+    Client->>Builder: setStart(month)
+    Client->>Builder: setEnd(month)
+    Client->>Builder: setOpenAt(month)
+    Client->>Builder: setValidator(validator)
+    Client->>Builder: build()
     
-    Builder->>UtcDates: canonicalYearMonthDay(date)
-    Builder->>Builder: validateBoundaries()
+    Builder->>Month: create(start)
+    Builder->>Month: create(end)
+    Builder->>Month: create(openAt)
     
-    App->>Builder: build()
-    Builder->>Constraints: new CalendarConstraints(...)
+    Builder->>CalendarConstraints: new CalendarConstraints(...)
+    CalendarConstraints->>CalendarConstraints: validate constraints
     
-    App->>Constraints: isWithinBounds(date)
-    Constraints->>Validator: isValid(date)
-    Validator-->>Constraints: validation result
-    Constraints-->>App: within bounds result
+    CalendarConstraints-->>Builder: constraints instance
+    Builder-->>Client: CalendarConstraints
     
-    App->>Constraints: clamp(month)
-    Constraints->>Month: compareTo(start)
-    Constraints->>Month: compareTo(end)
-    Constraints-->>App: constrained month
+    Client->>CalendarConstraints: isWithinBounds(date)
+    CalendarConstraints->>DateValidator: isValid(date)
+    DateValidator-->>CalendarConstraints: validation result
+    CalendarConstraints-->>Client: boolean result
+```
+
+## Configuration Process
+
+```mermaid
+flowchart TD
+    Start[Start Configuration] --> CreateBuilder[Create Builder Instance]
+    CreateBuilder --> SetStart[Set Start Month]
+    SetStart --> SetEnd[Set End Month]
+    SetEnd --> SetOpenAt[Set OpenAt Month]
+    SetOpenAt --> SetValidator[Set Date Validator]
+    SetValidator --> SetFirstDay[Set First Day of Week]
+    SetFirstDay --> Build[Build CalendarConstraints]
+    
+    Build --> Validate[Validate Constraints]
+    Validate --> Valid{Valid?}
+    Valid -->|Yes| Create[Create Instance]
+    Valid -->|No| Error[Throw Exception]
+    
+    Create --> End[Configuration Complete]
+    Error --> End
 ```
 
 ## Integration with Date Picker System
 
+The calendar-constraints module integrates seamlessly with the broader date picker ecosystem:
+
+- **MaterialDatePicker**: Uses CalendarConstraints to define selectable date ranges
+- **Month Display**: References constraints for determining which months to display
+- **Date Validation**: Applies constraints during date selection events
+- **Navigation Control**: Uses bounds to enable/disable month navigation
+
+## Validation System
+
+The validation system provides flexible date filtering capabilities:
+
 ```mermaid
-graph LR
-    subgraph "Date Picker Modules"
-        CC[calendar-constraints]
-        MDC[material-datepicker-core]
-        CD[calendar-display]
-        DU[date-utilities]
-    end
+classDiagram
+    class DateValidator {
+        <<interface>>
+        +isValid(long date) boolean
+    }
     
-    subgraph "External Dependencies"
-        Calendar[Calendar API]
-        Parcelable[Parcelable Interface]
-    end
+    class DateValidatorPointForward {
+        +from(long point) DateValidator
+        +isValid(long date) boolean
+    }
     
-    MDC --> CC
-    CD --> CC
-    CC --> DU
-    CC --> Calendar
-    CC --> Parcelable
+    class CompositeDateValidator {
+        +allOf(List validators) DateValidator
+        +anyOf(List validators) DateValidator
+        +isValid(long date) boolean
+    }
     
-    style CC fill:#e3f2fd
-    style MDC fill:#f3e5f5
-    style CD fill:#e8eaf6
+    DateValidator <|-- DateValidatorPointForward
+    DateValidator <|-- CompositeDateValidator
 ```
 
-## Configuration Options
+## Error Handling
 
-### Temporal Boundaries
-- **Start Date**: Defines the earliest selectable month (default: January 1900)
-- **End Date**: Defines the latest selectable month (default: December 2100)
-- **Open At**: Specifies the initial display month (defaults to current month if within bounds)
+The module implements comprehensive validation with specific error conditions:
 
-### Validation System
-- **DateValidator**: Custom validation logic for date selection
-- **Default Validator**: All dates valid (DateValidatorPointForward.from(Long.MIN_VALUE))
-- **Composite Validation**: Support for multiple validation rules
+- **Invalid Date Ranges**: Throws IllegalArgumentException when start is after end
+- **OpenAt Validation**: Ensures openAt month falls within start-end range
+- **First Day Validation**: Validates firstDayOfWeek against Calendar constants
+- **Null Safety**: Enforces non-null requirements for critical components
 
-### Localization Support
-- **First Day of Week**: Configurable week start day (Sunday, Monday, etc.)
-- **UTC Time Handling**: Consistent time zone management across locales
-- **Calendar System**: Gregorian calendar support with proper localization
+## Performance Considerations
 
-## Usage Patterns
+The module is optimized for performance in several ways:
 
-### Basic Constraint Configuration
+- **Immutable Design**: CalendarConstraints instances are immutable after creation
+- **Cached Calculations**: Month and year spans are computed once during construction
+- **Efficient Comparisons**: Uses timeInMillis for fast date comparisons
+- **Parcelable Optimization**: Minimal parcel size for fast serialization
+
+## Usage Examples
+
+### Basic Date Range Configuration
+
 ```java
 CalendarConstraints constraints = new CalendarConstraints.Builder()
-    .setStart(startMonthMillis)
-    .setEnd(endMonthMillis)
-    .setOpenAt(openMonthMillis)
+    .setStart(startMonthTime)
+    .setEnd(endMonthTime)
+    .setOpenAt(currentMonthTime)
+    .build();
+```
+
+### Custom Validation Configuration
+
+```java
+CalendarConstraints constraints = new CalendarConstraints.Builder()
+    .setStart(startMonthTime)
+    .setEnd(endMonthTime)
+    .setValidator(DateValidatorPointForward.from(minimumDate))
+    .build();
+```
+
+### First Day of Week Configuration
+
+```java
+CalendarConstraints constraints = new CalendarConstraints.Builder()
+    .setStart(startMonthTime)
+    .setEnd(endMonthTime)
     .setFirstDayOfWeek(Calendar.MONDAY)
     .build();
 ```
 
-### Custom Date Validation
-```java
-CalendarConstraints constraints = new CalendarConstraints.Builder()
-    .setValidator(new DateValidator() {
-        @Override
-        public boolean isValid(long date) {
-            // Custom validation logic
-            return isBusinessDay(date) && !isHoliday(date);
-        }
-        
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-        
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            // Parcelable implementation
-        }
-    })
-    .build();
-```
+## Related Documentation
 
-## State Management
-
-### Parcelable Implementation
-The module implements comprehensive Parcelable support for:
-- Configuration persistence across device rotations
-- State restoration in multi-window scenarios
-- Process-safe data transfer
-- Memory-efficient serialization
-
-### Validation State
-- Immutable constraint objects ensure thread safety
-- Deep copy validation prevents external modification
-- Bundle-based state preservation for complex validators
-
-## Error Handling
-
-### Boundary Validation
-- Prevents invalid date ranges (start after end)
-- Validates month consistency across constraints
-- Ensures first day of week validity
-- Provides clear exception messages for debugging
-
-### Date Validation
-- Graceful handling of invalid dates
-- Boundary clamping for out-of-range values
-- Consistent UTC time normalization
-- Locale-aware date processing
-
-## Performance Considerations
-
-### Memory Efficiency
-- Lazy initialization of month names
-- Cached calendar calculations
-- Minimal object creation during validation
-- Efficient month span calculations
-
-### Computational Optimization
-- Pre-calculated month and year spans
-- Cached comparison operations
-- Optimized boundary checking
-- Efficient date range validation
-
-## Relationship to Other Modules
-
-### [material-datepicker-core](material-datepicker-core.md)
-The calendar-constraints module provides the foundational validation system that the Material Date Picker uses to control date selection behavior and display boundaries.
-
-### [date-utilities](date-utilities.md)
-Leverages UtcDates for consistent time zone handling and date normalization across all calendar operations.
-
-### [calendar-display](calendar-display.md)
-Supplies the constraint boundaries that determine which months and years are available for navigation and display in calendar views.
-
-## Best Practices
-
-### Constraint Design
-- Define reasonable date ranges to improve user experience
-- Implement efficient DateValidator implementations
-- Consider localization requirements for first day of week
-- Test boundary conditions thoroughly
-
-### Validation Implementation
-- Keep DateValidator implementations lightweight
-- Avoid complex calculations in validation methods
-- Consider caching validation results for performance
-- Ensure proper Parcelable implementation for state preservation
-
-### Integration Guidelines
-- Always validate constraints before applying to date pickers
-- Handle configuration changes gracefully through Parcelable support
-- Consider accessibility implications of date restrictions
-- Provide clear user feedback for invalid date selections
+- [Date Picker Module](material-date-picker.md) - Main date picker implementation
+- [Calendar Adapters](calendar-adapters.md) - Month and year display adapters
+- [Date Formatting](date-formatting.md) - Date string formatting utilities
 
 ## API Reference
 
-### CalendarConstraints
-- `getStart()`: Returns the earliest allowed month
-- `getEnd()`: Returns the latest allowed month
-- `getOpenAt()`: Returns the initial display month
-- `getDateValidator()`: Returns the date validation logic
-- `isWithinBounds(long date)`: Validates if a date is within constraints
-- `clamp(Month month)`: Constrains a month to valid bounds
+### CalendarConstraints Methods
 
-### CalendarConstraints.Builder
-- `setStart(long month)`: Sets the earliest selectable month
-- `setEnd(long month)`: Sets the latest selectable month
-- `setOpenAt(long month)`: Sets the initial display month
-- `setFirstDayOfWeek(int day)`: Configures the first day of week
-- `setValidator(DateValidator validator)`: Sets custom validation logic
-- `build()`: Creates the CalendarConstraints instance
+| Method | Return Type | Description |
+|--------|-------------|-------------|
+| `isWithinBounds(long date)` | boolean | Checks if a date falls within the constraints |
+| `getDateValidator()` | DateValidator | Returns the date validator |
+| `getStart()` | Month | Gets the start month |
+| `getEnd()` | Month | Gets the end month |
+| `getOpenAt()` | Month | Gets the open-at month |
+| `getMonthSpan()` | int | Gets the total number of months |
+| `getYearSpan()` | int | Gets the total number of years |
+| `clamp(Month month)` | Month | Clamps a month to the constraints |
+
+### Builder Methods
+
+| Method | Return Type | Description |
+|--------|-------------|-------------|
+| `setStart(long month)` | Builder | Sets the start month |
+| `setEnd(long month)` | Builder | Sets the end month |
+| `setOpenAt(long month)` | Builder | Sets the open-at month |
+| `setFirstDayOfWeek(int day)` | Builder | Sets the first day of week |
+| `setValidator(DateValidator)` | Builder | Sets the date validator |
+| `build()` | CalendarConstraints | Builds the constraints instance |

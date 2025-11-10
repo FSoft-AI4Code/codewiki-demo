@@ -2,364 +2,290 @@
 
 ## Introduction
 
-The types module serves as the foundational type system for the Mermaid diagramming library. It provides core TypeScript interfaces and type definitions that are used throughout the entire Mermaid ecosystem. This module defines the fundamental data structures for parsing, rendering, and managing diagram elements, establishing a consistent type contract across all diagram types and rendering operations.
+The types module serves as the foundational type system for Mermaid diagrams, providing TypeScript interfaces and type definitions that define the structure and behavior of various diagram elements. This module establishes the contract between different components of the Mermaid system, ensuring type safety and consistency across the entire framework.
 
-## Core Architecture
+## Core Purpose
 
-### Type Hierarchy Overview
+The types module acts as the central type repository that:
+- Defines the shape of data structures used throughout Mermaid
+- Establishes type contracts between parsers, databases, renderers, and configuration systems
+- Provides type safety for diagram-specific elements and their relationships
+- Enables consistent data flow across the rendering pipeline
+
+## Architecture Overview
 
 ```mermaid
-graph TD
-    subgraph "Core Types"
-        ParseResult[ParseResult]
-        RenderResult[RenderResult]
-        ParseOptions[ParseOptions]
-        Point[Point]
-        EdgeData[EdgeData]
-        TextDimensions[TextDimensions]
-        TextDimensionConfig[TextDimensionConfig]
+graph TB
+    subgraph "Types Module"
+        T[Types Module]
+        T --> PT[ParseResult Types]
+        T --> RT[RenderResult Types]
+        T --> DT[Diagram Types]
+        T --> CT[Configuration Types]
+        T --> ST[Shape Types]
+        T --> NT[Node Types]
+        T --> ET[Edge Types]
     end
     
-    subgraph "Metadata Types"
-        NodeMetaData[NodeMetaData]
-        EdgeMetaData[EdgeMetaData]
-        ParticipantMetaData[ParticipantMetaData]
+    subgraph "Core System"
+        C[Core API]
+        P[Parser Engine]
+        R[Rendering Engine]
+        D[Diagram Plugins]
     end
     
-    subgraph "Utility Types"
-        D3Element[D3Element]
-        D3Selection[D3Selection]
-        MaybePromise[MaybePromise]
-        ArrayElement[ArrayElement]
-    end
-    
-    ParseResult --> MermaidConfig[MermaidConfig]
-    RenderResult --> ParseResult
-    TextDimensions --> TextDimensionConfig
-    EdgeData --> NodeMetaData
-    
-    style ParseResult fill:#e1f5fe
-    style RenderResult fill:#e1f5fe
-    style Point fill:#e1f5fe
+    T -.->|"defines contracts for"| C
+    T -.->|"structures data for"| P
+    T -.->|"shapes output for"| R
+    T -.->|"types diagram elements for"| D
 ```
 
-### Component Relationships
+## Component Relationships
 
 ```mermaid
 graph LR
-    subgraph "Input Processing"
-        ParseOptions --> ParseResult
-        MermaidConfig --> ParseResult
+    subgraph "Type Dependencies"
+        PR[ParseResult] --> |"parsed data"| RR[RenderResult]
+        DD[DiagramDefinition] --> |"defines"| PT[ParserDefinition]
+        DD --> |"uses"| DB[DiagramDB]
+        DD --> |"renders via"| DR[DiagramRenderer]
+        
+        RD[RenderData] --> |"contains"| LD[LayoutData]
+        RD --> |"has nodes"| BN[BaseNode]
+        RD --> |"has edges"| E[Edge]
+        
+        SD[ShapeDefinition] --> |"renders"| BN
+        T[Theme] --> |"styles"| SD
     end
-    
-    subgraph "Rendering Pipeline"
-        ParseResult --> RenderResult
-        TextDimensionConfig --> TextDimensions
-        Point --> EdgeData
-        EdgeData --> RenderResult
-    end
-    
-    subgraph "Metadata System"
-        NodeMetaData --> EdgeData
-        EdgeMetaData --> EdgeData
-        ParticipantMetaData --> ParseResult
-    end
-    
-    style ParseOptions fill:#fff3e0
-    style RenderResult fill:#fff3e0
-    style TextDimensions fill:#fff3e0
 ```
 
-## Core Components
+## Core Type Categories
 
-### ParseResult Interface
+### 1. Core API Types
 
-The `ParseResult` interface represents the outcome of parsing a Mermaid diagram definition. It contains the essential information needed to understand and process the diagram.
+These types form the foundation of the Mermaid system:
 
-```typescript
-interface ParseResult {
-  diagramType: string;
-  config: MermaidConfig;
-}
-```
+- **ParseResult**: Defines the structure of parsed diagram data
+- **RenderResult**: Specifies the output format for rendered diagrams
+- **MermaidConfig**: Establishes the global configuration interface
+- **RunOptions**: Defines execution parameters for diagram processing
 
-**Key Properties:**
-- `diagramType`: Identifies the specific diagram type (e.g., 'flowchart', 'sequence', 'class')
-- `config`: Configuration object containing YAML frontmatter or directive settings
+### 2. Diagram Definition Types
 
-**Usage Context:**
-- Returned by diagram parsers after successful parsing
-- Used by the rendering system to determine appropriate rendering strategies
-- Links to [config module](config.md) for configuration management
+Located in the [diagram_plugin_api](diagram_plugin_api.md) module:
 
-### RenderResult Interface
+- **DiagramDefinition**: The contract for diagram implementations
+- **ParserDefinition**: Interface for diagram parsers
+- **DiagramDB**: Database interface for storing diagram data
+- **DiagramRenderer**: Rendering interface for diagram visualization
+- **InjectUtils**: Utility injection interface
 
-The `RenderResult` interface encapsulates the complete output of the diagram rendering process, including the generated SVG and any necessary post-processing functions.
+### 3. Rendering Types
 
-```typescript
-interface RenderResult {
-  svg: string;
-  diagramType: string;
-  bindFunctions?: (element: Element) => void;
-}
-```
+Part of the [rendering_engine](rendering_engine.md) module:
 
-**Key Properties:**
-- `svg`: The generated SVG code for the diagram
-- `diagramType`: The diagram type for reference
-- `bindFunctions`: Optional function for binding event listeners after DOM insertion
+- **RenderData**: Container for rendering information
+- **LayoutData**: Layout calculation results
+- **BaseNode**: Fundamental node structure
+- **Edge**: Connection between nodes
+- **ShapeDefinition**: Visual shape specifications
+- **Theme**: Styling and theming interface
 
-**Integration Points:**
-- Consumed by the [core-mermaid module](core-mermaid.md) for final output
-- Used by applications integrating Mermaid for display
-- Links to [rendering-util module](rendering-util.md) for rendering infrastructure
+### 4. Parser Types
 
-### Point Interface
+From the [parser_engine](parser_engine.md) module:
 
-A fundamental geometric type representing coordinates in 2D space, used throughout the rendering system.
+- **AbstractMermaidTokenBuilder**: Base class for token generation
+- **AbstractMermaidValueConverter**: Base class for value transformation
+- **TreemapValidator**: Specific validator for treemap diagrams
 
-```typescript
-interface Point {
-  x: number;
-  y: number;
-}
-```
+### 5. Layout Types
 
-**Applications:**
-- Node positioning in diagrams
-- Edge routing and control points
-- Text placement calculations
-- Used by [rendering-util module](rendering-util.md) for layout algorithms
+In the [layout_engine_elk](layout_engine_elk.md) module:
 
-### EdgeData Interface
-
-Comprehensive type definition for edge (connection) elements in diagrams, containing styling and structural information.
-
-```typescript
-interface EdgeData {
-  arrowheadStyle?: string;
-  labelpos?: string;
-  labelType?: string;
-  label?: string;
-  classes: string;
-  pattern: string;
-  id: string;
-  arrowhead: string;
-  startLabelRight: string;
-  endLabelLeft: string;
-  arrowTypeStart: string;
-  arrowTypeEnd: string;
-  style: string;
-  labelStyle: string;
-  curve: any;
-}
-```
-
-**Key Features:**
-- Supports multiple arrow types and styles
-- Configurable labels and positioning
-- CSS class integration for styling
-- Curve definition for complex edge routing
-
-### Text System Types
-
-#### TextDimensions Interface
-
-```typescript
-interface TextDimensions {
-  width: number;
-  height: number;
-  lineHeight?: number;
-}
-```
-
-#### TextDimensionConfig Interface
-
-```typescript
-interface TextDimensionConfig {
-  fontSize?: number;
-  fontWeight?: number;
-  fontFamily?: string;
-}
-```
-
-**Usage:**
-- Text measurement and layout calculations
-- Font configuration for consistent typography
-- Integration with [rendering-util module](rendering-util.md) for text rendering
-
-## Metadata System
-
-### NodeMetaData Interface
-
-Rich metadata for diagram nodes, supporting various visual and semantic properties.
-
-```typescript
-interface NodeMetaData {
-  shape?: string;
-  label?: string;
-  icon?: string;
-  form?: string;
-  pos?: 't' | 'b';
-  img?: string;
-  w?: string;
-  h?: string;
-  constraint?: 'on' | 'off';
-  priority: 'Very High' | 'High' | 'Medium' | 'Low' | 'Very Low';
-  assigned?: string;
-  ticket?: string;
-}
-```
-
-**Applications:**
-- Node styling and customization
-- Priority-based layout decisions
-- Icon and image integration
-- Constraint-based positioning
-
-### EdgeMetaData Interface
-
-Specialized metadata for edge elements, focusing on animation and curve properties.
-
-```typescript
-interface EdgeMetaData {
-  animation?: 'fast' | 'slow';
-  animate?: boolean;
-  curve?: 'basis' | 'bumpX' | 'bumpY' | 'cardinal' | 'catmullRom' | 'linear' | 'monotoneX' | 'monotoneY' | 'natural' | 'step' | 'stepAfter' | 'stepBefore';
-}
-```
-
-**Features:**
-- Animation control for interactive diagrams
-- Multiple curve types for different visual styles
-- Performance optimization options
-
-### ParticipantMetaData Interface
-
-Specialized metadata for sequence diagram participants.
-
-```typescript
-interface ParticipantMetaData {
-  type?: 'actor' | 'participant' | 'boundary' | 'control' | 'entity' | 'database' | 'collections' | 'queue';
-}
-```
-
-**Usage:**
-- Sequence diagram participant typing
-- Visual representation selection
-- Integration with [sequence module](sequence.md)
-
-## Utility Types
-
-### D3 Integration Types
-
-#### D3Element Type
-```typescript
-type D3Element = any;
-```
-
-#### D3Selection Type
-```typescript
-type D3Selection<T extends SVGElement> = d3.Selection<T, unknown, Element | null, unknown>;
-```
-
-**Purpose:**
-- Type-safe D3.js integration
-- SVG element manipulation
-- Used by [rendering-util module](rendering-util.md) for DOM operations
-
-### Async Support
-
-#### MaybePromise Type
-```typescript
-type MaybePromise<T> = T | Promise<T>;
-```
-
-**Usage:**
-- Flexible async/sync function signatures
-- Backward compatibility for synchronous operations
-- Used throughout the API for optional async behavior
-
-#### ArrayElement Type Helper
-```typescript
-type ArrayElement<A> = A extends readonly (infer T)[] ? T : never;
-```
-
-**Purpose:**
-- Type extraction from arrays
-- Generic type manipulation utilities
+- **NodeWithVertex**: Node with layout positioning
+- **TreeData**: Hierarchical data structure
 
 ## Data Flow Architecture
 
 ```mermaid
 sequenceDiagram
-    participant Input as "Diagram Input"
-    participant ParseOptions as "ParseOptions"
-    participant ParseResult as "ParseResult"
-    participant Metadata as "Metadata Types"
-    participant RenderResult as "RenderResult"
+    participant Input as "Diagram Text"
+    participant Parser as "Parser Types"
+    participant DB as "Database Types"
+    participant Layout as "Layout Types"
+    participant Render as "Render Types"
+    participant Output as "Visual Output"
     
-    Input->>ParseOptions: Configuration
-    ParseOptions->>ParseResult: Parse with options
-    ParseResult->>Metadata: Extract metadata
-    Metadata->>RenderResult: Apply metadata
-    RenderResult-->>Input: Return SVG + bindings
-    
-    Note over ParseResult: Contains diagramType and config
-    Note over Metadata: NodeMetaData, EdgeMetaData, etc.
-    Note over RenderResult: Final output with bindFunctions
+    Input->>Parser: Raw text input
+    Parser->>Parser: ParseResult structure
+    Parser->>DB: Structured data
+    DB->>Layout: Node/Edge data
+    Layout->>Layout: LayoutData calculation
+    Layout->>Render: Positioned elements
+    Render->>Render: RenderData processing
+    Render->>Output: RenderResult
 ```
 
-## Integration with Other Modules
+## Diagram-Specific Type Extensions
 
-### Configuration Integration
-- Links to [config module](config.md) through `MermaidConfig` usage in `ParseResult`
-- Provides type safety for configuration objects
-- Supports diagram-specific configuration inheritance
+The types module extends to support specific diagram types through specialized interfaces:
 
-### Rendering Pipeline Integration
-- Used by [rendering-util module](rendering-util.md) for layout calculations
-- `Point` type used extensively in node positioning
-- `TextDimensions` used for text measurement and layout
+### Flowchart Types
+- **FlowVertex**: Node types for flowcharts
+- **FlowEdge**: Connection types for flowcharts
+- **FlowSubGraph**: Grouping structures
+- **FlowchartDiagramConfig**: Configuration interface
 
-### Diagram-Specific Integration
-- `ParticipantMetaData` used by [sequence module](sequence.md)
-- `EdgeData` used by [flowchart module](flowchart.md) and other diagram types
-- Metadata types provide extensibility for diagram-specific features
+### Sequence Diagram Types
+- **Actor**: Participant representation
+- **Message**: Communication between actors
+- **Note**: Annotations and comments
+- **SequenceDiagramConfig**: Configuration options
 
-### Core System Integration
-- `ParseResult` and `RenderResult` are fundamental to [core-mermaid module](core-mermaid.md)
-- `ParseOptions` used in the main parsing pipeline
-- Utility types support the overall API design
+### Class Diagram Types
+- **ClassNode**: Class representation
+- **ClassRelation**: Relationships between classes
+- **ClassMember**: Class attributes and methods
+- **ClassDiagramConfig**: Configuration interface
 
-## Type Safety and Extensibility
+### State Diagram Types
+- **StateDB**: State machine data
+- **StateStmt**: State statements
+- **Edge**: State transitions
+- **StateDiagramConfig**: Configuration options
 
-The types module provides several mechanisms for type safety and extensibility:
+### Entity Relationship Types
+- **EntityNode**: Entity representation
+- **Relationship**: Entity relationships
+- **ErDiagramConfig**: Configuration interface
 
-1. **Strict Typing**: All interfaces use specific types rather than generic objects
-2. **Optional Properties**: Extensive use of optional properties for backward compatibility
-3. **Union Types**: Constrained choices for properties like `priority` and `curve`
-4. **Generic Types**: Support for reusable patterns with `MaybePromise` and `ArrayElement`
+### Git Graph Types
+- **GitGraphDB**: Git repository data
+- **Commit**: Commit representation
+- **BranchAst**: Branch structure
+- **GitGraphDiagramConfig**: Configuration options
 
-## Best Practices
+### Chart Types
+- **PieDB**: Pie chart data
+- **PieFields**: Data fields
+- **PieDiagramConfig**: Configuration interface
 
-### When Extending Types
-- Maintain backward compatibility with optional properties
-- Use union types for constrained value sets
-- Document the purpose and usage of new properties
-- Consider integration points with existing modules
+### XY Chart Types
+- **XYChartBuilder**: Chart construction
+- **XYChartData**: Data structure
+- **XYChartConfig**: Configuration
+- **Axis**: Axis definition
+- **Plot**: Plot configuration
+- **XYChartConfig**: Global configuration
 
-### When Using Types
-- Leverage TypeScript's type inference where possible
-- Use the metadata types for rich diagram element descriptions
-- Consider the async implications of `MaybePromise` in API design
-- Reference the appropriate module documentation for context-specific usage
+### Requirement Diagram Types
 
-## Dependencies
+The requirement diagram types demonstrate the module's approach to domain-specific type definitions:
 
-This module has minimal external dependencies:
-- References `MermaidConfig` from the [config module](config.md)
-- Integrates with D3.js types for SVG manipulation
-- Self-contained utility types for common patterns
+```typescript
+// Requirement types define the core elements
+interface Requirement {
+  name: string;
+  type: RequirementType;  // 'Requirement' | 'Functional Requirement' | etc.
+  requirementId: string;
+  text: string;
+  risk: RiskLevel;        // 'Low' | 'Medium' | 'High'
+  verifyMethod: VerifyType; // 'Analysis' | 'Demonstration' | 'Inspection' | 'Test'
+  cssStyles: string[];
+  classes: string[];
+}
 
-The types module serves as the foundation for type safety across the entire Mermaid ecosystem, ensuring consistent data structures and interfaces throughout the parsing and rendering pipeline.
+// Relationship types define connections
+interface Relation {
+  type: RelationshipType; // 'contains' | 'copies' | 'derives' | etc.
+  src: string;            // Source requirement ID
+  dst: string;            // Destination requirement ID
+}
+```
+
+### Additional Diagram Types
+
+- **Mindmap Types**: [diagram_mindmap](diagram_mindmap.md)
+- **Architecture Types**: [diagram_architecture](diagram_architecture.md)
+- **Sankey Types**: [diagram_sankey](diagram_sankey.md)
+- **Quadrant Chart Types**: [diagram_quadrant_chart](diagram_quadrant_chart.md)
+- **Treemap Types**: [diagram_treemap](diagram_treemap.md)
+
+## Integration Patterns
+
+### Type Extension Pattern
+```typescript
+// Base types provide common functionality
+interface BaseNode {
+  id: string;
+  type: string;
+}
+
+// Diagram-specific types extend base functionality
+interface FlowVertex extends BaseNode {
+  text: string;
+  shape: string;
+}
+```
+
+### Configuration Pattern
+```typescript
+// Each diagram type has associated configuration
+type DiagramConfig = {
+  theme: Theme;
+  layout: LayoutOptions;
+  // diagram-specific options
+}
+```
+
+### Database Pattern
+```typescript
+// Each diagram has a database interface
+interface DiagramDB {
+  addNode(node: BaseNode): void;
+  getNode(id: string): BaseNode | undefined;
+  getEdges(): Edge[];
+}
+```
+
+## Process Flow
+
+```mermaid
+graph TD
+    A[Diagram Text Input] --> B{Parser Types}
+    B --> C[ParseResult]
+    C --> D[Diagram Database]
+    D --> E[Layout Engine]
+    E --> F[LayoutData]
+    F --> G[Rendering Engine]
+    G --> H[RenderData]
+    H --> I[RenderResult]
+    I --> J[Visual Output]
+    
+    K[Configuration Types] --> B
+    K --> E
+    K --> G
+    
+    L[Theme Types] --> G
+```
+
+## Key Benefits
+
+1. **Type Safety**: Ensures consistent data structures across the system
+2. **Modularity**: Allows independent development of diagram types
+3. **Extensibility**: Enables easy addition of new diagram types
+4. **Maintainability**: Provides clear contracts between components
+5. **Documentation**: Serves as living documentation for the system
+
+## Related Modules
+
+- [Core API](mermaid_core_api.md) - Uses types for main interfaces
+- [Diagram Plugin API](diagram_plugin_api.md) - Extends base types for plugins
+- [Rendering Engine](rendering_engine.md) - Consumes render-related types
+- [Parser Engine](parser_engine.md) - Uses parse result types
+- [Layout Engine ELK](layout_engine_elk.md) - Extends layout types
+
+## Conclusion
+
+The types module is the architectural foundation of Mermaid, providing the type system that enables the framework's flexibility and extensibility. By establishing clear contracts between components, it allows the system to support a wide variety of diagram types while maintaining consistency and type safety throughout the rendering pipeline.

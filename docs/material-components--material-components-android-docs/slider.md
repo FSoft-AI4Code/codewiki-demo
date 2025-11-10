@@ -2,136 +2,96 @@
 
 ## Overview
 
-The Slider module provides Material Design-compliant slider components for Android applications, offering both single-value and range selection capabilities. This module implements touch-interactive sliders that allow users to select values from a continuous or discrete range, following Material Design guidelines for consistent user experience across Android applications.
+The Slider module provides Material Design-compliant slider components for Android applications, enabling users to select values from a continuous or discrete range. The module offers both single-value sliders and range sliders with multiple thumbs, supporting various interaction patterns and customization options.
 
 ## Architecture
 
-The slider module is built around a hierarchical architecture with base abstractions and specialized implementations:
+The slider module is built around a hierarchical architecture with base classes providing common functionality and specialized implementations for different slider types.
 
 ```mermaid
 graph TD
-    A[Base Interfaces] --> B[BaseSlider]
+    A[BaseSlider] --> B[Slider]
     A --> C[RangeSlider]
-    B --> D[Slider]
-    C --> E[Range-specific Features]
+    D[BaseOnChangeListener] --> E[Slider.OnChangeListener]
+    D --> F[RangeSlider.OnChangeListener]
+    G[BaseOnSliderTouchListener] --> H[Slider.OnSliderTouchListener]
+    G --> I[RangeSlider.OnSliderTouchListener]
+    J[SliderOrientation] --> A
     
-    F[Event System] --> G[BaseOnChangeListener]
-    F --> H[BaseOnSliderTouchListener]
-    G --> I[RangeSlider.OnChangeListener]
-    H --> J[RangeSlider.OnSliderTouchListener]
-    
-    K[Configuration] --> L[SliderOrientation]
-    K --> M[Value Management]
-    K --> N[Visual Customization]
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style B fill:#bbf,stroke:#333,stroke-width:2px
+    style C fill:#bbf,stroke:#333,stroke-width:2px
 ```
 
 ## Core Components
 
-### Base Abstractions
+### Base Interfaces
 
 #### BaseOnChangeListener
-- **Purpose**: Defines the contract for value change notifications
-- **Location**: `lib.java.com.google.android.material.slider.BaseOnChangeListener`
-- **Key Features**:
-  - Generic interface for all slider types
-  - Provides value change events with user interaction context
-  - Restricted to library group usage
+- **Purpose**: Defines the contract for value change callbacks
+- **Key Method**: `onValueChange(S slider, float value, boolean fromUser)`
+- **Usage**: Notifies listeners when slider values change, indicating whether the change was initiated by user interaction
+- **Detailed Documentation**: [base-listeners.md](base-listeners.md)
 
 #### BaseOnSliderTouchListener
-- **Purpose**: Handles touch interaction lifecycle events
-- **Location**: `lib.java.com.google.android.material.slider.BaseOnSliderTouchListener`
-- **Key Features**:
-  - Monitors touch start and stop events
-  - Enables custom touch handling behaviors
-  - Generic design for extensibility
-
-### Specialized Implementations
-
-#### RangeSlider
-- **Purpose**: Multi-thumb slider for selecting value ranges
-- **Location**: `lib.java.com.google.android.material.slider.RangeSlider`
-- **Key Features**:
-  - Multiple thumb support for range selection
-  - Minimum separation constraints between thumbs
-  - Custom thumb drawables per value
-  - State persistence and restoration
+- **Purpose**: Handles touch interaction events
+- **Key Methods**: 
+  - `onStartTrackingTouch(S slider)` - Called when user begins interacting
+  - `onStopTrackingTouch(S slider)` - Called when user finishes interaction
+- **Usage**: Provides fine-grained control over touch interactions for custom behaviors
+- **Detailed Documentation**: [base-listeners.md](base-listeners.md)
 
 #### SliderOrientation
 - **Purpose**: Defines orientation constants for slider layout
-- **Location**: `lib.java.com.google.android.material.slider.SliderOrientation`
+- **Values**: `HORIZONTAL` and `VERTICAL`
+- **Usage**: Standardizes orientation configuration across the module
+- **Detailed Documentation**: [orientation.md](orientation.md)
+
+### Slider Types
+
+#### RangeSlider
+- **Purpose**: Multi-thumb slider for selecting ranges or multiple values
 - **Key Features**:
-  - Horizontal and vertical orientation support
-  - Integration with LinearLayout constants
-  - Extensible for future orientation types
+  - Support for multiple values simultaneously
+  - Minimum separation between thumbs
+  - Custom thumb drawables per value
+  - State persistence and restoration
+- **XML Attributes**: `app:values`, `app:minSeparation`
+- **Detailed Documentation**: [range-slider.md](range-slider.md)
 
-## Event System Architecture
+## Module Structure
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant Slider
-    participant Listener
-    participant Application
-    
-    User->>Slider: Touch/Drag
-    Slider->>Slider: Update Value
-    Slider->>Listener: onValueChange()
-    Listener->>Application: Process Change
-    
-    User->>Slider: Touch Down
-    Slider->>Listener: onStartTrackingTouch()
-    
-    User->>Slider: Touch Up
-    Slider->>Listener: onStopTrackingTouch()
-```
+The slider module is organized into several key areas:
 
-## Value Management
+### Core Functionality
+- **Base listener interfaces** that define the callback contracts
+- **Orientation handling** for both horizontal and vertical layouts
+- **State management** for configuration persistence
 
-The slider module implements sophisticated value management:
+### Specialized Implementations
+- **RangeSlider** for multi-value selection scenarios
+- **Touch handling** for user interaction tracking
+- **Value change notifications** for real-time updates
 
-- **Continuous Values**: Support for floating-point value ranges
-- **Discrete Values**: Step-based value selection
-- **Multi-value Support**: RangeSlider handles multiple simultaneous values
-- **Value Constraints**: Minimum/maximum bounds with separation requirements
-- **State Persistence**: Complete state saving and restoration
+## Integration with Material Design
 
-## Visual Customization
+The slider module integrates with the broader Material Design system through:
 
-### Thumb Customization
-- Custom drawable support for individual thumbs
-- Programmatic drawable assignment
-- Resource-based drawable configuration
-- Per-value custom thumb support in RangeSlider
-
-### Orientation Support
-- Horizontal layout (default)
-- Vertical layout support
-- LinearLayout integration for consistent behavior
-
-## Integration Points
-
-### Material Design System Integration
-- Theme-aware styling
-- Material Design elevation and shadows
-- Consistent color theming
-- Touch feedback and animations
-
-### Accessibility
-- Screen reader support
-- Touch target sizing
-- Value announcement
-- Keyboard navigation support
+- **Theme enforcement** via `ThemeEnforcement` utility
+- **State persistence** following Android's saved state pattern
+- **Accessibility support** built into the base classes
+- **Customization options** for thumb drawables and styling
 
 ## Usage Patterns
 
-### Single Value Selection
+### Basic Value Selection
 ```xml
 <com.google.android.material.slider.Slider
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:valueFrom="0"
     android:valueTo="100"
-    android:stepSize="1" />
+    android:value="50" />
 ```
 
 ### Range Selection
@@ -142,36 +102,21 @@ The slider module implements sophisticated value management:
     android:valueFrom="0"
     android:valueTo="100"
     app:values="@array/initial_range_values"
-    app:minSeparation="10" />
+    app:minSeparation="10dp" />
 ```
-
-## Performance Considerations
-
-- Efficient touch event handling
-- Optimized value calculation algorithms
-- Memory-efficient state management
-- Smooth animation performance
-- Minimal layout recalculations
-
-## Dependencies
-
-The slider module has minimal external dependencies:
-- AndroidX annotation library
-- Material Design theming system
-- Core Android UI framework
-- Theme enforcement utilities
 
 ## Related Documentation
 
-- [Material Design Slider Guidelines](https://material.io/components/sliders)
-- [Android Slider Component Guide](button.md) - For button-like interactions
-- [Touch Behavior System](behavior.md) - For scroll and touch behaviors
-- [Theme and Styling](color.md) - For visual customization options
+For information about related components and utilities, see:
 
-## Sub-modules
+- [appbar.md](appbar.md) - For scroll-aware behaviors
+- [theme.md](theme.md) - For Material Design theming integration
+- [internal.md](internal.md) - For internal utilities and helpers
 
-For detailed information about specific slider implementations and advanced features, refer to:
+## Dependencies
 
-- [Range Slider Implementation](range-slider.md) - Detailed RangeSlider documentation with multi-thumb support and value separation
-- [Event System](slider-events.md) - Comprehensive event handling documentation covering touch interactions and value changes
-- [Slider Orientation](slider-orientation.md) - Layout and orientation configuration options
+The slider module relies on several key dependencies from the Material Design library:
+
+- **ThemeEnforcement** - Ensures proper Material Design theming
+- **AndroidX libraries** - For compatibility and lifecycle management
+- **Material attributes** - For consistent styling and theming

@@ -2,53 +2,67 @@
 
 ## Introduction
 
-The structured_search module is the core query processing component of the GraphRAG system, providing multiple search strategies for knowledge graph-based question answering. This module implements a sophisticated search framework that leverages the indexed knowledge graph to deliver contextual, accurate responses to user queries through various search methodologies.
+The structured_search module is a core component of the GraphRAG query engine that provides intelligent search capabilities over knowledge graphs. It implements multiple search strategies including local search, global search, and DRIFT (Dynamic Reasoning and Inference with Follow-up Thoughts) search, each optimized for different types of queries and use cases.
 
-The module supports four distinct search modes:
-- **Local Search**: Neighborhood-based search focusing on specific entities and their immediate relationships
-- **Global Search**: Community-based search using map-reduce approach across community summaries
-- **Basic Search**: Traditional RAG-style vector search on raw text chunks
-- **DRIFT Search**: Dynamic, iterative search with follow-up queries and adaptive exploration
+This module serves as the primary interface for querying the knowledge graph constructed during the indexing pipeline, enabling users to extract meaningful insights from their data through natural language queries.
 
 ## Architecture Overview
 
+The structured_search module follows a layered architecture with clear separation of concerns:
+
 ```mermaid
 graph TB
-    subgraph "Structured Search Module"
-        BS[BaseSearch<br/><i>Abstract Base Class</i>]
-        SR[SearchResult<br/><i>Data Structure</i>]
-        
-        BS --> LS[LocalSearch]
-        BS --> GS[GlobalSearch]
-        BS --> BRS[BasicSearch]
-        BS --> DS[DRIFTSearch]
-        
-        LS --> LSCB[LocalContextBuilder]
-        GS --> GSCB[GlobalContextBuilder]
-        BRS --> BSCB[BasicContextBuilder]
-        DS --> DSCB[DRIFTSearchContextBuilder]
+    subgraph "Query Engine Layer"
+        BS[BaseSearch]
+        SR[SearchResult]
+        LS[LocalSearch]
+        GS[GlobalSearch]
+        DS[DRIFTSearch]
     end
     
-    subgraph "External Dependencies"
-        CM[ChatModel<br/>Language Model]
+    subgraph "Context Builder Layer"
+        LCB[LocalContextBuilder]
+        GCB[GlobalContextBuilder]
+        DCB[DRIFTContextBuilder]
         CH[ConversationHistory]
-        QC[QueryCallbacks]
-        LM[Language Models Module]
-        CB[Context Builder Module]
     end
     
-    BS -.-> CM
-    BS -.-> CH
-    LS -.-> QC
-    GS -.-> QC
-    BRS -.-> QC
-    DS -.-> QC
+    subgraph "Language Model Layer"
+        CM[ChatModel]
+        MR[ModelResponse]
+    end
     
-    CM -.-> LM
-    LSCB -.-> CB
-    GSCB -.-> CB
-    BSCB -.-> CB
-    DSCB -.-> CB
+    subgraph "Data Access Layer"
+        VS[VectorStore]
+        ES[EntityStore]
+        RS[RelationshipStore]
+        CS[CommunityStore]
+    end
+    
+    BS --> SR
+    LS --> BS
+    GS --> BS
+    DS --> BS
+    
+    LS --> LCB
+    GS --> GCB
+    DS --> DCB
+    
+    LCB --> VS
+    LCB --> ES
+    LCB --> RS
+    GCB --> CS
+    DCB --> LCB
+    
+    LS --> CM
+    GS --> CM
+    DS --> CM
+    
+    CM --> MR
+    
+    CH --> LCB
+    CH --> GCB
+    CH --> DCB
 ```
 
 ## Core Components
@@ -57,285 +71,350 @@ graph TB
 
 The `BaseSearch` class serves as the foundation for all search implementations, providing a common interface and shared functionality.
 
-**Key Responsibilities:**
-- Defines the contract for search operations through abstract methods
-- Manages common dependencies (language model, context builder, token encoder)
-- Provides parameter management for both model and context builder configurations
-- Supports both synchronous and streaming search operations
+**Key Features:**
+- Generic type system supporting different context builders
+- Standardized search and stream_search methods
+- Token encoding and model parameter management
+- Integration with conversation history
 
-**Core Methods:**
-- `search()`: Execute a complete search operation
-- `stream_search()`: Stream search results incrementally
+**Component Relationships:**
+- Depends on [ChatModel](language_model.md) for LLM interactions
+- Works with various [ContextBuilder](context_builder.md) implementations
+- Integrates with [ConversationHistory](context_builder.md) for multi-turn queries
 
 ### SearchResult Data Structure
 
-The `SearchResult` dataclass encapsulates comprehensive search outcome information:
+The `SearchResult` dataclass encapsulates all information returned from a search operation:
 
-**Response Data:**
-- `response`: The generated answer (string, dict, or list)
-- `context_data`: Structured context records used for the response
-- `context_text`: Actual text strings that were in the context window
+```mermaid
+classDiagram
+    class SearchResult {
+        +response: str|dict|list
+        +context_data: str|list[DataFrame]|dict
+        +context_text: str|list[str]|dict
+        +completion_time: float
+        +llm_calls: int
+        +prompt_tokens: int
+        +output_tokens: int
+        +llm_calls_categories: dict
+        +prompt_tokens_categories: dict
+        +output_tokens_categories: dict
+    }
+```
 
-**Performance Metrics:**
-- `completion_time`: Total execution time
-- `llm_calls`: Total number of LLM calls made
-- `prompt_tokens`/`output_tokens`: Token usage statistics
-- Category breakdowns for detailed analysis
+## Search Strategies
 
-## Search Implementations
+### 1. Local Search
 
-### Local Search
+Local search focuses on specific entities and their immediate relationships, ideal for targeted queries about particular nodes or edges in the graph.
 
-**Purpose**: Neighborhood-focused search around specific entities
+**Use Cases:**
+- Entity-specific queries ("What is Microsoft's revenue?")
+- Relationship exploration ("Who are Microsoft's competitors?")
+- Attribute-based searches ("Companies founded in 1975")
 
 **Architecture:**
 ```mermaid
-graph LR
-    Query[User Query] --> LS[LocalSearch]
-    LS --> LCB[LocalContextBuilder]
-    LCB --> Entities[Entity Data]
-    LCB --> Relations[Relationship Data]
-    LCB --> TextUnits[Text Unit Data]
-    LCB --> Context[Context Chunks]
-    Context --> LLM[Language Model]
-    LLM --> Response[Search Result]
+sequenceDiagram
+    participant User
+    participant LocalSearch
+    participant LocalContextBuilder
+    participant VectorStore
+    participant ChatModel
+    
+    User->>LocalSearch: search(query)
+    LocalSearch->>LocalContextBuilder: build_context(query)
+    LocalContextBuilder->>VectorStore: search_similar_entities
+    VectorStore-->>LocalContextBuilder: entity_results
+    LocalContextBuilder->>VectorStore: search_relationships
+    VectorStore-->>LocalContextBuilder: relationship_results
+    LocalContextBuilder-->>LocalSearch: context_result
+    LocalSearch->>ChatModel: generate_response(context + query)
+    ChatModel-->>LocalSearch: response
+    LocalSearch-->>User: SearchResult
 ```
 
 **Key Features:**
-- Focuses on entity neighborhoods and immediate relationships
-- Uses local context builder to gather relevant entity and relationship data
-- Supports conversation history for contextual responses
-- Implements streaming for real-time response generation
-- Configurable response types and system prompts
+- Entity-centric context building
+- Relationship traversal within configurable depth
+- Support for vector similarity search
+- Configurable context window management
 
-**Process Flow:**
-1. Build local context using entity and relationship data
-2. Format context into system prompt
-3. Generate response using language model
-4. Track performance metrics and token usage
+### 2. Global Search
 
-### Global Search
+Global search operates on community summaries and high-level graph structures, suitable for broad, analytical queries that require understanding of overall patterns.
 
-**Purpose**: Community-based search using map-reduce approach
+**Use Cases:**
+- Thematic analysis ("What are the main technology trends?")
+- Community detection ("What are the key market segments?")
+- Pattern recognition ("How has the industry evolved?")
 
 **Architecture:**
 ```mermaid
-graph TB
-    Query[User Query] --> GS[GlobalSearch]
-    GS --> GCB[GlobalContextBuilder]
-    GCB --> Communities[Community Reports]
-    
+graph TD
     subgraph "Map Phase"
-        Communities --> Map1[Map Response 1]
-        Communities --> Map2[Map Response 2]
-        Communities --> Map3[Map Response N]
+        A[Query] --> B[Community Batches]
+        B --> C[Parallel LLM Calls]
+        C --> D[Intermediate Answers]
     end
     
     subgraph "Reduce Phase"
-        Map1 --> Reduce[Reduce Operation]
-        Map2 --> Reduce
-        Map3 --> Reduce
-        Reduce --> Final[Final Response]
+        D --> E[Score Filtering]
+        E --> F[Ranking]
+        F --> G[Context Assembly]
+        G --> H[Final LLM Call]
+        H --> I[Response]
     end
+    
+    J[Community Reports] --> B
+    K[General Knowledge] --> H
 ```
 
-**Key Features:**
-- Two-phase approach: map communities to intermediate answers, then reduce to final response
-- Parallel processing of community reports for efficiency
-- Scoring and ranking of intermediate responses
-- Configurable token limits and concurrency controls
-- Support for general knowledge incorporation
+**Implementation Details:**
+- **Map Phase**: Processes community reports in parallel using LLM calls
+- **Reduce Phase**: Combines intermediate results into final answer
+- **Scoring System**: Ranks responses by relevance and importance
+- **Token Management**: Configurable limits for context windows
 
-**Process Flow:**
-1. **Map Phase**: Process community reports in parallel to generate key points with scores
-2. **Filter & Rank**: Remove low-scoring responses and rank by relevance
-3. **Reduce Phase**: Combine top responses into comprehensive final answer
-4. **Streaming Support**: Real-time response generation
+### 3. DRIFT Search
 
-### Basic Search
+DRIFT (Dynamic Reasoning and Inference with Follow-up Thoughts) search implements an iterative, exploratory approach that can handle complex, multi-faceted queries.
 
-**Purpose**: Traditional RAG-style vector search on text chunks
+**Use Cases:**
+- Complex analytical queries ("Compare the strategies of top tech companies")
+- Multi-hop reasoning ("What factors led to the success of startup X?")
+- Exploratory analysis ("What are the emerging patterns in AI adoption?")
 
 **Architecture:**
 ```mermaid
-graph LR
-    Query[User Query] --> BS[BasicSearch]
-    BS --> BCB[BasicContextBuilder]
-    BCB --> VectorStore[Vector Store]
-    VectorStore --> TextChunks[Text Chunks]
-    TextChunks --> Context[Context Window]
-    Context --> LLM[Language Model]
-    LLM --> Response[Search Result]
+stateDiagram-v2
+    [*] --> Primer
+    Primer --> Action1: Generate initial actions
+    Action1 --> Search1: Execute search
+    Search1 --> Action2: Generate follow-ups
+    Action2 --> Search2: Execute search
+    Search2 --> Action3: Generate follow-ups
+    Action3 --> Reduce: Continue until depth limit
+    Reduce --> [*]: Final response
 ```
 
-**Key Features:**
-- Vector similarity search on raw text units
-- Simple, straightforward RAG implementation
-- Configurable context window and response types
-- Streaming support for real-time responses
-- Minimal complexity for baseline comparisons
+**Key Components:**
+- **Primer**: Generates initial search actions and follow-up queries
+- **Action System**: Encapsulates search operations with scoring
+- **Query State**: Maintains search history and context
+- **Reduction**: Combines all findings into comprehensive response
 
-### DRIFT Search
+## Data Flow
 
-**Purpose**: Dynamic, iterative search with adaptive exploration
-
-**Architecture:**
-```mermaid
-graph TB
-    Query[User Query] --> DS[DRIFTSearch]
-    DS --> Primer[DRIFTPrimer]
-    Primer --> Initial[Initial Analysis]
-    Initial --> Actions[DriftActions]
-    
-    subgraph "Iterative Loop"
-        Actions --> LocalSearch[Local Search]
-        LocalSearch --> Results[Search Results]
-        Results --> NewActions[New Actions]
-        NewActions --> Actions
-    end
-    
-    Results --> Reduce[Reduce Response]
-    Reduce --> Final[Final Answer]
-```
-
-**Key Features:**
-- Multi-step iterative search process
-- Automatic generation of follow-up queries
-- State management for query progression
-- Integration with local search for detailed exploration
-- Configurable depth and breadth parameters
-
-**Process Flow:**
-1. **Priming**: Initial analysis to identify key aspects and generate follow-up queries
-2. **Iterative Exploration**: Execute follow-up searches using local search
-3. **State Management**: Track query state and action results
-4. **Response Reduction**: Combine all findings into comprehensive answer
-
-## Context Builder Integration
-
-The structured search module relies heavily on context builders to prepare relevant information for each search type:
+### Search Execution Flow
 
 ```mermaid
-graph TD
-    subgraph "Context Builders"
-        LCB[LocalContextBuilder]
-        GCB[GlobalContextBuilder]
-        BCB[BasicContextBuilder]
-        DSCB[DRIFTSearchContextBuilder]
-    end
+flowchart TD
+    Start([User Query]) --> Validate{Validate Query}
+    Validate -->|Valid| Route{Select Search Type}
+    Route -->|Local| LocalPath
+    Route -->|Global| GlobalPath
+    Route -->|DRIFT| DriftPath
     
-    subgraph "Data Sources"
-        Entities[Entity Data]
-        Relations[Relationship Data]
-        Communities[Community Reports]
-        TextUnits[Text Units]
-        Vectors[Vector Embeddings]
-    end
+    LocalPath[LocalSearch.search] --> BuildLocal[Build Local Context]
+    BuildLocal --> LocalLLM[Generate Response]
+    LocalLLM --> ReturnLocal[Return Result]
     
-    LCB --> Entities
-    LCB --> Relations
-    LCB --> TextUnits
+    GlobalPath[GlobalSearch.search] --> BuildGlobal[Build Global Context]
+    BuildGlobal --> MapPhase[Map Phase - Parallel Processing]
+    MapPhase --> ReducePhase[Reduce Phase - Combine Results]
+    ReducePhase --> ReturnGlobal[Return Result]
     
-    GCB --> Communities
+    DriftPath[DRIFTSearch.search] --> Primer[Primer Phase]
+    Primer --> SearchLoop[Search Loop]
+    SearchLoop --> ReduceDrift[Reduce Results]
+    ReduceDrift --> ReturnDrift[Return Result]
     
-    BCB --> Vectors
-    BCB --> TextUnits
+    ReturnLocal --> End([End])
+    ReturnGlobal --> End
+    ReturnDrift --> End
     
-    DSCB --> Entities
-    DSCB --> Relations
-    DSCB --> Communities
-    DSCB --> TextUnits
+    Validate -->|Invalid| Error[Error Handling]
+    Error --> End
 ```
 
-## Performance and Monitoring
+### Context Building Process
 
-### Token Management
-- Comprehensive token usage tracking across all operations
-- Configurable token limits for different search phases
-- Token encoder integration for accurate counting
-
-### Callback System
-- Real-time monitoring of search progress
-- Token streaming for user interfaces
-- Performance metrics collection
-- Error handling and logging
-
-### Concurrency Control
-- Semaphore-based concurrency management in global search
-- Configurable parallelism levels
-- Async/await pattern throughout for scalability
-
-## Error Handling
-
-The module implements robust error handling:
-- Graceful degradation on LLM failures
-- Empty response handling with appropriate fallbacks
-- Exception logging and monitoring
-- Token limit management
-
-## Configuration
-
-Each search type supports extensive configuration:
-- Model parameters (temperature, max tokens, etc.)
-- Context builder parameters (top-k, proportions, etc.)
-- Search-specific settings (response types, prompts, etc.)
-- Performance tuning options (concurrency, token limits)
-
-## Dependencies
-
-The structured_search module integrates with several other GraphRAG modules:
-
-- **[Language Models](language_models.md)**: Provides LLM capabilities through the ChatModel protocol
-- **[Context Builder](query_context_builder.md)**: Supplies relevant context for each search type
-- **[Data Models](data_models.md)**: Uses entity, relationship, and community data structures
-- **[Callbacks](callbacks.md)**: Enables monitoring and progress tracking
-
-## Usage Patterns
-
-### Basic Usage
-```python
-# Initialize search with appropriate context builder
-search = LocalSearch(
-    model=chat_model,
-    context_builder=local_context_builder,
-    token_encoder=token_encoder
-)
-
-# Execute search
-result = await search.search("What are the key relationships between entities?")
+```mermaid
+sequenceDiagram
+    participant Search as Search Implementation
+    participant Context as ContextBuilder
+    participant Store as Data Stores
+    participant Model as Language Model
+    
+    Search->>Context: build_context(query, params)
+    Context->>Store: Query relevant data
+    Store-->>Context: Raw data (entities, relationships, communities)
+    Context->>Context: Filter and rank data
+    Context->>Context: Format for LLM consumption
+    Context->>Model: Token counting (if needed)
+    Context-->>Search: ContextResult (data + text + metadata)
 ```
 
-### Streaming Usage
-```python
-# Stream search results
-async for chunk in search.stream_search("Tell me about entity X"):
-    print(chunk, end="", flush=True)
-```
+## Integration Points
 
-### Advanced Configuration
-```python
-# Configure with custom parameters
-search = GlobalSearch(
-    model=chat_model,
-    context_builder=global_context_builder,
-    concurrent_coroutines=16,
-    max_data_tokens=10000,
-    allow_general_knowledge=True
-)
-```
+### Configuration Integration
+
+The structured_search module integrates with the [Configuration](configuration.md) system through:
+
+- **LocalSearchConfig**: Parameters for local search behavior
+- **GlobalSearchConfig**: Parameters for global search behavior  
+- **Model configurations**: LLM parameters and settings
+- **Storage configurations**: Data store connections
+
+### Data Model Dependencies
+
+Search operations work with the [Core Data Model](data_model.md):
+
+- **Entity**: Primary nodes in the knowledge graph
+- **Relationship**: Connections between entities
+- **Community**: Groups of related entities
+- **CommunityReport**: Summaries of community characteristics
+- **TextUnit**: Original text segments
+
+### Language Model Integration
+
+The module leverages the [Language Model Abstraction](language_model.md):
+
+- **ChatModel**: Interface for LLM interactions
+- **ModelResponse**: Standardized response format
+- **Token Management**: Efficient token counting and limits
+- **Streaming Support**: Real-time response generation
 
 ## Performance Considerations
 
-- **Local Search**: Fastest for entity-specific queries, minimal LLM calls
-- **Global Search**: Higher latency due to map-reduce approach, but comprehensive
-- **Basic Search**: Moderate performance, depends on vector store efficiency
-- **DRIFT Search**: Highest latency due to iterative nature, but most thorough
+### Optimization Strategies
+
+1. **Caching**: Integration with [Pipeline Caching](pipeline_caching.md) for repeated queries
+2. **Concurrency**: Parallel processing in global search map phase
+3. **Token Management**: Intelligent context window optimization
+4. **Vector Stores**: Efficient similarity search through [Vector Stores](vector_stores.md)
+
+### Scalability Features
+
+- **Async Operations**: All search methods support asynchronous execution
+- **Batch Processing**: Global search processes communities in parallel batches
+- **Configurable Limits**: Token limits, concurrency controls, and timeout settings
+- **Resource Management**: Proper cleanup and resource allocation
+
+## Error Handling
+
+### Exception Management
+
+```mermaid
+flowchart TD
+    Try[Search Operation] --> Catch{Exception Type}
+    Catch -->|LLM Error| LLMHandler[Log + Return Empty Result]
+    Catch -->|Data Error| DataHandler[Log + Use Available Data]
+    Catch -->|Token Limit| TokenHandler[Truncate + Retry]
+    Catch -->|Timeout| TimeoutHandler[Return Partial Result]
+    
+    LLMHandler --> Return[Return SearchResult with Error Info]
+    DataHandler --> Return
+    TokenHandler --> Return
+    TimeoutHandler --> Return
+```
+
+### Resilience Features
+
+- **Graceful Degradation**: Continues operation with partial data
+- **Error Logging**: Comprehensive logging for debugging
+- **Fallback Responses**: Default responses when data is unavailable
+- **Token Recovery**: Automatic truncation and retry mechanisms
+
+## Usage Examples
+
+### Basic Local Search
+
+```python
+from graphrag.query.structured_search.local_search.search import LocalSearch
+from graphrag.query.context_builder.builders import LocalContextBuilder
+
+# Initialize components
+context_builder = LocalContextBuilder(
+    entity_store=entity_store,
+    relationship_store=relationship_store,
+    vector_store=vector_store
+)
+
+local_search = LocalSearch(
+    model=chat_model,
+    context_builder=context_builder,
+    response_type="multiple paragraphs"
+)
+
+# Execute search
+result = await local_search.search(
+    query="What are Microsoft's main products?",
+    conversation_history=history
+)
+```
+
+### Global Search with Streaming
+
+```python
+from graphrag.query.structured_search.global_search.search import GlobalSearch
+
+# Configure global search
+global_search = GlobalSearch(
+    model=chat_model,
+    context_builder=global_context_builder,
+    concurrent_coroutines=16,
+    max_data_tokens=8000
+)
+
+# Stream results
+async for chunk in global_search.stream_search(
+    query="Analyze technology industry trends"
+):
+    print(chunk, end="", flush=True)
+```
+
+### DRIFT Search for Complex Queries
+
+```python
+from graphrag.query.structured_search.drift_search.search import DRIFTSearch
+
+drift_search = DRIFTSearch(
+    model=chat_model,
+    context_builder=drift_context_builder,
+    query_state=QueryState()
+)
+
+result = await drift_search.search(
+    query="Compare the business strategies of major cloud providers",
+    reduce=True  # Combine all findings into single response
+)
+```
 
 ## Future Enhancements
 
-Potential areas for improvement:
-- Caching mechanisms for repeated queries
-- Query optimization and planning
-- Hybrid search strategies combining multiple approaches
-- Advanced ranking and relevance scoring
-- Multi-language support enhancements
+### Planned Features
+
+1. **Hybrid Search**: Combining local and global strategies automatically
+2. **Query Planning**: Intelligent selection of search strategy based on query analysis
+3. **Multi-modal Support**: Integration with image and document search
+4. **Federated Search**: Cross-graph query capabilities
+5. **Query Optimization**: Automatic query reformulation and optimization
+
+### Performance Improvements
+
+- **Query Result Caching**: Cache similar query results
+- **Predictive Loading**: Pre-load likely relevant data
+- **Distributed Processing**: Scale across multiple nodes
+- **Index Optimization**: Enhanced indexing strategies for faster retrieval
+
+## Related Documentation
+
+- [Query Engine](query_engine.md) - Overview of the query system
+- [Context Builder](context_builder.md) - Context construction details
+- [Language Model](language_model.md) - LLM integration and management
+- [Configuration](configuration.md) - Configuration options and settings
+- [Data Model](data_model.md) - Core data structures and relationships
+- [Vector Stores](vector_stores.md) - Vector storage and similarity search
+- [Pipeline Caching](pipeline_caching.md) - Caching mechanisms and optimization

@@ -2,7 +2,18 @@
 
 ## Introduction
 
-The `base-transient-bottom-bar` module provides the foundational framework for displaying lightweight transient notification bars along the bottom edge of the application window. This module serves as the abstract base class for Material Design snackbars and similar transient UI components, offering a robust architecture for managing display duration, animations, user interactions, and system integration.
+The `base-transient-bottom-bar` module provides the foundational framework for displaying lightweight transient notification bars along the bottom edge of the application window. This module serves as the base class for Material Design snackbars and similar transient UI components, offering a robust architecture for managing the lifecycle, animations, and interactions of bottom-positioned notification elements.
+
+## Module Overview
+
+The module implements a comprehensive system for creating and managing transient bottom bars with support for:
+- Multiple animation modes (slide and fade)
+- Swipe-to-dismiss functionality
+- Accessibility features
+- Anchor view positioning
+- Gesture inset handling for Android Q+
+- Customizable styling and theming
+- Event callbacks and lifecycle management
 
 ## Core Architecture
 
@@ -28,18 +39,6 @@ classDiagram
         +addCallback(BaseCallback)
     }
 
-    class ContentViewCallback {
-        <<interface>>
-        +animateContentIn(int, int)
-        +animateContentOut(int, int)
-    }
-
-    class BaseCallback {
-        <<abstract>>
-        +onShown(B)
-        +onDismissed(B, int)
-    }
-
     class SnackbarBaseLayout {
         -BaseTransientBottomBar baseTransientBottomBar
         -ShapeAppearanceModel shapeAppearanceModel
@@ -47,245 +46,343 @@ classDiagram
         -Rect originalMargins
         +addToTargetParent(ViewGroup)
         +setAnimationMode(int)
+        +onLayout(boolean, int, int, int, int)
+    }
+
+    class BaseCallback {
+        <<abstract>>
+        +onDismissed(B, int)
+        +onShown(B)
+    }
+
+    class ContentViewCallback {
+        <<interface>>
+        +animateContentIn(int, int)
+        +animateContentOut(int, int)
     }
 
     class Behavior {
         -BehaviorDelegate delegate
         +canSwipeDismissView(View)
-        +onInterceptTouchEvent(...)
+        +onInterceptTouchEvent(CoordinatorLayout, View, MotionEvent)
     }
 
+    BaseTransientBottomBar --> SnackbarBaseLayout : contains
     BaseTransientBottomBar --> ContentViewCallback : uses
     BaseTransientBottomBar --> BaseCallback : notifies
-    BaseTransientBottomBar --> SnackbarBaseLayout : contains
     BaseTransientBottomBar --> Behavior : configures
-    Behavior --> BehaviorDelegate : delegates to
+    Behavior --> SwipeDismissBehavior : extends
 ```
 
 ### Animation System
 
 ```mermaid
+flowchart TD
+    A[Animation Controller] --> B{Animation Mode}
+    B -->|ANIMATION_MODE_SLIDE| C[Slide Animation]
+    B -->|ANIMATION_MODE_FADE| D[Fade Animation]
+    
+    C --> C1[Translation Y Animation]
+    C --> C2[Content Fade Animation]
+    
+    D --> D1[Alpha Animation]
+    D --> D2[Scale Animation]
+    
+    C1 --> E[Interpolator: FAST_OUT_SLOW_IN]
+    C2 --> F[Duration: 180ms]
+    
+    D1 --> G[Interpolator: LINEAR]
+    D2 --> H[Interpolator: LINEAR_OUT_SLOW_IN]
+```
+
+### Lifecycle Management
+
+```mermaid
 stateDiagram-v2
-    [*] --> Hidden
-    Hidden --> Showing : show()
-    Showing --> Shown : animation complete
-    Shown --> Hiding : dismiss()/timeout
-    Hiding --> Hidden : animation complete
+    [*] --> Created
+    Created --> Queued: show()
+    Queued --> Showing: SnackbarManager
+    Showing --> Shown: Animation Complete
+    Shown --> Dismissing: dismiss()
+    Dismissing --> Hidden: Animation Complete
+    Hidden --> [*]: View Removed
     
-    state Showing {
-        [*] --> SlideInAnimation
-        [*] --> FadeInAnimation
-        SlideInAnimation --> Shown
-        FadeInAnimation --> Shown
-    }
-    
-    state Hiding {
-        [*] --> SlideOutAnimation
-        [*] --> FadeOutAnimation
-        SlideOutAnimation --> Hidden
-        FadeOutAnimation --> Hidden
-    }
-```
-
-### System Integration Architecture
-
-```mermaid
-graph TD
-    A[BaseTransientBottomBar] --> B[SnackbarManager]
-    A --> C[AccessibilityManager]
-    A --> D[WindowInsets]
-    A --> E[SwipeDismissBehavior]
-    
-    B --> F[Message Queue]
-    B --> G[Timeout Management]
-    
-    C --> H[Screen Readers]
-    C --> I[Accessibility Services]
-    
-    D --> J[System Gestures]
-    D --> K[Navigation Bar]
-    D --> L[Display Cutouts]
-    
-    E --> M[Touch Handling]
-    E --> N[Swipe Detection]
-```
-
-## Component Relationships
-
-### Dependency Flow
-
-```mermaid
-graph LR
-    subgraph "Core Module"
-        BTB[BaseTransientBottomBar]
-        CVCB[ContentViewCallback]
-    end
-    
-    subgraph "Supporting Systems"
-        SM[SnackbarManager]
-        SBL[SnackbarBaseLayout]
-        BC[BaseCallback]
-        B[Behavior]
-    end
-    
-    subgraph "External Dependencies"
-        CL[CoordinatorLayout]
-        SDB[SwipeDismissBehavior]
-        AM[AccessibilityManager]
-        MU[MaterialUtils]
-    end
-    
-    BTB --> CVCB
-    BTB --> SM
-    BTB --> SBL
-    BTB --> BC
-    BTB --> B
-    B --> SDB
-    SBL --> CL
-    BTB --> AM
-    BTB --> MU
+    Shown --> Dismissing: Swipe
+    Shown --> Dismissing: Timeout
+    Shown --> Dismissing: New Snackbar
 ```
 
 ## Key Features
 
-### 1. Animation Management
-- **Slide Animation**: Traditional bottom-up slide with content fade
-- **Fade Animation**: Material Design 3 fade and scale animations
-- **Configurable Duration**: Theme-based animation timing
-- **Accessibility Aware**: Disables animations when accessibility services are active
+### 1. Animation Modes
 
-### 2. Positioning System
-- **Anchor View Support**: Position above specific UI elements
-- **System Insets**: Automatic adjustment for navigation bars and display cutouts
-- **Gesture Insets**: Android Q+ gesture area avoidance
-- **Margin Management**: Dynamic margin calculation and updates
+The module supports two primary animation modes:
 
-### 3. Interaction Handling
-- **Swipe to Dismiss**: Integrated swipe dismiss behavior
-- **Touch Handling**: Consumes touches to prevent background interaction
-- **Timeout Management**: Automatic dismissal with pause/resume capability
-- **Manual Control**: Programmatic show/dismiss with event tracking
+- **Slide Animation (Default)**: Vertical translation with content fade
+- **Fade Animation**: Alpha and scale transformations
 
-### 4. Accessibility Integration
-- **Screen Reader Support**: Proper accessibility announcements
-- **Keyboard Navigation**: Dismiss action via accessibility services
-- **Live Regions**: Appropriate content updates for assistive technologies
-- **Focus Management**: Proper focus handling during show/hide transitions
-
-## Data Flow
-
-### Show Process Flow
-
-```mermaid
-sequenceDiagram
-    participant App
-    participant BTB as BaseTransientBottomBar
-    participant SM as SnackbarManager
-    participant SBL as SnackbarBaseLayout
-    participant View
-    
-    App->>BTB: show()
-    BTB->>SM: show(duration, callback)
-    SM->>BTB: managerCallback.show()
-    BTB->>BTB: showView()
-    BTB->>SBL: addToTargetParent()
-    SBL->>View: addView()
-    BTB->>BTB: animateViewIn()
-    BTB->>SBL: setVisibility(VISIBLE)
-    BTB->>App: onViewShown()
+```java
+// Animation configuration
+public static final int ANIMATION_MODE_SLIDE = 0;
+public static final int ANIMATION_MODE_FADE = 1;
 ```
 
-### Dismiss Process Flow
+### 2. Swipe Dismiss Behavior
+
+Integrated with CoordinatorLayout and SwipeDismissBehavior for gesture-based dismissal:
 
 ```mermaid
 sequenceDiagram
     participant User
-    participant BTB as BaseTransientBottomBar
-    participant SM as SnackbarManager
-    participant CB as Callbacks
+    participant SwipeDismissBehavior
+    participant BaseTransientBottomBar
+    participant SnackbarManager
     
-    User->>BTB: dismiss()/timeout/swipe
-    BTB->>SM: dismiss(event)
-    SM->>BTB: managerCallback.dismiss(event)
-    BTB->>BTB: hideView(event)
-    BTB->>BTB: animateViewOut()
-    BTB->>CB: onDismissed(event)
-    BTB->>View: removeView()
+    User->>SwipeDismissBehavior: Swipe gesture
+    SwipeDismissBehavior->>BaseTransientBottomBar: onDismiss()
+    BaseTransientBottomBar->>SnackbarManager: dispatchDismiss(SWIPE)
+    SnackbarManager->>BaseTransientBottomBar: hideView()
+    BaseTransientBottomBar->>User: Animation out
+```
+
+### 3. Anchor View System
+
+Supports anchoring above specific views with automatic position recalculation:
+
+```mermaid
+graph TD
+    A[BaseTransientBottomBar] --> B[Anchor View]
+    B --> C[Layout Listener]
+    C --> D[Recalculate Margins]
+    D --> E[Update Position]
+    
+    F[Anchor View Moved] --> C
+    G[Anchor View Resized] --> C
+```
+
+### 4. Accessibility Features
+
+Comprehensive accessibility support including:
+- Screen reader compatibility
+- Gesture navigation handling (Android Q+)
+- Keyboard navigation support
+- Accessibility announcements
+
+### 5. Margin Management
+
+Sophisticated margin calculation system handling:
+- Window insets (system bars)
+- Anchor view positioning
+- Gesture insets (Android Q+)
+- Original view margins preservation
+
+## Dependencies
+
+The module integrates with several Material Design components:
+
+```mermaid
+graph TD
+    A[base-transient-bottom-bar] --> B[animation]
+    A --> C[theme]
+    A --> D[color]
+    A --> E[shape]
+    A --> F[resources]
+    A --> G[internal]
+    A --> H[behavior]
+    
+    B --> B1[MotionUtils]
+    C --> C1[MaterialThemeOverlay]
+    D --> D1[MaterialColors]
+    E --> E1[MaterialShapeDrawable]
+    F --> F1[MaterialResources]
+    G --> G1[ViewUtils]
+    G --> G2[WindowUtils]
+    H --> H1[SwipeDismissBehavior]
 ```
 
 ## Integration Points
 
-### CoordinatorLayout Integration
-- **Behavior System**: Custom SwipeDismissBehavior implementation
-- **Layout Parameters**: CoordinatorLayout.LayoutParams support
-- **Inset Edges**: Proper inset edge configuration for dodging
+### 1. Snackbar Implementation
 
-### Theme Integration
-- **Material Theming**: Automatic theme overlay application
-- **Shape Appearance**: Support for Material shape theming
-- **Color System**: Material Colors integration for backgrounds
-- **Motion System**: Theme-based animation interpolators and durations
+The module serves as the foundation for the main [snackbar-implementation](snackbar-implementation.md) component:
 
-### Window Management
-- **Insets Handling**: System window inset processing
-- **Gesture Areas**: Android Q+ mandatory gesture inset handling
-- **Multi-window**: Proper behavior in multi-window environments
+```java
+public class Snackbar extends BaseTransientBottomBar<Snackbar> {
+    // Extends base functionality with action buttons
+    // and specific styling for Material Design snackbars
+}
+```
+
+### 2. Content Layout
+
+Works in conjunction with [content-layout](content-layout.md) for structured content presentation:
+
+```java
+// SnackbarContentLayout implements ContentViewCallback
+view.addView(content); // Content is typically SnackbarContentLayout
+```
+
+### 3. Snackbar Manager
+
+Integrates with the system-wide SnackbarManager for queue management and coordination:
+
+```mermaid
+sequenceDiagram
+    participant App
+    participant BaseTransientBottomBar
+    participant SnackbarManager
+    
+    App->>BaseTransientBottomBar: show()
+    BaseTransientBottomBar->>SnackbarManager: show(duration, callback)
+    SnackbarManager->>SnackbarManager: Queue Management
+    SnackbarManager->>BaseTransientBottomBar: callback.show()
+    BaseTransientBottomBar->>BaseTransientBottomBar: showView()
+```
 
 ## Configuration Options
 
-### Animation Modes
-- `ANIMATION_MODE_SLIDE`: Traditional slide animation (default)
-- `ANIMATION_MODE_FADE`: Material Design 3 fade and scale animation
-
 ### Duration Constants
-- `LENGTH_SHORT`: Short display duration
-- `LENGTH_LONG`: Long display duration  
-- `LENGTH_INDEFINITE`: Display until manually dismissed
-- Custom duration in milliseconds
+
+```java
+public static final int LENGTH_INDEFINITE = -2;  // Show until dismissed
+public static final int LENGTH_SHORT = -1;       // Short duration
+public static final int LENGTH_LONG = 0;         // Long duration
+```
 
 ### Dismiss Events
-- `DISMISS_EVENT_SWIPE`: User swiped the bar away
-- `DISMISS_EVENT_ACTION`: User clicked action button
-- `DISMISS_EVENT_TIMEOUT`: Duration expired
-- `DISMISS_EVENT_MANUAL`: Programmatically dismissed
-- `DISMISS_EVENT_CONSECUTIVE`: Replaced by new bar
 
-## Related Modules
+```java
+public static final int DISMISS_EVENT_SWIPE = 0;      // User swiped
+public static final int DISMISS_EVENT_ACTION = 1;     // Action clicked
+public static final int DISMISS_EVENT_TIMEOUT = 2;    // Time expired
+public static final int DISMISS_EVENT_MANUAL = 3;     // Manual dismiss()
+public static final int DISMISS_EVENT_CONSECUTIVE = 4; // New snackbar shown
+```
 
-- [snackbar-implementation.md](snackbar-implementation.md) - Concrete Snackbar implementation
-- [content-layout-system.md](content-layout-system.md) - Content layout management
-- [behavior-system.md](behavior-system.md) - Swipe dismiss behavior framework
-- [material-motion.md](material-motion.md) - Animation and motion system
-- [accessibility-framework.md](accessibility-framework.md) - Accessibility integration
+### Animation Configuration
+
+Default animation parameters:
+- **Slide Duration**: 250ms
+- **Fade In Duration**: 150ms  
+- **Fade Out Duration**: 75ms
+- **Scale From Value**: 0.8f
 
 ## Usage Patterns
 
 ### Basic Implementation
+
 ```java
-// Extend BaseTransientBottomBar for custom implementation
-public class CustomBottomBar extends BaseTransientBottomBar<CustomBottomBar> {
-    
-    protected CustomBottomBar(ViewGroup parent, View content, ContentViewCallback callback) {
-        super(parent, content, callback);
-    }
-    
-    // Custom configuration and behavior
+// Create and show a transient bottom bar
+BaseTransientBottomBar<?> bar = new CustomTransientBottomBar(
+    parentViewGroup,
+    contentView,
+    contentViewCallback
+);
+bar.setDuration(BaseTransientBottomBar.LENGTH_LONG)
+   .setAnimationMode(BaseTransientBottomBar.ANIMATION_MODE_FADE)
+   .show();
+```
+
+### Advanced Configuration
+
+```java
+// Configure with anchor view and callbacks
+bar.setAnchorView(anchorView)
+   .setGestureInsetBottomIgnored(false)
+   .addCallback(new BaseCallback<CustomTransientBottomBar>() {
+       @Override
+       public void onDismissed(CustomTransientBottomBar bar, int event) {
+           // Handle dismissal
+       }
+       
+       @Override
+       public void onShown(CustomTransientBottomBar bar) {
+           // Handle show
+       }
+   });
+```
+
+## Thread Safety
+
+The module ensures thread safety through:
+- Handler-based message system for UI operations
+- Main thread enforcement for view modifications
+- Synchronized access to shared state via SnackbarManager
+
+## Performance Considerations
+
+### Memory Management
+- WeakReference usage for anchor views to prevent memory leaks
+- Automatic cleanup on view detachment
+- Resource recycling for animation objects
+
+### Animation Optimization
+- Hardware acceleration support
+- Interpolator caching
+- Batch property updates during animations
+
+### Layout Efficiency
+- Margin recalculation only when necessary
+- Deferred layout operations
+- View state optimization
+
+## Error Handling
+
+The module includes comprehensive error handling for:
+- Invalid parent/child view relationships
+- Missing content views or callbacks
+- Animation failures
+- Accessibility service issues
+- Resource loading problems
+
+## Extension Points
+
+### Custom Transient Bottom Bars
+
+Extend `BaseTransientBottomBar` to create custom implementations:
+
+```java
+public class CustomTransientBottomBar extends BaseTransientBottomBar<CustomTransientBottomBar> {
+    // Override methods for custom behavior
+    // Implement custom styling and interactions
 }
 ```
 
-### Content View Callback Implementation
+### Custom Behaviors
+
+Implement custom `BaseTransientBottomBar.Behavior` for specialized interaction patterns:
+
+```java
+public class CustomBehavior extends BaseTransientBottomBar.Behavior {
+    // Override touch handling and dismissal logic
+}
+```
+
+### Content View Callbacks
+
+Implement `ContentViewCallback` for custom content animations:
+
 ```java
 public class CustomContentCallback implements ContentViewCallback {
-    @Override
-    public void animateContentIn(int delay, int duration) {
-        // Custom content entry animation
-    }
-    
-    @Override
-    public void animateContentOut(int delay, int duration) {
-        // Custom content exit animation
-    }
+    // Implement custom content animation logic
 }
 ```
 
-This module provides the essential foundation for creating consistent, accessible, and well-behaved transient notification components that integrate seamlessly with the Material Design system and Android platform features.
+## Best Practices
+
+1. **Duration Selection**: Use appropriate duration constants for user experience
+2. **Anchor View Management**: Properly manage anchor view lifecycle
+3. **Accessibility**: Ensure content is accessible and properly announced
+4. **Animation Performance**: Choose appropriate animation modes for device capabilities
+5. **Memory Management**: Clean up callbacks and references when no longer needed
+6. **Thread Safety**: Always interact with UI components on the main thread
+
+## Related Documentation
+
+- [snackbar-implementation](snackbar-implementation.md) - Main snackbar implementation
+- [content-layout](content-layout.md) - Content layout management
+- [behavior](behavior.md) - Swipe and interaction behaviors
+- [animation](animation.md) - Animation utilities and interpolators
+- [theme](theme.md) - Theming and styling system
+- [color](color.md) - Color management and theming
+- [shape](shape.md) - Shape appearance and background drawing

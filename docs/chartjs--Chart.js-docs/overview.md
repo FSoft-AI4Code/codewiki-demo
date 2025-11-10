@@ -1,176 +1,153 @@
 # Chart.js Repository Overview
 
-Chart.js is a flexible, community-maintained JavaScript charting library that renders data visualizations on the HTML5 `<canvas>` element. It provides a simple yet powerful API for creating responsive, animated, and interactive charts with minimal code.
-
 ## Purpose
 
-Chart.js aims to make data visualization accessible to developers by providing:
-- **Easy Integration**: Simple API that works with minimal configuration
-- **Responsive Design**: Charts automatically resize to fit their containers
-- **Animation Support**: Smooth, configurable animations for all chart types
-- **Extensibility**: Plugin system for adding custom functionality
-- **TypeScript Support**: Full type definitions for type-safe development
-- **Cross-Platform**: Works in browsers, Node.js, and other JavaScript environments
+Chart.js is a flexible, open-source JavaScript charting library that renders interactive, animated charts using HTML5 Canvas. It provides a simple yet powerful API for creating responsive, accessible, and performant data visualizations across web applications. The library supports a wide variety of chart types including line, bar, pie, doughnut, radar, polar area, bubble, and scatter charts, with extensive customization options and plugin architecture for extensibility.
 
 ## End-to-End Architecture
 
 ```mermaid
 graph TB
-    subgraph "Chart.js Architecture"
-        subgraph "Core Layer"
+    subgraph "Application Layer"
+        App[Web Application]
+        User[User Interactions]
+    end
+    
+    subgraph "Chart.js Library"
+        subgraph "Core Engine"
             Chart[Chart Controller]
-            Config[Configuration System]
-            Animation[Animation Engine]
-            Scale[Scale System]
             Registry[Component Registry]
-            Plugin[Plugin Service]
+            Config[Configuration System]
+            Defaults[Defaults Manager]
+            PluginService[Plugin Service]
         end
         
         subgraph "Chart Types"
-            Bar[Bar Controller]
-            Line[Line Controller]
-            Pie[Pie Controller]
-            Doughnut[Doughnut Controller]
-            Radar[Radar Controller]
-            Polar[Polar Area Controller]
-            Bubble[Bubble Controller]
-            Scatter[Scatter Controller]
+            BarC[Bar Controller]
+            LineC[Line Controller]
+            PieC[Pie Controller]
+            DoughnutC[Doughnut Controller]
+            RadarC[Radar Controller]
+            ScatterC[Scatter Controller]
+            BubbleC[Bubble Controller]
+            PolarC[Polar Area Controller]
         end
         
-        subgraph "Visual Elements"
-            Point[Point Element]
-            Line[Line Element]
-            Bar[Bar Element]
+        subgraph "Visual Components"
             Arc[Arc Element]
+            Bar[Bar Element]
+            Line[Line Element]
+            Point[Point Element]
         end
         
-        subgraph "Scale Types"
-            Linear[Linear Scale]
+        subgraph "Scale System"
             Category[Category Scale]
-            Time[Time Scale]
+            Linear[Linear Scale]
             Logarithmic[Logarithmic Scale]
-            Radial[Radial Linear Scale]
+            Time[Time Scale]
+            TimeSeries[TimeSeries Scale]
+            RadialLinear[Radial Linear Scale]
         end
         
-        subgraph "Built-in Plugins"
+        subgraph "Animation System"
+            Animator[Animator]
+            Animations[Animations Manager]
+            Animation[Animation Instances]
+        end
+        
+        subgraph "Plugin Ecosystem"
             Legend[Legend Plugin]
-            Tooltip[Tooltip Plugin]
             Title[Title Plugin]
+            Tooltip[Tooltip Plugin]
+            Filler[Filler Plugin]
             Colors[Colors Plugin]
         end
         
         subgraph "Platform Layer"
             DomPlatform[DOM Platform]
             BasicPlatform[Basic Platform]
+            BasePlatform[Base Platform]
         end
         
-        subgraph "Utility Layer"
-            Helpers[Helpers Module]
-            Types[Types Module]
+        subgraph "Utilities"
+            DateAdapter[Date Adapter]
+            Helpers[Helper Functions]
         end
     end
     
-    Chart --> Config
-    Chart --> Animation
-    Chart --> Scale
+    subgraph "Rendering Layer"
+        Canvas[HTML5 Canvas]
+        Context[2D Context]
+    end
+    
+    App --> Chart
+    User --> DomPlatform
+    
     Chart --> Registry
-    Chart --> Plugin
+    Chart --> Config
+    Chart --> PluginService
+    Chart --> Animator
     
-    Bar --> Chart
-    Line --> Chart
-    Pie --> Chart
+    Registry --> BarC
+    Registry --> LineC
+    Registry --> PieC
+    Registry --> DoughnutC
+    Registry --> RadarC
+    Registry --> ScatterC
+    Registry --> BubbleC
+    Registry --> PolarC
     
-    Point --> Line
-    Bar --> Bar
-    Arc --> Pie
+    BarC --> Bar
+    LineC --> Line
+    LineC --> Point
+    PieC --> Arc
+    DoughnutC --> Arc
+    RadarC --> Line
+    RadarC --> Point
+    ScatterC --> Point
+    BubbleC --> Point
+    PolarC --> Arc
     
-    Linear --> Scale
-    Category --> Scale
-    Time --> Scale
+    BarC --> Category
+    BarC --> Linear
+    LineC --> Category
+    LineC --> Linear
+    PieC --> Category
+    DoughnutC --> Category
+    RadarC --> RadialLinear
+    ScatterC --> Linear
+    BubbleC --> Linear
+    Time --> DateAdapter
+    TimeSeries --> DateAdapter
     
-    Legend --> Plugin
-    Tooltip --> Plugin
-    Title --> Plugin
+    PluginService --> Legend
+    PluginService --> Title
+    PluginService --> Tooltip
+    PluginService --> Filler
+    PluginService --> Colors
     
-    DomPlatform --> Chart
-    Helpers --> Chart
-    Types --> Chart
+    Animator --> Animations
+    Animations --> Animation
+    
+    DomPlatform --> Canvas
+    BasicPlatform --> Canvas
+    Canvas --> Context
+    
+    Config --> Defaults
+    Helpers --> Animation
+    Helpers --> Bar
+    Helpers --> Line
+    Helpers --> Point
+    Helpers --> Arc
 ```
 
-## Core Modules Documentation
+## Core Module Documentation References
 
-### [Core Module](core.md)
-The foundational layer providing essential infrastructure for chart creation, configuration, animation, and data management. It includes:
-- **Chart Controller**: Central orchestrator managing chart lifecycle
-- **Configuration System**: Hierarchical option resolution and defaults management
-- **Animation Engine**: Smooth 60fps animations with requestAnimationFrame
-- **Scale System**: Base scale functionality for axis management
-- **Component Registry**: Central registration system for all Chart.js components
-- **Plugin Service**: Manages plugin lifecycle and hooks
-
-### [Controllers Module](controllers.md)
-Implements chart-type specific controllers that extend the base DatasetController:
-- **Bar Controller**: Vertical/horizontal bar charts with grouping and stacking
-- **Line Controller**: Line and area charts with gap support
-- **Pie/Doughnut Controllers**: Circular data visualization
-- **Radar Controller**: Multi-dimensional data comparison
-- **Polar Area Controller**: Radial data representation
-- **Bubble Controller**: Three-dimensional data (x, y, radius)
-- **Scatter Controller**: X-Y coordinate data points
-
-### [Elements Module](elements.md)
-Provides fundamental visual building blocks:
-- **Arc Element**: Circular segments for pie/doughnut charts
-- **Bar Element**: Rectangular bars for bar charts
-- **Line Element**: Line segments with multiple interpolation modes
-- **Point Element**: Data points with various styles and sizes
-
-### [Scales Module](scales.md)
-Handles data-to-pixel mapping and axis management:
-- **Category Scale**: Discrete categorical data
-- **Linear Scale**: Continuous numeric data
-- **Logarithmic Scale**: Data spanning multiple orders of magnitude
-- **Time Scale**: Temporal data with automatic unit selection
-- **Time Series Scale**: Optimized for irregular time intervals
-- **Radial Linear Scale**: Linear scale for radial/polar charts
-
-### [Plugins Module](plugins.md)
-Extensible functionality through built-in and custom plugins:
-- **Legend Plugin**: Interactive dataset toggling and display
-- **Tooltip Plugin**: Rich interactive tooltips with positioning modes
-- **Title Plugin**: Multi-line chart titles with positioning
-- **Colors Plugin**: Automatic color assignment for datasets
-- **Filler Plugin**: Area filling between datasets
-
-### [Platform Module](platform.md)
-Abstraction layer for cross-platform compatibility:
-- **DomPlatform**: Full browser support with DOM events and responsive handling
-- **BasicPlatform**: Minimal implementation for limited environments
-- **Canvas Context Management**: Proper resource handling and cleanup
-- **Device Pixel Ratio**: High-DPI display support
-
-### [Helpers Module](helpers.md)
-Comprehensive utility library providing:
-- **Canvas Helpers**: Drawing utilities for points, text, and shapes
-- **Collection Helpers**: Array operations and binary search
-- **Configuration Helpers**: Type-safe configuration resolution
-- **Core Helpers**: Type checking and object manipulation
-- **RTL Helpers**: Right-to-left text support
-
-### [Types Module](types.md)
-Complete TypeScript type definitions ensuring:
-- **Type Safety**: Full coverage for all configurations and options
-- **IntelliSense**: Enhanced development experience
-- **Extensibility**: Support for custom chart types and plugins
-- **Chart Type Registry**: Sophisticated type mapping system
-
-## Key Features
-
-- **8 Built-in Chart Types**: Bar, Line, Pie, Doughnut, Radar, Polar Area, Bubble, Scatter
-- **Responsive by Default**: Automatic resizing and mobile optimization
-- **Animation System**: Configurable animations with easing functions
-- **Plugin Architecture**: Extensible through custom plugins
-- **Mixed Chart Types**: Combine different chart types in a single chart
-- **Accessibility**: ARIA support and keyboard navigation
-- **Performance**: Optimized for large datasets with decimation
-- **Internationalization**: RTL support and locale-aware formatting
+- **[Core Engine](core_engine.md)** - Central orchestration system managing chart lifecycle, data processing, rendering, and interactivity
+- **[Animation Module](animation.md)** - Smooth, configurable animations for chart transitions and updates
+- **[Controllers Module](controllers.md)** - Specialized dataset controllers for different chart types (Bar, Line, Pie, Doughnut, Radar, Scatter, Bubble, Polar Area)
+- **[Elements Module](elements.md)** - Visual building blocks (Arc, Bar, Line, Point elements) for chart rendering
+- **[Scales Module](scales.md)** - Mathematical foundation for mapping data values to visual positions (Category, Linear, Logarithmic, Time, TimeSeries, Radial Linear)
+- **[Plugins Module](plugins.md)** - Essential chart enhancements including legends, titles, tooltips, data filling, and automatic color assignment
+- **[Platform Module](platform.md)** - Abstraction layer for platform-specific operations across different environments
+- **[Date Adapters](date_adapters.md)** - Flexible system for handling date and time operations with different libraries

@@ -1,23 +1,23 @@
 {
-    "amalgamate": {
+    "amalgamation-tool": {
         "components": [
             "tools.amalgamate.amalgamate.TranslationUnit",
             "tools.amalgamate.amalgamate.Amalgamation"
         ],
         "children": {}
     },
-    "serve_header": {
+    "header-server": {
         "components": [
-            "tools.serve_header.serve_header.DualStackServer",
-            "tools.serve_header.serve_header.HeaderRequestHandler",
             "tools.serve_header.serve_header.DirectoryEventBucket",
+            "tools.serve_header.serve_header.DualStackServer",
             "tools.serve_header.serve_header.ExitHandler",
-            "tools.serve_header.serve_header.WorkTrees",
-            "tools.serve_header.serve_header.WorkTree"
+            "tools.serve_header.serve_header.HeaderRequestHandler",
+            "tools.serve_header.serve_header.WorkTree",
+            "tools.serve_header.serve_header.WorkTrees"
         ],
         "children": {}
     },
-    "gdb_pretty_printer": {
+    "gdb-pretty-printer": {
         "components": [
             "tools.gdb_pretty_printer.nlohmann-json.JsonValuePrinter"
         ],

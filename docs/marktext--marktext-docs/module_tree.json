@@ -1,422 +1,227 @@
 {
-    "main_app_core": {
+    "Application Core": {
         "path": "src/main/app",
         "components": [
             "src.main.app.index.App",
             "src.main.app.env.AppEnvironment",
             "src.main.app.paths.AppPaths",
-            "src.main.app.accessor.Accessor"
+            "src.main.app.windowManager.WindowManager",
+            "src.main.windows.base.BaseWindow",
+            "src.main.windows.editor.EditorWindow"
         ],
         "children": {
-            "window_management": {
+            "Window Management": {
                 "components": [
                     "src.main.app.windowManager.WindowManager",
-                    "src.main.app.windowManager.WindowActivityList"
+                    "src.main.windows.base.BaseWindow"
                 ],
                 "children": {}
             },
-            "command_system": {
+            "Editor Window": {
+                "components": [
+                    "src.main.windows.editor.EditorWindow"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Main Process Services": {
+        "path": "src/main",
+        "components": [
+            "src.main.commands.index.CommandManager",
+            "src.main.preferences.index.Preference",
+            "src.main.dataCenter.index.DataCenter",
+            "src.main.filesystem.watcher.Watcher",
+            "src.main.menu.index.AppMenu",
+            "src.main.keyboard.shortcutHandler.Keybindings"
+        ],
+        "children": {
+            "Command Management": {
                 "components": [
                     "src.main.commands.index.CommandManager"
                 ],
                 "children": {}
             },
-            "data_management": {
-                "components": [
-                    "src.main.dataCenter.index.DataCenter"
-                ],
-                "children": {}
-            },
-            "file_system": {
-                "components": [
-                    "src.main.filesystem.watcher.Watcher"
-                ],
-                "children": {}
-            },
-            "keyboard_system": {
-                "components": [
-                    "src.main.keyboard.index.KeyboardLayoutMonitor",
-                    "src.main.keyboard.shortcutHandler.Keybindings"
-                ],
-                "children": {}
-            },
-            "menu_system": {
-                "components": [
-                    "src.main.menu.index.AppMenu"
-                ],
-                "children": {}
-            },
-            "preferences": {
+            "User Preferences": {
                 "components": [
                     "src.main.preferences.index.Preference"
                 ],
                 "children": {}
             },
-            "window_types": {
+            "Data Management": {
                 "components": [
-                    "src.main.windows.base.BaseWindow",
-                    "src.main.windows.editor.EditorWindow",
-                    "src.main.windows.setting.SettingWindow"
+                    "src.main.dataCenter.index.DataCenter"
+                ],
+                "children": {}
+            },
+            "File System Watcher": {
+                "components": [
+                    "src.main.filesystem.watcher.Watcher"
+                ],
+                "children": {}
+            },
+            "Application Menu": {
+                "components": [
+                    "src.main.menu.index.AppMenu"
+                ],
+                "children": {}
+            },
+            "Keyboard Shortcuts": {
+                "components": [
+                    "src.main.keyboard.shortcutHandler.Keybindings"
                 ],
                 "children": {}
             }
         }
     },
-    "window_management": {
-        "path": "src/main/app/windowManager.js",
-        "components": [
-            "src.main.app.windowManager.WindowManager",
-            "src.main.app.windowManager.WindowActivityList"
-        ],
-        "children": {}
-    },
-    "command_system": {
-        "path": "src/main/commands",
-        "components": [
-            "src.main.commands.index.CommandManager"
-        ],
-        "children": {}
-    },
-    "data_management": {
-        "path": "src/main/dataCenter",
-        "components": [
-            "src.main.dataCenter.index.DataCenter"
-        ],
-        "children": {}
-    },
-    "file_system": {
-        "path": "src/main/filesystem",
-        "components": [
-            "src.main.filesystem.watcher.Watcher"
-        ],
-        "children": {}
-    },
-    "keyboard_system": {
-        "path": "src/main/keyboard",
-        "components": [
-            "src.main.keyboard.index.KeyboardLayoutMonitor",
-            "src.main.keyboard.shortcutHandler.Keybindings"
-        ],
-        "children": {}
-    },
-    "menu_system": {
-        "path": "src/main/menu",
-        "components": [
-            "src.main.menu.index.AppMenu"
-        ],
-        "children": {}
-    },
-    "preferences": {
-        "path": "src/main/preferences",
-        "components": [
-            "src.main.preferences.index.Preference"
-        ],
-        "children": {}
-    },
-    "window_types": {
-        "path": "src/main/windows",
-        "components": [
-            "src.main.windows.base.BaseWindow",
-            "src.main.windows.editor.EditorWindow",
-            "src.main.windows.setting.SettingWindow"
-        ],
-        "children": {}
-    },
-    "muya_framework": {
+    "Muya Editor Core": {
         "path": "src/muya/lib",
         "components": [
-            "src.muya.lib.index.Muya"
-        ],
-        "children": {}
-    },
-    "muya_content": {
-        "path": "src/muya/lib/contentState",
-        "components": [
+            "src.muya.lib.index.Muya",
             "src.muya.lib.contentState.index.ContentState",
-            "src.muya.lib.contentState.history.History"
-        ],
-        "children": {
-            "content_manipulation": {
-                "components": [
-                    "enterCtrl",
-                    "updateCtrl",
-                    "backspaceCtrl",
-                    "deleteCtrl"
-                ],
-                "children": {}
-            },
-            "advanced_features": {
-                "components": [
-                    "codeBlockCtrl",
-                    "tableBlockCtrl",
-                    "formatCtrl",
-                    "searchCtrl"
-                ],
-                "children": {}
-            },
-            "content_types": {
-                "components": [
-                    "imageCtrl",
-                    "linkCtrl",
-                    "footnoteCtrl",
-                    "emojiCtrl"
-                ],
-                "children": {}
-            },
-            "navigation_input": {
-                "components": [
-                    "arrowCtrl",
-                    "clickCtrl",
-                    "inputCtrl",
-                    "pasteCtrl",
-                    "copyCutCtrl"
-                ],
-                "children": {}
-            },
-            "document_structure": {
-                "components": [
-                    "containerCtrl",
-                    "htmlBlockCtrl",
-                    "tocCtrl"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "muya_events": {
-        "path": "src/muya/lib/eventHandler",
-        "components": [
-            "src.muya.lib.eventHandler.event.EventCenter",
-            "src.muya.lib.eventHandler.clickEvent.ClickEvent",
-            "src.muya.lib.eventHandler.clipboard.Clipboard",
-            "src.muya.lib.eventHandler.dragDrop.DragDrop",
-            "src.muya.lib.eventHandler.keyboard.Keyboard",
-            "src.muya.lib.eventHandler.mouseEvent.MouseEvent",
-            "src.muya.lib.eventHandler.resize.Resize"
-        ],
-        "children": {
-            "keyboard_input_handler": {
-                "components": [
-                    "src.muya.lib.eventHandler.keyboard.Keyboard"
-                ],
-                "children": {}
-            },
-            "click_event_handler": {
-                "components": [
-                    "src.muya.lib.eventHandler.clickEvent.ClickEvent"
-                ],
-                "children": {}
-            },
-            "clipboard_manager": {
-                "components": [
-                    "src.muya.lib.eventHandler.clipboard.Clipboard"
-                ],
-                "children": {}
-            },
-            "event_center": {
-                "components": [
-                    "src.muya.lib.eventHandler.event.EventCenter"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "muya_ui_components": {
-        "path": "src/muya/lib/ui",
-        "components": [
-            "src.muya.lib.ui.baseFloat.index.BaseFloat",
-            "src.muya.lib.ui.baseScrollFloat.index.BaseScrollFloat",
-            "src.muya.lib.ui.codePicker.index.CodePicker",
-            "src.muya.lib.ui.emojiPicker.index.EmojiPicker",
-            "src.muya.lib.ui.emojis.index.Emoji",
-            "src.muya.lib.ui.footnoteTool.index.LinkTools",
-            "src.muya.lib.ui.formatPicker.index.FormatPicker",
-            "src.muya.lib.ui.frontMenu.index.FrontMenu",
-            "src.muya.lib.ui.imagePicker.index.ImagePathPicker",
-            "src.muya.lib.ui.imageSelector.index.ImageSelector",
-            "src.muya.lib.ui.imageToolbar.index.ImageToolbar",
-            "src.muya.lib.ui.linkTools.index.LinkTools",
-            "src.muya.lib.ui.quickInsert.index.QuickInsert",
-            "src.muya.lib.ui.tablePicker.index.TablePicker",
-            "src.muya.lib.ui.tableTools.index.TableBarTools",
-            "src.muya.lib.ui.tooltip.index.Tooltip",
-            "src.muya.lib.ui.transformer.index.Transformer"
-        ],
-        "children": {
-            "base_components": {
-                "components": [
-                    "src.muya.lib.ui.baseFloat.index.BaseFloat",
-                    "src.muya.lib.ui.baseScrollFloat.index.BaseScrollFloat"
-                ],
-                "children": {}
-            },
-            "picker_components": {
-                "components": [
-                    "src.muya.lib.ui.codePicker.index.CodePicker",
-                    "src.muya.lib.ui.emojiPicker.index.EmojiPicker",
-                    "src.muya.lib.ui.formatPicker.index.FormatPicker",
-                    "src.muya.lib.ui.imagePicker.index.ImagePathPicker",
-                    "src.muya.lib.ui.tablePicker.index.TablePicker"
-                ],
-                "children": {}
-            },
-            "menu_components": {
-                "components": [
-                    "src.muya.lib.ui.frontMenu.index.FrontMenu",
-                    "src.muya.lib.ui.quickInsert.index.QuickInsert"
-                ],
-                "children": {}
-            },
-            "image_components": {
-                "components": [
-                    "src.muya.lib.ui.imageSelector.index.ImageSelector",
-                    "src.muya.lib.ui.imageToolbar.index.ImageToolbar"
-                ],
-                "children": {}
-            },
-            "tool_components": {
-                "components": [
-                    "src.muya.lib.ui.linkTools.index.LinkTools",
-                    "src.muya.lib.ui.tableTools.index.TableBarTools",
-                    "src.muya.lib.ui.footnoteTool.index.LinkTools"
-                ],
-                "children": {}
-            },
-            "utility_components": {
-                "components": [
-                    "src.muya.lib.ui.tooltip.index.Tooltip",
-                    "src.muya.lib.ui.transformer.index.Transformer",
-                    "src.muya.lib.ui.emojis.index.Emoji"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "muya_parser": {
-        "path": "src/muya/lib/parser/render",
-        "components": [
+            "src.muya.lib.contentState.history.History",
+            "src.muya.lib.selection.index.Selection",
             "src.muya.lib.parser.render.index.StateRender",
-            "src.muya.lib.parser.render.plantuml.Diagram"
+            "src.muya.lib.eventHandler.event.EventCenter",
+            "src.muya.lib.eventHandler.keyboard.Keyboard"
         ],
         "children": {
-            "state_render": {
+            "ContentState": {
+                "components": [
+                    "src.muya.lib.contentState.index.ContentState",
+                    "src.muya.lib.contentState.history.History"
+                ],
+                "children": {}
+            },
+            "StateRender": {
                 "components": [
                     "src.muya.lib.parser.render.index.StateRender"
                 ],
                 "children": {}
             },
-            "plantuml_diagram": {
+            "EventCenter": {
                 "components": [
-                    "src.muya.lib.parser.render.plantuml.Diagram"
+                    "src.muya.lib.eventHandler.event.EventCenter"
                 ],
                 "children": {}
-            }
-        }
-    },
-    "muya_selection": {
-        "path": "src/muya/lib/selection",
-        "components": [
-            "src.muya.lib.selection.index.Selection",
-            "src.muya.lib.selection.cursor.Cursor"
-        ],
-        "children": {
-            "selection_core": {
+            },
+            "Keyboard Handler": {
+                "components": [
+                    "src.muya.lib.eventHandler.keyboard.Keyboard"
+                ],
+                "children": {}
+            },
+            "Selection Manager": {
                 "components": [
                     "src.muya.lib.selection.index.Selection"
                 ],
                 "children": {}
-            },
-            "cursor_management": {
+            }
+        }
+    },
+    "Muya Editor UI": {
+        "path": "src/muya/lib/ui",
+        "components": [
+            "src.muya.lib.ui.baseFloat.index.BaseFloat",
+            "src.muya.lib.ui.quickInsert.index.QuickInsert",
+            "src.muya.lib.ui.frontMenu.index.FrontMenu",
+            "src.muya.lib.ui.formatPicker.index.FormatPicker",
+            "src.muya.lib.ui.imageToolbar.index.ImageToolbar",
+            "src.muya.lib.ui.tableTools.index.TableBarTools"
+        ],
+        "children": {
+            "BaseFloat": {
                 "components": [
-                    "src.muya.lib.selection.cursor.Cursor"
+                    "src.muya.lib.ui.baseFloat.index.BaseFloat"
+                ],
+                "children": {}
+            },
+            "QuickInsert": {
+                "components": [
+                    "src.muya.lib.ui.quickInsert.index.QuickInsert"
+                ],
+                "children": {}
+            },
+            "FrontMenu": {
+                "components": [
+                    "src.muya.lib.ui.frontMenu.index.FrontMenu"
+                ],
+                "children": {}
+            },
+            "FormatPicker": {
+                "components": [
+                    "src.muya.lib.ui.formatPicker.index.FormatPicker"
+                ],
+                "children": {}
+            },
+            "ImageToolbar": {
+                "components": [
+                    "src.muya.lib.ui.imageToolbar.index.ImageToolbar"
+                ],
+                "children": {}
+            },
+            "TableTools": {
+                "components": [
+                    "src.muya.lib.ui.tableTools.index.TableBarTools"
                 ],
                 "children": {}
             }
         }
     },
-    "muya_export": {
+    "Muya Editor I/O": {
         "path": "src/muya/lib/utils",
         "components": [
             "src.muya.lib.utils.exportHtml.ExportHtml",
             "src.muya.lib.utils.exportMarkdown.ExportMarkdown"
         ],
-        "children": {}
-    },
-    "renderer_commands": {
-        "path": "src/renderer/commands",
-        "components": [
-            "src.renderer.commands.index.RootCommand",
-            "src.renderer.commands.fileEncoding.FileEncodingCommand",
-            "src.renderer.commands.lineEnding.LineEndingCommand",
-            "src.renderer.commands.quickOpen.QuickOpenCommand",
-            "src.renderer.commands.spellcheckerLanguage.SpellcheckerLanguageCommand",
-            "src.renderer.commands.trailingNewline.TrailingNewlineCommand"
-        ],
         "children": {
-            "file_operations": {
+            "HTML Export": {
                 "components": [
-                    "src.renderer.commands.fileEncoding.FileEncodingCommand",
-                    "src.renderer.commands.lineEnding.LineEndingCommand",
-                    "src.renderer.commands.trailingNewline.TrailingNewlineCommand"
+                    "src.muya.lib.utils.exportHtml.ExportHtml"
                 ],
                 "children": {}
             },
-            "search_navigation": {
+            "Markdown Export": {
                 "components": [
-                    "src.renderer.commands.quickOpen.QuickOpenCommand"
-                ],
-                "children": {}
-            },
-            "language_tools": {
-                "components": [
-                    "src.renderer.commands.spellcheckerLanguage.SpellcheckerLanguageCommand"
+                    "src.muya.lib.utils.exportMarkdown.ExportMarkdown"
                 ],
                 "children": {}
             }
         }
     },
-    "renderer_services": {
-        "path": "src/renderer/services",
+    "Renderer-Side Features": {
+        "path": "src/renderer",
         "components": [
-            "src.renderer.services.printService.MarkdownPrint"
-        ],
-        "children": {}
-    },
-    "renderer_spellchecker": {
-        "path": "src/renderer/spellchecker",
-        "components": [
+            "src.renderer.commands.index.RootCommand",
+            "src.renderer.commands.quickOpen.QuickOpenCommand",
+            "src.renderer.node.ripgrepSearcher.RipgrepDirectorySearcher",
             "src.renderer.spellchecker.index.SpellChecker"
         ],
-        "children": {}
-    },
-    "renderer_node": {
-        "path": "src/renderer/node",
-        "components": [
-            "src.renderer.node.fileSearcher.FileSearcher",
-            "src.renderer.node.paths.RendererPaths",
-            "src.renderer.node.ripgrepSearcher.RipgrepDirectorySearcher"
-        ],
-        "children": {}
-    },
-    "renderer_preferences": {
-        "path": "src/renderer/prefComponents/keybindings",
-        "components": [
-            "src.renderer.prefComponents.keybindings.KeybindingConfigurator.KeybindingConfigurator"
-        ],
-        "children": {}
-    },
-    "common_utils": {
-        "path": "src/common",
-        "components": [
-            "src.common.envPaths.EnvPaths"
-        ],
-        "children": {}
-    },
-    "renderer_utilities": {
-        "path": "src/renderer/util",
-        "components": [
-            "src.renderer.util.listToTree.Node"
-        ],
-        "children": {}
+        "children": {
+            "RootCommand": {
+                "components": [
+                    "src.renderer.commands.index.RootCommand"
+                ],
+                "children": {}
+            },
+            "QuickOpenCommand": {
+                "components": [
+                    "src.renderer.commands.quickOpen.QuickOpenCommand"
+                ],
+                "children": {}
+            },
+            "RipgrepDirectorySearcher": {
+                "components": [
+                    "src.renderer.node.ripgrepSearcher.RipgrepDirectorySearcher"
+                ],
+                "children": {}
+            },
+            "SpellChecker": {
+                "components": [
+                    "src.renderer.spellchecker.index.SpellChecker"
+                ],
+                "children": {}
+            }
+        }
     }
 }

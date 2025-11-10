@@ -1,0 +1,452 @@
+{
+    "Trino SPI": {
+        "path": "core/trino-spi/src/main/java/io/trino/spi/",
+        "components": [
+            "core.trino-spi.src.main.java.io.trino.spi.Plugin.Plugin",
+            "core.trino-spi.src.main.java.io.trino.spi.Page.Page",
+            "core.trino-spi.src.main.java.io.trino.spi.block.Block.Block",
+            "core.trino-spi.src.main.java.io.trino.spi.connector.ConnectorMaterializedViewDefinition.Column",
+            "core.trino-spi.src.main.java.io.trino.spi.connector.ColumnMetadata.ColumnMetadata",
+            "core.trino-spi.src.main.java.io.trino.spi.connector.Constraint.Constraint",
+            "core.trino-spi.src.main.java.io.trino.spi.function.Signature.Builder",
+            "core.trino-spi.src.main.java.io.trino.spi.type.Type.Type",
+            "core.trino-spi.src.main.java.io.trino.spi.security.ConnectorIdentity.Builder",
+            "core.trino-spi.src.main.java.io.trino.spi.procedure.Procedure.Procedure",
+            "core.trino-spi.src.main.java.io.trino.spi.statistics.TableStatistics.Builder"
+        ],
+        "children": {}
+    },
+    "SQL Parser & AST": {
+        "path": "core/trino-parser/src/main/java/io/trino/sql/",
+        "components": [
+            "core.trino-parser.src.main.java.io.trino.sql.parser.RefreshableSqlBaseParserInitializer.RefreshableSqlBaseParserInitializer",
+            "core.trino-parser.src.main.java.io.trino.sql.tree.Query.Query",
+            "core.trino-parser.src.main.java.io.trino.sql.tree.Expression.Expression",
+            "core.trino-parser.src.main.java.io.trino.sql.tree.Statement.Statement",
+            "core.trino-parser.src.main.java.io.trino.sql.tree.Node.Node",
+            "core.trino-parser.src.main.java.io.trino.sql.SqlFormatter.SqlFormatter",
+            "core.trino-parser.src.main.java.io.trino.sql.QueryUtil.QueryUtil"
+        ],
+        "children": {}
+    },
+    "SQL Analyzer, Planner & Optimizer": {
+        "path": "core/trino-main/src/main/java/io/trino/sql/",
+        "components": [
+            "core.trino-main.src.main.java.io.trino.sql.analyzer.Analyzer.Analyzer",
+            "core.trino-main.src.main.java.io.trino.sql.analyzer.StatementAnalyzer.Visitor",
+            "core.trino-main.src.main.java.io.trino.sql.analyzer.Analysis.Builder",
+            "core.trino-main.src.main.java.io.trino.sql.analyzer.Scope.Scope",
+            "core.trino-main.src.main.java.io.trino.sql.planner.QueryPlanner.PlanAndMappings",
+            "core.trino-main.src.main.java.io.trino.sql.planner.SubPlan.SubPlan",
+            "core.trino-main.src.main.java.io.trino.sql.planner.plan.PlanNode.PlanNode",
+            "core.trino-main.src.main.java.io.trino.sql.planner.iterative.IterativeOptimizer.Context",
+            "core.trino-main.src.main.java.io.trino.sql.planner.iterative.Rule.Rule",
+            "core.trino-main.src.main.java.io.trino.cost.StatsCalculator.StatsCalculator",
+            "core.trino-main.src.main.java.io.trino.cost.PlanNodeStatsEstimate.Builder",
+            "core.trino-main.src.main.java.io.trino.sql.planner.optimizations.PlanOptimizer.PlanOptimizer",
+            "core.trino-main.src.main.java.io.trino.sql.planner.optimizations.PredicatePushDown.Rewriter",
+            "core.trino-main.src.main.java.io.trino.sql.ir.Expression.Expression"
+        ],
+        "children": {
+            "SQL Analyzer": {
+                "components": [
+                    "core.trino-main.src.main.java.io.trino.sql.analyzer.Analyzer.Analyzer",
+                    "core.trino-main.src.main.java.io.trino.sql.analyzer.StatementAnalyzer.Visitor",
+                    "core.trino-main.src.main.java.io.trino.sql.analyzer.Analysis.Builder",
+                    "core.trino-main.src.main.java.io.trino.sql.analyzer.Scope.Scope"
+                ],
+                "children": {}
+            },
+            "SQL Intermediate Representation": {
+                "components": [
+                    "core.trino-main.src.main.java.io.trino.sql.ir.Expression.Expression"
+                ],
+                "children": {}
+            },
+            "Query Planner & Plan Representation": {
+                "components": [
+                    "core.trino-main.src.main.java.io.trino.sql.planner.QueryPlanner.PlanAndMappings",
+                    "core.trino-main.src.main.java.io.trino.sql.planner.SubPlan.SubPlan",
+                    "core.trino-main.src.main.java.io.trino.sql.planner.plan.PlanNode.PlanNode"
+                ],
+                "children": {}
+            },
+            "Plan Optimizer": {
+                "components": [
+                    "core.trino-main.src.main.java.io.trino.sql.planner.iterative.IterativeOptimizer.Context",
+                    "core.trino-main.src.main.java.io.trino.sql.planner.iterative.Rule.Rule",
+                    "core.trino-main.src.main.java.io.trino.sql.planner.optimizations.PlanOptimizer.PlanOptimizer",
+                    "core.trino-main.src.main.java.io.trino.sql.planner.optimizations.PredicatePushDown.Rewriter"
+                ],
+                "children": {}
+            },
+            "Cost & Statistics": {
+                "components": [
+                    "core.trino-main.src.main.java.io.trino.cost.StatsCalculator.StatsCalculator",
+                    "core.trino-main.src.main.java.io.trino.cost.PlanNodeStatsEstimate.Builder"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Query Execution Engine": {
+        "path": "core/trino-main/src/main/java/io/trino/execution/",
+        "components": [
+            "core.trino-main.src.main.java.io.trino.execution.SqlQueryExecution.SqlQueryExecutionFactory",
+            "core.trino-main.src.main.java.io.trino.execution.StageExecution.StageExecution",
+            "core.trino-main.src.main.java.io.trino.execution.SqlTaskExecution.SqlTaskExecutionFactory",
+            "core.trino-main.src.main.java.io.trino.execution.TaskStatus.TaskStatus",
+            "core.trino-main.src.main.java.io.trino.operator.Operator.Operator",
+            "core.trino-main.src.main.java.io.trino.operator.Driver.Driver",
+            "core.trino-main.src.main.java.io.trino.operator.DriverContext.BlockedMonitor",
+            "core.trino-main.src.main.java.io.trino.operator.join.HashBuilderOperator.HashBuilderOperatorFactory",
+            "core.trino-main.src.main.java.io.trino.operator.join.LookupJoinOperatorFactory.LookupJoinOperatorFactory",
+            "core.trino-main.src.main.java.io.trino.memory.QueryContext.QueryContext",
+            "core.trino-main.src.main.java.io.trino.spiller.SpillerFactory.SpillerFactory",
+            "core.trino-main.src.main.java.io.trino.sql.gen.RowExpressionCompiler.Context"
+        ],
+        "children": {}
+    },
+    "SQL Functions & Operators": {
+        "path": "core/trino-main/src/main/java/io/trino/operator/",
+        "components": [
+            "core.trino-main.src.main.java.io.trino.operator.scalar.ScalarFunctionImplementation.ScalarFunctionImplementation",
+            "core.trino-main.src.main.java.io.trino.operator.aggregation.InternalAggregationFunction.InternalAggregationFunction",
+            "core.trino-main.src.main.java.io.trino.operator.window.WindowFunctionSupplier.WindowFunctionSupplier",
+            "core.trino-main.src.main.java.io.trino.operator.scalar.StringFunctions.StringFunctions",
+            "core.trino-main.src.main.java.io.trino.operator.scalar.MathFunctions.MathFunctions",
+            "core.trino-main.src.main.java.io.trino.operator.scalar.JsonFunctions.JsonFunctions",
+            "core.trino-main.src.main.java.io.trino.operator.aggregation.CountAggregation.CountAggregation",
+            "core.trino-main.src.main.java.io.trino.operator.aggregation.DoubleSumAggregation.DoubleSumAggregation",
+            "core.trino-main.src.main.java.io.trino.operator.window.RankFunction.RankFunction",
+            "core.trino-main.src.main.java.io.trino.type.TypeOperators.TypeOperators"
+        ],
+        "children": {}
+    },
+    "Metadata & Connector Abstraction": {
+        "path": "core/trino-main/src/main/java/io/trino/metadata/",
+        "components": [
+            "core.trino-main.src.main.java.io.trino.metadata.Metadata.Metadata",
+            "core.trino-main.src.main.java.io.trino.connector.ConnectorManager.ConnectorManager",
+            "core.trino-main.src.main.java.io.trino.metadata.CatalogManager.CatalogManager",
+            "core.trino-main.src.main.java.io.trino.metadata.FunctionManager.FunctionManager",
+            "core.trino-main.src.main.java.io.trino.metadata.LanguageFunctionManager.LanguageFunctionLoader",
+            "core.trino-main.src.main.java.io.trino.metadata.SystemFunctionBundle.SystemFunctionBundle",
+            "core.trino-main.src.main.java.io.trino.metadata.TypeRegistry.InternalTypeManager"
+        ],
+        "children": {}
+    },
+    "Trino Server & API": {
+        "path": "core/trino-main/src/main/java/io/trino/server/",
+        "components": [
+            "core.trino-server-main.src.main.java.io.trino.server.TrinoServer.TrinoServer",
+            "core.trino-main.src.main.java.io.trino.server.ServerMainModule.RegisterFunctionBundles",
+            "core.trino-main.src.main.java.io.trino.server.QueryResource.QueryResource",
+            "core.trino-main.src.main.java.io.trino.server.StatementResource.StatementResource",
+            "core.trino-main.src.main.java.io.trino.server.TaskResource.TaskResource",
+            "core.trino-main.src.main.java.io.trino.dispatcher.DispatchManager.DispatchManager",
+            "core.trino-main.src.main.java.io.trino.security.AccessControlManager.AccessControlManager",
+            "core.trino-main.src.main.java.io.trino.server.security.PasswordAuthenticatorManager.PasswordAuthenticatorManager",
+            "core.trino-main.src.main.java.io.trino.server.PluginManager.Loader"
+        ],
+        "children": {}
+    },
+    "Trino Client Library": {
+        "path": "client/trino-client/src/main/java/io/trino/client/",
+        "components": [
+            "client.trino-client.src.main.java.io.trino.client.StatementClient.StatementClient",
+            "client.trino-client.src.main.java.io.trino.client.StatementClientFactory.StatementClientFactory",
+            "client.trino-client.src.main.java.io.trino.client.ClientSession.Builder",
+            "client.trino-client.src.main.java.io.trino.client.QueryResults.QueryResults",
+            "client.trino-client.src.main.java.io.trino.client.Column.Column",
+            "client.trino-client.src.main.java.io.trino.client.QueryStatusInfo.QueryStatusInfo",
+            "client.trino-client.src.main.java.io.trino.client.OkHttpUtil.OkHttpUtil"
+        ],
+        "children": {}
+    },
+    "Trino CLI": {
+        "path": "client/trino-cli/src/main/java/io/trino/cli/",
+        "components": [
+            "client.trino-cli.src.main.java.io.trino.cli.Trino.Trino",
+            "client.trino-cli.src.main.java.io.trino.cli.Query.Query",
+            "client.trino-cli.src.main.java.io.trino.cli.QueryRunner.QueryRunner",
+            "client.trino-cli.src.main.java.io.trino.cli.Console.Console",
+            "client.trino-cli.src.main.java.io.trino.cli.ClientOptions.ClientResourceEstimate",
+            "client.trino-cli.src.main.java.io.trino.cli.lexer.StatementSplitter.Statement"
+        ],
+        "children": {}
+    },
+    "Trino JDBC Driver": {
+        "path": "client/trino-jdbc/src/main/java/io/trino/jdbc/",
+        "components": [
+            "client.trino-jdbc.src.main.java.io.trino.jdbc.TrinoDriver.TrinoDriver",
+            "client.trino-jdbc.src.main.java.io.trino.jdbc.TrinoConnection.TrinoConnection",
+            "client.trino-jdbc.src.main.java.io.trino.jdbc.TrinoStatement.TrinoStatement",
+            "client.trino-jdbc.src.main.java.io.trino.jdbc.TrinoResultSet.TrinoResultSet",
+            "client.trino-jdbc.src.main.java.io.trino.jdbc.TrinoDataSource.TrinoDataSource",
+            "client.trino-jdbc.src.main.java.io.trino.jdbc.ColumnInfo.ColumnInfo"
+        ],
+        "children": {}
+    },
+    "Trino Web UI": {
+        "path": "core/trino-web-ui/src/main/resources/webapp/",
+        "components": [
+            "core.trino-web-ui.src.main.java.io.trino.web.ui.WebUiResources.WebUiResources",
+            "core.trino-web-ui.src.main.resources.webapp.src.components.QueryList.QueryList",
+            "core.trino-web-ui.src.main.resources.webapp.src.components.QueryDetail.QueryDetail",
+            "core.trino-web-ui.src.main.resources.webapp.src.components.StageDetail.StageDetail",
+            "core.trino-web-ui.src.main.resources.webapp.src.components.WorkerList.WorkerList",
+            "core.trino-web-ui.src.main.resources.webapp-preview.src.components.AuthProvider.AuthProviderProps"
+        ],
+        "children": {}
+    },
+    "Plugin Toolkit": {
+        "path": "lib/trino-plugin-toolkit/src/main/java/io/trino/plugin/base/",
+        "components": [
+            "lib.trino-plugin-toolkit.src.main.java.io.trino.plugin.base.classloader.ClassLoaderSafeConnectorMetadata.ClassLoaderSafeConnectorMetadata",
+            "lib.trino-plugin-toolkit.src.main.java.io.trino.plugin.base.security.FileBasedSystemAccessControl.Factory",
+            "lib.trino-plugin-toolkit.src.main.java.io.trino.plugin.base.security.AllowAllSystemAccessControl.Factory",
+            "lib.trino-plugin-toolkit.src.main.java.io.trino.plugin.base.session.SessionPropertiesProvider.SessionPropertiesProvider",
+            "lib.trino-plugin-toolkit.src.main.java.io.trino.plugin.base.aggregation.AggregateFunctionRule.RewriteContext",
+            "lib.trino-plugin-toolkit.src.main.java.io.trino.plugin.base.expression.ConnectorExpressionRule.RewriteContext"
+        ],
+        "children": {}
+    },
+    "Filesystem Abstraction Layer": {
+        "path": "lib/trino-filesystem/",
+        "components": [
+            "lib.trino-filesystem.src.main.java.io.trino.filesystem.TrinoFileSystem.TrinoFileSystem",
+            "lib.trino-filesystem.src.main.java.io.trino.filesystem.TrinoFileSystemFactory.TrinoFileSystemFactory",
+            "lib.trino-filesystem-s3.src.main.java.io.trino.filesystem.s3.S3FileSystemFactory.S3FileSystemFactory",
+            "lib.trino-filesystem-azure.src.main.java.io.trino.filesystem.azure.AzureFileSystemFactory.AzureFileSystemFactory",
+            "lib.trino-filesystem-gcs.src.main.java.io.trino.filesystem.gcs.GcsFileSystemFactory.GcsFileSystemFactory",
+            "lib.trino-filesystem.src.main.java.io.trino.filesystem.local.LocalFileSystemFactory.LocalFileSystemFactory",
+            "lib.trino-hdfs.src.main.java.io.trino.filesystem.hdfs.HdfsFileSystemFactory.HdfsFileSystemFactory"
+        ],
+        "children": {}
+    },
+    "ORC & Parquet Libraries": {
+        "path": "lib/",
+        "components": [
+            "lib.trino-orc.src.main.java.io.trino.orc.OrcReader.FieldMapperFactory",
+            "lib.trino-orc.src.main.java.io.trino.orc.OrcWriter.OrcWriter",
+            "lib.trino-orc.src.main.java.io.trino.orc.OrcDataSource.OrcDataSource",
+            "lib.trino-parquet.src.main.java.io.trino.parquet.ParquetReader.ParquetReader",
+            "lib.trino-parquet.src.main.java.io.trino.parquet.ParquetWriter.ParquetWriter",
+            "lib.trino-parquet.src.main.java.io.trino.parquet.reader.ParquetDataSource.ParquetDataSource"
+        ],
+        "children": {}
+    },
+    "Hive Support Libraries": {
+        "path": "lib/",
+        "components": [
+            "lib.trino-metastore.src.main.java.io.trino.metastore.HiveMetastore.HiveMetastore",
+            "lib.trino-metastore.src.main.java.io.trino.metastore.Table.Table",
+            "lib.trino-metastore.src.main.java.io.trino.metastore.Partition.Builder",
+            "lib.trino-metastore.src.main.java.io.trino.metastore.Database.Builder",
+            "lib.trino-hive-formats.src.main.java.io.trino.hive.formats.encodings.ColumnEncoding.ColumnEncoding",
+            "lib.trino-hive-formats.src.main.java.io.trino.hive.formats.rcfile.RcFileReader.Column",
+            "lib.trino-hdfs.src.main.java.io.trino.hdfs.HdfsEnvironment.HdfsEnvironment"
+        ],
+        "children": {}
+    },
+    "Base JDBC Connector": {
+        "path": "plugin/trino-base-jdbc/src/main/java/io/trino/plugin/jdbc/",
+        "components": [
+            "plugin.trino-base-jdbc.src.main.java.io.trino.plugin.jdbc.JdbcClient.JdbcClient",
+            "plugin.trino-base-jdbc.src.main.java.io.trino.plugin.jdbc.BaseJdbcClient.TopNFunction",
+            "plugin.trino-base-jdbc.src.main.java.io.trino.plugin.jdbc.JdbcConnector.JdbcConnector",
+            "plugin.trino-base-jdbc.src.main.java.io.trino.plugin.jdbc.JdbcMetadata.JdbcMetadata",
+            "plugin.trino-base-jdbc.src.main.java.io.trino.plugin.jdbc.JdbcSplitManager.JdbcSplitManager",
+            "plugin.trino-base-jdbc.src.main.java.io.trino.plugin.jdbc.JdbcPageSourceProvider.JdbcPageSourceProvider",
+            "plugin.trino-base-jdbc.src.main.java.io.trino.plugin.jdbc.JdbcPageSinkProvider.JdbcPageSinkProvider",
+            "plugin.trino-base-jdbc.src.main.java.io.trino.plugin.jdbc.ColumnMapping.ColumnMapping"
+        ],
+        "children": {}
+    },
+    "Hive Connector": {
+        "path": "plugin/trino-hive/src/main/java/io/trino/plugin/hive/",
+        "components": [
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePlugin.HivePlugin",
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveMetadata.HiveMetadata",
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveSplitManager.HiveSplitManager",
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePageSourceProvider.ColumnMapping",
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePageSinkProvider.HivePageSinkProvider",
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveTransactionManager.MemoizedMetadata",
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.metastore.thrift.ThriftHiveMetastore.ThriftHiveMetastore",
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.metastore.glue.GlueHiveMetastore.GlueHiveMetastore",
+            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.util.HiveBucketing.HiveBucketing"
+        ],
+        "children": {
+            "Hive Connector Core": {
+                "components": [
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePlugin.HivePlugin",
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveTransactionManager.MemoizedMetadata",
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveMetadata.HiveMetadata",
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveSplitManager.HiveSplitManager",
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePageSourceProvider.ColumnMapping",
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePageSinkProvider.HivePageSinkProvider",
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.util.HiveBucketing.HiveBucketing"
+                ],
+                "children": {
+                    "Hive Connector Lifecycle & Metadata": {
+                        "components": [
+                            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePlugin.HivePlugin",
+                            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveTransactionManager.MemoizedMetadata",
+                            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveMetadata.HiveMetadata"
+                        ],
+                        "children": {}
+                    },
+                    "Hive Data Access": {
+                        "components": [
+                            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HiveSplitManager.HiveSplitManager",
+                            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePageSourceProvider.ColumnMapping",
+                            "plugin.trino-hive.src.main.java.io.trino.plugin.hive.HivePageSinkProvider.HivePageSinkProvider"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "Hive Metastore Clients": {
+                "components": [
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.metastore.thrift.ThriftHiveMetastore.ThriftHiveMetastore",
+                    "plugin.trino-hive.src.main.java.io.trino.plugin.hive.metastore.glue.GlueHiveMetastore.GlueHiveMetastore"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Iceberg Connector": {
+        "path": "plugin/trino-iceberg/src/main/java/io/trino/plugin/iceberg/",
+        "components": [
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPlugin.IcebergPlugin",
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergMetadata.IcebergMetadata",
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergSplitManager.IcebergSplitManager",
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPageSourceProvider.IcebergPageSourceProvider",
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPageSinkProvider.IcebergPageSinkProvider",
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.catalog.TrinoCatalog.TrinoCatalog",
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.catalog.hms.TrinoHiveCatalogFactory.TrinoHiveCatalogFactory",
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.catalog.glue.TrinoGlueCatalogFactory.TrinoGlueCatalogFactory",
+            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.procedure.OptimizeTableProcedure.OptimizeTableProcedure"
+        ],
+        "children": {
+            "Iceberg Connector Core": {
+                "components": [
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPlugin.IcebergPlugin",
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergMetadata.IcebergMetadata",
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergSplitManager.IcebergSplitManager",
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPageSourceProvider.IcebergPageSourceProvider",
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPageSinkProvider.IcebergPageSinkProvider",
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.procedure.OptimizeTableProcedure.OptimizeTableProcedure"
+                ],
+                "children": {
+                    "Iceberg Connector Lifecycle & Metadata": {
+                        "components": [
+                            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPlugin.IcebergPlugin",
+                            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergMetadata.IcebergMetadata"
+                        ],
+                        "children": {}
+                    },
+                    "Iceberg Data Access": {
+                        "components": [
+                            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergSplitManager.IcebergSplitManager",
+                            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPageSourceProvider.IcebergPageSourceProvider",
+                            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.IcebergPageSinkProvider.IcebergPageSinkProvider"
+                        ],
+                        "children": {}
+                    },
+                    "Iceberg Procedures": {
+                        "components": [
+                            "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.procedure.OptimizeTableProcedure.OptimizeTableProcedure"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "Iceberg Catalog Abstraction & Factories": {
+                "components": [
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.catalog.TrinoCatalog.TrinoCatalog",
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.catalog.hms.TrinoHiveCatalogFactory.TrinoHiveCatalogFactory",
+                    "plugin.trino-iceberg.src.main.java.io.trino.plugin.iceberg.catalog.glue.TrinoGlueCatalogFactory.TrinoGlueCatalogFactory"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Delta Lake Connector": {
+        "path": "plugin/trino-delta-lake/src/main/java/io/trino/plugin/deltalake/",
+        "components": [
+            "plugin.trino-delta-lake.src.main.java.io.trino.plugin.deltalake.DeltaLakePlugin.DeltaLakePlugin",
+            "plugin.trino-delta-lake.src.main.java.io.trino.plugin.deltalake.DeltaLakeMetadata.SnapshotSupplier",
+            "plugin.trino-delta-lake.src.main.java.io.trino.plugin.deltalake.DeltaLakeSplitManager.DeltaLakeSplitManager",
+            "plugin.trino-delta-lake.src.main.java.io.trino.plugin.deltalake.DeltaLakePageSourceProvider.DeltaLakePageSourceProvider",
+            "plugin.trino-delta-lake.src.main.java.io.trino.plugin.deltalake.DeltaLakePageSinkProvider.DeltaLakePageSinkProvider",
+            "plugin.trino-delta-lake.src.main.java.io.trino.plugin.deltalake.transactionlog.TransactionLogAccess.TransactionLogAccess",
+            "plugin.trino-delta-lake.src.main.java.io.trino.plugin.deltalake.procedure.VacuumProcedure.VacuumProcedure",
+            "plugin.trino-delta-lake.src.main.java.io.trino.plugin.deltalake.procedure.OptimizeTableProcedure.OptimizeTableProcedure"
+        ],
+        "children": {}
+    },
+    "Kafka Connector": {
+        "path": "plugin/trino-kafka/src/main/java/io/trino/plugin/kafka/",
+        "components": [
+            "plugin.trino-kafka.src.main.java.io.trino.plugin.kafka.KafkaPlugin.KafkaPlugin",
+            "plugin.trino-kafka.src.main.java.io.trino.plugin.kafka.KafkaConnector.KafkaConnector",
+            "plugin.trino-kafka.src.main.java.io.trino.plugin.kafka.KafkaMetadata.KafkaMetadata",
+            "plugin.trino-kafka.src.main.java.io.trino.plugin.kafka.KafkaSplitManager.KafkaSplitManager",
+            "plugin.trino-kafka.src.main.java.io.trino.plugin.kafka.KafkaRecordSetProvider.KafkaRecordSetProvider",
+            "plugin.trino-kafka.src.main.java.io.trino.plugin.kafka.schema.confluent.ConfluentSchemaRegistryTableDescriptionSupplier.Factory",
+            "plugin.trino-kafka.src.main.java.io.trino.plugin.kafka.encoder.json.JsonRowEncoderFactory.JsonRowEncoderFactory",
+            "plugin.trino-kafka.src.main.java.io.trino.plugin.kafka.encoder.avro.AvroRowEncoderFactory.AvroRowEncoderFactory"
+        ],
+        "children": {}
+    },
+    "TPC-H Connector": {
+        "path": "plugin/trino-tpch/src/main/java/io/trino/plugin/tpch/",
+        "components": [
+            "plugin.trino-tpch.src.main.java.io.trino.plugin.tpch.TpchPlugin.TpchPlugin",
+            "plugin.trino-tpch.src.main.java.io.trino.plugin.tpch.TpchConnector.TpchConnector",
+            "plugin.trino-tpch.src.main.java.io.trino.plugin.tpch.TpchMetadata.TpchMetadata",
+            "plugin.trino-tpch.src.main.java.io.trino.plugin.tpch.TpchSplitManager.TpchSplitManager",
+            "plugin.trino-tpch.src.main.java.io.trino.plugin.tpch.TpchRecordSetProvider.TpchRecordSetProvider",
+            "plugin.trino-tpch.src.main.java.io.trino.plugin.tpch.TpchNodePartitioningProvider.TpchNodePartitioningProvider"
+        ],
+        "children": {}
+    },
+    "TPC-DS Connector": {
+        "path": "plugin/trino-tpcds/src/main/java/io/trino/plugin/tpcds/",
+        "components": [
+            "plugin.trino-tpcds.src.main.java.io.trino.plugin.tpcds.TpcdsPlugin.TpcdsPlugin",
+            "plugin.trino-tpcds.src.main.java.io.trino.plugin.tpcds.TpcdsConnector.TpcdsConnector",
+            "plugin.trino-tpcds.src.main.java.io.trino.plugin.tpcds.TpcdsMetadata.TpcdsMetadata",
+            "plugin.trino-tpcds.src.main.java.io.trino.plugin.tpcds.TpcdsSplitManager.TpcdsSplitManager",
+            "plugin.trino-tpcds.src.main.java.io.trino.plugin.tpcds.TpcdsRecordSetProvider.TpcdsRecordSetProvider"
+        ],
+        "children": {}
+    },
+    "Trino Verifier": {
+        "path": "service/trino-verifier/src/main/java/io/trino/verifier/",
+        "components": [
+            "service.trino-verifier.src.main.java.io.trino.verifier.TrinoVerifier.TrinoVerifier",
+            "service.trino-verifier.src.main.java.io.trino.verifier.VerifyCommand.VersionProvider",
+            "service.trino-verifier.src.main.java.io.trino.verifier.Validator.ResultSetConverter",
+            "service.trino-verifier.src.main.java.io.trino.verifier.QueryPair.QueryPair",
+            "service.trino-verifier.src.main.java.io.trino.verifier.QueryResult.QueryResult",
+            "service.trino-verifier.src.main.java.io.trino.verifier.checksum.ChecksumValidator.ChecksumValidator"
+        ],
+        "children": {}
+    },
+    "Trino Testing Framework": {
+        "path": "testing/trino-testing/src/main/java/io/trino/testing/",
+        "components": [
+            "testing.trino-testing.src.main.java.io.trino.testing.QueryRunner.QueryRunner",
+            "testing.trino-testing.src.main.java.io.trino.testing.DistributedQueryRunner.Builder",
+            "testing.trino-testing.src.main.java.io.trino.testing.StandaloneQueryRunner.StandaloneQueryRunner",
+            "testing.trino-testing.src.main.java.io.trino.testing.BaseConnectorTest.BaseConnectorTest",
+            "testing.trino-testing.src.main.java.io.trino.testing.MaterializedResult.Builder",
+            "testing.trino-testing.src.main.java.io.trino.testing.sql.SqlExecutor.SqlExecutor",
+            "testing.trino-testing.src.main.java.io.trino.testing.assertions.TrinoExceptionAssert.TrinoExceptionAssert"
+        ],
+        "children": {}
+    }
+}

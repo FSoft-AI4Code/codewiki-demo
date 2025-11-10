@@ -1,369 +1,596 @@
 {
-    "Core_Validation_Engine": {
-        "path": "src/FluentValidation",
+    "Core & Validation Execution": {
+        "path": "src/FluentValidation/",
         "components": [
-            "src.FluentValidation.IValidator.IValidator",
+            "src.FluentValidation.AssemblyScanner.AssemblyScanner",
+            "src.FluentValidation.AssemblyScanner.AssemblyScanResult",
+            "src.FluentValidation.IValidationContext.IHasFailures",
             "src.FluentValidation.IValidationContext.IValidationContext",
             "src.FluentValidation.IValidationContext.ValidationContext",
-            "src.FluentValidation.IValidationContext.IHasFailures",
-            "src.FluentValidation.Results.ValidationFailure",
-            "src.FluentValidation.Results.ValidationResult",
+            "src.FluentValidation.IValidator.IValidator",
+            "src.FluentValidation.IValidatorDescriptor.IValidatorDescriptor",
+            "src.FluentValidation.IValidatorFactory.IValidatorFactory",
+            "src.FluentValidation.InlineValidator.InlineValidator",
+            "src.FluentValidation.Internal.CompositeValidatorSelector.CompositeValidatorSelector",
+            "src.FluentValidation.Internal.DefaultValidatorSelector.DefaultValidatorSelector",
+            "src.FluentValidation.Internal.IValidatorSelector.IValidatorSelector",
+            "src.FluentValidation.Internal.MemberNameValidatorSelector.MemberNameValidatorSelector",
+            "src.FluentValidation.Internal.RulesetValidatorSelector.RulesetValidatorSelector",
+            "src.FluentValidation.Internal.TrackingCollection.CaptureDisposable",
+            "src.FluentValidation.Internal.TrackingCollection.EventDisposable",
+            "src.FluentValidation.Internal.TrackingCollection.TrackingCollection",
+            "src.FluentValidation.Internal.ValidationStrategy.ValidationStrategy",
+            "src.FluentValidation.Results.ValidationFailure.ValidationFailure",
+            "src.FluentValidation.Results.ValidationResult.ValidationResult",
+            "src.FluentValidation.ValidatorDescriptor.RulesetMetadata",
             "src.FluentValidation.ValidatorDescriptor.ValidatorDescriptor",
-            "src.FluentValidation.ValidatorOptions.ValidatorConfiguration"
+            "src.FluentValidation.ValidatorOptions.ValidatorConfiguration",
+            "src.FluentValidation.ValidatorOptions.ValidatorSelectorOptions"
         ],
         "children": {
-            "Validation_Rules": {
+            "Validation Context Management": {
                 "components": [
-                    "src.FluentValidation.IValidationRule.IValidationRule",
-                    "src.FluentValidation.IValidationRuleInternal.IValidationRuleInternal",
-                    "src.FluentValidation.Internal.PropertyRule.PropertyRule",
-                    "src.FluentValidation.Internal.CollectionPropertyRule.CollectionPropertyRule",
-                    "src.FluentValidation.Internal.IncludeRule.IncludeRule",
-                    "src.FluentValidation.Internal.IncludeRule.IIncludeRule",
-                    "src.FluentValidation.ICollectionRule.ICollectionRule",
-                    "src.FluentValidation.Internal.IRuleComponent.IRuleComponent",
-                    "src.FluentValidation.Internal.RuleComponent.RuleComponent",
-                    "src.FluentValidation.Internal.RuleComponentForNullableStruct.RuleComponentForNullableStruct"
+                    "src.FluentValidation.IValidationContext.IValidationContext",
+                    "src.FluentValidation.IValidationContext.ValidationContext",
+                    "src.FluentValidation.IValidationContext.IHasFailures"
                 ],
                 "children": {}
             },
-            "Property_Validators": {
-                "components": [
-                    "src.FluentValidation.Validators.IPropertyValidator.IPropertyValidator",
-                    "src.FluentValidation.Validators.IPropertyValidator.IAsyncPropertyValidator",
-                    "src.FluentValidation.Validators.NotNullValidator.NotNullValidator",
-                    "src.FluentValidation.Validators.NotNullValidator.INotNullValidator",
-                    "src.FluentValidation.Validators.NullValidator.NullValidator",
-                    "src.FluentValidation.Validators.NullValidator.INullValidator",
-                    "src.FluentValidation.Validators.NotEmptyValidator.NotEmptyValidator",
-                    "src.FluentValidation.Validators.NotEmptyValidator.INotEmptyValidator",
-                    "src.FluentValidation.Validators.EmptyValidator.EmptyValidator",
-                    "src.FluentValidation.Validators.EqualValidator.EqualValidator",
-                    "src.FluentValidation.Validators.EqualValidator.IEqualValidator",
-                    "src.FluentValidation.Validators.NotEqualValidator.NotEqualValidator",
-                    "src.FluentValidation.Validators.LengthValidator.LengthValidator",
-                    "src.FluentValidation.Validators.LengthValidator.ILengthValidator",
-                    "src.FluentValidation.Validators.RegularExpressionValidator.RegularExpressionValidator",
-                    "src.FluentValidation.Validators.RegularExpressionValidator.IRegularExpressionValidator",
-                    "src.FluentValidation.Validators.EmailValidator.EmailValidator",
-                    "src.FluentValidation.Validators.EmailValidator.IEmailValidator",
-                    "src.FluentValidation.Validators.CreditCardValidator.CreditCardValidator",
-                    "src.FluentValidation.Validators.CreditCardValidator.ICreditCardValidator",
-                    "src.FluentValidation.Validators.EnumValidator.EnumValidator",
-                    "src.FluentValidation.Validators.EnumValidator.IEnumValidator",
-                    "src.FluentValidation.Validators.StringEnumValidator.StringEnumValidator",
-                    "src.FluentValidation.Validators.PredicateValidator.PredicateValidator",
-                    "src.FluentValidation.Validators.PredicateValidator.IPredicateValidator",
-                    "src.FluentValidation.Validators.AsyncPredicateValidator.AsyncPredicateValidator",
-                    "src.FluentValidation.Validators.ChildValidatorAdaptor.ChildValidatorAdaptor",
-                    "src.FluentValidation.Validators.ChildValidatorAdaptor.IChildValidatorAdaptor",
-                    "src.FluentValidation.Validators.PolymorphicValidator.PolymorphicValidator"
-                ],
-                "children": {}
-            },
-            "Validator_Selection": {
+            "Validator Selection System": {
                 "components": [
                     "src.FluentValidation.Internal.IValidatorSelector.IValidatorSelector",
                     "src.FluentValidation.Internal.DefaultValidatorSelector.DefaultValidatorSelector",
-                    "src.FluentValidation.Internal.CompositeValidatorSelector.CompositeValidatorSelector",
                     "src.FluentValidation.Internal.MemberNameValidatorSelector.MemberNameValidatorSelector",
-                    "src.FluentValidation.Internal.RulesetValidatorSelector.RulesetValidatorSelector"
+                    "src.FluentValidation.Internal.RulesetValidatorSelector.RulesetValidatorSelector",
+                    "src.FluentValidation.Internal.CompositeValidatorSelector.CompositeValidatorSelector"
                 ],
                 "children": {}
             },
-            "Localization": {
-                "components": [
-                    "src.FluentValidation.Resources.ILanguageManager.ILanguageManager",
-                    "src.FluentValidation.Resources.LanguageManager.LanguageManager",
-                    "src.FluentValidation.Internal.MessageFormatter.MessageFormatter",
-                    "src.FluentValidation.Internal.MessageBuilderContext.IMessageBuilderContext",
-                    "src.FluentValidation.Internal.MessageBuilderContext.MessageBuilderContext"
-                ],
-                "children": {}
-            },
-            "Comparison_Validators": {
-                "components": [
-                    "src.FluentValidation.Validators.AbstractComparisonValidator.IComparisonValidator",
-                    "src.FluentValidation.Validators.GreaterThanValidator.GreaterThanValidator",
-                    "src.FluentValidation.Validators.GreaterThanOrEqualValidator.GreaterThanOrEqualValidator",
-                    "src.FluentValidation.Validators.GreaterThanOrEqualValidator.IGreaterThanOrEqualValidator",
-                    "src.FluentValidation.Validators.LessThanValidator.LessThanValidator",
-                    "src.FluentValidation.Validators.LessThanOrEqualValidator.LessThanOrEqualValidator",
-                    "src.FluentValidation.Validators.LessThanOrEqualValidator.ILessThanOrEqualValidator",
-                    "src.FluentValidation.Validators.InclusiveBetweenValidator.InclusiveBetweenValidator",
-                    "src.FluentValidation.Validators.InclusiveBetweenValidator.IInclusiveBetweenValidator",
-                    "src.FluentValidation.Validators.ExclusiveBetweenValidator.ExclusiveBetweenValidator",
-                    "src.FluentValidation.Validators.ExclusiveBetweenValidator.IBetweenValidator",
-                    "src.FluentValidation.Validators.ComparableComparer.ComparableComparer",
-                    "src.FluentValidation.Validators.PrecisionScaleValidator.PrecisionScaleValidator"
-                ],
-                "children": {}
-            },
-            "Rule_Building": {
-                "components": [
-                    "src.FluentValidation.Internal.RuleBuilder.RuleBuilder",
-                    "src.FluentValidation.Internal.ConditionBuilder.ConditionBuilder",
-                    "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionBuilder",
-                    "src.FluentValidation.Internal.ConditionBuilder.ConditionOtherwiseBuilder",
-                    "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionOtherwiseBuilder",
-                    "src.FluentValidation.Internal.ChildRulesContainer.ChildRulesContainer"
-                ],
-                "children": {}
-            },
-            "AbstractValidator": {
-                "components": [
-                    "src.FluentValidation.Syntax.IRuleBuilderInitial",
-                    "src.FluentValidation.Syntax.IRuleBuilderInitialCollection",
-                    "src.FluentValidation.Syntax.IRuleBuilder",
-                    "src.FluentValidation.Syntax.IRuleBuilderOptions",
-                    "src.FluentValidation.Syntax.IRuleBuilderOptionsConditions",
-                    "src.FluentValidation.Syntax.IRuleBuilderInternal",
-                    "src.FluentValidation.Syntax.IConditionBuilder"
-                ],
-                "children": {}
-            },
-            "InlineValidator": {
-                "components": [
-                    "src.FluentValidation.InlineValidator.InlineValidator"
-                ],
-                "children": {}
-            },
-            "Assembly_Scanning": {
+            "Assembly Scanning and Discovery": {
                 "components": [
                     "src.FluentValidation.AssemblyScanner.AssemblyScanner",
                     "src.FluentValidation.AssemblyScanner.AssemblyScanResult"
                 ],
                 "children": {}
             },
-            "Validator_Factory": {
+            "Validation Results and Failures": {
                 "components": [
-                    "src.FluentValidation.IValidatorFactory.IValidatorFactory"
+                    "src.FluentValidation.Results.ValidationResult.ValidationResult",
+                    "src.FluentValidation.Results.ValidationFailure.ValidationFailure"
                 ],
                 "children": {}
             },
-            "Property_Chain": {
+            "Validator Metadata and Descriptors": {
                 "components": [
-                    "src.FluentValidation.Internal.PropertyChain.PropertyChain"
+                    "src.FluentValidation.IValidatorDescriptor.IValidatorDescriptor",
+                    "src.FluentValidation.ValidatorDescriptor.ValidatorDescriptor",
+                    "src.FluentValidation.ValidatorDescriptor.RulesetMetadata"
                 ],
                 "children": {}
             },
-            "Accessor_Cache": {
+            "Configuration and Global Options": {
                 "components": [
-                    "src.FluentValidation.Internal.AccessorCache.Key"
-                ],
-                "children": {}
-            },
-            "Validation_Strategy": {
-                "components": [
-                    "src.FluentValidation.Internal.ValidationStrategy.ValidationStrategy"
-                ],
-                "children": {}
-            },
-            "Tracking_Collection": {
-                "components": [
-                    "src.FluentValidation.Internal.TrackingCollection.TrackingCollection"
-                ],
-                "children": {}
-            },
-            "Dependency_Injection": {
-                "components": [
-                    "src.FluentValidation.DependencyInjectionExtensions.ServiceProviderValidatorFactory.ServiceProviderValidatorFactory"
+                    "src.FluentValidation.ValidatorOptions.ValidatorConfiguration",
+                    "src.FluentValidation.ValidatorOptions.ValidatorSelectorOptions"
                 ],
                 "children": {}
             }
         }
     },
-    "Validation_Rules": {
-        "path": "src/FluentValidation/Internal",
+    "Fluent API & Rule Definition": {
+        "path": "src/FluentValidation/Internal/",
         "components": [
+            "src.FluentValidation.ICollectionRule.ICollectionRule",
             "src.FluentValidation.IValidationRule.IValidationRule",
             "src.FluentValidation.IValidationRuleInternal.IValidationRuleInternal",
-            "src.FluentValidation.Internal.PropertyRule.PropertyRule",
+            "src.FluentValidation.Internal.AccessorCache.Key",
+            "src.FluentValidation.Internal.ChildRulesContainer.ChildRulesContainer",
             "src.FluentValidation.Internal.CollectionPropertyRule.CollectionPropertyRule",
-            "src.FluentValidation.Internal.IncludeRule.IncludeRule",
-            "src.FluentValidation.Internal.IncludeRule.IIncludeRule",
-            "src.FluentValidation.ICollectionRule.ICollectionRule",
-            "src.FluentValidation.Internal.IRuleComponent.IRuleComponent",
-            "src.FluentValidation.Internal.RuleComponent.RuleComponent",
-            "src.FluentValidation.Internal.RuleComponentForNullableStruct.RuleComponentForNullableStruct"
-        ],
-        "children": {}
-    },
-    "Property_Validators": {
-        "path": "src/FluentValidation/Validators",
-        "components": [
-            "src.FluentValidation.Validators.IPropertyValidator.IPropertyValidator",
-            "src.FluentValidation.Validators.IPropertyValidator.IAsyncPropertyValidator",
-            "src.FluentValidation.Validators.NotNullValidator.NotNullValidator",
-            "src.FluentValidation.Validators.NotNullValidator.INotNullValidator",
-            "src.FluentValidation.Validators.NullValidator.NullValidator",
-            "src.FluentValidation.Validators.NullValidator.INullValidator",
-            "src.FluentValidation.Validators.NotEmptyValidator.NotEmptyValidator",
-            "src.FluentValidation.Validators.NotEmptyValidator.INotEmptyValidator",
-            "src.FluentValidation.Validators.EmptyValidator.EmptyValidator",
-            "src.FluentValidation.Validators.EqualValidator.EqualValidator",
-            "src.FluentValidation.Validators.EqualValidator.IEqualValidator",
-            "src.FluentValidation.Validators.NotEqualValidator.NotEqualValidator",
-            "src.FluentValidation.Validators.LengthValidator.LengthValidator",
-            "src.FluentValidation.Validators.LengthValidator.ILengthValidator",
-            "src.FluentValidation.Validators.RegularExpressionValidator.RegularExpressionValidator",
-            "src.FluentValidation.Validators.RegularExpressionValidator.IRegularExpressionValidator",
-            "src.FluentValidation.Validators.EmailValidator.EmailValidator",
-            "src.FluentValidation.Validators.EmailValidator.IEmailValidator",
-            "src.FluentValidation.Validators.CreditCardValidator.CreditCardValidator",
-            "src.FluentValidation.Validators.CreditCardValidator.ICreditCardValidator",
-            "src.FluentValidation.Validators.EnumValidator.EnumValidator",
-            "src.FluentValidation.Validators.EnumValidator.IEnumValidator",
-            "src.FluentValidation.Validators.StringEnumValidator.StringEnumValidator",
-            "src.FluentValidation.Validators.PredicateValidator.PredicateValidator",
-            "src.FluentValidation.Validators.PredicateValidator.IPredicateValidator",
-            "src.FluentValidation.Validators.AsyncPredicateValidator.AsyncPredicateValidator",
-            "src.FluentValidation.Validators.ChildValidatorAdaptor.ChildValidatorAdaptor",
-            "src.FluentValidation.Validators.ChildValidatorAdaptor.IChildValidatorAdaptor",
-            "src.FluentValidation.Validators.PolymorphicValidator.PolymorphicValidator"
-        ],
-        "children": {}
-    },
-    "Comparison_Validators": {
-        "path": "src/FluentValidation/Validators",
-        "components": [
-            "src.FluentValidation.Validators.AbstractComparisonValidator.IComparisonValidator",
-            "src.FluentValidation.Validators.GreaterThanValidator.GreaterThanValidator",
-            "src.FluentValidation.Validators.GreaterThanOrEqualValidator.GreaterThanOrEqualValidator",
-            "src.FluentValidation.Validators.GreaterThanOrEqualValidator.IGreaterThanOrEqualValidator",
-            "src.FluentValidation.Validators.LessThanValidator.LessThanValidator",
-            "src.FluentValidation.Validators.LessThanOrEqualValidator.LessThanOrEqualValidator",
-            "src.FluentValidation.Validators.LessThanOrEqualValidator.ILessThanOrEqualValidator",
-            "src.FluentValidation.Validators.InclusiveBetweenValidator.InclusiveBetweenValidator",
-            "src.FluentValidation.Validators.InclusiveBetweenValidator.IInclusiveBetweenValidator",
-            "src.FluentValidation.Validators.ExclusiveBetweenValidator.ExclusiveBetweenValidator",
-            "src.FluentValidation.Validators.ExclusiveBetweenValidator.IBetweenValidator",
-            "src.FluentValidation.Validators.ComparableComparer.ComparableComparer",
-            "src.FluentValidation.Validators.PrecisionScaleValidator.PrecisionScaleValidator"
-        ],
-        "children": {}
-    },
-    "Rule_Building": {
-        "path": "src/FluentValidation/Internal",
-        "components": [
-            "src.FluentValidation.Internal.RuleBuilder.RuleBuilder",
-            "src.FluentValidation.Internal.ConditionBuilder.ConditionBuilder",
             "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionBuilder",
-            "src.FluentValidation.Internal.ConditionBuilder.ConditionOtherwiseBuilder",
             "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionOtherwiseBuilder",
-            "src.FluentValidation.Internal.ChildRulesContainer.ChildRulesContainer"
+            "src.FluentValidation.Internal.ConditionBuilder.ConditionBuilder",
+            "src.FluentValidation.Internal.ConditionBuilder.ConditionOtherwiseBuilder",
+            "src.FluentValidation.Internal.IRuleComponent.IRuleComponent",
+            "src.FluentValidation.Internal.IncludeRule.IIncludeRule",
+            "src.FluentValidation.Internal.IncludeRule.IncludeRule",
+            "src.FluentValidation.Internal.PropertyChain.PropertyChain",
+            "src.FluentValidation.Internal.PropertyRule.PropertyRule",
+            "src.FluentValidation.Internal.RuleBuilder.RuleBuilder",
+            "src.FluentValidation.Internal.RuleComponent.RuleComponent",
+            "src.FluentValidation.Internal.RuleComponentForNullableStruct.RuleComponentForNullableStruct",
+            "src.FluentValidation.Syntax.IConditionBuilder",
+            "src.FluentValidation.Syntax.IRuleBuilder",
+            "src.FluentValidation.Syntax.IRuleBuilderInitial",
+            "src.FluentValidation.Syntax.IRuleBuilderInitialCollection",
+            "src.FluentValidation.Syntax.IRuleBuilderInternal",
+            "src.FluentValidation.Syntax.IRuleBuilderOptions",
+            "src.FluentValidation.Syntax.IRuleBuilderOptionsConditions"
         ],
         "children": {
-            "Rule_Building_Core": {
+            "Rule Builder System": {
                 "components": [
+                    "src.FluentValidation.Syntax.IRuleBuilder",
+                    "src.FluentValidation.Syntax.IRuleBuilderInitial",
+                    "src.FluentValidation.Syntax.IRuleBuilderInitialCollection",
+                    "src.FluentValidation.Syntax.IRuleBuilderInternal",
+                    "src.FluentValidation.Syntax.IRuleBuilderOptions",
+                    "src.FluentValidation.Syntax.IRuleBuilderOptionsConditions"
+                ],
+                "children": {}
+            },
+            "Rule Implementation": {
+                "components": [
+                    "src.FluentValidation.IValidationRule",
+                    "src.FluentValidation.IValidationRuleInternal",
+                    "src.FluentValidation.Internal.PropertyRule.PropertyRule",
                     "src.FluentValidation.Internal.RuleBuilder.RuleBuilder"
                 ],
                 "children": {}
             },
-            "Condition_Building": {
+            "Rule Components": {
+                "components": [
+                    "src.FluentValidation.Internal.IRuleComponent.IRuleComponent",
+                    "src.FluentValidation.Internal.RuleComponent.RuleComponent",
+                    "src.FluentValidation.Internal.RuleComponentForNullableStruct.RuleComponentForNullableStruct"
+                ],
+                "children": {}
+            },
+            "Condition System": {
                 "components": [
                     "src.FluentValidation.Internal.ConditionBuilder.ConditionBuilder",
                     "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionBuilder",
                     "src.FluentValidation.Internal.ConditionBuilder.ConditionOtherwiseBuilder",
-                    "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionOtherwiseBuilder"
+                    "src.FluentValidation.Internal.ConditionBuilder.AsyncConditionOtherwiseBuilder",
+                    "src.FluentValidation.Syntax.IConditionBuilder"
                 ],
                 "children": {}
             },
-            "Child_Rules_Management": {
+            "Collection Rules": {
                 "components": [
+                    "src.FluentValidation.ICollectionRule.ICollectionRule",
+                    "src.FluentValidation.Internal.CollectionPropertyRule.CollectionPropertyRule"
+                ],
+                "children": {}
+            },
+            "Property Chain Management": {
+                "components": [
+                    "src.FluentValidation.Internal.PropertyChain.PropertyChain",
+                    "src.FluentValidation.Internal.AccessorCache.Key"
+                ],
+                "children": {}
+            },
+            "Include Rules": {
+                "components": [
+                    "src.FluentValidation.Internal.IncludeRule.IIncludeRule",
+                    "src.FluentValidation.Internal.IncludeRule.IncludeRule",
                     "src.FluentValidation.Internal.ChildRulesContainer.ChildRulesContainer"
                 ],
                 "children": {}
             }
         }
     },
-    "Validator_Selection": {
-        "path": "src/FluentValidation/Internal",
+    "Built-in Validators": {
+        "path": "src/FluentValidation/Validators/",
         "components": [
-            "src.FluentValidation.Internal.IValidatorSelector.IValidatorSelector",
-            "src.FluentValidation.Internal.DefaultValidatorSelector.DefaultValidatorSelector",
-            "src.FluentValidation.Internal.CompositeValidatorSelector.CompositeValidatorSelector",
-            "src.FluentValidation.Internal.MemberNameValidatorSelector.MemberNameValidatorSelector",
-            "src.FluentValidation.Internal.RulesetValidatorSelector.RulesetValidatorSelector"
+            "src.FluentValidation.Validators.AbstractComparisonValidator.IComparisonValidator",
+            "src.FluentValidation.Validators.AsyncPredicateValidator.AsyncPredicateValidator",
+            "src.FluentValidation.Validators.ChildValidatorAdaptor.ChildValidatorAdaptor",
+            "src.FluentValidation.Validators.ChildValidatorAdaptor.IChildValidatorAdaptor",
+            "src.FluentValidation.Validators.ComparableComparer.ComparableComparer",
+            "src.FluentValidation.Validators.CreditCardValidator.CreditCardValidator",
+            "src.FluentValidation.Validators.CreditCardValidator.ICreditCardValidator",
+            "src.FluentValidation.Validators.EmailValidator.AspNetCoreCompatibleEmailValidator",
+            "src.FluentValidation.Validators.EmailValidator.EmailValidator",
+            "src.FluentValidation.Validators.EmailValidator.IEmailValidator",
+            "src.FluentValidation.Validators.EmptyValidator.EmptyValidator",
+            "src.FluentValidation.Validators.EnumValidator.EnumValidator",
+            "src.FluentValidation.Validators.EnumValidator.IEnumValidator",
+            "src.FluentValidation.Validators.EqualValidator.EqualValidator",
+            "src.FluentValidation.Validators.EqualValidator.IEqualValidator",
+            "src.FluentValidation.Validators.ExclusiveBetweenValidator.ExclusiveBetweenValidator",
+            "src.FluentValidation.Validators.ExclusiveBetweenValidator.IBetweenValidator",
+            "src.FluentValidation.Validators.GreaterThanOrEqualValidator.GreaterThanOrEqualValidator",
+            "src.FluentValidation.Validators.GreaterThanOrEqualValidator.IGreaterThanOrEqualValidator",
+            "src.FluentValidation.Validators.GreaterThanValidator.GreaterThanValidator",
+            "src.FluentValidation.Validators.IPropertyValidator.IAsyncPropertyValidator",
+            "src.FluentValidation.Validators.IPropertyValidator.IPropertyValidator",
+            "src.FluentValidation.Validators.InclusiveBetweenValidator.IInclusiveBetweenValidator",
+            "src.FluentValidation.Validators.InclusiveBetweenValidator.InclusiveBetweenValidator",
+            "src.FluentValidation.Validators.LengthValidator.ExactLengthValidator",
+            "src.FluentValidation.Validators.LengthValidator.IExactLengthValidator",
+            "src.FluentValidation.Validators.LengthValidator.ILengthValidator",
+            "src.FluentValidation.Validators.LengthValidator.IMaximumLengthValidator",
+            "src.FluentValidation.Validators.LengthValidator.IMinimumLengthValidator",
+            "src.FluentValidation.Validators.LengthValidator.LengthValidator",
+            "src.FluentValidation.Validators.LengthValidator.MaximumLengthValidator",
+            "src.FluentValidation.Validators.LengthValidator.MinimumLengthValidator",
+            "src.FluentValidation.Validators.LessThanOrEqualValidator.ILessThanOrEqualValidator",
+            "src.FluentValidation.Validators.LessThanOrEqualValidator.LessThanOrEqualValidator",
+            "src.FluentValidation.Validators.LessThanValidator.LessThanValidator",
+            "src.FluentValidation.Validators.NotEmptyValidator.INotEmptyValidator",
+            "src.FluentValidation.Validators.NotEmptyValidator.NotEmptyValidator",
+            "src.FluentValidation.Validators.NotEqualValidator.NotEqualValidator",
+            "src.FluentValidation.Validators.NotNullValidator.INotNullValidator",
+            "src.FluentValidation.Validators.NotNullValidator.NotNullValidator",
+            "src.FluentValidation.Validators.NullValidator.INullValidator",
+            "src.FluentValidation.Validators.NullValidator.NullValidator",
+            "src.FluentValidation.Validators.PolymorphicValidator.DerivedValidatorFactory",
+            "src.FluentValidation.Validators.PolymorphicValidator.PolymorphicValidator",
+            "src.FluentValidation.Validators.PrecisionScaleValidator.PrecisionScaleValidator",
+            "src.FluentValidation.Validators.PredicateValidator.IPredicateValidator",
+            "src.FluentValidation.Validators.PredicateValidator.PredicateValidator",
+            "src.FluentValidation.Validators.RegularExpressionValidator.IRegularExpressionValidator",
+            "src.FluentValidation.Validators.RegularExpressionValidator.RegularExpressionValidator",
+            "src.FluentValidation.Validators.StringEnumValidator.StringEnumValidator"
         ],
-        "children": {}
+        "children": {
+            "Comparison Validators": {
+                "components": [
+                    "src.FluentValidation.Validators.AbstractComparisonValidator.IComparisonValidator",
+                    "src.FluentValidation.Validators.EqualValidator.EqualValidator",
+                    "src.FluentValidation.Validators.EqualValidator.IEqualValidator",
+                    "src.FluentValidation.Validators.GreaterThanValidator.GreaterThanValidator",
+                    "src.FluentValidation.Validators.GreaterThanOrEqualValidator.GreaterThanOrEqualValidator",
+                    "src.FluentValidation.Validators.GreaterThanOrEqualValidator.IGreaterThanOrEqualValidator",
+                    "src.FluentValidation.Validators.LessThanValidator.LessThanValidator",
+                    "src.FluentValidation.Validators.LessThanOrEqualValidator.ILessThanOrEqualValidator",
+                    "src.FluentValidation.Validators.LessThanOrEqualValidator.LessThanOrEqualValidator",
+                    "src.FluentValidation.Validators.NotEqualValidator.NotEqualValidator",
+                    "src.FluentValidation.Validators.ExclusiveBetweenValidator.ExclusiveBetweenValidator",
+                    "src.FluentValidation.Validators.ExclusiveBetweenValidator.IBetweenValidator",
+                    "src.FluentValidation.Validators.InclusiveBetweenValidator.IInclusiveBetweenValidator",
+                    "src.FluentValidation.Validators.InclusiveBetweenValidator.InclusiveBetweenValidator",
+                    "src.FluentValidation.Validators.ComparableComparer.ComparableComparer"
+                ],
+                "children": {}
+            },
+            "String Validators": {
+                "components": [
+                    "src.FluentValidation.Validators.LengthValidator.ExactLengthValidator",
+                    "src.FluentValidation.Validators.LengthValidator.IExactLengthValidator",
+                    "src.FluentValidation.Validators.LengthValidator.ILengthValidator",
+                    "src.FluentValidation.Validators.LengthValidator.IMaximumLengthValidator",
+                    "src.FluentValidation.Validators.LengthValidator.IMinimumLengthValidator",
+                    "src.FluentValidation.Validators.LengthValidator.LengthValidator",
+                    "src.FluentValidation.Validators.LengthValidator.MaximumLengthValidator",
+                    "src.FluentValidation.Validators.LengthValidator.MinimumLengthValidator",
+                    "src.FluentValidation.Validators.RegularExpressionValidator.IRegularExpressionValidator",
+                    "src.FluentValidation.Validators.RegularExpressionValidator.RegularExpressionValidator",
+                    "src.FluentValidation.Validators.EmailValidator.AspNetCoreCompatibleEmailValidator",
+                    "src.FluentValidation.Validators.EmailValidator.EmailValidator",
+                    "src.FluentValidation.Validators.EmailValidator.IEmailValidator",
+                    "src.FluentValidation.Validators.CreditCardValidator.CreditCardValidator",
+                    "src.FluentValidation.Validators.CreditCardValidator.ICreditCardValidator",
+                    "src.FluentValidation.Validators.StringEnumValidator.StringEnumValidator"
+                ],
+                "children": {}
+            },
+            "Null and Empty Validators": {
+                "components": [
+                    "src.FluentValidation.Validators.NotNullValidator.INotNullValidator",
+                    "src.FluentValidation.Validators.NotNullValidator.NotNullValidator",
+                    "src.FluentValidation.Validators.NullValidator.INullValidator",
+                    "src.FluentValidation.Validators.NullValidator.NullValidator",
+                    "src.FluentValidation.Validators.NotEmptyValidator.INotEmptyValidator",
+                    "src.FluentValidation.Validators.NotEmptyValidator.NotEmptyValidator",
+                    "src.FluentValidation.Validators.EmptyValidator.EmptyValidator"
+                ],
+                "children": {}
+            },
+            "Custom and Predicate Validators": {
+                "components": [
+                    "src.FluentValidation.Validators.PredicateValidator.IPredicateValidator",
+                    "src.FluentValidation.Validators.PredicateValidator.PredicateValidator",
+                    "src.FluentValidation.Validators.AsyncPredicateValidator.AsyncPredicateValidator"
+                ],
+                "children": {}
+            },
+            "Complex Object Validators": {
+                "components": [
+                    "src.FluentValidation.Validators.ChildValidatorAdaptor.ChildValidatorAdaptor",
+                    "src.FluentValidation.Validators.ChildValidatorAdaptor.IChildValidatorAdaptor",
+                    "src.FluentValidation.Validators.PolymorphicValidator.DerivedValidatorFactory",
+                    "src.FluentValidation.Validators.PolymorphicValidator.PolymorphicValidator"
+                ],
+                "children": {}
+            },
+            "Enum and Numeric Validators": {
+                "components": [
+                    "src.FluentValidation.Validators.EnumValidator.EnumValidator",
+                    "src.FluentValidation.Validators.EnumValidator.IEnumValidator",
+                    "src.FluentValidation.Validators.PrecisionScaleValidator.PrecisionScaleValidator"
+                ],
+                "children": {}
+            }
+        }
     },
     "Localization": {
-        "path": "src/FluentValidation/Resources",
+        "path": "src/FluentValidation/Resources/",
         "components": [
+            "src.FluentValidation.Internal.MessageBuilderContext.IMessageBuilderContext",
+            "src.FluentValidation.Internal.MessageBuilderContext.MessageBuilderContext",
+            "src.FluentValidation.Internal.MessageFormatter.MessageFormatter",
             "src.FluentValidation.Resources.ILanguageManager.ILanguageManager",
             "src.FluentValidation.Resources.LanguageManager.LanguageManager",
-            "src.FluentValidation.Internal.MessageFormatter.MessageFormatter",
-            "src.FluentValidation.Internal.MessageBuilderContext.IMessageBuilderContext",
-            "src.FluentValidation.Internal.MessageBuilderContext.MessageBuilderContext"
+            "src.FluentValidation.Resources.Languages.AlbanianLanguage.AlbanianLanguage",
+            "src.FluentValidation.Resources.Languages.ArabicLanguage.ArabicLanguage",
+            "src.FluentValidation.Resources.Languages.AzerbaijaneseLanguage.AzerbaijaneseLanguage",
+            "src.FluentValidation.Resources.Languages.BengaliLanguage.BengaliLanguage",
+            "src.FluentValidation.Resources.Languages.BosnianLanguage.BosnianLanguage",
+            "src.FluentValidation.Resources.Languages.BulgarianLanguage.BulgarianLanguage",
+            "src.FluentValidation.Resources.Languages.CatalanLanguage.CatalanLanguage",
+            "src.FluentValidation.Resources.Languages.ChineseSimplifiedLanguage.ChineseSimplifiedLanguage",
+            "src.FluentValidation.Resources.Languages.ChineseTraditionalLanguage.ChineseTraditionalLanguage",
+            "src.FluentValidation.Resources.Languages.CroatianLanguage.CroatianLanguage",
+            "src.FluentValidation.Resources.Languages.CzechLanguage.CzechLanguage",
+            "src.FluentValidation.Resources.Languages.DanishLanguage.DanishLanguage",
+            "src.FluentValidation.Resources.Languages.DutchLanguage.DutchLanguage",
+            "src.FluentValidation.Resources.Languages.EnglishLanguage.EnglishLanguage",
+            "src.FluentValidation.Resources.Languages.EstonianLanguage.EstonianLanguage",
+            "src.FluentValidation.Resources.Languages.FinnishLanguage.FinnishLanguage",
+            "src.FluentValidation.Resources.Languages.FrenchLanguage.FrenchLanguage",
+            "src.FluentValidation.Resources.Languages.GeorgianLanguage.GeorgianLanguage",
+            "src.FluentValidation.Resources.Languages.GermanLanguage.GermanLanguage",
+            "src.FluentValidation.Resources.Languages.GreekLanguage.GreekLanguage",
+            "src.FluentValidation.Resources.Languages.HebrewLanguage.HebrewLanguage",
+            "src.FluentValidation.Resources.Languages.HindiLanguage.HindiLanguage",
+            "src.FluentValidation.Resources.Languages.HungarianLanguage.HungarianLanguage",
+            "src.FluentValidation.Resources.Languages.IcelandicLanguage.IcelandicLanguage",
+            "src.FluentValidation.Resources.Languages.IndonesianLanguage.IndonesianLanguage",
+            "src.FluentValidation.Resources.Languages.ItalianLanguage.ItalianLanguage",
+            "src.FluentValidation.Resources.Languages.JapaneseLanguage.JapaneseLanguage",
+            "src.FluentValidation.Resources.Languages.KazakhLanguage.KazakhLanguage",
+            "src.FluentValidation.Resources.Languages.KhmerLanguage.KhmerLanguage",
+            "src.FluentValidation.Resources.Languages.KoreanLanguage.KoreanLanguage",
+            "src.FluentValidation.Resources.Languages.LatvianLanguage.LatvianLanguage",
+            "src.FluentValidation.Resources.Languages.MacedonianLanguage.MacedonianLanguage",
+            "src.FluentValidation.Resources.Languages.NorwegianBokmalLanguage.NorwegianBokmalLanguage",
+            "src.FluentValidation.Resources.Languages.NorwegianNynorskLanguage.NorwegianNynorskLanguage",
+            "src.FluentValidation.Resources.Languages.PersianLanguage.PersianLanguage",
+            "src.FluentValidation.Resources.Languages.PolishLanguage.PolishLanguage",
+            "src.FluentValidation.Resources.Languages.PortugueseBrazilLanguage.PortugueseBrazilLanguage",
+            "src.FluentValidation.Resources.Languages.PortugueseLanguage.PortugueseLanguage",
+            "src.FluentValidation.Resources.Languages.RomanianLanguage.RomanianLanguage",
+            "src.FluentValidation.Resources.Languages.RomanshLanguage.RomanshLanguage",
+            "src.FluentValidation.Resources.Languages.RussianLanguage.RussianLanguage",
+            "src.FluentValidation.Resources.Languages.SerbianCyrillicLanguage.SerbianCyrillicLanguage",
+            "src.FluentValidation.Resources.Languages.SerbianLatinLanguage.SerbianLatinLanguage",
+            "src.FluentValidation.Resources.Languages.SlovakLanguage.SlovakLanguage",
+            "src.FluentValidation.Resources.Languages.SlovenianLanguage.SlovenianLanguage",
+            "src.FluentValidation.Resources.Languages.SpanishLanguage.SpanishLanguage",
+            "src.FluentValidation.Resources.Languages.SwedishLanguage.SwedishLanguage",
+            "src.FluentValidation.Resources.Languages.TajikLanguage.TajikLanguage",
+            "src.FluentValidation.Resources.Languages.TamilLanguage.TamilLanguage",
+            "src.FluentValidation.Resources.Languages.TeluguLanguage.TeluguLanguage",
+            "src.FluentValidation.Resources.Languages.ThaiLanguage.ThaiLanguage",
+            "src.FluentValidation.Resources.Languages.TurkishLanguage.TurkishLanguage",
+            "src.FluentValidation.Resources.Languages.UkrainianLanguage.UkrainianLanguage",
+            "src.FluentValidation.Resources.Languages.UzbekCyrillicLanguage.UzbekCyrillicLanguage",
+            "src.FluentValidation.Resources.Languages.UzbekLatinLanguage.UzbekLatinLanguage",
+            "src.FluentValidation.Resources.Languages.VietnameseLanguage.VietnameseLanguage",
+            "src.FluentValidation.Resources.Languages.WelshLanguage.WelshLanguage"
         ],
-        "children": {}
+        "children": {
+            "Language Management": {
+                "components": [
+                    "src.FluentValidation.Resources.ILanguageManager.ILanguageManager",
+                    "src.FluentValidation.Resources.LanguageManager.LanguageManager"
+                ],
+                "children": {
+                    "Message Formatting": {
+                        "components": [
+                            "src.FluentValidation.Internal.MessageBuilderContext.IMessageBuilderContext",
+                            "src.FluentValidation.Internal.MessageBuilderContext.MessageBuilderContext",
+                            "src.FluentValidation.Internal.MessageFormatter.MessageFormatter"
+                        ],
+                        "children": {}
+                    },
+                    "Supported Languages": {
+                        "components": [
+                            "src.FluentValidation.Resources.Languages.AlbanianLanguage.AlbanianLanguage",
+                            "src.FluentValidation.Resources.Languages.ArabicLanguage.ArabicLanguage",
+                            "src.FluentValidation.Resources.Languages.AzerbaijaneseLanguage.AzerbaijaneseLanguage",
+                            "src.FluentValidation.Resources.Languages.BengaliLanguage.BengaliLanguage",
+                            "src.FluentValidation.Resources.Languages.BosnianLanguage.BosnianLanguage",
+                            "src.FluentValidation.Resources.Languages.BulgarianLanguage.BulgarianLanguage",
+                            "src.FluentValidation.Resources.Languages.CatalanLanguage.CatalanLanguage",
+                            "src.FluentValidation.Resources.Languages.ChineseSimplifiedLanguage.ChineseSimplifiedLanguage",
+                            "src.FluentValidation.Resources.Languages.ChineseTraditionalLanguage.ChineseTraditionalLanguage",
+                            "src.FluentValidation.Resources.Languages.CroatianLanguage.CroatianLanguage",
+                            "src.FluentValidation.Resources.Languages.CzechLanguage.CzechLanguage",
+                            "src.FluentValidation.Resources.Languages.DanishLanguage.DanishLanguage",
+                            "src.FluentValidation.Resources.Languages.DutchLanguage.DutchLanguage",
+                            "src.FluentValidation.Resources.Languages.EnglishLanguage.EnglishLanguage",
+                            "src.FluentValidation.Resources.Languages.EstonianLanguage.EstonianLanguage",
+                            "src.FluentValidation.Resources.Languages.FinnishLanguage.FinnishLanguage",
+                            "src.FluentValidation.Resources.Languages.FrenchLanguage.FrenchLanguage",
+                            "src.FluentValidation.Resources.Languages.GeorgianLanguage.GeorgianLanguage",
+                            "src.FluentValidation.Resources.Languages.GermanLanguage.GermanLanguage",
+                            "src.FluentValidation.Resources.Languages.GreekLanguage.GreekLanguage",
+                            "src.FluentValidation.Resources.Languages.HebrewLanguage.HebrewLanguage",
+                            "src.FluentValidation.Resources.Languages.HindiLanguage.HindiLanguage",
+                            "src.FluentValidation.Resources.Languages.HungarianLanguage.HungarianLanguage",
+                            "src.FluentValidation.Resources.Languages.IcelandicLanguage.IcelandicLanguage",
+                            "src.FluentValidation.Resources.Languages.IndonesianLanguage.IndonesianLanguage",
+                            "src.FluentValidation.Resources.Languages.ItalianLanguage.ItalianLanguage",
+                            "src.FluentValidation.Resources.Languages.JapaneseLanguage.JapaneseLanguage",
+                            "src.FluentValidation.Resources.Languages.KazakhLanguage.KazakhLanguage",
+                            "src.FluentValidation.Resources.Languages.KhmerLanguage.KhmerLanguage",
+                            "src.FluentValidation.Resources.Languages.KoreanLanguage.KoreanLanguage",
+                            "src.FluentValidation.Resources.Languages.LatvianLanguage.LatvianLanguage",
+                            "src.FluentValidation.Resources.Languages.MacedonianLanguage.MacedonianLanguage",
+                            "src.FluentValidation.Resources.Languages.NorwegianBokmalLanguage.NorwegianBokmalLanguage",
+                            "src.FluentValidation.Resources.Languages.NorwegianNynorskLanguage.NorwegianNynorskLanguage",
+                            "src.FluentValidation.Resources.Languages.PersianLanguage.PersianLanguage",
+                            "src.FluentValidation.Resources.Languages.PolishLanguage.PolishLanguage",
+                            "src.FluentValidation.Resources.Languages.PortugueseBrazilLanguage.PortugueseBrazilLanguage",
+                            "src.FluentValidation.Resources.Languages.PortugueseLanguage.PortugueseLanguage",
+                            "src.FluentValidation.Resources.Languages.RomanianLanguage.RomanianLanguage",
+                            "src.FluentValidation.Resources.Languages.RomanshLanguage.RomanshLanguage",
+                            "src.FluentValidation.Resources.Languages.RussianLanguage.RussianLanguage",
+                            "src.FluentValidation.Resources.Languages.SerbianCyrillicLanguage.SerbianCyrillicLanguage",
+                            "src.FluentValidation.Resources.Languages.SerbianLatinLanguage.SerbianLatinLanguage",
+                            "src.FluentValidation.Resources.Languages.SlovakLanguage.SlovakLanguage",
+                            "src.FluentValidation.Resources.Languages.SlovenianLanguage.SlovenianLanguage",
+                            "src.FluentValidation.Resources.Languages.SpanishLanguage.SpanishLanguage",
+                            "src.FluentValidation.Resources.Languages.SwedishLanguage.SwedishLanguage",
+                            "src.FluentValidation.Resources.Languages.TajikLanguage.TajikLanguage",
+                            "src.FluentValidation.Resources.Languages.TamilLanguage.TamilLanguage",
+                            "src.FluentValidation.Resources.Languages.TeluguLanguage.TeluguLanguage",
+                            "src.FluentValidation.Resources.Languages.ThaiLanguage.ThaiLanguage",
+                            "src.FluentValidation.Resources.Languages.TurkishLanguage.TurkishLanguage",
+                            "src.FluentValidation.Resources.Languages.UkrainianLanguage.UkrainianLanguage",
+                            "src.FluentValidation.Resources.Languages.UzbekCyrillicLanguage.UzbekCyrillicLanguage",
+                            "src.FluentValidation.Resources.Languages.UzbekLatinLanguage.UzbekLatinLanguage",
+                            "src.FluentValidation.Resources.Languages.VietnameseLanguage.VietnameseLanguage",
+                            "src.FluentValidation.Resources.Languages.WelshLanguage.WelshLanguage"
+                        ],
+                        "children": {
+                            "European Languages": {
+                                "components": [
+                                    "src.FluentValidation.Resources.Languages.AlbanianLanguage.AlbanianLanguage",
+                                    "src.FluentValidation.Resources.Languages.BosnianLanguage.BosnianLanguage",
+                                    "src.FluentValidation.Resources.Languages.BulgarianLanguage.BulgarianLanguage",
+                                    "src.FluentValidation.Resources.Languages.CatalanLanguage.CatalanLanguage",
+                                    "src.FluentValidation.Resources.Languages.CroatianLanguage.CroatianLanguage",
+                                    "src.FluentValidation.Resources.Languages.CzechLanguage.CzechLanguage",
+                                    "src.FluentValidation.Resources.Languages.DanishLanguage.DanishLanguage",
+                                    "src.FluentValidation.Resources.Languages.DutchLanguage.DutchLanguage",
+                                    "src.FluentValidation.Resources.Languages.EnglishLanguage.EnglishLanguage",
+                                    "src.FluentValidation.Resources.Languages.EstonianLanguage.EstonianLanguage",
+                                    "src.FluentValidation.Resources.Languages.FinnishLanguage.FinnishLanguage",
+                                    "src.FluentValidation.Resources.Languages.FrenchLanguage.FrenchLanguage",
+                                    "src.FluentValidation.Resources.Languages.GeorgianLanguage.GeorgianLanguage",
+                                    "src.FluentValidation.Resources.Languages.GermanLanguage.GermanLanguage",
+                                    "src.FluentValidation.Resources.Languages.GreekLanguage.GreekLanguage",
+                                    "src.FluentValidation.Resources.Languages.HebrewLanguage.HebrewLanguage",
+                                    "src.FluentValidation.Resources.Languages.HungarianLanguage.HungarianLanguage",
+                                    "src.FluentValidation.Resources.Languages.IcelandicLanguage.IcelandicLanguage",
+                                    "src.FluentValidation.Resources.Languages.ItalianLanguage.ItalianLanguage",
+                                    "src.FluentValidation.Resources.Languages.LatvianLanguage.LatvianLanguage",
+                                    "src.FluentValidation.Resources.Languages.MacedonianLanguage.MacedonianLanguage",
+                                    "src.FluentValidation.Resources.Languages.NorwegianBokmalLanguage.NorwegianBokmalLanguage",
+                                    "src.FluentValidation.Resources.Languages.NorwegianNynorskLanguage.NorwegianNynorskLanguage",
+                                    "src.FluentValidation.Resources.Languages.PolishLanguage.PolishLanguage",
+                                    "src.FluentValidation.Resources.Languages.PortugueseBrazilLanguage.PortugueseBrazilLanguage",
+                                    "src.FluentValidation.Resources.Languages.PortugueseLanguage.PortugueseLanguage",
+                                    "src.FluentValidation.Resources.Languages.RomanianLanguage.RomanianLanguage",
+                                    "src.FluentValidation.Resources.Languages.RomanshLanguage.RomanshLanguage",
+                                    "src.FluentValidation.Resources.Languages.RussianLanguage.RussianLanguage",
+                                    "src.FluentValidation.Resources.Languages.SerbianCyrillicLanguage.SerbianCyrillicLanguage",
+                                    "src.FluentValidation.Resources.Languages.SerbianLatinLanguage.SerbianLatinLanguage",
+                                    "src.FluentValidation.Resources.Languages.SlovakLanguage.SlovakLanguage",
+                                    "src.FluentValidation.Resources.Languages.SlovenianLanguage.SlovenianLanguage",
+                                    "src.FluentValidation.Resources.Languages.SpanishLanguage.SpanishLanguage",
+                                    "src.FluentValidation.Resources.Languages.SwedishLanguage.SwedishLanguage",
+                                    "src.FluentValidation.Resources.Languages.TurkishLanguage.TurkishLanguage",
+                                    "src.FluentValidation.Resources.Languages.UkrainianLanguage.UkrainianLanguage",
+                                    "src.FluentValidation.Resources.Languages.WelshLanguage.WelshLanguage"
+                                ],
+                                "children": {}
+                            },
+                            "Asian Languages": {
+                                "components": [
+                                    "src.FluentValidation.Resources.Languages.ArabicLanguage.ArabicLanguage",
+                                    "src.FluentValidation.Resources.Languages.AzerbaijaneseLanguage.AzerbaijaneseLanguage",
+                                    "src.FluentValidation.Resources.Languages.BengaliLanguage.BengaliLanguage",
+                                    "src.FluentValidation.Resources.Languages.ChineseSimplifiedLanguage.ChineseSimplifiedLanguage",
+                                    "src.FluentValidation.Resources.Languages.ChineseTraditionalLanguage.ChineseTraditionalLanguage",
+                                    "src.FluentValidation.Resources.Languages.HindiLanguage.HindiLanguage",
+                                    "src.FluentValidation.Resources.Languages.IndonesianLanguage.IndonesianLanguage",
+                                    "src.FluentValidation.Resources.Languages.JapaneseLanguage.JapaneseLanguage",
+                                    "src.FluentValidation.Resources.Languages.KazakhLanguage.KazakhLanguage",
+                                    "src.FluentValidation.Resources.Languages.KhmerLanguage.KhmerLanguage",
+                                    "src.FluentValidation.Resources.Languages.KoreanLanguage.KoreanLanguage",
+                                    "src.FluentValidation.Resources.Languages.PersianLanguage.PersianLanguage",
+                                    "src.FluentValidation.Resources.Languages.TajikLanguage.TajikLanguage",
+                                    "src.FluentValidation.Resources.Languages.TamilLanguage.TamilLanguage",
+                                    "src.FluentValidation.Resources.Languages.TeluguLanguage.TeluguLanguage",
+                                    "src.FluentValidation.Resources.Languages.ThaiLanguage.ThaiLanguage",
+                                    "src.FluentValidation.Resources.Languages.UzbekCyrillicLanguage.UzbekCyrillicLanguage",
+                                    "src.FluentValidation.Resources.Languages.UzbekLatinLanguage.UzbekLatinLanguage",
+                                    "src.FluentValidation.Resources.Languages.VietnameseLanguage.VietnameseLanguage"
+                                ],
+                                "children": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "Message Formatting": {
+                "components": [
+                    "src.FluentValidation.Internal.MessageBuilderContext.IMessageBuilderContext",
+                    "src.FluentValidation.Internal.MessageBuilderContext.MessageBuilderContext",
+                    "src.FluentValidation.Internal.MessageFormatter.MessageFormatter"
+                ],
+                "children": {}
+            },
+            "Supported Languages": {
+                "components": [
+                    "src.FluentValidation.Resources.Languages.AlbanianLanguage.AlbanianLanguage",
+                    "src.FluentValidation.Resources.Languages.ArabicLanguage.ArabicLanguage",
+                    "src.FluentValidation.Resources.Languages.AzerbaijaneseLanguage.AzerbaijaneseLanguage",
+                    "src.FluentValidation.Resources.Languages.BengaliLanguage.BengaliLanguage",
+                    "src.FluentValidation.Resources.Languages.BosnianLanguage.BosnianLanguage",
+                    "src.FluentValidation.Resources.Languages.BulgarianLanguage.BulgarianLanguage",
+                    "src.FluentValidation.Resources.Languages.CatalanLanguage.CatalanLanguage",
+                    "src.FluentValidation.Resources.Languages.ChineseSimplifiedLanguage.ChineseSimplifiedLanguage",
+                    "src.FluentValidation.Resources.Languages.ChineseTraditionalLanguage.ChineseTraditionalLanguage",
+                    "src.FluentValidation.Resources.Languages.CroatianLanguage.CroatianLanguage",
+                    "src.FluentValidation.Resources.Languages.CzechLanguage.CzechLanguage",
+                    "src.FluentValidation.Resources.Languages.DanishLanguage.DanishLanguage",
+                    "src.FluentValidation.Resources.Languages.DutchLanguage.DutchLanguage",
+                    "src.FluentValidation.Resources.Languages.EnglishLanguage.EnglishLanguage",
+                    "src.FluentValidation.Resources.Languages.EstonianLanguage.EstonianLanguage",
+                    "src.FluentValidation.Resources.Languages.FinnishLanguage.FinnishLanguage",
+                    "src.FluentValidation.Resources.Languages.FrenchLanguage.FrenchLanguage",
+                    "src.FluentValidation.Resources.Languages.GeorgianLanguage.GeorgianLanguage",
+                    "src.FluentValidation.Resources.Languages.GermanLanguage.GermanLanguage",
+                    "src.FluentValidation.Resources.Languages.GreekLanguage.GreekLanguage",
+                    "src.FluentValidation.Resources.Languages.HebrewLanguage.HebrewLanguage",
+                    "src.FluentValidation.Resources.Languages.HindiLanguage.HindiLanguage",
+                    "src.FluentValidation.Resources.Languages.HungarianLanguage.HungarianLanguage",
+                    "src.FluentValidation.Resources.Languages.IcelandicLanguage.IcelandicLanguage",
+                    "src.FluentValidation.Resources.Languages.IndonesianLanguage.IndonesianLanguage",
+                    "src.FluentValidation.Resources.Languages.ItalianLanguage.ItalianLanguage",
+                    "src.FluentValidation.Resources.Languages.JapaneseLanguage.JapaneseLanguage",
+                    "src.FluentValidation.Resources.Languages.KazakhLanguage.KazakhLanguage",
+                    "src.FluentValidation.Resources.Languages.KhmerLanguage.KhmerLanguage",
+                    "src.FluentValidation.Resources.Languages.KoreanLanguage.KoreanLanguage",
+                    "src.FluentValidation.Resources.Languages.LatvianLanguage.LatvianLanguage",
+                    "src.FluentValidation.Resources.Languages.MacedonianLanguage.MacedonianLanguage",
+                    "src.FluentValidation.Resources.Languages.NorwegianBokmalLanguage.NorwegianBokmalLanguage",
+                    "src.FluentValidation.Resources.Languages.NorwegianNynorskLanguage.NorwegianNynorskLanguage",
+                    "src.FluentValidation.Resources.Languages.PersianLanguage.PersianLanguage",
+                    "src.FluentValidation.Resources.Languages.PolishLanguage.PolishLanguage",
+                    "src.FluentValidation.Resources.Languages.PortugueseBrazilLanguage.PortugueseBrazilLanguage",
+                    "src.FluentValidation.Resources.Languages.PortugueseLanguage.PortugueseLanguage",
+                    "src.FluentValidation.Resources.Languages.RomanianLanguage.RomanianLanguage",
+                    "src.FluentValidation.Resources.Languages.RomanshLanguage.RomanshLanguage",
+                    "src.FluentValidation.Resources.Languages.RussianLanguage.RussianLanguage",
+                    "src.FluentValidation.Resources.Languages.SerbianCyrillicLanguage.SerbianCyrillicLanguage",
+                    "src.FluentValidation.Resources.Languages.SerbianLatinLanguage.SerbianLatinLanguage",
+                    "src.FluentValidation.Resources.Languages.SlovakLanguage.SlovakLanguage",
+                    "src.FluentValidation.Resources.Languages.SlovenianLanguage.SlovenianLanguage",
+                    "src.FluentValidation.Resources.Languages.SpanishLanguage.SpanishLanguage",
+                    "src.FluentValidation.Resources.Languages.SwedishLanguage.SwedishLanguage",
+                    "src.FluentValidation.Resources.Languages.TajikLanguage.TajikLanguage",
+                    "src.FluentValidation.Resources.Languages.TamilLanguage.TamilLanguage",
+                    "src.FluentValidation.Resources.Languages.TeluguLanguage.TeluguLanguage",
+                    "src.FluentValidation.Resources.Languages.ThaiLanguage.ThaiLanguage",
+                    "src.FluentValidation.Resources.Languages.TurkishLanguage.TurkishLanguage",
+                    "src.FluentValidation.Resources.Languages.UkrainianLanguage.UkrainianLanguage",
+                    "src.FluentValidation.Resources.Languages.UzbekCyrillicLanguage.UzbekCyrillicLanguage",
+                    "src.FluentValidation.Resources.Languages.UzbekLatinLanguage.UzbekLatinLanguage",
+                    "src.FluentValidation.Resources.Languages.VietnameseLanguage.VietnameseLanguage",
+                    "src.FluentValidation.Resources.Languages.WelshLanguage.WelshLanguage"
+                ],
+                "children": {}
+            }
+        }
     },
-    "AbstractValidator": {
-        "path": "src/FluentValidation",
-        "components": [
-            "src.FluentValidation.Syntax.IRuleBuilderInitial",
-            "src.FluentValidation.Syntax.IRuleBuilderInitialCollection",
-            "src.FluentValidation.Syntax.IRuleBuilder",
-            "src.FluentValidation.Syntax.IRuleBuilderOptions",
-            "src.FluentValidation.Syntax.IRuleBuilderOptionsConditions",
-            "src.FluentValidation.Syntax.IRuleBuilderInternal",
-            "src.FluentValidation.Syntax.IConditionBuilder"
-        ],
-        "children": {}
-    },
-    "InlineValidator": {
-        "path": "src/FluentValidation",
-        "components": [
-            "src.FluentValidation.InlineValidator.InlineValidator"
-        ],
-        "children": {}
-    },
-    "Assembly_Scanning": {
-        "path": "src/FluentValidation",
-        "components": [
-            "src.FluentValidation.AssemblyScanner.AssemblyScanner",
-            "src.FluentValidation.AssemblyScanner.AssemblyScanResult"
-        ],
-        "children": {}
-    },
-    "Validator_Factory": {
-        "path": "src/FluentValidation",
-        "components": [
-            "src.FluentValidation.IValidatorFactory.IValidatorFactory"
-        ],
-        "children": {}
-    },
-    "Property_Chain": {
-        "path": "src/FluentValidation/Internal",
-        "components": [
-            "src.FluentValidation.Internal.PropertyChain.PropertyChain"
-        ],
-        "children": {}
-    },
-    "Accessor_Cache": {
-        "path": "src/FluentValidation/Internal",
-        "components": [
-            "src.FluentValidation.Internal.AccessorCache.Key"
-        ],
-        "children": {}
-    },
-    "Validation_Strategy": {
-        "path": "src/FluentValidation/Internal",
-        "components": [
-            "src.FluentValidation.Internal.ValidationStrategy.ValidationStrategy"
-        ],
-        "children": {}
-    },
-    "Tracking_Collection": {
-        "path": "src/FluentValidation/Internal",
-        "components": [
-            "src.FluentValidation.Internal.TrackingCollection.TrackingCollection"
-        ],
-        "children": {}
-    },
-    "Dependency_Injection": {
-        "path": "src/FluentValidation.DependencyInjectionExtensions",
+    "Dependency Injection Extensions": {
+        "path": "src/FluentValidation.DependencyInjectionExtensions/",
         "components": [
             "src.FluentValidation.DependencyInjectionExtensions.ServiceProviderValidatorFactory.ServiceProviderValidatorFactory"
         ],

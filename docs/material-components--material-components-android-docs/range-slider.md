@@ -2,155 +2,176 @@
 
 ## Introduction
 
-The Range Slider module is a specialized component within the Material Design Components library that provides a UI control for selecting a range of values from a continuous or discrete set. Unlike a standard slider that handles a single value, the Range Slider manages multiple thumbs to represent minimum and maximum values, making it ideal for filtering, price ranges, and other dual-value selection scenarios.
+The Range Slider module provides a Material Design component that allows users to select a range of values from a continuous or discrete set. Unlike a standard slider that controls a single value, the Range Slider supports multiple thumbs, enabling users to define minimum and maximum bounds, create ranges, or select multiple discrete values.
 
-## Module Overview
+This module is part of the larger [Slider](slider.md) component family and extends the base slider functionality to support multi-value selection scenarios commonly used in price filters, date ranges, and other range-based user inputs.
 
-The Range Slider module extends the base slider functionality to support multiple values and thumbs, providing a rich set of features for range-based value selection. It is part of the larger [slider](slider.md) module ecosystem and inherits from the `BaseSlider` class to provide specialized range-specific behavior.
+## Architecture Overview
+
+The Range Slider module follows a hierarchical inheritance structure built upon Material Design principles:
+
+```mermaid
+classDiagram
+    class BaseSlider {
+        <<abstract>>
+        +setValues(values)
+        +getValues()
+        +setCustomThumbDrawable(drawable)
+        +onSaveInstanceState()
+        +onRestoreInstanceState(state)
+    }
+    
+    class RangeSlider {
+        +minSeparation: float
+        +separationUnit: int
+        +setMinSeparation(separation)
+        +setMinSeparationValue(separation)
+        +getMinSeparation()
+    }
+    
+    class OnChangeListener {
+        <<interface>>
+        +onValueChange(slider, value, fromUser)
+    }
+    
+    class OnSliderTouchListener {
+        <<interface>>
+        +onStartTrackingTouch(slider)
+        +onStopTrackingTouch(slider)
+    }
+    
+    class BaseOnChangeListener {
+        <<interface>>
+    }
+    
+    class BaseOnSliderTouchListener {
+        <<interface>>
+    }
+    
+    BaseSlider <|-- RangeSlider
+    BaseOnChangeListener <|-- OnChangeListener
+    BaseOnSliderTouchListener <|-- OnSliderTouchListener
+    RangeSlider ..> OnChangeListener : uses
+    RangeSlider ..> OnSliderTouchListener : uses
+```
 
 ## Core Components
 
 ### RangeSlider Class
-The main component that extends `BaseSlider` to provide range-specific functionality:
-- **Purpose**: Manages multiple slider thumbs for range selection
-- **Key Features**: Multi-value support, minimum separation between thumbs, customizable thumb drawables
-- **Inheritance**: Extends `BaseSlider<RangeSlider, OnChangeListener, OnSliderTouchListener>`
+The main component that extends `BaseSlider` to provide multi-thumb functionality. Key features include:
 
-### Event Listeners
+- **Multi-value Support**: Manages multiple slider values simultaneously
+- **Minimum Separation**: Enforces minimum distance between thumbs to prevent overlap
+- **Custom Thumb Drawables**: Supports individual thumb customization for each value
+- **State Persistence**: Handles configuration changes through saved state
+
+### Listener Interfaces
 
 #### OnChangeListener
 ```java
-public interface OnChangeListener extends BaseOnChangeListener<RangeSlider>
+public interface OnChangeListener extends BaseOnChangeListener<RangeSlider> {
+    void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser);
+}
 ```
-- **Purpose**: Handles value change events for all thumbs in the range slider
-- **Usage**: Notified when any thumb value changes during user interaction
-- **Inheritance**: Extends `BaseOnChangeListener<RangeSlider>` from [slider-events](slider.md)
+- Notifies when any slider value changes
+- Provides access to the affected slider instance
+- Indicates whether the change was user-initiated
 
 #### OnSliderTouchListener
 ```java
-public interface OnSliderTouchListener extends BaseOnSliderTouchListener<RangeSlider>
+public interface OnSliderTouchListener extends BaseOnSliderTouchListener<RangeSlider> {
+    void onStartTrackingTouch(@NonNull RangeSlider slider);
+    void onStopTrackingTouch(@NonNull RangeSlider slider);
+}
 ```
-- **Purpose**: Manages touch interaction events for the range slider
-- **Methods**: `onStartTrackingTouch()` and `onStopTrackingTouch()`
-- **Inheritance**: Extends `BaseOnSliderTouchListener<RangeSlider>` from [slider-events](slider.md)
+- Monitors user interaction with the slider
+- Useful for implementing custom behaviors during touch events
 
-## Architecture
+## Data Flow Architecture
 
-### Component Hierarchy
-```mermaid
-graph TD
-    A[BaseSlider] --> B[RangeSlider]
-    C[BaseOnChangeListener] --> D[OnChangeListener]
-    E[BaseOnSliderTouchListener] --> F[OnSliderTouchListener]
-    B --> D
-    B --> F
-    
-    style B fill:#f9f,stroke:#333,stroke-width:2px
-    style D fill:#bbf,stroke:#333,stroke-width:2px
-    style F fill:#bbf,stroke:#333,stroke-width:2px
-```
-
-### Module Dependencies
-```mermaid
-graph LR
-    A[range-slider] --> B[slider-events]
-    A --> C[slider-orientation]
-    A --> D[BaseSlider]
-    
-    B --> E[BaseOnChangeListener]
-    B --> F[BaseOnSliderTouchListener]
-    C --> G[SliderOrientation]
-    
-    style A fill:#f9f,stroke:#333,stroke-width:2px
-```
-
-## Key Features
-
-### Multi-Value Support
-- Manages multiple values simultaneously through a `List<Float>` structure
-- Each value represents a thumb position on the slider track
-- Supports both continuous and discrete value sets
-
-### Minimum Separation
-- **Pixel-based separation**: `setMinSeparation(float)` - minimum distance in pixels
-- **Value-based separation**: `setMinSeparationValue(float)` - minimum distance in value scale
-- Prevents thumbs from overlapping and ensures meaningful range selection
-
-### Customization Options
-- Custom thumb drawables for individual values
-- Consistent styling with Material Design guidelines
-- Support for both drawable resources and `Drawable` objects
-
-## Data Flow
-
-### Value Change Flow
 ```mermaid
 sequenceDiagram
     participant User
     participant RangeSlider
     participant OnChangeListener
-    participant Application
-    
-    User->>RangeSlider: Touch and drag thumb
-    RangeSlider->>RangeSlider: Update value position
-    RangeSlider->>OnChangeListener: onValueChange(slider, value, fromUser)
-    OnChangeListener->>Application: Handle value change
-    Application->>Application: Update UI/Logic
-```
-
-### Touch Event Flow
-```mermaid
-sequenceDiagram
-    participant User
-    participant RangeSlider
     participant OnSliderTouchListener
-    participant Application
+    participant BaseSlider
     
-    User->>RangeSlider: Touch down
-    RangeSlider->>OnSliderTouchListener: onStartTrackingTouch(slider)
-    OnSliderTouchListener->>Application: Handle touch start
-    User->>RangeSlider: Touch up
-    RangeSlider->>OnSliderTouchListener: onStopTrackingTouch(slider)
-    OnSliderTouchListener->>Application: Handle touch end
+    User->>RangeSlider: Touch interaction
+    RangeSlider->>OnSliderTouchListener: onStartTrackingTouch()
+    
+    User->>RangeSlider: Move thumb
+    RangeSlider->>BaseSlider: Update value
+    RangeSlider->>OnChangeListener: onValueChange(value, true)
+    
+    User->>RangeSlider: Release touch
+    RangeSlider->>OnSliderTouchListener: onStopTrackingTouch()
+    
+    Note over RangeSlider: Configuration change
+    RangeSlider->>RangeSlider: onSaveInstanceState()
+    RangeSlider->>RangeSlider: onRestoreInstanceState(state)
 ```
 
-## State Management
+## Component Dependencies
 
-### RangeSliderState
-The module implements custom state persistence through `RangeSliderState`:
-- **Purpose**: Maintains slider state during configuration changes
-- **Storage**: Saves `minSeparation` and `separationUnit` values
-- **Implementation**: Extends `AbsSavedState` for Android's saved state mechanism
-
-### State Persistence Flow
 ```mermaid
 graph TD
-    A[Configuration Change] --> B[onSaveInstanceState]
-    B --> C[Create RangeSliderState]
-    C --> D[Store minSeparation & separationUnit]
-    D --> E[Return Parcelable]
+    RangeSlider[RangeSlider] --> BaseSlider[BaseSlider]
+    RangeSlider --> ThemeEnforcement[ThemeEnforcement]
+    RangeSlider --> OnChangeListener[OnChangeListener]
+    RangeSlider --> OnSliderTouchListener[OnSliderTouchListener]
     
-    F[Restore State] --> G[onRestoreInstanceState]
-    G --> H[Read RangeSliderState]
-    H --> I[Restore minSeparation & separationUnit]
-    I --> J[Update Slider Configuration]
+    BaseSlider --> BaseOnChangeListener[BaseOnChangeListener]
+    BaseSlider --> BaseOnSliderTouchListener[BaseOnSliderTouchListener]
     
-    style C fill:#bbf,stroke:#333,stroke-width:2px
-    style H fill:#bbf,stroke:#333,stroke-width:2px
+    ThemeEnforcement --> Context[Context]
+    ThemeEnforcement --> AttributeSet[AttributeSet]
+    
+    RangeSlider --> Parcelable[Parcelable]
+    RangeSlider --> TypedArray[TypedArray]
+    RangeSlider --> Drawable[Drawable]
 ```
 
-## XML Attributes
+## Key Features and Functionality
 
-### Range-Specific Attributes
-- `app:values`: Initial values for the range slider (resource reference to array)
-- `app:minSeparation`: Minimum distance between overlapping thumbs
+### Multi-Value Management
+The RangeSlider excels at managing multiple values through its specialized API:
 
-### Inherited Attributes
-The Range Slider inherits all attributes from the base slider component, including:
-- Value range configuration (`valueFrom`, `valueTo`)
-- Step size for discrete values
-- Visual styling attributes
-- Track and thumb customization
+```java
+// Set multiple values
+rangeSlider.setValues(10.0f, 50.0f, 90.0f);
+
+// Get all current values
+List<Float> values = rangeSlider.getValues();
+
+// Set individual thumb drawables
+rangeSlider.setCustomThumbDrawablesForValues(R.drawable.thumb1, R.drawable.thumb2);
+```
+
+### Minimum Separation Control
+Prevents thumbs from overlapping by enforcing minimum distances:
+
+```java
+// Set minimum separation in pixels
+rangeSlider.setMinSeparation(20.0f);
+
+// Set minimum separation in value scale
+rangeSlider.setMinSeparationValue(5.0f);
+```
+
+### State Persistence
+The component handles configuration changes through its internal `RangeSliderState` class, preserving:
+- Current slider values
+- Minimum separation settings
+- Separation unit type (pixels vs. values)
+
+## Integration with Material Design System
+
+The RangeSlider integrates with several Material Design components and utilities:
+
+- **[Theme System](theme.md)**: Uses `ThemeEnforcement` for consistent styling
+- **[Base Slider](slider.md)**: Inherits core slider functionality and behaviors
+- **[Internal Utilities](internal.md)**: Leverages Material internal utilities for theme enforcement
 
 ## Usage Patterns
 
@@ -162,76 +183,73 @@ The Range Slider inherits all attributes from the base slider component, includi
     android:valueFrom="0"
     android:valueTo="100"
     app:values="@array/initial_range_values"
-    app:minSeparation="10dp" />
+    app:minSeparation="5dp" />
 ```
 
-### Programmatic Usage
+### Programmatic Configuration
 ```java
 RangeSlider rangeSlider = findViewById(R.id.range_slider);
-rangeSlider.setValues(20f, 80f);
-rangeSlider.setMinSeparation(5f);
+rangeSlider.setValues(25.0f, 75.0f);
+rangeSlider.setMinSeparation(10.0f);
+
 rangeSlider.addOnChangeListener((slider, value, fromUser) -> {
-    List<Float> values = slider.getValues();
     // Handle value changes
+    List<Float> currentValues = slider.getValues();
 });
 ```
 
-## Integration with Other Modules
+## Process Flow
 
-### Slider Module Ecosystem
-The Range Slider is part of a comprehensive slider system:
-- **[slider-events](slider.md)**: Provides base event listener interfaces
-- **[slider-orientation](slider.md)**: Handles orientation-specific behavior
-- **BaseSlider**: Common functionality shared with single-value sliders
-
-### Material Design Integration
-- Consistent theming with other Material components
-- Support for Material Design color schemes
-- Integration with elevation and shadow systems
-- Accessibility features aligned with Material guidelines
-
-## Performance Considerations
-
-### Memory Management
-- Efficient state persistence with minimal object creation
-- Optimized value storage using `ArrayList<Float>`
-- Lazy initialization of custom drawables
-
-### Touch Responsiveness
-- Smooth touch handling for multiple thumbs
-- Efficient separation validation during drag operations
-- Optimized redraw cycles for performance
-
-## Accessibility
-
-### Screen Reader Support
-- Proper content descriptions for thumbs
-- Value announcements during interaction
-- Semantic meaning for range selection
-
-### Keyboard Navigation
-- Support for keyboard-based value adjustment
-- Proper focus management for multiple thumbs
-- Integration with system accessibility services
+```mermaid
+flowchart TD
+    A[Initialize RangeSlider] --> B[Parse XML Attributes]
+    B --> C[Set Initial Values]
+    C --> D[Configure Min Separation]
+    D --> E[Render Thumbs]
+    
+    E --> F{User Interaction}
+    F -->|Touch Start| G[Notify OnSliderTouchListener]
+    F -->|Move Thumb| H[Check Min Separation]
+    H --> I{Separation Valid?}
+    I -->|Yes| J[Update Value]
+    I -->|No| K[Prevent Overlap]
+    J --> L[Notify OnChangeListener]
+    
+    F -->|Touch End| M[Notify OnSliderTouchListener]
+    
+    N[Configuration Change] --> O[Save State]
+    O --> P[Restore State]
+    P --> E
+```
 
 ## Best Practices
 
-### Value Management
-- Use appropriate `minSeparation` to prevent overlapping
-- Consider value-based separation for meaningful ranges
-- Validate initial values against the defined range
-
-### User Experience
-- Provide clear visual feedback for thumb positions
-- Consider using custom drawables for better visibility
-- Implement appropriate change listeners for responsive UI updates
-
-### Performance Optimization
-- Minimize operations in change listeners
-- Use appropriate step sizes for discrete values
-- Consider debouncing frequent value changes
+1. **Value Validation**: Always validate the number of values and their ranges before setting them
+2. **Separation Units**: Choose appropriate separation units based on use case (pixels for visual separation, values for logical ranges)
+3. **Listener Management**: Properly manage listener registration to avoid memory leaks
+4. **State Restoration**: Handle configuration changes appropriately using saved state
+5. **Accessibility**: Ensure proper content descriptions and accessibility support
 
 ## Related Documentation
-- [Slider Module](slider.md) - Base slider functionality and shared components
-- [Material Design Slider Guidelines](https://material.io/components/sliders) - Design principles and usage patterns
-- [Android Accessibility Guide](https://developer.android.com/guide/topics/ui/accessibility) - Accessibility implementation details
+
+- [Base Slider Components](slider.md) - Core slider functionality and base classes
+- [Material Theme System](theme.md) - Theming and styling integration
+- [Internal Utilities](internal.md) - Supporting utilities and helpers
+- [Common Animation Utilities](common-utils.md) - Animation and interaction support
+
+## Technical Considerations
+
+### Performance
+- Efficient value management through `ArrayList<Float>`
+- Minimal object allocation during touch events
+- Optimized state serialization for configuration changes
+
+### Memory Management
+- Proper cleanup of listeners and callbacks
+- Efficient drawable resource management for custom thumbs
+- State restoration without memory leaks
+
+### Extensibility
+- Interface-based listener pattern for customization
+- Protected methods for subclassing and extension
+- Support for custom thumb drawables and styling

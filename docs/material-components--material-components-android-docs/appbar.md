@@ -2,143 +2,158 @@
 
 ## Overview
 
-The AppBar module provides Material Design app bar components for Android applications. It implements the collapsing app bar pattern with sophisticated scrolling behaviors, elevation changes, and visual effects. The module is built on top of CoordinatorLayout and provides seamless integration with scrolling content.
+The AppBar module is a core component of the Material Design Components library for Android, providing flexible and interactive app bar implementations. This module implements the Material Design app bar concept with advanced scrolling behaviors, elevation changes, and collapsing animations.
+
+## Purpose
+
+The AppBar module serves as the foundation for creating responsive, interactive top app bars that:
+- Respond to scroll events with various scroll flags and effects
+- Support collapsing and expanding animations
+- Provide elevation changes based on scroll position
+- Integrate seamlessly with CoordinatorLayout for complex scrolling patterns
+- Support Material Design elevation and theming
 
 ## Architecture
 
 ```mermaid
-graph TD
-    A[AppBarLayout] --> B[CollapsingToolbarLayout]
-    A --> C[HeaderBehavior]
-    A --> D[ScrollingViewBehavior]
-    C --> E[ViewOffsetBehavior]
-    C --> F[HeaderScrollingViewBehavior]
-    E --> G[ViewOffsetHelper]
+graph TB
+    subgraph "AppBar Module Architecture"
+        A[AppBarLayout] --> B[BaseBehavior]
+        A --> C[LayoutParams]
+        A --> D[OnOffsetChangedListener]
+        A --> E[LiftOnScrollListener]
+        
+        F[CollapsingToolbarLayout] --> G[LayoutParams]
+        F --> H[StaticLayoutBuilderConfigurer]
+        
+        I[HeaderBehavior] --> J[ViewOffsetBehavior]
+        K[ScrollingViewBehavior] --> J
+        
+        L[ViewUtilsLollipop] --> A
+        L --> F
+    end
     
-    H[Core Components] --> I[SavedState Management]
-    H --> J[Scroll Behavior System]
-    H --> K[Lift on Scroll]
-    H --> L[Offset Listeners]
-    H --> M[Animation System]
-    
-    style A fill:#1976d2,stroke:#333,stroke-width:2px,color:#fff
-    style B fill:#1976d2,stroke:#333,stroke-width:2px,color:#fff
-    style C fill:#1976d2,stroke:#333,stroke-width:2px,color:#fff
+    subgraph "External Dependencies"
+        M[CoordinatorLayout] --> A
+        M --> K
+        N[MaterialShapeDrawable] --> A
+        O[AnimationUtils] --> A
+        P[MotionUtils] --> A
+    end
 ```
 
-## Core Functionality
+## Core Components
 
-### AppBarLayout
-The main container that implements the vertical LinearLayout with Material Design app bar features. It manages:
-- **Scroll coordination** with nested scrolling children
-- **Elevation changes** based on scroll position (lift on scroll)
-- **State persistence** across configuration changes
-- **Accessibility** support for screen readers
+### 1. AppBarLayout
+The main container that implements a vertical LinearLayout with Material Design app bar features. It supports:
+- **Scroll Flags**: Define how child views respond to scrolling (scroll, enterAlways, exitUntilCollapsed, snap, etc.)
+- **Lift on Scroll**: Automatic elevation changes based on scroll position
+- **Offset Management**: Tracks and manages vertical offset changes
+- **State Management**: Handles expanded/collapsed states with animations
 
-### CollapsingToolbarLayout
-A specialized FrameLayout that provides collapsing title functionality:
-- **Title animation** between expanded and collapsed states
-- **Content scrims** for visual hierarchy
-- **Parallax effects** for child views
-- **Status bar integration** with scrim support
+### 2. CollapsingToolbarLayout
+A specialized FrameLayout that wraps Toolbar implementations to create collapsing app bar effects:
+- **Collapsing Title**: Animated title that scales and translates between expanded and collapsed states
+- **Content Scrims**: Background overlays that appear based on scroll position
+- **Parallax Effects**: Child views can scroll with parallax multipliers
+- **Pin Mode**: Child views can be pinned in place during collapse
 
-### Behavior System
-CoordinatorLayout behaviors that enable complex interactions:
-- **HeaderBehavior**: Base class for header view behaviors
-- **ScrollingViewBehavior**: Coordinates scrolling between AppBarLayout and content
-- **ViewOffsetBehavior**: Manages view offsetting and positioning
+### 3. Behavior Classes
+- **BaseBehavior**: Core nested scrolling behavior for AppBarLayout
+- **ScrollingViewBehavior**: Coordinates scrolling between AppBarLayout and content views
+- **HeaderBehavior**: Abstract base for header behaviors with touch handling
+- **ViewOffsetBehavior**: Base behavior for views that need offset management
+
+### 4. Support Components
+- **LayoutParams**: Custom layout parameters for scroll flags and collapse modes
+- **ViewOffsetHelper**: Manages view offset animations and positioning
+- **ViewUtilsLollipop**: API-specific utilities for state list animators and elevation
 
 ## Key Features
 
-### 1. Scroll Flags System
-AppBarLayout supports various scroll flags that control child view behavior:
-- `scroll`: Basic scrolling behavior
-- `exitUntilCollapsed`: View collapses until minimum height
-- `enterAlways`: Quick return pattern
-- `enterAlwaysCollapsed`: Enter in collapsed state
-- `snap`: Snap to nearest edge
-- `snapMargins`: Snap considering margins
+### Scroll Behaviors
+The module supports various scroll flags that can be combined:
+- `SCROLL_FLAG_SCROLL`: Basic scroll behavior
+- `SCROLL_FLAG_ENTER_ALWAYS`: Quick return pattern
+- `SCROLL_FLAG_EXIT_UNTIL_COLLAPSED`: Collapse until minimum height
+- `SCROLL_FLAG_SNAP`: Snap to nearest edge when scrolling ends
+- `SCROLL_FLAG_SNAP_MARGINS`: Snap considering margins
 
-### 2. Lift on Scroll
-Automatic elevation and color changes based on scroll position:
-- Configurable elevation values
-- Custom color transitions
-- Progress-based animations
-- Target view specification
+### Lift on Scroll
+Automatic elevation changes based on content scroll position:
+- Configurable elevation values and animation duration
+- Support for custom colors or elevation-based lifting
+- Progress listeners for custom lift animations
 
-### 3. Title Collapse Modes
-Two modes for title animation:
-- **Scale mode**: Continuous scaling and translation
-- **Fade mode**: Fade out/in with translation
+### Collapsing Effects
+Advanced collapsing animations including:
+- Title scaling and translation between states
+- Content scrim visibility based on scroll progress
+- Parallax scrolling for background content
+- Pin behavior for fixed elements
 
-### 4. Child Scroll Effects
-Special effects for child views during scroll:
-- **Compress effect**: Parallax compression animation
-- Custom interpolator support
-- Per-child configuration
+## Integration
 
-## Integration Patterns
+The AppBar module integrates with:
+- **[CoordinatorLayout](../coordinatorlayout.md)**: For complex scrolling coordination
+- **[Material Theme System](../theme.md)**: For consistent styling and elevation
+- **[Animation System](../animation.md)**: For smooth transitions and interpolators
+- **[Shape System](../shape.md)**: For Material shape and elevation effects
 
-### Basic Setup
+## Usage Patterns
+
+### Basic App Bar with Scroll
 ```xml
 <androidx.coordinatorlayout.widget.CoordinatorLayout>
     <com.google.android.material.appbar.AppBarLayout>
-        <com.google.android.material.appbar.CollapsingToolbarLayout>
-            <androidx.appcompat.widget.Toolbar
-                app:layout_scrollFlags="scroll|exitUntilCollapsed"/>
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        <androidx.appcompat.widget.Toolbar
+            app:layout_scrollFlags="scroll|enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>
     
-    <NestedScrollView
+    <androidx.core.widget.NestedScrollView
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <!-- Content -->
-    </NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 ```
 
-### Advanced Configuration
-- Custom scroll effects and interpolators
-- Programmatic offset control
-- State restoration and persistence
-- Accessibility enhancements
-
-## Dependencies
-
-The AppBar module integrates with several other Material Design components:
-
-- **[CoordinatorLayout](coordinatorlayout.md)**: Core dependency for behavior system
-- **[Toolbar](toolbar.md)**: Content container within AppBarLayout
-- **[Color System](color.md)**: For lift on scroll color transitions
-- **[Animation System](animation.md)**: For smooth transitions and effects
-- **[Shape System](shape.md)**: For Material shape theming
+### Collapsing Toolbar
+```xml
+<androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <com.google.android.material.appbar.AppBarLayout>
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            
+            <ImageView
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.7" />
+                
+            <androidx.appcompat.widget.Toolbar
+                app:layout_collapseMode="pin" />
+                
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+```
 
 ## Sub-modules
 
-For detailed information about specific components, see:
-
-- [AppBarLayout Core](appbarlayout-core.md) - Core AppBarLayout functionality including SavedState, scroll behaviors, lift on scroll listeners, and layout parameters
-- [Collapsing Toolbar](collapsing-toolbar.md) - Collapsing title animations, scrim effects, and layout configurations
-- [Behavior System](behavior-system.md) - HeaderBehavior and ViewOffsetBehavior implementations for scroll coordination
-- [Utility Components](utility-components.md) - ViewUtilsLollipop for state list animations and outline providers
+For detailed information about specific sub-modules, refer to:
+- [AppBarLayout Core](appbar-layout.md) - Core AppBarLayout functionality including BaseBehavior, LayoutParams, scroll flags, and lift-on-scroll features
+- [Collapsing Toolbar](collapsing-toolbar.md) - CollapsingToolbarLayout implementation with title animations, scrim effects, and parallax scrolling
+- [Behaviors](appbar-behaviors.md) - HeaderBehavior and ViewOffsetBehavior classes for scroll coordination and view offset management
+- [Utilities](appbar-utilities.md) - ViewUtilsLollipop and other utility classes for API-specific functionality
 
 ## Performance Considerations
 
-- **View recycling**: Efficient handling of nested scrolling
-- **Animation optimization**: Hardware acceleration for smooth transitions
-- **Memory management**: Proper cleanup of listeners and references
-- **State persistence**: Minimal overhead for configuration changes
-
-## Accessibility
-
-- Full screen reader support with proper content descriptions
-- Keyboard navigation support
-- Semantic role announcements
-- High contrast mode compatibility
-- Reduced motion support
+- **Scroll Optimization**: The module uses nested scrolling APIs for efficient scroll handling
+- **Animation Performance**: Hardware-accelerated animations with proper interpolators
+- **Memory Management**: Efficient state management and view recycling
+- **Accessibility**: Full accessibility support with proper announcements
 
 ## Version Compatibility
 
-- Minimum SDK: 21 (Lollipop)
-- Full feature support: SDK 23+
-- Enhanced animations: SDK 24+
-- Latest optimizations: SDK 26+
+- **Minimum SDK**: Supports API 14+
+- **Material Theming**: Full support for Material Design 3 theming
+- **Elevation**: Proper elevation handling across different Android versions
+- **State List Animators**: Enhanced animations on API 21+

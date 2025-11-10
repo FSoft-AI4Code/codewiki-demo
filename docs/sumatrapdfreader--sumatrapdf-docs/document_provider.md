@@ -2,258 +2,320 @@
 
 ## Introduction
 
-The Document Provider module is a core component of the UI Automation (UIA) system in SumatraPDF, implementing the `IRawElementProviderSimple`, `IRawElementProviderFragment`, and `ITextProvider` interfaces. It serves as the primary bridge between the document content and accessibility tools, enabling screen readers and other assistive technologies to interact with PDF documents.
+The Document Provider module is a core component of SumatraPDF's accessibility infrastructure, implementing the UI Automation Document Provider interface for screen readers and accessibility tools. This module bridges the gap between SumatraPDF's document rendering engine and Windows UI Automation framework, enabling users with disabilities to access and navigate document content programmatically.
 
 ## Architecture Overview
 
-The Document Provider acts as the central coordinator for UI Automation access to document content, managing page providers and text ranges while maintaining the document hierarchy required by the UIA framework.
+The Document Provider module serves as the central accessibility hub for document content, implementing multiple COM interfaces to expose document structure and text content to assistive technologies. It creates a hierarchical representation of document pages and provides text range functionality for navigation and selection.
 
 ```mermaid
 graph TB
     subgraph "UI Automation Framework"
         UIA[UI Automation Client]
-        ITextProvider[ITextProvider Interface]
-        IRawElementProvider[IRawElementProviderSimple]
-        IRawElementProviderFragment[IRawElementProviderFragment]
+        ITP[ITextProvider Interface]
+        IREPF[IRawElementProviderFragment]
+        IREPS[IRawElementProviderSimple]
     end
     
     subgraph "Document Provider Module"
         DP[SumatraUIAutomationDocumentProvider]
-        PP[Page Providers Array]
+        PP[Page Providers]
         TR[Text Ranges]
-        DM[DisplayModel Reference]
+        UR[UiaRect]
     end
     
-    subgraph "Document Core"
-        Engine[Document Engine]
-        Pages[Page Content]
-        TextSel[Text Selection]
+    subgraph "Document Engine"
+        DM[DisplayModel]
+        DE[Document Engine]
+        TS[Text Selection]
     end
     
-    UIA --> ITextProvider
-    UIA --> IRawElementProvider
-    UIA --> IRawElementProviderFragment
+    UIA --> ITP
+    UIA --> IREPF
+    UIA --> IREPS
     
-    ITextProvider --> DP
-    IRawElementProvider --> DP
-    IRawElementProviderFragment --> DP
+    ITP --> DP
+    IREPF --> DP
+    IREPS --> DP
     
     DP --> PP
     DP --> TR
-    DP --> DM
+    DP --> UR
     
-    DM --> Engine
-    DM --> Pages
-    DM --> TextSel
+    DP --> DM
+    DM --> DE
+    DM --> TS
+    
+    PP --> DM
+    TR --> DM
 ```
 
 ## Core Components
 
 ### SumatraUIAutomationDocumentProvider
 
-The main class that implements the UIA interfaces and manages the document's accessibility representation.
+The main document provider class that implements multiple COM interfaces to expose document accessibility functionality:
 
-**Key Responsibilities:**
-- Document lifecycle management (loading/unloading)
-- Page provider coordination
-- Text range creation and management
-- UIA property and pattern implementation
-- Navigation within the document structure
+- **IRawElementProviderSimple**: Basic provider interface for UI Automation
+- **IRawElementProviderFragment**: Fragment navigation within the accessibility tree
+- **ITextProvider**: Text content and selection functionality
+- **IAccIdentity**: Identity management for accessibility clients
 
-**Core Properties:**
-- `refCount`: Reference counting for COM object lifecycle
-- `canvasHwnd`: Handle to the canvas window
-- `root`: Reference to the root UIA provider
-- `released`: Document state flag
-- `child_first/child_last`: Linked list of page providers
-- `dm`: DisplayModel reference
+#### Key Responsibilities
 
-## Component Relationships
+1. **Document Lifecycle Management**: Loads and unloads documents, maintaining references to DisplayModel
+2. **Page Provider Management**: Creates and manages page provider instances for each document page
+3. **Text Range Services**: Provides text selection and navigation capabilities
+4. **Property Exposure**: Exposes document properties (name, type, selection state) to UI Automation
+5. **Navigation Support**: Implements hierarchical navigation between document elements
+
+#### Document State Management
 
 ```mermaid
-graph LR
-    subgraph "Document Provider Hierarchy"
-        Root[Root Provider]
-        Doc[Document Provider]
-        P1[Page Provider 1]
-        P2[Page Provider 2]
-        Pn[Page Provider N]
-        TR[Text Ranges]
-    end
+stateDiagram-v2
+    [*] --> Unloaded
+    Unloaded --> Loading: LoadDocument()
+    Loading --> Loaded: Document Ready
+    Loaded --> Unloading: FreeDocument()
+    Unloading --> Unloaded: Cleanup Complete
     
-    Root -->|Parent| Doc
-    Doc -->|First Child| P1
-    Doc -->|Last Child| Pn
-    P1 -->|Next| P2
-    P2 -->|Next| Pn
-    Doc -->|Creates| TR
-    P1 -->|Creates| TR
-    P2 -->|Creates| TR
-    Pn -->|Creates| TR
+    Loaded --> Reloading: New Document
+    Reloading --> Loading: LoadDocument()
 ```
 
-## Data Flow
+### UiaRect Structure
+
+A simple rectangle structure used for bounding box calculations in UI Automation:
+
+```cpp
+struct UiaRect {
+    double left;
+    double top;
+    double width;
+    double height;
+};
+```
+
+## Component Interactions
 
 ### Document Loading Process
 
 ```mermaid
 sequenceDiagram
-    participant Engine as Document Engine
-    participant DP as Document Provider
-    participant PP as Page Providers
-    participant UIA as UI Automation
+    participant UI as UI Automation Client
+    participant DP as DocumentProvider
+    participant PP as PageProvider
+    participant DM as DisplayModel
     
-    Engine->>DP: LoadDocument(DisplayModel)
-    DP->>DP: Free existing document
-    loop For each page
-        DP->>PP: Create page provider
-        PP->>PP: Initialize with page info
-        DP->>DP: Link to provider chain
+    UI->>DP: Query Document
+    DP->>DM: Load DisplayModel
+    loop For Each Page
+        DP->>PP: Create PageProvider
+        PP->>DM: Reference Page Data
+        PP->>DP: Link to Sibling Pages
     end
-    DP->>DP: Set released=false
-    UIA->>DP: Query document properties
-    DP->>Engine: Access document data
+    DP->>UI: Return Document Structure
 ```
 
 ### Text Selection Flow
 
 ```mermaid
 sequenceDiagram
-    participant UIA as UI Automation Client
-    participant DP as Document Provider
-    participant TR as Text Range
+    participant SR as Screen Reader
+    participant DP as DocumentProvider
+    participant TR as TextRange
     participant DM as DisplayModel
     
-    UIA->>DP: GetSelection()
-    DP->>DM: Get text selection
-    DP->>TR: Create text range
-    TR->>TR: Initialize with selection
-    DP->>UIA: Return selection array
-    UIA->>TR: Query text properties
-    TR->>DM: Access text content
+    SR->>DP: GetSelection()
+    DP->>DM: Get TextSelection
+    DP->>TR: Create TextRange
+    TR->>DM: Reference Selection Data
+    DP->>SR: Return TextRange
+    SR->>TR: Query Text Content
+    TR->>DM: Retrieve Text Data
+    TR->>SR: Return Text Content
 ```
 
-## Interface Implementation
+## Data Flow Architecture
 
-### ITextProvider Implementation
+### Property Value Retrieval
 
-The Document Provider implements the `ITextProvider` interface to expose document text content:
-
-- **GetSelection()**: Returns currently selected text ranges
-- **GetVisibleRanges()**: Returns ranges for visible pages
-- **RangeFromChild()**: Creates text range from page element
-- **RangeFromPoint()**: Creates text range from screen coordinates (not implemented)
-- **get_DocumentRange()**: Returns range covering entire document
-- **get_SupportedTextSelection()**: Returns single selection support
-
-### IRawElementProviderFragment Implementation
-
-Implements navigation within the document structure:
-
-- **Navigate()**: Handles parent/child navigation
-- **GetRuntimeId()**: Provides unique runtime identifier
-- **get_BoundingRectangle()**: Returns document bounds
-- **get_FragmentRoot()**: Returns root provider reference
-
-### IRawElementProviderSimple Implementation
-
-Provides basic UIA element properties:
-
-- **GetPatternProvider()**: Returns pattern implementations
-- **GetPropertyValue()**: Returns UIA properties (name, control type, etc.)
-- **get_HostRawElementProvider()**: Returns host provider (none)
-- **get_ProviderOptions()**: Returns server-side provider options
-
-## Key Features
-
-### Document Lifecycle Management
-
-```cpp
-void LoadDocument(DisplayModel* newDm)
-void FreeDocument()
-bool IsDocumentLoaded() const
+```mermaid
+graph LR
+    subgraph "UI Automation Request"
+        PROP[Property ID]
+        VAR[VARIANT Result]
+    end
+    
+    subgraph "Document Provider"
+        PV[GetPropertyValue]
+        CHECK[Property Check]
+        NAME[Extract File Name]
+        TYPE[Set Control Type]
+    end
+    
+    subgraph "Document Engine"
+        FP[File Path]
+        ENG[Engine Info]
+    end
+    
+    PROP --> PV
+    PV --> CHECK
+    CHECK --> NAME
+    CHECK --> TYPE
+    NAME --> FP
+    TYPE --> ENG
+    NAME --> VAR
+    TYPE --> VAR
 ```
 
-The provider maintains strict lifecycle control, ensuring proper cleanup of page providers and preventing access to released documents.
+### Navigation Implementation
 
-### Page Provider Coordination
-
-Creates and manages a linked list of page providers, each representing a single page in the document:
-
-```cpp
-SumatraUIAutomationPageProvider* GetFirstPage()
-SumatraUIAutomationPageProvider* GetLastPage()
+```mermaid
+graph TD
+    NAV[Navigate Request]
+    DIR{Direction}
+    
+    DIR -->|Parent| ROOT[Return Root Provider]
+    DIR -->|FirstChild| FIRST[Return First Page]
+    DIR -->|LastChild| LAST[Return Last Page]
+    DIR -->|Sibling| NULL[Return Null]
+    
+    FIRST --> CHECK{Document Loaded?}
+    LAST --> CHECK
+    
+    CHECK -->|Yes| PAGE[Return Page Provider]
+    CHECK -->|No| NULL
+    
+    ROOT --> ADDREF[AddRef & Return]
+    PAGE --> ADDREF
+    NULL --> OK[Return S_OK]
 ```
 
-### Text Range Management
+## Integration with Other Modules
 
-Creates text ranges for various purposes:
-- Current text selection
-- Visible page ranges
-- Document-wide ranges
-- Page-specific ranges
+### Core Application Integration
+
+The Document Provider module integrates with the [core_application_and_ui](core_application_and_ui.md) module through:
+
+- **DisplayModel**: References the main document display model for content access
+- **MainWindow**: Receives canvas HWND for UI Automation boundary calculations
+- **Settings**: Accesses application settings for accessibility features
+
+### Engine Integration
+
+Works with multiple document engines from various modules:
+
+- **[mupdf_engine_integration](mupdf_engine_integration.md)**: PDF document text extraction and page information
+- **[djvu_engine_integration](djvu_engine_integration.md)**: DjVu document accessibility support
+- **[ebook_engines](ebook_engines.md)**: E-book format accessibility (CHM, FB2, MOBI)
+- **[image_and_comic_book_engine](image_and_comic_book_engine.md)**: Image-based document support
+
+### Text Range Module
+
+Closely integrated with the [text_range](text_range.md) module for:
+
+- **Text Navigation**: Line, word, and character endpoint movement
+- **Selection Management**: Text selection creation and manipulation
+- **Range Operations**: Document range calculations and visibility
+
+## Accessibility Features
+
+### Supported Patterns
+
+1. **Text Pattern**: Full text content access and selection
+2. **Selection Pattern**: Text selection management
+3. **Value Pattern**: Document property values
+4. **LegacyIAccessible Pattern**: Backward compatibility
+
+### Document Properties Exposed
+
+- **Name**: Document filename
+- **Control Type**: Document control identifier
+- **Content Element**: Indicates document is content
+- **Text Pattern Available**: Confirms text accessibility
+- **Automation ID**: "Document" identifier
+
+### Navigation Capabilities
+
+- **Parent Navigation**: Returns to root provider
+- **Child Navigation**: Access to page providers
+- **Document Range**: Entire document text range
+- **Visible Ranges**: Currently visible page ranges
+- **Selection Range**: Current text selection
 
 ## Error Handling
 
-The implementation includes comprehensive error handling:
-- Null pointer validation
-- Document state verification
-- Memory allocation failure handling
-- COM interface compliance
+### Document State Validation
 
-## Dependencies
+```cpp
+bool IsDocumentLoaded() const {
+    return !released;
+}
 
-The Document Provider module depends on several other system components:
+DisplayModel* GetDM() {
+    ReportIf(!IsDocumentLoaded());
+    ReportIf(!dm);
+    return dm;
+}
+```
 
-### Direct Dependencies
-- [DisplayModel](display_model.md): Document presentation and page management
-- [Page Provider](page_provider.md): Individual page accessibility
-- [Text Range](text_range.md): Text content accessibility
-- [Root Provider](root_provider.md): Top-level UIA provider
+### COM Interface Error Codes
 
-### Indirect Dependencies
-- [Document Engine](document_core.md): Document format handling
-- [UI Models](ui_models.md): User interface abstractions
-- [Settings](settings.md): Application configuration
-
-## Integration Points
-
-### UI Automation Framework
-The provider integrates with Windows UI Automation through standard COM interfaces, enabling accessibility tools to interact with document content.
-
-### Document System
-Works closely with the DisplayModel to access document content, page information, and text selection state.
-
-### Windowing System
-Maintains references to the canvas window for proper UIA runtime identification and coordinate mapping.
+- **E_POINTER**: Null pointer parameters
+- **E_FAIL**: Document not loaded
+- **E_OUTOFMEMORY**: Memory allocation failures
+- **E_NOTIMPL**: Unsupported operations
+- **S_OK**: Successful operations
 
 ## Performance Considerations
 
-- **Lazy Loading**: Page providers are created only when document is loaded
-- **Reference Counting**: Proper COM object lifecycle management
-- **Memory Management**: Careful cleanup of allocated resources
-- **State Validation**: Prevents access to released documents
+### Memory Management
+
+- Reference counting for COM objects
+- Cleanup of page provider chains
+- Safe array management for selections
+- CoTaskMem allocation for identity strings
+
+### Optimization Strategies
+
+1. **Lazy Loading**: Page providers created only when document loads
+2. **Reference Sharing**: DisplayModel shared between providers
+3. **State Caching**: Document state cached to avoid repeated checks
+4. **Batch Operations**: Multiple selections handled in arrays
 
 ## Security Considerations
 
-- **Input Validation**: All parameters are validated before use
-- **Memory Safety**: Proper bounds checking and allocation verification
-- **Access Control**: Document access is controlled through DisplayModel
-- **COM Compliance**: Follows COM threading and lifecycle rules
+### Interface Access Control
+
+- Server-side provider implementation
+- No direct window handle exposure
+- Safe string handling for file names
+- Memory allocation validation
+
+### Identity Management
+
+- Runtime ID based on window handle
+- Memory address-based identity strings
+- Child ID mapping for page identification
 
 ## Future Enhancements
 
-Potential areas for improvement:
-- Implementation of RangeFromPoint for coordinate-based text access
-- Support for multiple text selections
-- Enhanced error reporting for accessibility tools
-- Performance optimization for large documents
-- Support for additional UIA patterns
+### Potential Improvements
 
-## Related Documentation
+1. **Enhanced Text Navigation**: Support for more complex text structures
+2. **Annotation Accessibility**: Expose document annotations
+3. **Form Field Support**: Interactive form accessibility
+4. **Multilingual Support**: Better handling of multilingual documents
+5. **Performance Optimization**: Faster text range calculations
 
-- [Page Provider](page_provider.md) - Individual page accessibility
-- [Text Range](text_range.md) - Text content accessibility
-- [Root Provider](root_provider.md) - Top-level UIA provider
-- [Display Model](display_model.md) - Document presentation layer
-- [UI Automation Constants](uia_constants.md) - UIA-specific constants and definitions
+### Extended Pattern Support
+
+- **Scroll Pattern**: Document scrolling control
+- **Grid Pattern**: Table structure exposure
+- **Table Pattern**: Tabular data accessibility
+- **Hyperlink Pattern**: Link navigation support
+
+## Conclusion
+
+The Document Provider module is essential for making SumatraPDF documents accessible to users with disabilities. By implementing the UI Automation interfaces, it enables screen readers and other assistive technologies to access document content programmatically. The module's architecture supports multiple document formats through integration with various engine modules while maintaining consistent accessibility behavior across all supported formats.

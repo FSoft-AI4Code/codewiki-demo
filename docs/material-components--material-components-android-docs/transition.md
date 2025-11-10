@@ -1,126 +1,92 @@
-# Material Design Transition Module
+# Material Transition Module
 
 ## Overview
 
-The Material Design Transition module provides a comprehensive set of animation and transition components that enable smooth, meaningful motion between UI states. This module implements Material Design's motion principles, offering sophisticated transition effects that enhance user experience through visual continuity and spatial relationships.
-
-## Purpose
-
-The transition module serves as the foundation for creating fluid, purposeful animations in Android applications. It provides:
-
-- **Container Transformations**: Morphing between different container shapes and sizes
-- **Elevation-based Transitions**: Scaling effects that emphasize elevation changes
-- **Fade Animations**: Smooth opacity transitions with various fade modes
-- **Shared Axis Motion**: Coordinated movement along X, Y, and Z axes
-- **Visibility Transitions**: Comprehensive show/hide animations with multiple animation providers
+The Material Transition module provides a comprehensive set of animation and transition components for implementing Material Design motion patterns in Android applications. This module enables smooth, meaningful transitions between UI states, supporting the Material Design principles of motion that enhance user understanding and create visual continuity.
 
 ## Architecture
 
+The transition module is organized into several key sub-modules that work together to provide a complete transition system:
+
 ```mermaid
 graph TD
-    A[MaterialContainerTransform] --> B[TransitionDrawable]
-    A --> C[ProgressThresholds]
-    A --> D[ProgressThresholdsGroup]
+    A[Material Transition Module] --> B[Container Transforms]
+    A --> C[Visibility Transitions]
+    A --> D[Animation Providers]
+    A --> E[Platform Compatibility]
+    A --> F[Utilities & Helpers]
     
-    E[MaterialVisibility] --> F[MaterialFade]
-    E --> G[MaterialFadeThrough]
-    E --> H[MaterialSharedAxis]
-    E --> I[MaterialElevationScale]
+    B --> B1[MaterialContainerTransform]
+    B --> B2[FadeModeEvaluators]
+    B --> B3[FitModeEvaluators]
+    B --> B4[MaskEvaluator]
     
-    F --> J[FadeProvider]
-    F --> K[ScaleProvider]
+    C --> C1[MaterialFade]
+    C --> C2[MaterialFadeThrough]
+    C --> C3[MaterialSharedAxis]
+    C --> C4[MaterialElevationScale]
+    C --> C5[Hold]
     
-    G --> L[FadeThroughProvider]
-    G --> M[ScaleProvider]
+    D --> D1[FadeProvider]
+    D --> D2[FadeThroughProvider]
+    D --> D3[ScaleProvider]
+    D --> D4[SlideDistanceProvider]
     
-    H --> N[SlideDistanceProvider]
-    H --> O[ScaleProvider]
-    H --> P[FadeThroughProvider]
+    E --> E1[Platform Transition Classes]
+    E --> E2[Compatibility Layer]
     
-    I --> Q[ScaleProvider]
-    I --> R[FadeProvider]
-    
-    style A fill:#e1f5fe
-    style E fill:#e1f5fe
+    F --> F1[TransitionUtils]
+    F --> F2[MaterialArcMotion]
+    F --> F3[TransitionListenerAdapter]
 ```
 
-## Core Components
+## Core Functionality
 
-### MaterialContainerTransform
-The flagship component that transforms one container to another through morphing animations. It supports:
-- Shape morphing between different container geometries
-- Customizable fade modes (IN, OUT, CROSS, THROUGH)
-- Fit modes for content scaling (AUTO, WIDTH, HEIGHT)
-- Progress thresholds for fine-grained animation control
-- Elevation shadow rendering
-- Theme-based animation properties
+### Container Transforms
+Container transforms morph between two views or containers, creating a seamless transition that maintains visual continuity. This is particularly useful for transitioning between different screens or expanding/collapsing UI elements.
 
-### MaterialVisibility
-Abstract base class for all visibility-based transitions, providing:
-- Primary and secondary animator provider architecture
-- Theme integration for duration and easing
-- Support for additional animator providers
-- Standardized appear/disappear animation patterns
+### Visibility Transitions  
+Visibility transitions handle the appearance and disappearance of UI elements with various animation patterns including fade, slide, and scale effects.
 
-### Specialized Transition Types
-
-#### MaterialFade
-Combines fade and scale animations for smooth appearance/disappearance with a default start scale of 0.8f.
-
-#### MaterialFadeThrough
-Provides fade in/out with scale effects, using a default start scale of 0.92f for subtle entrance animations.
-
-#### MaterialSharedAxis
-Enables shared motion along X, Y, or Z axes with coordinated slide/scale and fade effects.
-
-#### MaterialElevationScale
-Emphasizes elevation changes through scaling animations, useful for exit/reenter transitions.
+### Animation Providers
+Low-level animation components that provide specific animation behaviors like fading, scaling, and sliding that can be composed together.
 
 ## Sub-modules
 
-### [Container Transform System](container-transform-system.md)
-Handles the core container transformation logic including shape morphing, bounds calculation, and drawing operations. This system provides the foundation for morphing animations between different container shapes and sizes.
+### [Container Transforms](container-transforms.md)
+Detailed documentation for container transformation components including MaterialContainerTransform, fade mode evaluators, fit mode evaluators, and masking systems.
 
-### [Visibility Transition Framework](visibility-transition-framework.md)
-Provides the base architecture for all visibility-based transitions with theme integration and animator provider management. This framework standardizes how appear/disappear animations are structured and executed.
+### [Visibility Transitions](visibility-transitions.md)
+Comprehensive guide to visibility-based transitions including fade, slide, scale, and axis-based motion patterns.
 
 ### [Animation Providers](animation-providers.md)
-Specialized components that provide specific animation effects:
-- **FadeProvider**: Opacity-based animations
-- **ScaleProvider**: Size-based transformations
-- **SlideDistanceProvider**: Position-based movements
-- **FadeThroughProvider**: Cross-fade animations
+Low-level animation components that provide specific animation behaviors like fading, scaling, and sliding.
 
-Each provider can be combined and customized to create complex transition effects.
+### [Platform Compatibility](platform-compatibility.md)
+Platform-specific implementations and compatibility layer for ensuring consistent behavior across different Android API levels.
 
-## Integration with Other Modules
-
-The transition module integrates with several other Material Design components:
-
-- **[Shape Module](shape.md)**: Utilizes `ShapeAppearanceModel` for container shape definitions
-- **[Animation Module](animation.md)**: Leverages `AnimationUtils` for standardized interpolators
-- **[Theme System](theme.md)**: Respects theme attributes for motion properties
+### [Utilities & Helpers](utilities-helpers.md)
+Utility classes and helper components including transition utilities, motion paths, and listener adapters.
 
 ## Key Features
 
 ### Theme Integration
-All transitions support theme-based configuration through Material Design motion attributes:
-- `motionDurationLong1`, `motionDurationLong2`, `motionDurationMedium4`, `motionDurationShort3`
-- `motionEasingEmphasizedInterpolator`, `motionEasingEmphasizedDecelerateInterpolator`, `motionEasingEmphasizedAccelerateInterpolator`
-- `motionPath` for custom motion paths
+The transition module deeply integrates with Material Design themes, automatically loading:
+- Motion durations from theme attributes
+- Easing interpolators from theme definitions
+- Path motions from theme configurations
 
-### Progress Thresholds
-Fine-grained control over animation timing through progress thresholds:
-- **Fade Thresholds**: Control when fade animations begin and end
-- **Scale Thresholds**: Manage scaling animation timing
-- **Scale Mask Thresholds**: Control container dimension morphing
-- **Shape Mask Thresholds**: Manage shape transformation timing
+### Customizable Animation Patterns
+- **Fade Modes**: IN, OUT, CROSS, THROUGH
+- **Fit Modes**: AUTO, WIDTH, HEIGHT for content scaling
+- **Transition Directions**: AUTO, ENTER, RETURN
+- **Progress Thresholds**: Fine-grained control over animation timing
 
-### Performance Optimization
-- Hardware acceleration support for elevation shadows (API 28+)
-- Efficient drawable caching and reuse
-- Optimized path calculations for motion animations
-- Memory-conscious animation lifecycle management
+### Performance Optimizations
+- Hardware-accelerated drawing where available
+- Efficient shape interpolation
+- Optimized shadow rendering
+- Memory-conscious animation handling
 
 ## Usage Patterns
 
@@ -129,31 +95,39 @@ Fine-grained control over animation timing through progress thresholds:
 MaterialContainerTransform transform = new MaterialContainerTransform();
 transform.setStartView(startView);
 transform.setEndView(endView);
-transform.setContainerColor(containerColor);
+transform.setFadeMode(MaterialContainerTransform.FADE_MODE_THROUGH);
 ```
 
-### Themed Transition
+### Visibility Transition
 ```java
 MaterialFade fade = new MaterialFade();
-// Automatically loads duration and interpolator from theme
+fade.setDuration(300);
+fade.setInterpolator(AnimationUtils.FAST_OUT_SLOW_IN_INTERPOLATOR);
 ```
 
-### Custom Progress Thresholds
+### Custom Animation Provider
 ```java
-ProgressThresholds fadeThresholds = new ProgressThresholds(0.2f, 0.8f);
-transform.setFadeProgressThresholds(fadeThresholds);
+ScaleProvider scaleProvider = new ScaleProvider(true);
+scaleProvider.setIncomingStartScale(0.8f);
+scaleProvider.setIncomingEndScale(1.0f);
 ```
+
+## Integration with Other Modules
+
+The transition module works closely with:
+- **[Shape Module](shape.md)**: For container shape transformations
+- **[Animation Module](animation.md)**: For timing and interpolation utilities
+- **[Theme Module](theme.md)**: For theme-based motion values
+- **[Motion Module](motion.md)**: For advanced motion patterns
 
 ## Best Practices
 
-1. **Use Theme Values**: Leverage theme attributes for consistent motion across your app
-2. **Test on Multiple Devices**: Ensure animations perform well on various screen sizes and API levels
-3. **Consider Accessibility**: Provide options to disable or reduce motion for accessibility
-4. **Optimize for Performance**: Use appropriate drawing view IDs to limit animation bounds
-5. **Handle Configuration Changes**: Properly manage transition state during configuration changes
+1. **Use Theme Values**: Leverage theme attributes for consistent motion timing
+2. **Choose Appropriate Transitions**: Select transitions that match the semantic meaning
+3. **Consider Performance**: Use hardware acceleration and optimize complex animations
+4. **Test Across Devices**: Ensure consistent behavior across different API levels
+5. **Provide Alternatives**: Consider users with reduced motion preferences
 
-## Related Documentation
+## API Compatibility
 
-- [Shape Module Documentation](shape.md) - For shape appearance configuration
-- [Animation Module Documentation](animation.md) - For animation utilities and interpolators
-- [Theme System Documentation](theme.md) - For motion theme attributes
+The module provides both standard AndroidX Transition APIs and platform-specific implementations for Android Lollipop (API 21) and above, ensuring broad compatibility while taking advantage of newer platform features when available.

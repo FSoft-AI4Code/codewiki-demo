@@ -2,7 +2,16 @@
 
 ## Overview
 
-The behavior module provides scroll-based view behaviors for Material Design components within CoordinatorLayout. It implements intelligent hiding and showing of UI elements based on scroll gestures, enhancing user experience by maximizing screen real estate when needed while maintaining accessibility standards.
+The behavior module provides scroll-based interaction behaviors for Material Design components within CoordinatorLayout. It implements sophisticated hiding and showing animations that respond to user scroll gestures, enhancing the user experience by dynamically managing screen real estate.
+
+## Purpose
+
+This module serves as the foundation for creating intelligent scroll-aware behaviors that:
+- Hide views when scrolling down to maximize content visibility
+- Show views when scrolling up to restore navigation/interaction elements
+- Support multiple screen edges (left, right, bottom) for hide animations
+- Provide accessibility-aware behavior modifications
+- Integrate seamlessly with Material Design motion principles
 
 ## Architecture
 
@@ -10,93 +19,74 @@ The behavior module provides scroll-based view behaviors for Material Design com
 graph TD
     A[CoordinatorLayout] --> B[HideViewOnScrollBehavior]
     A --> C[HideBottomViewOnScrollBehavior]
-    B --> D[HideViewOnScrollDelegate]
-    B --> E[OnScrollStateChangedListener]
+    B --> D[Scroll Detection]
+    B --> E[Animation System]
+    B --> F[Accessibility Manager]
+    C --> D
     C --> E
-    D --> F[HideBottomViewOnScrollDelegate]
-    D --> G[HideRightViewOnScrollDelegate]
-    D --> H[HideLeftViewOnScrollDelegate]
+    C --> F
     
-    style B fill:#e1f5fe
-    style C fill:#e1f5fe
-    style D fill:#fff3e0
-    style E fill:#f3e5f5
+    D --> G[NestedScroll Events]
+    E --> H[Material Motion]
+    F --> I[Touch Exploration]
+    
+    G --> J[dyConsumed > 0: Hide]
+    G --> K[dyConsumed < 0: Show]
+    H --> L[Interpolators]
+    H --> M[Duration]
+    I --> N[Auto-disable on Touch Exploration]
 ```
 
-## Core Functionality
+## Core Components
 
 ### HideViewOnScrollBehavior
-The primary behavior class that provides flexible view hiding capabilities for any edge of the screen (right, bottom, left). This is the recommended approach for implementing scroll-based view behaviors.
+The primary behavior class that provides flexible scroll-based hiding/showing functionality for views within CoordinatorLayout. Supports hiding views off three screen edges (left, right, bottom) with smooth animations.
 
 **Key Features:**
-- Multi-edge support (right, bottom, left)
-- Accessibility-aware (disables when touch exploration is enabled)
-- Configurable animation durations and interpolators
-- State change listeners for reactive UI updates
+- Multi-edge support (left, right, bottom)
 - Gravity-based automatic edge detection
+- Configurable animation parameters
+- Accessibility-aware behavior
+- State change listeners
 
 ### HideBottomViewOnScrollBehavior
-A specialized behavior for bottom-edge hiding, maintained for backward compatibility. This class is deprecated in favor of `HideViewOnScrollBehavior`.
+A specialized behavior focused on bottom-edge hiding (deprecated in favor of HideViewOnScrollBehavior). Provides legacy support for bottom navigation and similar components.
 
 **Key Features:**
 - Bottom-specific hiding behavior
-- Same accessibility and animation features as HideViewOnScrollBehavior
-- Legacy API compatibility
+- Smooth slide animations
+- Touch exploration integration
+- State management
 
 ## Sub-modules
 
-### [hide-view-on-scroll](hide-view-on-scroll.md)
-Core implementation of the flexible view hiding behavior system, including delegate pattern for different edge orientations.
+### [Scroll-based Hiding Behaviors](scroll-behaviors.md)
+- **HideViewOnScrollBehavior**: Modern, flexible behavior supporting multiple edges
+- **HideBottomViewOnScrollBehavior**: Legacy bottom-specific behavior (deprecated)
 
-### [hide-bottom-view-on-scroll](hide-bottom-view-on-scroll.md)
-Legacy bottom-specific implementation maintained for backward compatibility.
+For detailed implementation details, animation systems, and API reference, see the [scroll-behaviors](scroll-behaviors.md) documentation.
 
-## Related Documentation
+### Animation System
+- Material Design motion principles integration
+- Configurable duration and interpolation
+- Theme-aware animation parameters
+- Smooth property animations
 
-- [appbar](appbar.md) - App bar scrolling behaviors and coordination
-- [bottomnavigation](bottomnavigation.md) - Bottom navigation integration
-- [floatingactionbutton](floatingactionbutton.md) - FAB visibility behaviors
-- [transition](transition.md) - Material motion system integration
+### Accessibility Integration
+- Automatic behavior modification for touch exploration
+- Content padding recommendations
+- State change notifications
+- User preference respect
 
-## Integration with CoordinatorLayout
+## Integration with Other Modules
 
-```mermaid
-sequenceDiagram
-    participant User
-    participant View
-    participant Behavior
-    participant CoordinatorLayout
-    
-    User->>View: Scroll gesture
-    View->>CoordinatorLayout: onNestedScroll()
-    CoordinatorLayout->>Behavior: onNestedScroll()
-    Behavior->>Behavior: Evaluate scroll direction
-    alt Scroll Down
-        Behavior->>View: slideOut()/slideDown()
-        Behavior->>View: Animate translation
-    else Scroll Up
-        Behavior->>View: slideIn()/slideUp()
-        Behavior->>View: Animate translation
-    end
-    Behavior->>Listener: onStateChanged()
-```
+The behavior module integrates with several other Material Design components:
 
-## Accessibility Features
-
-The behavior module implements comprehensive accessibility support:
-
-1. **Touch Exploration Detection**: Automatically disables hiding behavior when touch exploration is enabled
-2. **State Management**: Prevents views from being hidden when accessibility services are active
-3. **Listener Cleanup**: Properly manages accessibility service listeners to prevent memory leaks
-
-## Animation System
-
-Both behaviors utilize Material Design motion principles:
-
-- **Enter Animation**: 225ms duration with `LINEAR_OUT_SLOW_IN_INTERPOLATOR`
-- **Exit Animation**: 175ms duration with `FAST_OUT_LINEAR_IN_INTERPOLATOR`
-- **Theme Integration**: Respects motion attributes from the current theme
-- **Customization**: Supports custom animation durations and interpolators
+- **[appbar](appbar.md)**: AppBarLayout behaviors for header scrolling
+- **[bottom-app-bar](bottom-app-bar.md)**: Bottom app bar hiding behaviors  
+- **[bottom-navigation](bottom-navigation.md)**: Navigation bar auto-hiding
+- **[fab](fab.md)**: Floating action button scroll behaviors
+- **[motion](motion.md)**: Material motion system integration
 
 ## Usage Patterns
 
@@ -118,35 +108,46 @@ behavior.addOnScrollStateChangedListener((view, state) -> {
 });
 ```
 
-## Dependencies
+## Key Features
 
-The behavior module integrates with several other Material Design components:
+### Multi-Edge Support
+- **EDGE_BOTTOM**: Traditional bottom sheet behavior
+- **EDGE_LEFT**: Left-edge sliding (RTL support)
+- **EDGE_RIGHT**: Right-edge sliding
 
-- **[appbar](appbar.md)**: Coordinates with AppBarLayout scrolling behaviors
-- **[bottomnavigation](bottomnavigation.md)**: Provides hiding behavior for bottom navigation
-- **[floatingactionbutton](floatingactionbutton.md)**: Works with FAB visibility behaviors
-- **[motion system](transition.md)**: Utilizes Material motion curves and durations
+### Accessibility Features
+- Automatic touch exploration detection
+- Behavior modification for accessibility
+- Content padding recommendations
+- State change notifications
 
-## Migration Path
+### Animation Customization
+- Theme-aware duration configuration
+- Custom interpolator support
+- Smooth property animations
+- Cancel and restart handling
 
-For applications using the deprecated `HideBottomViewOnScrollBehavior`:
+## State Management
 
-1. Replace behavior class in XML layouts
-2. Update programmatic references
-3. Configure edge position if needed (defaults to bottom for compatibility)
-4. Test accessibility features remain functional
+The behaviors maintain two primary states:
+- **STATE_SCROLLED_IN**: View is fully visible
+- **STATE_SCROLLED_OUT**: View is hidden off-screen
 
-## Best Practices
-
-1. **Always test with accessibility services enabled**
-2. **Provide visual indicators when views are hidden**
-3. **Consider content padding when behavior is disabled**
-4. **Use appropriate animation durations for your use case**
-5. **Clean up listeners in activity/fragment lifecycle methods**
+State transitions are triggered by scroll events and can be monitored through listener interfaces.
 
 ## Performance Considerations
 
-- Animations are hardware accelerated when possible
-- View state changes are batched to minimize layout passes
-- Accessibility listeners are properly managed to prevent leaks
-- Animation cancelation is handled gracefully to prevent visual glitches
+- Efficient nested scroll handling
+- Animation lifecycle management
+- Memory-conscious listener management
+- Accessibility service integration
+
+## Migration Notes
+
+**HideBottomViewOnScrollBehavior** is deprecated in favor of **HideViewOnScrollBehavior**. The newer behavior provides:
+- Enhanced functionality
+- Better edge support
+- Improved accessibility
+- More flexible configuration
+
+For migration guidance, see the individual behavior documentation.

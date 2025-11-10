@@ -1,134 +1,177 @@
 # MarkText Repository Overview
 
+MarkText is a **simple and elegant open-source markdown editor** that focuses on speed and usability. It provides a seamless WYSIWYG editing experience with real-time preview, making markdown writing intuitive and efficient.
+
 ## Purpose
 
-MarkText is a sophisticated, cross-platform markdown editor built with Electron that provides a seamless writing experience with real-time preview, extensive customization options, and powerful editing capabilities. The application serves as a modern alternative to traditional markdown editors, offering features like live preview, multiple themes, plugin support, and comprehensive file management.
+MarkText aims to be a **next-generation markdown editor** that removes the friction between writing and previewing markdown. It offers:
+- Real-time rendering of markdown syntax
+- Clean, distraction-free writing interface
+- Extensible architecture for custom functionality
+- Cross-platform support (Windows, macOS, Linux)
+- GitHub Flavored Markdown support with extensions
 
 ## End-to-End Architecture
 
 ```mermaid
 graph TB
-    subgraph "Main Process (Electron)"
-        App[App Controller]
-        Accessor[Component Registry]
-        WM[Window Manager]
+    subgraph "Application Layer"
+        App[Application Core]
+        MPS[Main Process Services]
+        Renderer[Renderer-Side Features]
+    end
+    
+    subgraph "Editor Layer"
+        MuyaCore[Muya Editor Core]
+        MuyaUI[Muya Editor UI]
+        MuyaIO[Muya Editor I/O]
+    end
+    
+    subgraph "Platform Layer"
+        Electron[Electron Framework]
+        Node[Node.js Runtime]
+        Chromium[Chromium Engine]
+    end
+    
+    subgraph "User Interface"
+        EditorWindow[Editor Window]
+        SettingsWindow[Settings Window]
+        MenuBar[Application Menu]
+    end
+    
+    App --> MPS
+    App --> Renderer
+    App --> EditorWindow
+    
+    MPS --> MuyaCore
+    Renderer --> MuyaUI
+    
+    MuyaCore --> MuyaUI
+    MuyaCore --> MuyaIO
+    
+    Electron --> App
+    Chromium --> Renderer
+    Node --> MPS
+    
+    EditorWindow --> MuyaCore
+    MenuBar --> MPS
+```
+
+## Core Module Architecture
+
+```mermaid
+graph LR
+    subgraph "Main Process"
+        AC[Application Core<br/>Window & Lifecycle]
         CM[Command Manager]
+        Pref[Preferences]
         DC[Data Center]
-        FS[File System Watcher]
-        KS[Keyboard System]
-        MS[Menu System]
-        P[Preferences]
+        FW[File Watcher]
     end
     
     subgraph "Renderer Process"
-        Editor[Editor Window]
-        Settings[Settings Window]
-        Muya[Muya Editor Engine]
-        Commands[Renderer Commands]
-        Services[Renderer Services]
+        RC[Root Commands]
+        QO[Quick Open]
+        SC[Spell Checker]
+        RS[Ripgrep Search]
     end
     
-    subgraph "Core Editor Engine"
-        ContentState[Content State]
-        EventCenter[Event Center]
-        Parser[State Render]
-        Selection[Selection Manager]
-        Export[Export System]
+    subgraph "Editor Engine"
+        ME[Muya Editor]
+        CS[Content State]
+        SR[State Render]
+        EC[Event Center]
+        SM[Selection Mgr]
     end
     
     subgraph "UI Components"
-        Pickers[Picker Components]
-        Menus[Menu Components]
-        Tools[Tool Components]
-        Images[Image Components]
+        QI[Quick Insert]
+        FM[Front Menu]
+        FP[Format Picker]
+        IT[Image Toolbar]
+        TT[Table Tools]
     end
     
-    App --> Accessor
-    Accessor --> WM
-    Accessor --> CM
-    Accessor --> DC
-    Accessor --> FS
-    Accessor --> KS
-    Accessor --> MS
-    Accessor --> P
+    AC --> CM
+    AC --> Pref
+    AC --> DC
+    AC --> FW
     
-    WM --> Editor
-    WM --> Settings
+    RC --> ME
+    QO --> RS
+    SC --> ME
     
-    Editor --> Muya
-    Editor --> Commands
-    Editor --> Services
+    ME --> CS
+    ME --> SR
+    ME --> EC
+    CS --> SM
     
-    Muya --> ContentState
-    Muya --> EventCenter
-    Muya --> Parser
-    Muya --> Selection
-    Muya --> Export
-    
-    EventCenter --> Pickers
-    EventCenter --> Menus
-    EventCenter --> Tools
-    EventCenter --> Images
-    
-    CM -.-> Commands
-    P -.-> Settings
-    FS -.-> Editor
+    EC --> QI
+    EC --> FM
+    EC --> FP
+    EC --> IT
+    EC --> TT
 ```
 
-## Core Module References
+## Repository Structure
 
-### Main Application Core
-- **[main_app_core](main_app_core.md)**: Central orchestrator managing application lifecycle, window management, and component coordination
-- **[window_management](window_management.md)**: Multi-window coordination with intelligent file distribution and activity tracking
-- **[command_system](command_system.md)**: Unified command execution framework for user actions and keyboard shortcuts
-- **[data_management](data_management.md)**: Centralized data persistence with encrypted storage for sensitive information
-- **[file_system](file_system.md)**: Real-time file monitoring and change detection with cross-platform compatibility
-- **[keyboard_system](keyboard_system.md)**: Cross-platform keyboard input handling with dynamic layout support
-- **[menu_system](menu_system.md)**: Dynamic menu management with platform-specific adaptations
-- **[preferences](preferences.md)**: User settings management with schema validation and real-time synchronization
-- **[window_types](window_types.md)**: Specialized window implementations for editing and settings
+The repository is organized into four main architectural layers:
 
-### Muya Editor Framework
-- **[muya_framework](muya_framework.md)**: Core editor engine providing markdown editing capabilities
-- **[muya_content](muya_content.md)**: Content state management with block-based architecture and history tracking
-- **[muya_events](muya_events.md)**: Comprehensive event handling system for user interactions
-- **[muya_ui_components](muya_ui_components.md)**: Rich UI component library with floating panels and pickers
-- **[muya_parser](muya_parser.md)**: Markdown parsing and rendering with virtual DOM optimization
-- **[muya_selection](muya_selection.md)**: Advanced text selection and cursor management
-- **[muya_export](muya_export.md)**: Multi-format export system with diagram and math support
+### 1. Application Core (`src/main/app`)
+Central application controller managing:
+- **Window Management**: Creation and lifecycle of editor windows
+- **Environment Setup**: Platform-specific configurations
+- **IPC Communication**: Main-renderer process bridge
+- **File Operations**: Opening, saving, and file associations
 
-### Renderer Process Components
-- **[renderer_commands](renderer_commands.md)**: Command execution layer for renderer-side operations
-- **[renderer_services](renderer_services.md)**: Document export and print preparation services
-- **[renderer_spellchecker](renderer_spellchecker.md)**: Cross-platform spell checking with language switching
-- **[renderer_node](renderer_node.md)**: File system search capabilities using ripgrep
-- **[renderer_preferences](renderer_preferences.md)**: UI for keyboard shortcut customization
+### 2. Main Process Services (`src/main`)
+System-level services providing:
+- **Command Management**: Centralized command execution
+- **User Preferences**: Settings storage and validation
+- **Data Persistence**: Encrypted credential storage
+- **File System Watching**: Real-time file change detection
+- **Application Menu**: Dynamic menu management
+- **Keyboard Shortcuts**: Customizable key bindings
 
-### Shared Utilities
-- **[common_utils](common_utils.md)**: Path management and environment utilities
-- **[renderer_utilities](renderer_utilities.md)**: Tree structure manipulation for hierarchical data
+### 3. Muya Editor Core (`src/muya/lib`)
+The markdown editing engine featuring:
+- **Content State Management**: Block-based content representation
+- **Real-time Rendering**: Instant markdown to HTML conversion
+- **Event Handling**: Centralized event management
+- **Selection Management**: Precise cursor and text selection
+- **History Management**: Undo/redo functionality
+
+### 4. Muya Editor UI (`src/muya/lib/ui`)
+User interface components including:
+- **Quick Insert**: @ command for content insertion
+- **Context Menus**: Block-level operations
+- **Format Toolbar**: Text formatting options
+- **Image Tools**: Image manipulation controls
+- **Table Tools**: Table editing functionality
+
+### 5. Renderer-Side Features (`src/renderer`)
+Client-side functionality providing:
+- **Command System**: User-facing commands and actions
+- **Quick File Access**: Fast file navigation
+- **Advanced Search**: Ripgrep-powered text search
+- **Spell Checking**: Integrated spell checking
 
 ## Key Features
 
-- **Multi-Window Support**: Intelligent window management with file distribution
-- **Real-time Preview**: Live markdown rendering with syntax highlighting
-- **Extensive Customization**: Themes, keybindings, and editor preferences
-- **Advanced Editing**: Tables, diagrams, math expressions, and code blocks
-- **Cross-Platform**: Consistent experience on Windows, macOS, and Linux
-- **Plugin Architecture**: Extensible design for custom functionality
-- **Export Capabilities**: HTML, PDF, and various markdown formats
+- **Real-time Preview**: Instant markdown rendering as you type
+- **WYSIWYG Editing**: Visual editing without markdown syntax visibility
+- **Block-based Architecture**: Content organized as manipulatable blocks
+- **Extensible Plugin System**: Custom functionality through plugins
+- **Cross-platform Support**: Consistent experience across operating systems
+- **GitHub Flavored Markdown**: Full GFM support with extensions
+- **Advanced Features**: Tables, diagrams, mathematical expressions
 - **File System Integration**: Real-time file watching and project management
-- **Search Functionality**: Full-text search with ripgrep integration
-- **Spell Checking**: Multi-language support with platform-specific optimizations
 
-## Technology Stack
+## Documentation References
 
-- **Electron**: Cross-platform desktop application framework
-- **Node.js**: Server-side JavaScript runtime
-- **Snabbdom**: Virtual DOM library for efficient rendering
-- **marked**: Markdown parser and compiler
-- **KaTeX**: Math expression rendering
-- **Prism.js**: Syntax highlighting engine
-- **chokidar**: File system watcher
-- **ripgrep**: Fast text search utility
-- **Popper.js**: Positioning engine for UI components
+For detailed information about each module, refer to:
+- [Application Core Documentation](Application%20Core.md) - Window management and application lifecycle
+- [Main Process Services Documentation](Main%20Process%20Services.md) - System services and preferences
+- [Muya Editor Core Documentation](Muya%20Editor%20Core.md) - Editor engine and content management
+- [Muya Editor UI Documentation](Muya%20Editor%20UI.md) - User interface components
+- [Renderer-Side Features Documentation](Renderer-Side%20Features.md) - Client-side commands and functionality

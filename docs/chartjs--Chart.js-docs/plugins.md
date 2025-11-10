@@ -2,191 +2,359 @@
 
 ## Overview
 
-The plugins module is a core component of Chart.js that provides extensible functionality through a plugin architecture. Plugins allow developers to enhance charts with additional features such as automatic color assignment, data filling, legends, titles, and interactive tooltips. The module follows a modular design where each plugin is self-contained and can be enabled/disabled independently.
+The plugins module is a core component of Chart.js that provides essential chart enhancements and interactive features. It implements a plugin-based architecture that allows for modular functionality including legends, titles, tooltips, data filling, and automatic color assignment. These plugins extend the base chart functionality while maintaining loose coupling with the core chart system.
 
-## Architecture
+## Module Architecture
 
-The plugins module implements a plugin-based architecture where each plugin provides specific chart functionality:
+The plugins module follows a modular design pattern where each plugin is self-contained yet integrates seamlessly with the chart lifecycle. The architecture is built around the [PluginService](core_engine.md#pluginservice) from the core engine, which manages plugin registration, initialization, and lifecycle events.
 
 ```mermaid
 graph TB
     subgraph "Plugins Module"
-        CP[Colors Plugin]
-        FP[Filler Plugin]
-        LP[Legend Plugin]
-        TP[Title Plugin]
-        TTP[Tooltip Plugin]
+        L[Legend Plugin]
+        T[Title Plugin]
+        TT[Tooltip Plugin]
+        F[Filler Plugin]
+        C[Colors Plugin]
     end
     
-    subgraph "Core Integration"
-        PS[Plugin Service]
-        CM[Chart Manager]
-        LE[Layout Engine]
-    end
+    PS[PluginService<br/>core.core.plugins.PluginService]
+    Chart[Chart Instance]
     
-    CP --> PS
-    FP --> PS
-    LP --> LE
-    TP --> LE
-    TTP --> CM
+    PS --> L
+    PS --> T
+    PS --> TT
+    PS --> F
+    PS --> C
     
-    PS --> CM
-    LE --> CM
+    L --> Chart
+    T --> Chart
+    TT --> Chart
+    F --> Chart
+    C --> Chart
+    
+    style PS fill:#f9f,stroke:#333,stroke-width:2px
+    style Chart fill:#9f9,stroke:#333,stroke-width:2px
 ```
 
-## Core Functionality
+## Core Components
 
-### Plugin Service Integration
-The plugins module integrates with the core [PluginService](core.md#plugin-service) which manages plugin lifecycle, registration, and execution. Each plugin follows a standard interface with lifecycle hooks like `beforeLayout`, `afterUpdate`, and `afterEvent`.
+### Legend Plugin (src.plugins.plugin.legend.Legend)
 
-### Layout Management
-Several plugins (Legend, Title) integrate with the [layout system](core.md#layout-management) to properly position themselves within the chart area. The layout engine ensures these elements don't overlap with chart content.
-
-## Sub-modules
-
-### [Colors Plugin](colors-plugin.md)
-The Colors plugin automatically assigns colors to datasets that don't have predefined colors. It supports different color assignment strategies based on chart type:
-
-- **Default Mode**: Assigns border and background colors to datasets
-- **Doughnut Mode**: Assigns different colors to each data segment
-- **Polar Area Mode**: Similar to doughnut but with transparency
+The Legend plugin provides interactive chart legends that display dataset information and allow users to toggle dataset visibility. It extends the [Element](core_engine.md#element) base class and integrates with the layout system through [layouts](core_engine.md#layouts).
 
 **Key Features:**
-- Automatic color cycling through predefined palettes
-- Support for force override of existing colors
-- Chart-type specific colorization logic
-
-**Configuration:**
-- `enabled`: Enable/disable automatic coloring
-- `forceOverride`: Override existing color definitions
-
-### Filler Plugin
-The Filler plugin provides functionality for filling areas under or between datasets. It includes geometric utilities for complex fill operations.
-
-**Key Components:**
-- `simpleArc`: Utility class for arc-based fill operations
-- Path segment generation for custom shapes
-- Interpolation support for smooth curves
-
-### [Legend Plugin](legend-plugin.md)
-The Legend plugin displays a legend showing dataset information with interactive features for showing/hiding datasets.
-
-**Key Features:**
-- Automatic legend item generation from datasets
-- Interactive dataset toggling (click to show/hide)
-- Multiple layout modes (horizontal/vertical)
-- Customizable styling and positioning
+- Interactive dataset toggling (show/hide datasets)
+- Configurable positioning (top, bottom, left, right)
+- Customizable styling and formatting
+- Support for multiple legend items and grouping
 - RTL (Right-to-Left) text support
-- Event handling for hover and click interactions
+- Point style and color box rendering
 
-**Layout Modes:**
-- **Horizontal**: Items arranged in rows, wraps to new lines
-- **Vertical**: Items arranged in columns
+**Architecture:**
+```mermaid
+graph LR
+    Legend[Legend Plugin]
+    Element[Element Base]
+    Layouts[Layout System]
+    Chart[Chart Instance]
+    Dataset[Dataset Metadata]
+    
+    Element --> Legend
+    Legend --> Layouts
+    Legend --> Chart
+    Legend --> Dataset
+    
+    style Legend fill:#f96,stroke:#333,stroke-width:2px
+    style Element fill:#99f,stroke:#333,stroke-width:2px
+```
 
-**Styling Options:**
-- Box styles (color, border, point styles)
-- Font customization
-- Padding and spacing control
-- Title support
+**Lifecycle Integration:**
+- `start()`: Initializes legend instance and adds to layout system
+- `beforeUpdate()`: Configures legend with updated options
+- `afterUpdate()`: Rebuilds labels and adjusts hit boxes
+- `afterEvent()`: Handles user interactions (click, hover, leave)
+- `stop()`: Removes legend from chart and layout system
 
-### [Title Plugin](title-plugin.md)
-The Title plugin provides chart title functionality with support for multiple text lines and various positioning options.
+### Title Plugin (src.plugins.plugin.title.Title)
+
+The Title plugin provides chart titles with support for multiple text lines and various positioning options. It extends the [Element](core_engine.md#element) base class and offers simple yet flexible title rendering.
 
 **Key Features:**
-- Single or multi-line titles
-- Flexible positioning (top, bottom, left, right)
-- Font and color customization
-- Automatic layout integration
-- Rotation support for vertical titles
+- Single or multi-line text support
+- Positioning: top, bottom, left, right
+- Customizable fonts, colors, and alignment
+- Automatic text rotation for vertical positioning
+- Integration with layout system for proper spacing
 
-### [Tooltip Plugin](tooltip-plugin.md)
-The Tooltip plugin provides interactive tooltips that appear when users hover over chart elements. It's the most complex plugin with extensive customization options.
+**Architecture:**
+```mermaid
+graph LR
+    Title[Title Plugin]
+    Element[Element Base]
+    Layouts[Layout System]
+    Canvas[Canvas Context]
+    
+    Element --> Title
+    Title --> Layouts
+    Title --> Canvas
+    
+    style Title fill:#f96,stroke:#333,stroke-width:2px
+```
+
+### Tooltip Plugin (src.plugins.plugin.tooltip.Tooltip)
+
+The Tooltip plugin provides interactive data point information display with rich customization options. It extends the [Element](core_engine.md#element) base class and integrates with the animation system through [Animations](animation.md#animations).
 
 **Key Features:**
 - Multiple positioning modes (average, nearest)
 - Rich content support (title, body, footer)
-- Color boxes and point style indicators
-- Animation support with smooth transitions
-- External tooltip support for custom rendering
+- Color box and point style rendering
+- Customizable callbacks for content generation
+- Animation support for smooth transitions
 - RTL text support
-- Advanced callback system for content customization
+- External tooltip support for custom rendering
 
-**Positioning Modes:**
-- **Average**: Positions tooltip at average position of active elements
-- **Nearest**: Positions tooltip nearest to the event position
+**Architecture:**
+```mermaid
+graph TB
+    Tooltip[Tooltip Plugin]
+    Element[Element Base]
+    Animations[Animation System]
+    Positioners[Positioning Algorithms]
+    Callbacks[Content Callbacks]
+    Chart[Chart Instance]
+    
+    Element --> Tooltip
+    Tooltip --> Animations
+    Tooltip --> Positioners
+    Tooltip --> Callbacks
+    Tooltip --> Chart
+    
+    Positioners --> Average[Average Positioner]
+    Positioners --> Nearest[Nearest Positioner]
+    
+    Callbacks --> TitleCB[Title Callbacks]
+    Callbacks --> BodyCB[Body Callbacks]
+    Callbacks --> FooterCB[Footer Callbacks]
+    
+    style Tooltip fill:#f96,stroke:#333,stroke-width:2px
+    style Positioners fill:#9f9,stroke:#333,stroke-width:2px
+    style Callbacks fill:#9f9,stroke:#333,stroke-width:2px
+```
+
+**Positioning Algorithms:**
+- **Average**: Calculates the average position of all active elements
+- **Nearest**: Finds the element closest to the event position
 
 **Content Structure:**
-- Title section with customizable text
-- Body section with dataset information
-- Footer section for additional content
-- Color indicators for dataset identification
+```
+Tooltip Content
+├── Title Section
+│   ├── beforeTitle
+│   ├── title
+│   └── afterTitle
+├── Body Section
+│   ├── beforeBody
+│   ├── Body Items (per dataset)
+│   │   ├── beforeLabel
+│   │   ├── label
+│   │   └── afterLabel
+│   └── afterBody
+└── Footer Section
+    ├── beforeFooter
+    ├── footer
+    └── afterFooter
+```
 
-## Plugin Lifecycle
+### Filler Plugin (src.plugins.plugin.filler.simpleArc.simpleArc)
+
+The Filler plugin provides arc-based filling functionality for area charts and similar visualizations. It implements a simple arc class that can be used for creating filled regions under or between chart lines.
+
+**Key Features:**
+- Arc path generation for canvas rendering
+- Interpolation support for smooth curves
+- Parameterized arc bounds control
+- Integration with chart area calculations
+
+### Colors Plugin (src.plugins.plugin.colors.ColorsPluginOptions)
+
+The Colors plugin automatically assigns colors to datasets that don't have predefined colors. It provides intelligent color cycling based on chart type and dataset characteristics.
+
+**Key Features:**
+- Automatic color assignment for datasets
+- Chart-type specific color strategies
+- Configurable color palettes
+- Override options for custom color schemes
+- Support for doughnut and polar area charts
+
+**Color Assignment Strategy:**
+```mermaid
+graph TD
+    Start[Dataset Processing]
+    CheckColors{Has Colors?}
+    CheckOverride{Force Override?}
+    CheckType{Chart Type}
+    
+    Default[Default Color Assignment]
+    Doughnut[Doughnut Color Assignment]
+    Polar[Polar Area Color Assignment]
+    Skip[Skip Assignment]
+    
+    Start --> CheckColors
+    CheckColors -->|Yes| CheckOverride
+    CheckColors -->|No| CheckType
+    CheckOverride -->|True| CheckType
+    CheckOverride -->|False| Skip
+    
+    CheckType -->|Default| Default
+    CheckType -->|Doughnut| Doughnut
+    CheckType -->|Polar Area| Polar
+    
+    style Start fill:#f9f,stroke:#333,stroke-width:2px
+    style CheckColors fill:#ff9,stroke:#333,stroke-width:2px
+    style CheckType fill:#ff9,stroke:#333,stroke-width:2px
+```
+
+## Plugin Integration and Data Flow
+
+The plugins module integrates with the chart system through a well-defined lifecycle that ensures proper initialization, updates, and cleanup.
 
 ```mermaid
 sequenceDiagram
     participant Chart
     participant PluginService
-    participant Plugin
+    participant Legend
+    participant TitlePlugin
+    participant Tooltip
+    participant Colors
     
     Chart->>PluginService: Initialize plugins
-    PluginService->>Plugin: start(chart, args, options)
-    Plugin->>Plugin: Initialize internal state
+    PluginService->>Legend: start(chart, options)
+    PluginService->>TitlePlugin: start(chart, options)
+    PluginService->>Tooltip: afterInit(chart, options)
+    PluginService->>Colors: beforeLayout(chart, options)
     
     Chart->>PluginService: beforeUpdate
-    PluginService->>Plugin: beforeUpdate(chart, args, options)
+    PluginService->>Legend: beforeUpdate(chart, options)
+    PluginService->>TitlePlugin: beforeUpdate(chart, options)
+    PluginService->>Tooltip: beforeUpdate(chart, options)
     
     Chart->>PluginService: afterUpdate
-    PluginService->>Plugin: afterUpdate(chart, args, options)
+    PluginService->>Legend: afterUpdate(chart)
     
     Chart->>PluginService: afterEvent
-    PluginService->>Plugin: afterEvent(chart, args)
+    PluginService->>Legend: afterEvent(chart, event)
+    PluginService->>Tooltip: afterEvent(chart, event)
     
-    Chart->>PluginService: Stop chart
-    PluginService->>Plugin: stop(chart)
-    Plugin->>Plugin: Cleanup resources
+    Chart->>PluginService: afterDraw
+    PluginService->>Tooltip: afterDraw(chart)
+    
+    Chart->>PluginService: Destroy
+    PluginService->>Legend: stop(chart)
+    PluginService->>TitlePlugin: stop(chart)
 ```
+
+## Dependencies and Interactions
+
+The plugins module has several key dependencies within the Chart.js ecosystem:
+
+### Core Dependencies
+- **[Element](core_engine.md#element)**: Base class for all plugin elements
+- **[PluginService](core_engine.md#pluginservice)**: Manages plugin lifecycle and registration
+- **[Layouts](core_engine.md#layouts)**: Handles positioning and sizing of layout-based plugins
+- **[Defaults](core_engine.md#defaults)**: Provides default configuration values
+
+### Helper Dependencies
+- **Canvas Helpers**: Drawing utilities for rendering (rounded rectangles, text, points)
+- **RTL Helpers**: Right-to-left text support
+- **Option Helpers**: Configuration parsing and validation
+- **Math Helpers**: Geometric calculations for positioning
+
+### Animation Dependencies
+- **[Animations](animation.md#animations)**: Smooth transitions for tooltip movements
+- **[Animator](animation.md#animator)**: Animation state management
+
+## Configuration and Customization
+
+Each plugin provides extensive configuration options through the chart options object:
+
+### Legend Configuration
+```javascript
+options: {
+  plugins: {
+    legend: {
+      display: true,
+      position: 'top',
+      align: 'center',
+      onClick: (e, legendItem, legend) => { /* custom click handler */ },
+      onHover: (e, legendItem, legend) => { /* custom hover handler */ },
+      labels: {
+        color: (ctx) => ctx.chart.options.color,
+        boxWidth: 40,
+        padding: 10,
+        generateLabels: (chart) => { /* custom label generation */ }
+      }
+    }
+  }
+}
+```
+
+### Tooltip Configuration
+```javascript
+options: {
+  plugins: {
+    tooltip: {
+      enabled: true,
+      position: 'average',
+      backgroundColor: 'rgba(0,0,0,0.8)',
+      titleColor: '#fff',
+      bodyColor: '#fff',
+      callbacks: {
+        title: (tooltipItems) => { /* custom title */ },
+        label: (tooltipItem) => { /* custom label */ }
+      }
+    }
+  }
+}
+```
+
+### Colors Configuration
+```javascript
+options: {
+  plugins: {
+    colors: {
+      enabled: true,
+      forceOverride: false
+    }
+  }
+}
+```
+
+## Best Practices and Usage Guidelines
+
+### Performance Considerations
+- **Tooltip Performance**: Use `external` option for complex custom tooltips to avoid canvas rendering overhead
+- **Legend Optimization**: Implement custom `generateLabels` for large datasets to reduce processing time
+- **Color Assignment**: Disable colors plugin when custom colors are predefined to avoid unnecessary processing
+
+### Accessibility
+- **Legend Accessibility**: Ensure legend items have sufficient contrast and clear visual indicators
+- **Tooltip Accessibility**: Provide keyboard navigation support through custom event handling
+- **Color Accessibility**: Consider color-blind friendly palettes when using automatic color assignment
+
+### Customization Patterns
+- **Custom Legend Items**: Override `generateLabels` to create custom legend representations
+- **External Tooltips**: Use the `external` callback for DOM-based tooltips with rich content
+- **Event Handling**: Leverage plugin event callbacks for custom interactions and integrations
 
 ## Integration with Other Modules
 
-### Core Module Dependencies
-- **Element**: All plugins extend the base Element class for consistent behavior
-- **Layout Engine**: Legend and Title plugins integrate with the layout system
-- **Animation System**: Tooltip plugin uses animations for smooth transitions
-- **Plugin Service**: Central service managing all plugin operations
+The plugins module works closely with other Chart.js modules to provide a cohesive charting experience:
 
-### Helper Module Dependencies
-- **Canvas Helpers**: Drawing utilities for rendering plugin content
-- **RTL Helpers**: Right-to-left text support for internationalization
-- **Math Helpers**: Geometric calculations for positioning
-- **Options Helpers**: Configuration parsing and validation
+- **[Controllers](controllers.md)**: Plugins interact with dataset controllers for data access and styling
+- **[Elements](elements.md)**: Legend and tooltip plugins render element representations
+- **[Scales](scales.md)**: Tooltip positioning considers scale boundaries and transformations
+- **[Animation](animation.md)**: Smooth transitions for interactive elements
 
-## Configuration
-
-Each plugin can be configured through the chart options:
-
-```javascript
-const chart = new Chart(ctx, {
-    options: {
-        plugins: {
-            colors: { enabled: true, forceOverride: false },
-            legend: { display: true, position: 'top' },
-            title: { display: true, text: 'Chart Title' },
-            tooltip: { enabled: true, mode: 'nearest' }
-        }
-    }
-});
-```
-
-## Best Practices
-
-1. **Plugin Ordering**: Consider plugin dependencies when enabling multiple plugins
-2. **Performance**: Disable unused plugins to improve rendering performance
-3. **Customization**: Use plugin callbacks for advanced customization without modifying core code
-4. **Event Handling**: Leverage plugin event hooks for interactive features
-5. **Layout Considerations**: Account for plugin dimensions when positioning chart elements
-
-## Related Documentation
-- [Core Module](core.md) - Plugin service and element base classes
-- [Helpers Module](helpers.md) - Utility functions used by plugins
-- [Types Module](types.md) - TypeScript definitions for plugin options
+This modular approach ensures that plugins can be easily extended, customized, or replaced while maintaining compatibility with the broader Chart.js ecosystem.

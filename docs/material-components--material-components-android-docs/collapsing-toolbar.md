@@ -1,21 +1,21 @@
 # Collapsing Toolbar Module
 
-The collapsing-toolbar module provides the `CollapsingToolbarLayout` component, a sophisticated wrapper for Toolbar that implements a collapsing app bar with rich animation and interaction capabilities. This module is designed to work seamlessly with the [appbarlayout-core](appbarlayout-core.md) module to create dynamic, responsive top app bars that enhance user experience through visual feedback and smooth transitions.
+The collapsing-toolbar module provides the `CollapsingToolbarLayout` component, a sophisticated wrapper for Toolbar that implements Material Design's collapsing app bar pattern. This module enables smooth transitions between expanded and collapsed states with rich visual effects including parallax scrolling, title animations, and scrim overlays.
 
 ## Overview
 
-`CollapsingToolbarLayout` extends `FrameLayout` to provide a container that can house a `Toolbar` and other views while implementing sophisticated collapsing behavior. The layout responds to scroll events from its parent `AppBarLayout` to create engaging visual effects including title scaling, content scrims, and parallax scrolling.
+The `CollapsingToolbarLayout` is designed to work as a direct child of `AppBarLayout` and provides advanced collapsing behavior for app bars. It supports multiple collapse modes, animated title transitions, and customizable visual effects that enhance the user experience during scroll interactions.
 
 ## Core Components
 
 ### CollapsingToolbarLayout
-The main component that orchestrates the collapsing behavior, managing title animations, scrim visibility, and child view interactions.
+The main component that orchestrates the collapsing behavior and manages all visual effects.
 
 ### StaticLayoutBuilderConfigurer
-An interface for advanced customization of the `StaticLayout` used for title text rendering, allowing fine-grained control over text layout behavior.
+An interface for customizing the `StaticLayout` used for title text rendering, allowing advanced text layout configurations.
 
 ### LayoutParams
-Custom layout parameters that control how child views behave during the collapsing animation, supporting different collapse modes (off, pin, parallax).
+Custom layout parameters that control how child views behave during the collapse animation, supporting different collapse modes (off, pin, parallax).
 
 ## Architecture
 
@@ -26,303 +26,190 @@ graph TB
         SLC[StaticLayoutBuilderConfigurer]
         LP[LayoutParams]
         CTH[CollapsingTextHelper]
-        CSUB[CollapsingSubtitleHelper]
+        CSUB[CollapsingTextHelper]
         EOP[ElevationOverlayProvider]
     end
     
     subgraph "Parent Module"
         ABL[AppBarLayout]
-        OCL[OnOffsetChangedListener]
+        VO[ViewOffsetHelper]
     end
     
     subgraph "External Dependencies"
-        TB[Toolbar]
-        VO[ViewOffsetHelper]
         MC[MaterialColors]
         AU[AnimationUtils]
+        MU[MotionUtils]
+        TE[ThemeEnforcement]
     end
     
     CTL --> CTH
     CTL --> CSUB
     CTL --> EOP
     CTL --> LP
-    CTL --> OCL
-    CTL --> TB
-    CTL --> VO
+    CTL --> SLC
+    
+    ABL --> CTL
+    VO --> CTL
+    
     CTL --> MC
     CTL --> AU
-    
-    SLC -.-> CTH
-    OCL --> ABL
-    VO --> CTL
+    CTL --> MU
+    CTL --> TE
 ```
 
 ## Key Features
 
-### Collapsing Title System
-The module implements a sophisticated title system with two `CollapsingTextHelper` instances:
-- **Primary Title**: Main title text with configurable appearance and behavior
-- **Subtitle**: Secondary text that collapses alongside the main title
+### Collapsing Title Animation
+- **Scale Mode**: Title continuously scales and translates between expanded and collapsed states
+- **Fade Mode**: Expanded title fades out while collapsed title fades in
+- **Customizable Typography**: Separate text appearances for expanded and collapsed states
+- **Subtitle Support**: Full subtitle support with independent styling
 
-### Title Collapse Modes
-Two distinct animation modes for title transitions:
-- **SCALE Mode** (`TITLE_COLLAPSE_MODE_SCALE`): Continuous scaling and translation
-- **FADE Mode** (`TITLE_COLLAPSE_MODE_FADE`): Fade out/in with translation
+### Visual Effects
+- **Content Scrim**: Full-bleed overlay that appears/disappears based on scroll position
+- **Status Bar Scrim**: System window scrim for immersive experiences
+- **Parallax Scrolling**: Child views can scroll with parallax effects
+- **Pinned Views**: Child views can remain fixed during collapse
 
-### Scrim System
-Dual scrim implementation for visual depth:
-- **Content Scrim**: Overlays content when collapsed
-- **Status Bar Scrim**: Handles system window insets
-
-### Child View Behavior
-Three collapse modes for child views:
-- **OFF**: Normal behavior, no collapsing
-- **PIN**: View remains fixed during collapse
-- **PARALLAX**: View scrolls with parallax effect
+### Advanced Layout Control
+- **Collapse Modes**: OFF, PIN, PARALLAX for different child view behaviors
+- **Margin Control**: Precise control over title positioning in both states
+- **Multiline Support**: Advanced text layout with line spacing and hyphenation
+- **RTL Support**: Full right-to-left text direction support
 
 ## Data Flow
 
 ```mermaid
 sequenceDiagram
-    participant ScrollView as "Scroll View"
-    participant AppBarLayout as "AppBarLayout"
-    participant CollapsingToolbar as "CollapsingToolbarLayout"
-    participant TextHelpers as "CollapsingTextHelpers"
-    participant Scrims as "Scrim System"
+    participant User
+    participant ScrollView
+    participant AppBarLayout
+    participant CollapsingToolbarLayout
+    participant CollapsingTextHelper
+    participant ViewOffsetHelper
     
-    ScrollView->>AppBarLayout: Scroll Event
-    AppBarLayout->>CollapsingToolbar: onOffsetChanged(offset)
-    CollapsingToolbar->>CollapsingToolbar: Calculate expansion fraction
-    CollapsingToolbar->>TextHelpers: Update expansion state
-    CollapsingToolbar->>Scrims: Update visibility
-    CollapsingToolbar->>CollapsingToolbar: Invalidate drawing
-    TextHelpers->>CollapsingToolbar: Draw text
-    Scrims->>CollapsingToolbar: Draw scrims
+    User->>ScrollView: Scroll gesture
+    ScrollView->>AppBarLayout: Notify offset change
+    AppBarLayout->>CollapsingToolbarLayout: onOffsetChanged()
+    CollapsingToolbarLayout->>CollapsingTextHelper: Update expansion fraction
+    CollapsingToolbarLayout->>ViewOffsetHelper: Apply child offsets
+    CollapsingToolbarLayout->>CollapsingToolbarLayout: Update scrim visibility
+    CollapsingTextHelper->>CollapsingToolbarLayout: Request redraw
+    ViewOffsetHelper->>CollapsingToolbarLayout: Apply layout changes
+    CollapsingToolbarLayout->>User: Render updated UI
 ```
 
 ## Component Interactions
 
 ```mermaid
 graph LR
-    subgraph "Layout Management"
-        MEASURE[onMeasure]
-        LAYOUT[onLayout]
-        DRAW[draw]
+    subgraph "Layout System"
+        CTL[CollapsingToolbarLayout]
+        ABL[AppBarLayout]
+        VO[ViewOffsetHelper]
+        LP[LayoutParams]
     end
     
     subgraph "Text System"
-        TITLE_HELPER[CollapsingTextHelper]
-        SUBTITLE_HELPER[CollapsingSubtitleHelper]
-        BOUNDS_UPDATE[updateTextBounds]
+        CTH[CollapsingTextHelper]
+        CSUB[CollapsingTextHelper]
+        SLC[StaticLayoutBuilderConfigurer]
     end
     
-    subgraph "Offset Management"
-        OFFSET_LISTENER[OffsetUpdateListener]
-        VIEW_OFFSET[ViewOffsetHelper]
-        CHILD_UPDATE[updateChildOffsets]
+    subgraph "Visual System"
+        SCRIM[Scrim Drawable]
+        EOP[ElevationOverlayProvider]
+        ANIM[ValueAnimator]
     end
     
-    subgraph "Scrim Management"
-        SCRIM_UPDATE[updateScrimVisibility]
-        SCRIM_ANIM[animateScrim]
-        ALPHA_SET[setScrimAlpha]
-    end
+    ABL -. Offset Events .-> CTL
+    CTL -. Child Layout .-> LP
+    LP -. Offset Behavior .-> VO
+    VO -. Position Updates .-> CTL
     
-    MEASURE --> TITLE_HELPER
-    LAYOUT --> BOUNDS_UPDATE
-    DRAW --> TITLE_HELPER
+    CTL -. Title State .-> CTH
+    CTL -. Subtitle State .-> CSUB
+    SLC -. Text Layout .-> CTH
+    SLC -. Text Layout .-> CSUB
     
-    OFFSET_LISTENER --> CHILD_UPDATE
-    CHILD_UPDATE --> VIEW_OFFSET
-    
-    OFFSET_LISTENER --> SCRIM_UPDATE
-    SCRIM_UPDATE --> SCRIM_ANIM
-    SCRIM_ANIM --> ALPHA_SET
+    CTL -. Scrim State .-> SCRIM
+    EOP -. Color Overlay .-> SCRIM
+    ANIM -. Alpha Animation .-> SCRIM
 ```
 
-## Configuration and Customization
+## Configuration Options
 
-### Title Appearance
-- **Expanded State**: Configurable text appearance, color, size, and gravity
-- **Collapsed State**: Independent text appearance settings
-- **Typography**: Custom typefaces for both states
-- **Ellipsize**: Configurable text truncation behavior
+### Title Collapse Modes
+- `TITLE_COLLAPSE_MODE_SCALE`: Smooth scaling transition (default)
+- `TITLE_COLLAPSE_MODE_FADE`: Fade in/out transition
 
-### Layout Parameters
+### Child Collapse Modes
+- `COLLAPSE_MODE_OFF`: No special behavior
+- `COLLAPSE_MODE_PIN`: View pins in place during collapse
+- `COLLAPSE_MODE_PARALLAX`: View scrolls with parallax effect
+
+### Scrim Triggers
+- Automatic based on visible height threshold
+- Manual control via `setScrimsShown()`
+- Customizable animation duration and interpolators
+
+## Usage Patterns
+
+### Basic Implementation
 ```xml
-<com.google.android.material.appbar.CollapsingToolbarLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-    app:contentScrim="@color/colorPrimary"
-    app:expandedTitleTextAppearance="@style/ExpandedTitle"
-    app:collapsedTitleTextAppearance="@style/CollapsedTitle">
-    
-    <!-- Child views with collapse modes -->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:src="@drawable/header_image"
-        app:layout_collapseMode="parallax"
-        app:layout_collapseParallaxMultiplier="0.7" />
+<com.google.android.material.appbar.AppBarLayout>
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:contentScrim="@color/primary"
+        app:expandedTitleTextAppearance="@style/ExpandedTitle"
+        app:collapsedTitleTextAppearance="@style/CollapsedTitle">
         
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_collapseMode="pin" />
-        
-</com.google.android.material.appbar.CollapsingToolbarLayout>
+        <ImageView
+            app:layout_collapseMode="parallax"
+            app:layout_collapseParallaxMultiplier="0.7"/>
+            
+        <androidx.appcompat.widget.Toolbar
+            app:layout_collapseMode="pin"/>
+            
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+</com.google.android.material.appbar.AppBarLayout>
 ```
 
-### Programmatic Configuration
-```java
-CollapsingToolbarLayout collapsingToolbar = findViewById(R.id.collapsing_toolbar);
-
-// Set title and subtitle
-collapsingToolbar.setTitle("Page Title");
-collapsingToolbar.setSubtitle("Subtitle text");
-
-// Configure title collapse mode
-collapsingToolbar.setTitleCollapseMode(CollapsingToolbarLayout.TITLE_COLLAPSE_MODE_FADE);
-
-// Set scrims
-collapsingToolbar.setContentScrimColor(Color.BLUE);
-collapsingToolbar.setStatusBarScrimColor(Color.TRANSPARENT);
-
-// Configure animation duration
-collapsingToolbar.setScrimAnimationDuration(300);
-```
+### Advanced Configuration
+- Custom title position interpolators
+- Multiline text with hyphenation
+- Dynamic scrim colors based on elevation
+- System window inset handling
 
 ## Integration with AppBarLayout
 
-The collapsing-toolbar module is designed to work seamlessly with the [appbarlayout-core](appbarlayout-core.md) module:
+The `CollapsingToolbarLayout` is designed to work seamlessly with [`AppBarLayout`](appbar-layout.md) as its parent. It responds to scroll events and offset changes to coordinate the collapsing behavior with other app bar components.
 
-```mermaid
-graph TD
-    subgraph "AppBarLayout Integration"
-        ABL[AppBarLayout]
-        CTL[CollapsingToolbarLayout]
-        OCL[OnOffsetChangedListener]
-        SV[Scrollable View]
-    end
-    
-    SV -->|Scroll Events| ABL
-    ABL -->|Offset Updates| OCL
-    OCL -->|Process Updates| CTL
-    CTL -->|Update UI| CTL
-    
-    style CTL fill:#f9f,stroke:#333,stroke-width:4px
-```
-
-## Advanced Features
-
-### Multi-line Title Support
-The module supports multi-line titles with configurable line spacing and hyphenation:
-- `setMaxLines()`: Control maximum lines in expanded state
-- `setLineSpacingAdd()`: Configure line spacing
-- `setHyphenationFrequency()`: Control text hyphenation
-
-### System Window Insets
-Advanced handling of system window insets:
-- Automatic top inset application
-- Force apply system window insets option
-- Status bar scrim integration
-
-### Experimental Features
-Several experimental features for advanced use cases:
-- `StaticLayoutBuilderConfigurer` for custom text layout
-- RTL text direction heuristics
-- Extra multiline height calculations
+### Key Dependencies
+- **AppBarLayout**: Provides scroll offset information and coordination
+- **ViewOffsetHelper**: Manages child view positioning during collapse
+- **CollapsingTextHelper**: Handles complex text animation and rendering
 
 ## Performance Considerations
 
 ### Optimization Strategies
-1. **View Recycling**: Efficient view offset helper management
-2. **Animation Optimization**: Hardware-accelerated scrim animations
-3. **Text Bounds Caching**: Intelligent text bounds recalculation
-4. **Drawing Optimization**: Selective invalidation and clipping
+- **View Recycling**: Efficient handling of dummy views for title measurement
+- **Animation Batching**: Coordinated animations to minimize redraws
+- **Bounds Caching**: Smart recalculation of text bounds only when necessary
+- **Scrim Optimization**: Efficient drawable state management
 
 ### Memory Management
-- Drawable mutation for proper state management
-- View offset helper reuse
-- Efficient text measurement and layout
+- Drawable mutation for proper state isolation
+- View tag usage for offset helper storage
+- Careful listener registration and cleanup
 
-## Dependencies
+## Related Modules
 
-The collapsing-toolbar module depends on:
-- **[appbarlayout-core](appbarlayout-core.md)**: For scroll behavior integration
-- **[behavior-system](behavior-system.md)**: For view offset management
-- **[utility-components](utility-components.md)**: For utility functions
-- **Material Components**: Animation, color, and theme utilities
+- **[AppBarLayout](appbar-layout.md)**: Parent container that provides scroll coordination
+- **[AppBar Behaviors](appbar-behaviors.md)**: CoordinatorLayout behaviors for app bar components
+- **[AppBar Utilities](appbar-utilities.md)**: Helper utilities for app bar functionality
 
-## Best Practices
+## References
 
-### Layout Structure
-```xml
-<androidx.coordinatorlayout.widget.CoordinatorLayout>
-    <com.google.android.material.appbar.AppBarLayout>
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            
-            <!-- Background content -->
-            <ImageView
-                app:layout_collapseMode="parallax" />
-                
-            <!-- Toolbar -->
-            <androidx.appcompat.widget.Toolbar
-                app:layout_collapseMode="pin" />
-                
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
-    
-    <!-- Scrollable content -->
-    <androidx.core.widget.NestedScrollView
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
-```
-
-### Performance Tips
-1. Use appropriate `scrimVisibleHeightTrigger` values
-2. Minimize complex drawable resources for scrims
-3. Consider title collapse mode based on content complexity
-4. Test with different text lengths and languages
-
-### Accessibility
-- Proper content descriptions from title text
-- Support for screen readers
-- High contrast mode compatibility
-- Text scaling support
-
-## Troubleshooting
-
-### Common Issues
-1. **Title not appearing**: Check `titleEnabled` and toolbar integration
-2. **Scrim not showing**: Verify `scrimVisibleHeightTrigger` and content bounds
-3. **Parallax not working**: Ensure proper `collapseMode` and multiplier settings
-4. **Performance issues**: Optimize text complexity and animation duration
-
-### Debug Techniques
-- Use `getExpansionFraction()` to monitor collapse state
-- Check `getScrimVisibleHeightTrigger()` for scrim behavior
-- Verify `LayoutParams` configuration for child views
-- Monitor `OnOffsetChangedListener` callbacks
-
-## Migration Guide
-
-### From Toolbar
-When migrating from standard Toolbar to CollapsingToolbarLayout:
-1. Wrap existing Toolbar in CollapsingToolbarLayout
-2. Move title configuration to CollapsingToolbarLayout
-3. Configure appropriate collapse modes
-4. Test scroll behavior with AppBarLayout
-
-### Version Compatibility
-- Minimum API level considerations
-- Feature availability across versions
-- Backward compatibility strategies
-- Material Design 3 compliance
-
-This documentation provides a comprehensive guide to understanding and implementing the collapsing-toolbar module within the Material Design Components framework. For integration examples and advanced usage patterns, refer to the [appbarlayout-core](appbarlayout-core.md) documentation for complete app bar system implementation.
+- [Material Design Top App Bar Guidelines](https://material.io/components/top-app-bar/overview)
+- [Component Developer Guidance](https://github.com/material-components/material-components-android/blob/master/docs/components/TopAppBar.md)

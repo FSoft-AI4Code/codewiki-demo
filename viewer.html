@@ -112,6 +112,38 @@
             display: inline-block;
         }
         
+        .repo-links {
+            margin: 20px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .repo-link-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 12px;
+            background: white;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s;
+            border: 1px solid var(--border-color);
+        }
+        
+        .repo-link-btn:hover {
+            background: var(--hover-color);
+            border-color: var(--primary-color);
+            transform: translateX(2px);
+        }
+        
+        .repo-link-btn svg {
+            flex-shrink: 0;
+        }
+        
         .nav-section {
             margin-bottom: 20px;
         }
@@ -373,6 +405,8 @@
             <a href="index.html" class="back-btn">← Back to Gallery</a>
             <div class="logo" id="repo-name">📚 Loading...</div>
             
+            <div class="repo-links" id="repo-links" style="display: none;"></div>
+            
             <div class="repo-info" id="repo-info" style="display: none;">
                 <h4>Generation Info</h4>
                 <div id="info-content"></div>
@@ -425,6 +459,8 @@
         let currentProject = '';
         let moduleTree = null;
         let metadata = null;
+        let repoOwner = '';
+        let repoName = '';
         
         // Get project from URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -436,8 +472,37 @@
             loadProject();
         }
         
+        function parseProjectFolder(folderName) {
+            // Remove -docs suffix
+            let cleanName = folderName.replace(/-docs$/, '');
+            
+            // Split by --
+            const parts = cleanName.split('--');
+            
+            if (parts.length === 2) {
+                return {
+                    owner: parts[0],
+                    repo: parts[1],
+                    githubUrl: `https://github.com/${parts[0]}/${parts[1]}`,
+                    deepwikiUrl: `https://deepwiki.com/${parts[0]}/${parts[1]}`
+                };
+            }
+            
+            return {
+                owner: 'Unknown',
+                repo: cleanName,
+                githubUrl: null,
+                deepwikiUrl: null
+            };
+        }
+        
         async function loadProject() {
             try {
+                // Parse project info
+                const projectInfo = parseProjectFolder(currentProject);
+                repoOwner = projectInfo.owner;
+                repoName = projectInfo.repo;
+                
                 // Load metadata
                 const metadataResponse = await fetch(`docs/${currentProject}/metadata.json`);
                 if (metadataResponse.ok) {
@@ -453,9 +518,12 @@
                 }
                 
                 // Set project name
-                const repoName = currentProject.replace(/-docs$/, '').replace(/--/g, '/');
-                document.getElementById('repo-name').textContent = `📚 ${repoName}`;
-                document.title = `${repoName} - Documentation`;
+                const displayName = currentProject.replace(/-docs$/, '').replace(/--/g, '/');
+                document.getElementById('repo-name').textContent = `📚 ${displayName}`;
+                document.title = `${displayName} - Documentation`;
+                
+                // Display repository links
+                displayRepoLinks(projectInfo);
                 
                 // Load overview by default
                 loadDocument('overview.md');
@@ -464,6 +532,42 @@
                 console.error('Error loading project:', error);
                 showError('Failed to load project: ' + error.message);
             }
+        }
+        
+        function displayRepoLinks(projectInfo) {
+            const linksContainer = document.getElementById('repo-links');
+            
+            if (!projectInfo.githubUrl && !projectInfo.deepwikiUrl) {
+                return;
+            }
+            
+            let html = '';
+            
+            if (projectInfo.githubUrl) {
+                html += `
+                    <a href="${projectInfo.githubUrl}" class="repo-link-btn" target="_blank" rel="noopener noreferrer">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
+                        </svg>
+                        Original GitHub Repository
+                    </a>
+                `;
+            }
+            
+            if (projectInfo.deepwikiUrl) {
+                html += `
+                    <a href="${projectInfo.deepwikiUrl}" class="repo-link-btn" target="_blank" rel="noopener noreferrer">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M3 2.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3 7a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 3 7zm0 4.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+                            <path fill-rule="evenodd" d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 0a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2z"/>
+                        </svg>
+                        Corresponding DeepWiki Docs
+                    </a>
+                `;
+            }
+            
+            linksContainer.innerHTML = html;
+            linksContainer.style.display = 'flex';
         }
         
         function displayMetadata() {

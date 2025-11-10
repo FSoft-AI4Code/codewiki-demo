@@ -1,144 +1,191 @@
 {
-    "core_dialogue": {
-        "path": "rasa/core",
+    "NLU Pipeline": {
+        "path": "rasa/nlu/",
+        "components": [
+            "rasa.nlu.tokenizers.tokenizer.Tokenizer",
+            "rasa.nlu.featurizers.featurizer.Featurizer",
+            "rasa.nlu.featurizers.dense_featurizer.dense_featurizer.DenseFeaturizer",
+            "rasa.nlu.featurizers.sparse_featurizer.count_vectors_featurizer.CountVectorsFeaturizer",
+            "rasa.nlu.classifiers.classifier.IntentClassifier",
+            "rasa.nlu.classifiers.diet_classifier.DIETClassifier",
+            "rasa.nlu.classifiers.fallback_classifier.FallbackClassifier",
+            "rasa.nlu.extractors.extractor.EntityExtractorMixin",
+            "rasa.nlu.extractors.crf_entity_extractor.CRFEntityExtractor",
+            "rasa.nlu.extractors.duckling_entity_extractor.DucklingEntityExtractor",
+            "rasa.nlu.extractors.entity_synonyms.EntitySynonymMapper",
+            "rasa.nlu.selectors.response_selector.ResponseSelector",
+            "rasa.shared.nlu.interpreter.NaturalLanguageInterpreter"
+        ],
+        "children": {}
+    },
+    "Core Featurization": {
+        "path": "rasa/core/featurizers/",
+        "components": [
+            "rasa.core.featurizers.tracker_featurizers.TrackerFeaturizer",
+            "rasa.core.featurizers.tracker_featurizers.MaxHistoryTrackerFeaturizer",
+            "rasa.core.featurizers.tracker_featurizers.FullDialogueTrackerFeaturizer",
+            "rasa.core.featurizers.single_state_featurizer.SingleStateFeaturizer"
+        ],
+        "children": {}
+    },
+    "Dialogue Management Core": {
+        "path": "rasa/core/",
         "components": [
             "rasa.core.agent.Agent",
             "rasa.core.processor.MessageProcessor",
+            "rasa.shared.core.trackers.DialogueStateTracker",
+            "rasa.core.tracker_store.TrackerStore",
+            "rasa.core.tracker_store.InMemoryTrackerStore",
+            "rasa.core.tracker_store.RedisTrackerStore",
+            "rasa.core.tracker_store.SQLTrackerStore",
+            "rasa.core.brokers.broker.EventBroker",
+            "rasa.core.lock_store.LockStore"
+        ],
+        "children": {}
+    },
+    "Dialogue Policies": {
+        "path": "rasa/core/policies/",
+        "components": [
             "rasa.core.policies.policy.Policy",
-            "rasa.core.policies.ted_policy.TEDPolicy",
-            "rasa.core.policies.rule_policy.RulePolicy",
-            "rasa.core.policies.memoization.MemoizationPolicy",
             "rasa.core.policies.ensemble.PolicyPredictionEnsemble",
+            "rasa.core.policies.memoization.MemoizationPolicy",
+            "rasa.core.policies.rule_policy.RulePolicy",
+            "rasa.core.policies.ted_policy.TEDPolicy",
+            "rasa.core.policies.unexpected_intent_policy.UnexpecTEDIntentPolicy"
+        ],
+        "children": {}
+    },
+    "Actions": {
+        "path": "rasa/core/actions/",
+        "components": [
             "rasa.core.actions.action.Action",
+            "rasa.core.actions.action.ActionListen",
+            "rasa.core.actions.action.ActionRestart",
+            "rasa.core.actions.action.ActionSessionStart",
+            "rasa.core.actions.action.ActionDefaultFallback",
+            "rasa.core.actions.action.ActionExecutionRejection",
             "rasa.core.actions.forms.FormAction",
-            "rasa.core.actions.loops.LoopAction"
+            "rasa.core.actions.loops.LoopAction",
+            "rasa.core.actions.two_stage_fallback.TwoStageFallbackAction"
+        ],
+        "children": {}
+    },
+    "Domain & Training Data": {
+        "path": "rasa/shared/",
+        "components": [
+            "rasa.shared.core.domain.Domain",
+            "rasa.shared.core.slots.Slot",
+            "rasa.shared.core.events.Event",
+            "rasa.shared.core.events.UserUttered",
+            "rasa.shared.core.events.ActionExecuted",
+            "rasa.shared.core.events.SlotSet",
+            "rasa.shared.core.training_data.structures.StoryGraph",
+            "rasa.shared.core.training_data.structures.StoryStep",
+            "rasa.shared.core.training_data.structures.RuleStep",
+            "rasa.shared.nlu.training_data.training_data.TrainingData",
+            "rasa.shared.nlu.training_data.message.Message",
+            "rasa.shared.importers.importer.TrainingDataImporter",
+            "rasa.shared.importers.rasa.RasaFileImporter",
+            "rasa.shared.core.training_data.story_reader.yaml_story_reader.YAMLStoryReader",
+            "rasa.shared.nlu.training_data.formats.rasa_yaml.RasaYAMLReader"
         ],
         "children": {
-            "dialogue_orchestration": {
+            "Domain Model": {
                 "components": [
-                    "rasa.core.agent.Agent",
-                    "rasa.core.processor.MessageProcessor"
+                    "rasa.shared.core.domain.Domain",
+                    "rasa.shared.core.slots.Slot"
                 ],
                 "children": {}
             },
-            "policy_framework": {
+            "Dialogue Events": {
                 "components": [
-                    "rasa.core.policies.policy.Policy",
-                    "rasa.core.policies.ted_policy.TEDPolicy",
-                    "rasa.core.policies.rule_policy.RulePolicy",
-                    "rasa.core.policies.memoization.MemoizationPolicy",
-                    "rasa.core.policies.ensemble.PolicyPredictionEnsemble"
+                    "rasa.shared.core.events.Event",
+                    "rasa.shared.core.events.UserUttered",
+                    "rasa.shared.core.events.ActionExecuted",
+                    "rasa.shared.core.events.SlotSet"
                 ],
                 "children": {}
             },
-            "action_framework": {
+            "Core Training Data Structures": {
                 "components": [
-                    "rasa.core.actions.action.Action",
-                    "rasa.core.actions.forms.FormAction",
-                    "rasa.core.actions.loops.LoopAction"
+                    "rasa.shared.core.training_data.structures.StoryGraph",
+                    "rasa.shared.core.training_data.structures.StoryStep",
+                    "rasa.shared.core.training_data.structures.RuleStep"
+                ],
+                "children": {}
+            },
+            "NLU Training Data Structures": {
+                "components": [
+                    "rasa.shared.nlu.training_data.training_data.TrainingData",
+                    "rasa.shared.nlu.training_data.message.Message"
+                ],
+                "children": {}
+            },
+            "Training Data Importers & Readers": {
+                "components": [
+                    "rasa.shared.importers.importer.TrainingDataImporter",
+                    "rasa.shared.importers.rasa.RasaFileImporter",
+                    "rasa.shared.core.training_data.story_reader.yaml_story_reader.YAMLStoryReader",
+                    "rasa.shared.nlu.training_data.formats.rasa_yaml.RasaYAMLReader"
                 ],
                 "children": {}
             }
         }
     },
-    "nlu_processing": {
-        "path": "rasa/nlu",
-        "components": [
-            "rasa.nlu.classifiers.diet_classifier.DIETClassifier",
-            "rasa.nlu.classifiers.fallback_classifier.FallbackClassifier",
-            "rasa.nlu.extractors.crf_entity_extractor.CRFEntityExtractor",
-            "rasa.nlu.extractors.duckling_entity_extractor.DucklingEntityExtractor",
-            "rasa.nlu.tokenizers.whitespace_tokenizer.WhitespaceTokenizer",
-            "rasa.nlu.tokenizers.spacy_tokenizer.SpacyTokenizer",
-            "rasa.nlu.featurizers.sparse_featurizer.count_vectors_featurizer.CountVectorsFeaturizer",
-            "rasa.nlu.featurizers.dense_featurizer.spacy_featurizer.SpacyFeaturizer",
-            "rasa.nlu.selectors.response_selector.ResponseSelector"
-        ],
-        "children": {}
-    },
-    "engine_graph": {
-        "path": "rasa/engine",
+    "Execution Engine & Graph Components": {
+        "path": "rasa/engine/",
         "components": [
             "rasa.engine.graph.GraphComponent",
-            "rasa.engine.graph.GraphNode",
             "rasa.engine.graph.GraphSchema",
+            "rasa.engine.graph.GraphNode",
+            "rasa.engine.recipes.recipe.Recipe",
             "rasa.engine.recipes.default_recipe.DefaultV1Recipe",
+            "rasa.engine.runner.interface.GraphRunner",
             "rasa.engine.training.graph_trainer.GraphTrainer",
             "rasa.engine.storage.storage.ModelStorage",
-            "rasa.engine.runner.interface.GraphRunner"
+            "rasa.engine.storage.local_model_storage.LocalModelStorage",
+            "rasa.engine.storage.resource.Resource",
+            "rasa.engine.caching.TrainingCache",
+            "rasa.graph_components.providers.domain_provider.DomainProvider",
+            "rasa.graph_components.providers.nlu_training_data_provider.NLUTrainingDataProvider",
+            "rasa.graph_components.providers.story_graph_provider.StoryGraphProvider"
         ],
         "children": {}
     },
-    "channels": {
-        "path": "rasa/core/channels",
+    "Communication Channels": {
+        "path": "rasa/core/channels/",
         "components": [
             "rasa.core.channels.channel.InputChannel",
             "rasa.core.channels.channel.OutputChannel",
+            "rasa.core.channels.channel.UserMessage",
+            "rasa.core.channels.channel.CollectingOutputChannel",
             "rasa.core.channels.rest.RestInput",
             "rasa.core.channels.socketio.SocketIOInput",
+            "rasa.core.channels.callback.CallbackInput",
             "rasa.core.channels.console.CmdlineInput"
         ],
         "children": {}
     },
-    "shared_core": {
-        "path": "rasa/shared/core",
+    "Natural Language Generation (NLG)": {
+        "path": "rasa/core/nlg/",
         "components": [
-            "rasa.shared.core.domain.Domain",
-            "rasa.shared.core.events.Event",
-            "rasa.shared.core.events.UserUttered",
-            "rasa.shared.core.events.ActionExecuted",
-            "rasa.shared.core.events.SlotSet",
-            "rasa.shared.core.trackers.DialogueStateTracker",
-            "rasa.shared.core.slots.Slot",
-            "rasa.shared.core.training_data.structures.StoryGraph"
+            "rasa.core.nlg.generator.NaturalLanguageGenerator",
+            "rasa.core.nlg.response.TemplatedNaturalLanguageGenerator"
         ],
         "children": {}
     },
-    "shared_nlu": {
-        "path": "rasa/shared/nlu",
+    "TensorFlow Model Components": {
+        "path": "rasa/utils/tensorflow/",
         "components": [
-            "rasa.shared.nlu.training_data.training_data.TrainingData",
-            "rasa.shared.nlu.training_data.message.Message",
-            "rasa.shared.nlu.training_data.features.Features",
-            "rasa.shared.nlu.interpreter.NaturalLanguageInterpreter"
-        ],
-        "children": {}
-    },
-    "data_importers": {
-        "path": "rasa/shared/importers",
-        "components": [
-            "rasa.shared.importers.importer.TrainingDataImporter",
-            "rasa.shared.importers.rasa.RasaFileImporter",
-            "rasa.shared.importers.multi_project.MultiProjectImporter"
-        ],
-        "children": {}
-    },
-    "storage_persistence": {
-        "path": "rasa/core",
-        "components": [
-            "rasa.core.tracker_store.TrackerStore",
-            "rasa.core.tracker_store.InMemoryTrackerStore",
-            "rasa.core.tracker_store.SQLTrackerStore",
-            "rasa.core.lock_store.LockStore"
-        ],
-        "children": {}
-    },
-    "graph_providers": {
-        "path": "rasa/graph_components/providers",
-        "components": [
-            "rasa.graph_components.providers.domain_provider.DomainProvider",
-            "rasa.graph_components.providers.nlu_training_data_provider.NLUTrainingDataProvider",
-            "rasa.graph_components.providers.story_graph_provider.StoryGraphProvider",
-            "rasa.graph_components.providers.training_tracker_provider.TrainingTrackerProvider"
-        ],
-        "children": {}
-    },
-    "model_training": {
-        "path": "rasa",
-        "components": [
-            "rasa.model_training.TrainingResult",
-            "rasa.core.training.training.ActionFingerprint",
-            "rasa.engine.training.components.FingerprintComponent"
+            "rasa.utils.tensorflow.models.RasaModel",
+            "rasa.utils.tensorflow.models.TransformerRasaModel",
+            "rasa.utils.tensorflow.data_generator.RasaDataGenerator",
+            "rasa.utils.tensorflow.model_data.RasaModelData",
+            "rasa.utils.tensorflow.layers.CRF",
+            "rasa.utils.tensorflow.layers.DotProductLoss",
+            "rasa.utils.tensorflow.layers.Ffnn",
+            "rasa.utils.tensorflow.transformer.TransformerEncoder",
+            "rasa.utils.tensorflow.rasa_layers.RasaFeatureCombiningLayer"
         ],
         "children": {}
     }

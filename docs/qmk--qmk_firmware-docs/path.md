@@ -2,272 +2,252 @@
 
 ## Introduction
 
-The QMK Path module provides essential file system utilities and path management functions for the QMK firmware build system. It serves as a foundational component that handles path normalization, keyboard directory resolution, and file type validation across different operating systems. This module ensures consistent path handling between QMK firmware and userspace environments while providing utilities for locating keyboard configurations, keymaps, and build artifacts.
+The QMK Path module provides essential file system utilities and path management functions for the QMK (Quantum Mechanical Keyboard) firmware build system. This module serves as the foundation for navigating and validating file paths within the QMK firmware and userspace directories, ensuring consistent path handling across different operating systems and build environments.
 
-## Architecture Overview
+## Overview
 
-The path module is designed as a utility layer that abstracts file system operations specific to QMK's directory structure. It provides functions for path resolution, keyboard validation, and cross-platform path compatibility.
+The path module is responsible for:
+- Validating and resolving keyboard and keymap paths
+- Managing paths within QMK firmware and userspace directories
+- Providing cross-platform path normalization utilities
+- Handling file type validation for command-line arguments
+
+## Architecture
+
+### Core Components
 
 ```mermaid
-graph TB
-    subgraph "QMK Path Module"
-        FT[FileType Class]
-        PK[Path Functions]
-        KB[Keyboard Functions]
-        KM[Keymap Functions]
-    end
-    
-    subgraph "External Dependencies"
-        CONST[QMK Constants]
-        ERR[QMK Errors]
-        ENV[Environment Variables]
-    end
-    
-    subgraph "File System"
-        QMK_FW[QMK Firmware Directory]
-        QMK_US[QMK Userspace Directory]
-        KB_DIR[Keyboard Directories]
-        KM_DIR[Keymap Directories]
-    end
-    
-    FT --> PK
-    PK --> KB
-    KB --> KM
-    
-    PK --> CONST
-    PK --> ERR
-    PK --> ENV
-    
-    KB --> QMK_FW
-    KB --> QMK_US
-    KM --> KB_DIR
-    KM --> KM_DIR
+classDiagram
+    class FileType {
+        +__init__(*args, **kwargs)
+        +__call__(string)
+    }
+    class keyboard {
+        +keyboard(keyboard_name)
+    }
+    class keymap {
+        +keymap(keyboard_name, keymap_name)
+    }
+    class normpath {
+        +normpath(path)
+    }
+    class keymaps {
+        +keymaps(keyboard_name)
+    }
+    class is_keyboard {
+        +is_keyboard(keyboard_name)
+    }
+    class under_qmk_firmware {
+        +under_qmk_firmware(path)
+    }
+    class under_qmk_userspace {
+        +under_qmk_userspace(path)
+    }
+    class is_under_qmk_firmware {
+        +is_under_qmk_firmware(path)
+    }
+    class is_under_qmk_userspace {
+        +is_under_qmk_userspace(path)
+    }
+    class unix_style_path {
+        +unix_style_path(path)
+    }
+
+    FileType --> normpath : uses
+    keymap --> keymaps : uses
+    keymaps --> keyboard : uses
+    keymaps --> under_qmk_userspace : uses
+    keymaps --> under_qmk_firmware : uses
 ```
 
-## Core Components
+### Module Dependencies
+
+```mermaid
+graph TD
+    path[path module]
+    constants[qmk.constants]
+    errors[qmk.errors]
+    keyboard[keyboard module]
+    userspace[userspace module]
+    
+    path --> constants
+    path --> errors
+    keyboard --> path
+    userspace --> path
+    
+    style path fill:#f9f,stroke:#333,stroke-width:4px
+```
+
+## Component Details
 
 ### FileType Class
 
-The `FileType` class extends `argparse.FileType` to provide UTF-8 encoding by default and path normalization for command-line arguments.
+The `FileType` class extends `argparse.FileType` to provide UTF-8 encoded file handling with path normalization. It automatically normalizes file paths and checks for file existence before processing.
 
 **Key Features:**
-- Automatic UTF-8 encoding for file operations
-- Path normalization using the `normpath` function
-- Existence checking before file operations
-- Support for stdin handling with '-' magic string
+- Default UTF-8 encoding for stdin
+- Path normalization using `normpath()`
+- File existence validation
+- Seamless integration with argparse
 
 ### Path Resolution Functions
 
-#### Keyboard Validation
-- `is_keyboard(keyboard_name)`: Validates if a keyboard name corresponds to an actual keyboard configuration
-- Checks for absolute path injection attempts
-- Verifies existence of `rules.mk` or `keyboard.json` files
+#### `keyboard(keyboard_name)`
+Returns the relative path to a keyboard's directory within the QMK firmware structure.
 
-#### Path Location Functions
-- `under_qmk_firmware(path)`: Returns relative path under QMK firmware directory
-- `under_qmk_userspace(path)`: Returns relative path under QMK userspace directory
-- `is_under_qmk_firmware(path)`: Boolean check for QMK firmware subdirectory
-- `is_under_qmk_userspace(path)`: Boolean check for QMK userspace subdirectory
+**Usage:**
+```python
+keyboard_path = keyboard("clueboard/66/rev3")
+# Returns: Path('keyboards/clueboard/66/rev3')
+```
 
-#### Directory Resolution
-- `keyboard(keyboard_name)`: Returns path to keyboard directory relative to QMK root
-- `keymaps(keyboard_name)`: Locates all keymap directories for a keyboard
-- `keymap(keyboard_name, keymap_name)`: Finds specific keymap directory
+#### `keymap(keyboard_name, keymap_name)`
+Locates the directory of a specific keymap for a given keyboard, searching through both firmware and userspace directories.
 
-### Cross-Platform Utilities
+#### `keymaps(keyboard_name)`
+Returns all `keymaps/` directories for a given keyboard, including both firmware and userspace locations. This function handles the hierarchical nature of keyboard definitions and searches parent directories up to the root level.
 
-#### Path Normalization
-- `normpath(path)`: Normalizes paths relative to the script's execution directory
-- Handles both absolute and relative paths
-- Uses `ORIG_CWD` environment variable for consistent resolution
+### Path Validation Functions
 
-#### Unix Path Conversion
-- `unix_style_path(path)`: Converts Windows paths to Unix format
-- Handles drive letter conversion (e.g., `C:/` to `/c`)
-- Essential for Makefile compatibility
+#### `is_keyboard(keyboard_name)`
+Validates whether a given keyboard name corresponds to an actual keyboard that can be compiled. Checks for the existence of either `rules.mk` or `keyboard.json` files.
+
+#### `under_qmk_firmware(path)` and `under_qmk_userspace(path)`
+Return relative paths when the given path is within QMK firmware or userspace directories, respectively.
+
+#### `is_under_qmk_firmware(path)` and `is_under_qmk_userspace(path)`
+Boolean functions that determine if a path is contained within the respective QMK directory structures.
+
+### Utility Functions
+
+#### `normpath(path)`
+Normalizes paths relative to the script's execution directory, handling both absolute and relative paths appropriately.
+
+#### `unix_style_path(path)`
+Converts Windows-style paths with drive letters to Unix-style paths, essential for Makefile compatibility.
 
 ## Data Flow
 
 ```mermaid
 sequenceDiagram
     participant CLI as Command Line
-    participant FT as FileType
-    participant NP as normpath
-    participant KB as Keyboard Functions
-    participant FS as File System
+    participant Path as Path Module
+    participant Keyboard as Keyboard Module
+    participant FileSystem as File System
     
-    CLI->>FT: File argument
-    FT->>NP: Normalize path
-    NP->>FS: Check existence
-    FS-->>NP: Path status
-    NP-->>FT: Normalized path
-    FT-->>CLI: File object
+    CLI->>Path: keyboard_name
+    Path->>Path: is_keyboard()
+    Path->>FileSystem: Check rules.mk/keyboard.json
+    FileSystem-->>Path: File existence
+    Path-->>CLI: Validation result
     
-    CLI->>KB: Keyboard name
-    KB->>FS: Check rules.mk/keyboard.json
-    FS-->>KB: File existence
-    KB-->>CLI: Validation result
+    CLI->>Path: keymap request
+    Path->>Path: keymaps()
+    Path->>FileSystem: Search keymaps directories
+    Path->>Path: keymap()
+    Path-->>CLI: Keymap path
 ```
-
-## Component Interactions
-
-```mermaid
-graph LR
-    subgraph "Path Module Components"
-        FT[FileType]
-        NK[normpath]
-        UK[unix_style_path]
-        IK[is_keyboard]
-        KB[keyboard]
-        KM[keymaps]
-        KMAP[keymap]
-    end
-    
-    subgraph "External Dependencies"
-        CONST[MAX_KEYBOARD_SUBFOLDERS<br/>QMK_FIRMWARE<br/>QMK_USERSPACE]
-        ERR[NoSuchKeyboardError]
-        ENV[ORIG_CWD]
-    end
-    
-    FT --> NK
-    IK --> CONST
-    KB --> CONST
-    KM --> CONST
-    KM --> ERR
-    KMAP --> KM
-    NK --> ENV
-```
-
-## Process Flows
-
-### Keyboard Validation Process
-```mermaid
-flowchart TD
-    Start([Keyboard Name Input])
-    CheckEmpty{Is Empty?}
-    CheckAbsolute{Is Absolute Path?}
-    BuildPath[Build Keyboard Path]
-    CheckRules{rules.mk Exists?}
-    CheckJSON{keyboard.json Exists?}
-    ReturnTrue[Return True]
-    ReturnFalse[Return False]
-    
-    Start --> CheckEmpty
-    CheckEmpty -->|Yes| ReturnFalse
-    CheckEmpty -->|No| CheckAbsolute
-    CheckAbsolute -->|Yes| ReturnFalse
-    CheckAbsolute -->|No| BuildPath
-    BuildPath --> CheckRules
-    CheckRules -->|Yes| ReturnTrue
-    CheckRules -->|No| CheckJSON
-    CheckJSON -->|Yes| ReturnTrue
-    CheckJSON -->|No| ReturnFalse
-```
-
-### Keymap Directory Resolution
-```mermaid
-flowchart TD
-    Start([Keyboard Name Input])
-    CheckUserspace{Has QMK Userspace?}
-    SearchUserspace[Search Userspace Keymaps]
-    SearchFirmware[Search Firmware Keymaps]
-    CheckExists{Directory Exists?}
-    AddToList[Add to Found Directories]
-    MoveUp[Move to Parent Directory]
-    CheckRoot{At Root Level?}
-    ReturnList[Return Directories]
-    RaiseError[Raise NoSuchKeyboardError]
-    
-    Start --> CheckUserspace
-    CheckUserspace -->|Yes| SearchUserspace
-    CheckUserspace -->|No| SearchFirmware
-    SearchUserspace --> CheckExists
-    CheckExists -->|Yes| AddToList
-    CheckExists -->|No| MoveUp
-    MoveUp --> CheckRoot
-    CheckRoot -->|No| CheckExists
-    CheckRoot -->|Yes| SearchFirmware
-    SearchFirmware --> CheckExists
-    AddToList --> MoveUp
-    CheckRoot -->|Yes| CheckFound{Found Directories?}
-    CheckFound -->|Yes| ReturnList
-    CheckFound -->|No| RaiseError
-```
-
-## Dependencies
-
-### Internal Dependencies
-- **QMK Constants**: Uses `MAX_KEYBOARD_SUBFOLDERS`, `QMK_FIRMWARE`, `QMK_USERSPACE`, and `HAS_QMK_USERSPACE` constants for path resolution
-- **QMK Errors**: Raises `NoSuchKeyboardError` when keymap directories cannot be found
-
-### External Dependencies
-- **Python Standard Library**:
-  - `pathlib.Path`, `PureWindowsPath`, `PurePosixPath` for path operations
-  - `os` for environment variable access
-  - `argparse.FileType` for file type handling
-  - `logging` for error reporting
 
 ## Integration with Other Modules
 
-The path module serves as a foundational utility that other QMK modules depend on:
+### Keyboard Module Integration
+The path module provides the foundation for the [keyboard module](keyboard.md) by offering path validation and resolution functions. The keyboard module uses `is_keyboard()` to validate keyboard names and `keyboard()` to construct keyboard paths.
 
-- **[keyboard.md](keyboard.md)**: Uses path functions for keyboard validation and directory resolution
-- **[build_targets.md](build_targets.md)**: Relies on path resolution for locating build artifacts
-- **[userspace.md](userspace.md)**: Integrates with userspace path detection functions
+### Userspace Module Integration
+The path module works closely with the [userspace module](userspace.md) to handle paths within the QMK userspace directory. Functions like `under_qmk_userspace()` and `is_under_qmk_userspace()` are essential for userspace validation and path resolution.
 
-## Usage Examples
+### Community Modules Integration
+The [community modules](community_modules.md) may utilize path functions to locate and validate module paths within the QMK ecosystem.
 
-### Basic Path Operations
-```python
-from qmk.path import normpath, is_keyboard, keyboard
+## Process Flow
 
-# Normalize a command-line path
-config_file = normpath('configs/my_config.json')
-
-# Validate keyboard name
-if is_keyboard('clueboard/66/rev3'):
-    kb_path = keyboard('clueboard/66/rev3')
-```
-
-### Keymap Resolution
-```python
-from qmk.path import keymaps, keymap
-
-# Get all keymap directories for a keyboard
-all_keymaps = keymaps('clueboard/66/rev3')
-
-# Find specific keymap
-default_keymap = keymap('clueboard/66/rev3', 'default')
-```
-
-### Cross-Platform Path Handling
-```python
-from qmk.path import unix_style_path
-
-# Convert Windows path for Makefile compatibility
-unix_path = unix_style_path('C:/qmk_firmware/keyboards')
-# Result: '/c/qmk_firmware/keyboards'
+```mermaid
+flowchart TD
+    Start([Path Request])
+    
+    Start --> CheckType{Path Type?}
+    
+    CheckType -->|Keyboard| KeyboardPath
+    CheckType -->|Keymap| KeymapPath
+    CheckType -->|File| FilePath
+    
+    KeyboardPath --> ValidateKeyboard{is_keyboard?}
+    ValidateKeyboard -->|Yes| ReturnKeyboard[Return keyboard path]
+    ValidateKeyboard -->|No| ErrorKeyboard[Raise error]
+    
+    KeymapPath --> FindKeymaps[Find keymaps]
+    FindKeymaps --> SearchKeymap{keymap exists?}
+    SearchKeymap -->|Yes| ReturnKeymap[Return keymap path]
+    SearchKeymap -->|No| ErrorKeymap[Raise error]
+    
+    FilePath --> Normalize[Normalize path]
+    Normalize --> CheckExists{File exists?}
+    CheckExists -->|Yes| ReturnFile[Return normalized path]
+    CheckExists -->|No| ProcessFile[Process as stdin/argparse]
 ```
 
 ## Error Handling
 
-The module implements several error handling mechanisms:
+The path module implements several error handling mechanisms:
 
-- **Path Validation**: Prevents absolute path injection in keyboard names
-- **Existence Checking**: Verifies file and directory existence before operations
-- **Exception Handling**: Uses try-catch blocks for path operations that may fail
-- **Logging**: Provides error messages for debugging path resolution issues
+- **NoSuchKeyboardError**: Raised when keymap directories cannot be found for a given keyboard
+- **ValueError**: Caught and handled when paths are not within expected directory structures
+- **FileNotFoundError**: Implicitly handled through file existence checks
 
-## Security Considerations
+## Cross-Platform Compatibility
 
-- **Path Injection Prevention**: The `is_keyboard` function explicitly checks for and rejects absolute paths
-- **Environment Variable Usage**: Relies on `ORIG_CWD` for consistent path resolution
-- **File System Traversal**: Implements proper bounds checking when traversing directory structures
+The module provides robust cross-platform support through:
+- `pathlib.Path` for modern path handling
+- `unix_style_path()` for Windows-to-Unix path conversion
+- Environment variable usage (`ORIG_CWD`) for consistent relative path resolution
+- Support for both Windows and POSIX path formats
 
-## Performance Considerations
+## Usage Examples
 
-- **Caching Potential**: Path resolution results could be cached for frequently accessed keyboards
-- **File System Operations**: Minimizes file system calls by checking multiple conditions in sequence
-- **String Operations**: Uses efficient path operations from pathlib rather than string manipulation
+### Basic Path Resolution
+```python
+from qmk.path import keyboard, keymap
 
-This module provides the essential foundation for reliable file system operations within the QMK ecosystem, ensuring consistent behavior across different platforms and configurations.
+# Get keyboard path
+kb_path = keyboard("planck/rev6")
+
+# Find keymap
+km_path = keymap("planck/rev6", "default")
+```
+
+### Path Validation
+```python
+from qmk.path import is_keyboard, is_under_qmk_firmware
+
+# Validate keyboard
+if is_keyboard("planck/rev6"):
+    print("Valid keyboard")
+
+# Check path location
+if is_under_qmk_firmware(Path("keyboards/planck")):
+    print("Path is within QMK firmware")
+```
+
+### File Type Handling
+```python
+import argparse
+from qmk.path import FileType
+
+parser = argparse.ArgumentParser()
+parser.add_argument('file', type=FileType('r'))
+args = parser.parse_args()
+```
+
+## Best Practices
+
+1. **Always use path functions** for keyboard and keymap resolution instead of manual path construction
+2. **Validate paths** using `is_keyboard()` before performing operations
+3. **Use `normpath()`** for command-line provided paths to ensure consistency
+4. **Handle both firmware and userspace** paths when working with keymaps
+5. **Consider cross-platform compatibility** when working with paths in Makefiles or build scripts
+
+## Related Documentation
+
+- [Keyboard Module](keyboard.md) - For keyboard-specific operations and validation
+- [Userspace Module](userspace.md) - For userspace path management and validation
+- [Community Modules](community_modules.md) - For module path handling

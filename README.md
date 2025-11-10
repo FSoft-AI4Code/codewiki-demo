@@ -39,7 +39,7 @@ Adding new project documentation is automatic:
 
 2. **Regenerate index:**
    ```bash
-   node generate-projects.js
+   python generate-projects.py
    ```
 
 3. **Commit and push** (if using GitHub Pages)

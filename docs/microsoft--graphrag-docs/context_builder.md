@@ -1,372 +1,378 @@
 # Context Builder Module Documentation
 
-## Overview
+## Introduction
 
-The **context_builder** module is a core component of the GraphRAG query system responsible for preparing and organizing contextual information for different search modes. It provides the foundation for building relevant context that enables effective question answering over knowledge graphs.
+The context_builder module is a core component of the GraphRAG query system, responsible for constructing contextual information that feeds into different search modes (local, global, DRIFT, and basic search). This module provides the foundation for intelligent query processing by assembling relevant data, conversation history, and contextual information that enables the language models to generate accurate and contextually appropriate responses.
 
-The module implements a strategy pattern with specialized context builders for different search approaches: local search, global search, basic search, and DRIFT search. Each builder is designed to extract and format the most relevant information based on the specific search methodology.
+## Module Overview
 
-## Architecture
+The context_builder module serves as the intermediary between the raw graph data and the query processing pipeline. It abstracts the complexity of data retrieval and formatting, providing a unified interface for different search strategies to access relevant contextual information. The module is designed with extensibility in mind, allowing for different context building strategies while maintaining consistent interfaces and data structures.
 
-### Core Components
+## Core Architecture
+
+### Component Structure
 
 ```mermaid
 graph TB
     subgraph "Context Builder Module"
         CB[ContextBuilderResult]
-        GCB[GlobalContextBuilder<br/><i>Abstract Base</i>]
-        LCB[LocalContextBuilder<br/><i>Abstract Base</i>]
-        BCB[BasicContextBuilder<br/><i>Abstract Base</i>]
-        DCB[DRIFTContextBuilder<br/><i>Abstract Base</i>]
+        GCB[GlobalContextBuilder]
+        LCB[LocalContextBuilder]
+        DCB[DRIFTContextBuilder]
+        BCB[BasicContextBuilder]
         CH[ConversationHistory]
         CT[ConversationTurn]
         QAT[QATurn]
+        CR[ConversationRole]
     end
     
-    subgraph "Search System"
-        BS[BaseSearch]
-        LS[LocalSearch]
-        GS[GlobalSearch]
-        BS2[BasicSearch]
-        DS[DRIFTSearch]
+    subgraph "External Dependencies"
+        QS[Query System]
+        LM[Language Models]
+        PD[Pandas DataFrames]
+        TE[TikToken Encoder]
     end
     
-    subgraph "Data Models"
-        CM[Community Models]
-        EM[Entity Models]
-        RM[Relationship Models]
-        DM[Document Models]
-    end
+    GCB --> CB
+    LCB --> CB
+    DCB --> CB
+    BCB --> CB
     
-    CB -->|used by| GCB
-    CB -->|used by| LCB
-    CB -->|used by| BCB
+    CH --> CT
+    CH --> QAT
+    CT --> CR
     
-    GCB -->|implemented by| GS
-    LCB -->|implemented by| LS
-    BCB -->|implemented by| BS2
-    DCB -->|implemented by| DS
-    
-    CH -->|used by| GCB
-    CH -->|used by| LCB
-    CH -->|used by| BCB
-    
-    CT -->|composes| CH
-    QAT -->|derived from| CH
-    
-    LS -->|extends| BS
-    GS -->|extends| BS
-    BS2 -->|extends| BS
-    DS -->|extends| BS
-    
-    GCB -->|accesses| CM
-    LCB -->|accesses| EM
-    LCB -->|accesses| RM
-    BCB -->|accesses| DM
+    CB --> QS
+    CH --> LM
+    CH --> PD
+    CH --> TE
 ```
-
-### Component Relationships
-
-```mermaid
-graph LR
-    subgraph "Abstract Base Classes"
-        GCB
-        LCB
-        BCB
-        DCB
-    end
-    
-    subgraph "Concrete Implementations"
-        GCImpl[GlobalContextImpl]
-        LCImpl[LocalContextImpl]
-        BCImpl[BasicContextImpl]
-        DCImpl[DRIFTContextImpl]
-    end
-    
-    subgraph "Search Orchestration"
-        GS
-        LS
-        BS
-        DS
-    end
-    
-    GCB -->|specializes| GCImpl
-    LCB -->|specializes| LCImpl
-    BCB -->|specializes| BCImpl
-    DCB -->|specializes| DCImpl
-    
-    GCImpl -->|powers| GS
-    LCImpl -->|powers| LS
-    BCImpl -->|powers| BS
-    DCImpl -->|powers| DS
-```
-
-## Core Components
-
-### ContextBuilderResult
-
-The `ContextBuilderResult` dataclass serves as the standardized output format for all context builders. It encapsulates:
-
-- **context_chunks**: Formatted text chunks ready for LLM consumption
-- **context_records**: Structured data records organized by type (entities, relationships, communities, etc.)
-- **llm_calls**: Number of LLM calls made during context building
-- **prompt_tokens**: Total tokens used in prompts
-- **output_tokens**: Total tokens in outputs
 
 ### Abstract Base Classes
 
+The module defines four abstract base classes, each corresponding to a specific search mode:
+
 #### GlobalContextBuilder
-
-The `GlobalContextBuilder` provides the interface for building context in global search mode. Global search operates on community-level summaries and is designed for high-level, holistic questions about the dataset.
-
-**Key Characteristics:**
-- Asynchronous operation (`async def build_context`)
-- Operates on community reports and summaries
-- Handles conversation history integration
-- Optimized for broad, dataset-wide queries
+- **Purpose**: Handles context building for global search operations
+- **Method**: `build_context()` - Asynchronous operation
+- **Use Case**: Broad, graph-wide queries that require understanding of community structures and high-level patterns
 
 #### LocalContextBuilder
-
-The `LocalContextBuilder` defines the interface for local search context building. Local search focuses on specific entities and their immediate relationships, providing detailed, localized information.
-
-**Key Characteristics:**
-- Synchronous operation (`def build_context`)
-- Entity-centric context building
-- Relationship traversal and inclusion
-- Optimized for specific, detailed queries
-
-#### BasicContextBuilder
-
-The `BasicContextBuilder` provides a simplified context building approach for basic search operations, typically working directly with document content.
-
-**Key Characteristics:**
-- Synchronous operation
-- Document-based context
-- Minimal processing overhead
-- Suitable for straightforward queries
+- **Purpose**: Manages context building for local search operations
+- **Method**: `build_context()` - Synchronous operation
+- **Use Case**: Focused queries around specific entities or relationships
 
 #### DRIFTContextBuilder
+- **Purpose**: Specialized context building for DRIFT search mode
+- **Method**: `build_context()` - Asynchronous operation
+- **Return Type**: Tuple of DataFrame and dictionary with token counts
+- **Use Case**: Primer search actions requiring specific data formatting
 
-The `DRIFTContextBuilder` supports the DRIFT (Dynamic Reasoning over Information Flow and Topology) search methodology, which enables adaptive exploration of the knowledge graph.
+#### BasicContextBuilder
+- **Purpose**: Handles context building for basic search operations
+- **Method**: `build_context()` - Synchronous operation
+- **Use Case**: Simple, straightforward queries with minimal context requirements
 
-**Key Characteristics:**
-- Asynchronous operation
-- Dynamic context adaptation
-- Specialized for exploratory queries
-- Returns DataFrame and metrics tuple
+## Conversation History Management
 
-### ConversationHistory
+### Core Components
 
-The `ConversationHistory` class manages multi-turn conversation state and provides context formatting capabilities:
+#### ConversationHistory Class
+The `ConversationHistory` class serves as the central repository for managing conversational context across query sessions. It provides sophisticated token management and context formatting capabilities essential for maintaining coherent multi-turn conversations.
+
+**Key Features:**
+- Multi-turn conversation storage and retrieval
+- Token-based context truncation
+- Role-based message filtering
+- Recency bias implementation
+- Flexible context formatting
+
+#### ConversationTurn and QATurn
+These data structures represent individual conversation elements:
+- **ConversationTurn**: Single message with role and content
+- **QATurn**: Question-answer pair grouping user queries with assistant responses
+
+### Conversation Processing Pipeline
 
 ```mermaid
 sequenceDiagram
     participant User
     participant CH as ConversationHistory
+    participant CT as ConversationTurn
+    participant QAT as QATurn
     participant CB as ContextBuilder
-    participant Search as SearchEngine
+    participant LLM as Language Model
     
     User->>CH: Add user query
-    CH->>CH: Store ConversationTurn
-    User->>Search: Submit query
-    Search->>CB: Request context
-    CB->>CH: Get conversation history
-    CH->>CH: Convert to QA turns
-    CH->>CH: Apply token limits
-    CH->>CB: Return formatted context
-    CB->>Search: Provide context chunks
-    Search->>User: Return search results
+    CH->>CT: Create ConversationTurn
+    CH->>CH: Store in turns list
+    
     User->>CH: Add assistant response
+    CH->>CT: Create ConversationTurn
+    CH->>CH: Store in turns list
+    
+    CB->>CH: Request context
+    CH->>QAT: Convert to QA pairs
+    QAT->>CB: Return structured data
+    CB->>LLM: Format context with token limits
+    LLM->>User: Process query with context
 ```
 
-**Key Features:**
-- **Turn Management**: Stores conversation turns with roles (system, user, assistant)
-- **QA Conversion**: Converts linear conversation to question-answer pairs
-- **Token Management**: Applies token limits and recency bias
-- **Context Formatting**: Prepares conversation history for system prompts
+## Context Building Process
 
-## Data Flow
-
-### Context Building Process
+### Data Flow Architecture
 
 ```mermaid
-flowchart TD
-    Start([Query Received])
-    --> CheckHistory{Conversation History?}
+graph LR
+    subgraph "Input Sources"
+        Query[User Query]
+        History[Conversation History]
+        Graph[Graph Data]
+        Config[Configuration]
+    end
     
-    CheckHistory -->|Yes| ProcessHistory[Process Conversation History]
-    CheckHistory -->|No| SkipHistory[Skip History Processing]
+    subgraph "Context Builder Processing"
+        Tokenize[Token Analysis]
+        Filter[Content Filtering]
+        Format[Context Formatting]
+        Validate[Validation]
+    end
     
-    ProcessHistory --> DetermineSearch[Determine Search Type]
-    SkipHistory --> DetermineSearch
+    subgraph "Output Products"
+        Chunks[Context Chunks]
+        Records[Data Records]
+        Metrics[Usage Metrics]
+        Result[ContextBuilderResult]
+    end
     
-    DetermineSearch -->|Global| GlobalPath[Global Context Building]
-    DetermineSearch -->|Local| LocalPath[Local Context Building]
-    DetermineSearch -->|Basic| BasicPath[Basic Context Building]
-    DetermineSearch -->|DRIFT| DRIFTPath[DRIFT Context Building]
+    Query --> Tokenize
+    History --> Filter
+    Graph --> Format
+    Config --> Validate
     
-    GlobalPath --> FetchCommunities[Fetch Community Reports]
-    FetchCommunities --> RankCommunities[Rank by Relevance]
-    RankCommunities --> FormatGlobal[Format Global Context]
+    Tokenize --> Chunks
+    Filter --> Records
+    Format --> Metrics
+    Validate --> Result
     
-    LocalPath --> IdentifyEntities[Identify Relevant Entities]
-    IdentifyEntities --> FetchRelationships[Fetch Relationships]
-    FetchRelationships --> FetchTextUnits[Fetch Text Units]
-    FetchTextUnits --> FormatLocal[Format Local Context]
-    
-    BasicPath --> FetchDocuments[Fetch Documents]
-    FetchDocuments --> RankDocuments[Rank by Relevance]
-    RankDocuments --> FormatBasic[Format Basic Context]
-    
-    DRIFTPath --> DynamicExplore[Dynamic Graph Exploration]
-    DynamicExplore --> AdaptContext[Adapt Context]
-    AdaptContext --> FormatDRIFT[Format DRIFT Context]
-    
-    FormatGlobal --> ApplyLimits[Apply Token Limits]
-    FormatLocal --> ApplyLimits
-    FormatBasic --> ApplyLimits
-    FormatDRIFT --> ApplyLimits
-    
-    ApplyLimits --> ReturnResult[Return ContextBuilderResult]
-    ReturnResult --> End([Context Ready])
+    Chunks --> Result
+    Records --> Result
+    Metrics --> Result
 ```
 
-### Integration with Search System
+### ContextBuilderResult Structure
+
+The `ContextBuilderResult` dataclass encapsulates all outputs from the context building process:
+
+```python
+@dataclass
+class ContextBuilderResult:
+    context_chunks: str | list[str]  # Formatted context text
+    context_records: dict[str, pd.DataFrame]  # Structured data records
+    llm_calls: int = 0  # Number of LLM invocations
+    prompt_tokens: int = 0  # Input token count
+    output_tokens: int = 0  # Output token count
+```
+
+## Integration with Query System
+
+### Search Mode Integration
 
 ```mermaid
 graph TB
-    subgraph "Search Execution Flow"
-        Q[User Query]
-        SB[Search Begin]
-        CB[Context Building]
-        PR[Prompt Rendering]
-        LLM[LLM Call]
-        SR[Search Result]
+    subgraph "Query Engine"
+        LS[LocalSearch]
+        GS[GlobalSearch]
+        DS[DRIFTSearch]
+        BS[BasicSearch]
     end
     
-    subgraph "Context Builder Role"
-        CH[Conversation History]
-        CR[Context Records]
-        CC[Context Chunks]
-        CT[Token Counting]
+    subgraph "Context Builders"
+        LCB[LocalContextBuilder]
+        GCB[GlobalContextBuilder]
+        DCB[DRIFTContextBuilder]
+        BCB[BasicContextBuilder]
     end
     
-    Q --> SB
-    SB --> CB
-    CB --> CH
-    CB --> CR
-    CB --> CC
-    CB --> CT
+    subgraph "Context Results"
+        LCR[Local Context]
+        GCR[Global Context]
+        DCR[DRIFT Context]
+        BCR[Basic Context]
+    end
     
-    CH --> PR
-    CR --> PR
-    CC --> PR
-    CT --> PR
+    LS --> LCB
+    GS --> GCB
+    DS --> DCB
+    BS --> BCB
     
-    PR --> LLM
-    LLM --> SR
+    LCB --> LCR
+    GCB --> GCR
+    DCB --> DCR
+    BCB --> BCR
+    
+    LCR --> LS
+    GCR --> GS
+    DCR --> DS
+    BCR --> BS
 ```
 
-## Dependencies
+### Configuration Integration
+
+The context_builder module integrates with the broader GraphRAG configuration system:
+- **SearchMethod**: Determines which context builder to instantiate
+- **LocalSearchConfig**: Provides parameters for local context building
+- **GlobalSearchConfig**: Provides parameters for global context building
+- **LanguageModelConfig**: Supplies token encoding and model parameters
+
+## Token Management and Optimization
+
+### Token-Based Context Truncation
+
+The conversation history implementation includes sophisticated token management:
+
+1. **Token Counting**: Uses tiktoken for accurate token estimation
+2. **Context Truncation**: Automatically truncates history based on token limits
+3. **Recency Bias**: Prioritizes recent conversation turns
+4. **Selective Inclusion**: Filters user vs. assistant turns based on configuration
+
+### Performance Considerations
+
+```mermaid
+graph TD
+    A[Context Request] --> B{Token Limit Check}
+    B -->|Under Limit| C[Include All History]
+    B -->|Over Limit| D[Apply Truncation]
+    D --> E[Recency Sorting]
+    E --> F[Token Recalculation]
+    F --> G{Still Over Limit}
+    G -->|Yes| H[Remove Oldest Turns]
+    G -->|No| I[Format Context]
+    H --> F
+    C --> I
+    I --> J[Return Result]
+```
+
+## Error Handling and Validation
+
+### Input Validation
+- Conversation role validation using enum-based typing
+- Content sanitization for safe text processing
+- Token encoder validation and fallback mechanisms
+
+### Context Building Safeguards
+- Empty context handling with graceful degradation
+- DataFrame validation before CSV conversion
+- Token limit enforcement with configurable thresholds
+
+## Usage Patterns and Best Practices
+
+### Conversation History Management
+
+```python
+# Initialize conversation history
+history = ConversationHistory()
+
+# Add conversation turns
+history.add_turn(ConversationRole.USER, "What is the capital of France?")
+history.add_turn(ConversationRole.ASSISTANT, "The capital of France is Paris.")
+
+# Build context with token limits
+context_text, context_dfs = history.build_context(
+    max_qa_turns=5,
+    max_context_tokens=4000,
+    recency_bias=True
+)
+```
+
+### Context Builder Implementation Pattern
+
+```python
+class CustomLocalContextBuilder(LocalContextBuilder):
+    def build_context(self, query: str, conversation_history=None, **kwargs):
+        # Implement custom context building logic
+        context_chunks = self._assemble_context(query, conversation_history)
+        context_records = self._prepare_records(query)
+        
+        return ContextBuilderResult(
+            context_chunks=context_chunks,
+            context_records=context_records,
+            llm_calls=0,
+            prompt_tokens=self._count_tokens(context_chunks),
+            output_tokens=0
+        )
+```
+
+## Dependencies and Integration Points
 
 ### Internal Dependencies
-
-The context_builder module relies on several core GraphRAG modules:
-
-- **[data_models](data_models.md)**: Provides entity, relationship, community, and document models
-- **[language_models](language_models.md)**: Supplies token encoding and text processing utilities
-- **[query_system](query_system.md)**: Integrates with search orchestration
+- **Query System**: Provides search interfaces and result structures ([query_engine.md](query_engine.md))
+- **Data Model**: Supplies entity, relationship, and community data ([core_data_model.md](core_data_model.md))
+- **Configuration**: Supplies search and model parameters ([configuration.md](configuration.md))
 
 ### External Dependencies
-
-- **pandas**: Data manipulation and formatting
-- **tiktoken**: Token counting and management
+- **pandas**: Data manipulation and CSV formatting
+- **tiktoken**: Token counting for context management
 - **dataclasses**: Structured data representation
-
-## Usage Patterns
-
-### Local Search Context Building
-
-Local search context builders typically:
-1. Identify entities mentioned in the query
-2. Extract related entities through relationship traversal
-3. Include relevant text units and community information
-4. Apply relevance scoring and ranking
-5. Format results within token limits
-
-### Global Search Context Building
-
-Global search context builders typically:
-1. Analyze query for high-level themes
-2. Select relevant community reports
-3. Rank communities by importance and relevance
-4. Format community summaries for LLM consumption
-5. Handle large context through chunking
-
-### Conversation History Integration
-
-All context builders support conversation history integration:
-- Maintain conversation continuity
-- Apply recency bias for relevance
-- Respect token limits
-- Format as structured data for LLM context
-
-## Performance Considerations
-
-### Token Management
-- All builders implement token counting and limits
-- Context is truncated when exceeding limits
-- Recency bias ensures recent conversation turns are prioritized
-
-### Asynchronous Operations
-- Global and DRIFT builders support async operations
-- Enables parallel context building for large datasets
-- Improves response times for complex queries
-
-### Memory Efficiency
-- Context records are stored as pandas DataFrames
-- Lazy loading of related entities and relationships
-- Efficient data structures for large-scale operations
 
 ## Extension Points
 
 ### Custom Context Builders
+Developers can extend the system by implementing the abstract base classes:
 
-New context builders can be created by extending the abstract base classes:
+1. **Inherit** from appropriate base class (LocalContextBuilder, GlobalContextBuilder, etc.)
+2. **Implement** the `build_context` method with custom logic
+3. **Register** with the query system through configuration
+4. **Handle** conversation history and token management
 
-```python
-class CustomContextBuilder(GlobalContextBuilder):
-    async def build_context(
-        self,
-        query: str,
-        conversation_history: ConversationHistory | None = None,
-        **kwargs,
-    ) -> ContextBuilderResult:
-        # Custom implementation
-        pass
-```
+### Conversation History Extensions
+The conversation history system can be extended to support:
+- Custom token counting strategies
+- Alternative conversation formats
+- Integration with external conversation stores
+- Advanced filtering and prioritization algorithms
 
-### Context Post-Processing
+## Performance Optimization
 
-The `ContextBuilderResult` structure allows for:
-- Custom context chunk formatting
-- Additional metadata inclusion
-- Performance metrics tracking
-- Integration with monitoring systems
+### Caching Strategies
+- Context result caching for repeated queries
+- Token count memoization
+- Conversation history snapshot caching
 
-## Error Handling
+### Memory Management
+- DataFrame optimization for large conversation histories
+- Streaming context building for large datasets
+- Garbage collection optimization for long-running sessions
 
-The module implements robust error handling:
-- Graceful degradation when entities/relationships are missing
-- Token limit enforcement without crashes
-- Empty context handling
-- Conversation history validation
+## Monitoring and Observability
+
+### Metrics Collection
+- Context building latency
+- Token usage statistics
+- Conversation history depth analysis
+- Cache hit rates
+
+### Logging Integration
+- Context building process logging
+- Token limit enforcement logging
+- Error condition tracking
+- Performance bottleneck identification
 
 ## Future Enhancements
 
-Potential areas for enhancement include:
-- Multi-language conversation history support
-- Advanced relevance scoring algorithms
-- Dynamic context adaptation based on query complexity
-- Integration with external knowledge sources
-- Enhanced conversation memory management
+### Planned Features
+- Multi-language conversation support
+- Advanced conversation summarization
+- Context-aware token allocation
+- Dynamic context weighting
+- Conversation history persistence
+
+### Scalability Improvements
+- Distributed context building
+- Parallel conversation processing
+- Incremental context updates
+- Memory-efficient conversation storage
+
+## Conclusion
+
+The context_builder module represents a critical component in the GraphRAG query pipeline, providing the intelligent context assembly capabilities necessary for effective graph-based question answering. Its modular design, comprehensive token management, and flexible architecture make it well-suited for handling diverse query types while maintaining performance and accuracy standards. The module's integration with conversation history management ensures that multi-turn interactions remain coherent and contextually relevant, essential for building sophisticated conversational AI applications.

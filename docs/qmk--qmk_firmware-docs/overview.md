@@ -2,279 +2,201 @@
 
 ## Overview
 
-The QMK (Quantum Mechanical Keyboard) Firmware module is a comprehensive keyboard firmware ecosystem that provides tools, libraries, and utilities for building, configuring, and managing mechanical keyboard firmware. This module encompasses the entire QMK firmware build system, including Python utilities, hardware abstraction layers, and various supporting components.
+The QMK (Quantum Mechanical Keyboard) Firmware module is a comprehensive keyboard firmware ecosystem that provides tools, libraries, and utilities for building, configuring, and flashing custom keyboard firmware. This module encompasses the entire QMK firmware build system, from low-level hardware abstraction to high-level configuration tools.
 
 ## Architecture
 
 ```mermaid
 graph TB
     subgraph "QMK Firmware Module"
-        subgraph "Core Python Libraries"
-            A[lib.python.qmk.painter_qgf]
-            B[lib.python.qmk.painter_qff]
-            C[lib.python.qmk.search]
-            D[lib.python.qmk.build_targets]
-            E[lib.python.qmk.flashers]
-            F[lib.python.qmk.userspace]
-            G[lib.python.qmk.json_encoders]
-            H[lib.python.qmk.keyboard]
-            I[lib.python.qmk.path]
-            J[lib.python.qmk.community_modules]
+        subgraph "Core Libraries"
+            CL[lib/python/qmk]
+            USB[lib/usbhost]
+            ARD[Arduino Core]
         end
         
-        subgraph "CLI Tools"
-            K[lib.python.qmk.cli.generate.keyboard_c]
-            L[lib.python.qmk.cli.doctor.check]
+        subgraph "Build System"
+            BT[Build Targets]
+            SC[Search & Compile]
+            FL[Flashers]
         end
         
         subgraph "Hardware Support"
-            M[lib.usbhost.arduino-1.0.1]
-            N[drivers.bluetooth.bluefruit_le]
+            BT_DRV[Bluetooth Drivers]
+            USB_DRV[USB Drivers]
+            HW[Hardware Abstraction]
         end
         
         subgraph "Utilities"
-            O[keyboards.ergodox_ez.util.keymap_beautifier]
-            P[util.uf2conv]
-            Q[lib.python.kle2xy]
+            UF2[UF2 Converter]
+            KB[Keyboard Tools]
+            KM[Keymap Tools]
         end
     end
     
-    A --> D
-    B --> D
-    C --> D
-    D --> E
-    F --> D
-    H --> C
-    I --> H
-    J --> D
-    
-    K --> A
-    K --> B
-    L --> E
+    CL --> BT
+    CL --> SC
+    CL --> FL
+    BT --> BT_DRV
+    SC --> USB_DRV
+    FL --> HW
+    BT --> UF2
+    SC --> KB
+    FL --> KM
 ```
 
 ## Core Functionality
 
-### 1. Graphics and Display Support
+### 1. Build System (`lib/python/qmk/build_targets.py`)
+The build system provides a unified interface for compiling keyboard firmware:
+- **BuildTarget**: Base class for all build operations
+- **KeyboardKeymapBuildTarget**: Handles keyboard+keymap compilation
+- **JsonKeymapBuildTarget**: Processes JSON-based keymap configurations
+- Supports parallel compilation, cleaning, and compilation database generation
 
-The module provides comprehensive graphics support through two main subsystems:
-
-#### Quantum Graphics File (QGF) Format
-- **Purpose**: Custom image format for keyboard displays
-- **Components**: 
-  - `QGFImageFile`: Main image file handler
-  - `QGFGraphicsDescriptor`: File metadata and properties
-  - `QGFFrameDescriptorV1`: Individual frame information
-  - `QGFFramePaletteDescriptorV1`: Color palette management
-  - `QGFFrameDataDescriptorV1`: Image data storage
-- **Features**: RLE compression, delta frames, animation support
-- **File**: [painter_qgf.md](painter_qgf.md)
-
-#### Quantum Font File (QFF) Format
-- **Purpose**: Custom font format for keyboard displays
-- **Components**:
-  - `QFFFont`: Main font handler and generator
-  - `QFFFontDescriptor`: Font metadata
-  - `QFFAsciiGlyphTableV1`: ASCII character support
-  - `QFFUnicodeGlyphTableV1`: Unicode character support
-- **Features**: TTF conversion, glyph extraction, RLE compression
-- **File**: [painter_qff.md](painter_qff.md)
-
-### 2. Build System and Targets
-
-#### Build Target Management
-- **Purpose**: Unified interface for keyboard compilation
-- **Components**:
-  - `BuildTarget`: Base class for all build targets
-  - `KeyboardKeymapBuildTarget`: Traditional keyboard/keymap builds
-  - `JsonKeymapBuildTarget`: Configurator JSON-based builds
-- **Features**: Parallel builds, compilation databases, clean builds
-- **File**: [build_targets.md](build_targets.md)
-
-#### Search and Filtering
-- **Purpose**: Find keyboards and keymaps matching criteria
-- **Components**:
-  - `KeyboardKeymapDesc`: Keyboard/keymap descriptor
-  - `FilterFunction`: Base class for search filters
-  - `Exists`, `Absent`, `Length`, `Contains`: Specific filter implementations
-- **Features**: Complex queries, parallel processing, wildcard support
-- **File**: [search.md](search.md)
-
-#### Build Target Management
-- **Purpose**: Unified interface for keyboard compilation
-- **Components**:
-  - `BuildTarget`: Base class for all build targets
-  - `KeyboardKeymapBuildTarget`: Traditional keyboard/keymap builds
-  - `JsonKeymapBuildTarget`: Configurator JSON-based builds
-- **Features**: Parallel builds, compilation databases, clean builds
-- **File**: [build_targets.md](build_targets.md)
-
-#### Keyboard Management
-- **Purpose**: Handle keyboard discovery and metadata
-- **Components**:
-  - `AllKeyboards`: Special object representing all keyboards
-- **Features**: Keyboard enumeration, alias resolution, path handling
-- **File**: [keyboard.md](keyboard.md)
+### 2. Search and Discovery (`lib/python/qmk/search.py`)
+Advanced search capabilities for keyboards and keymaps:
+- **KeyboardKeymapDesc**: Represents keyboard/keymap combinations
+- **FilterFunction**: Base class for filtering search results
+- **Exists/Absent/Contains/Length**: Various filter implementations
+- Parallel processing for performance
 
 ### 3. Hardware Abstraction
+Multiple hardware abstraction layers:
+- **USB Host Library** (`lib/usbhost/`): Arduino-compatible USB host implementation
+- **Bluetooth Drivers** (`drivers/bluetooth/`): Bluefruit LE support
+- **Hardware Serial**: Multi-UART support for various microcontroller platforms
 
-#### USB Communication
-- **Purpose**: Arduino-compatible USB stack
-- **Components**:
-  - `ring_buffer`: Circular buffer implementation
-  - `CDC.cpp`: USB CDC (Communications Device Class)
-  - `USBCore.cpp`: Core USB functionality
-- **Features**: Serial communication, bootloader support
+### 4. Graphics and Display Support
+Advanced graphics capabilities for keyboards with displays:
+- **QGF Format** (`lib/python/qmk/painter_qgf.py`): Quantum Graphics File format
+- **QFF Format** (`lib/python/qmk/painter_qff.py`): Quantum Font File format
+- Image compression, delta frames, and palette support
 
-#### Bluetooth Support
-- **Purpose**: Bluefruit LE Bluetooth module integration
-- **Components**:
-  - `sdep_msg`: SDEP (Simple Data Exchange Protocol) message structure
-  - `queue_item`: Queued data for transmission
-- **Features**: Wireless connectivity, HID over BLE
-- **File**: [bluefruit_le.md](bluefruit_le.md)
+### 5. Flashing and Programming
+Comprehensive flashing support for various bootloaders:
+- **DFU**: Device Firmware Update protocol
+- **Caterina**: Arduino bootloader
+- **UF2**: Microsoft UF2 format
+- **ISP**: In-System Programming
+- **HID Bootloader**: Human Interface Device bootloader
 
-### 4. Development Tools
+## Key Components
 
-#### Code Generation
-- **Purpose**: Generate C code from JSON configurations
-- **Components**:
-  - `Layout` and `LayoutKey`: Keyboard layout geometry
-  - LED configuration generation
-  - Matrix mask generation
-- **Features**: Automatic code generation from info.json
+### Python Libraries (`lib/python/qmk/`)
 
-#### Keymap Beautification
-- **Purpose**: Format and beautify keymap source code
-- **Components**:
-  - `KeymapBeautifier`: C code formatting and layout
-- **Features**: ErgoDox-specific layouts, pretty printing
-- **File**: [keymap_beautifier.md](keymap_beautifier.md)
+#### [keyboard.py](keyboard.md)
+Keyboard discovery, validation, and layout rendering functionality. Provides the `AllKeyboards` class for handling keyboard collections, keyboard folder resolution, and visual layout rendering with support for both Unicode and ASCII art representations.
 
-### 5. File Format Support
+#### [flashers.py](flashers.md)
+Multi-protocol firmware flashing system with bootloader detection. Implements `DelayedKeyboardInterrupt` for safe USB operations and supports multiple bootloader types including DFU, Caterina, UF2, and ISP protocols.
 
-#### UF2 Conversion
-- **Purpose**: Convert between firmware formats
-- **Components**:
-  - `Block`: UF2 block structure
-- **Features**: UF2, HEX, BIN conversion, direct flashing
-- **File**: [uf2conv.md](uf2conv.md)
+#### [json_encoders.py](json_encoders.md)
+Specialized JSON encoders for QMK configuration files. Provides custom encoders for different QMK file types including `InfoJSONEncoder`, `KeymapJSONEncoder`, `UserspaceJSONEncoder`, and `CommunityModuleJSONEncoder` with proper formatting and sorting.
 
-#### KLE Layout Support
-- **Purpose**: Parse Keyboard Layout Editor files
-- **Components**:
-  - `KLE2xy`: KLE layout parser
-- **Features**: Layout extraction, coordinate calculation
-- **File**: [kle2xy.md](kle2xy.md)
+#### [path.py](path.md)
+File system utilities and path normalization for cross-platform compatibility. Includes `FileType` argument parser, keyboard and keymap path resolution, and Windows-to-Unix path conversion utilities.
 
-### 6. System Utilities
+#### [userspace.py](userspace.md)
+QMK userspace management and validation system. Provides `UserspaceDefs` class for managing build targets, validation against multiple schema versions, and automatic userspace detection across different directory structures.
 
-#### Path Management
-- **Purpose**: Cross-platform path handling
-- **Components**:
-  - `FileType`: Enhanced file type handling
-- **Features**: Windows/Unix path conversion, QMK-specific paths
-- **File**: [path.md](path.md)
+#### [community_modules.py](community_modules.md)
+Community module system for extending QMK functionality. Implements `ModuleAPI` for module definitions, discovery of available modules, and JSON validation for community-contributed extensions.
 
-#### JSON Encoding
-- **Purpose**: Custom JSON serialization
-- **Components**:
-  - `QMKJSONEncoder`: Base JSON encoder
-  - `InfoJSONEncoder`, `KeymapJSONEncoder`, `UserspaceJSONEncoder`: Specific encoders
-- **Features**: Pretty printing, schema compliance
-- **File**: [json_encoders.md](json_encoders.md)
+### Hardware Drivers
 
-#### Userspace Management
-- **Purpose**: Manage user-specific QMK configurations
-- **Components**:
-  - `UserspaceDefs`: Userspace configuration handler
-- **Features**: Build target management, validation
-- **File**: [userspace.md](userspace.md)
+#### USB Host (`lib/usbhost/arduino-1.0.1/`)
+Arduino-compatible USB host implementation providing:
+- USB core functionality (`USBCore.cpp`)
+- CDC (Communications Device Class) support (`CDC.cpp`)
+- Hardware serial communication (`HardwareSerial.cpp`)
 
-#### Community Modules
-- **Purpose**: Support for third-party QMK modules
-- **Components**:
-  - `ModuleAPI`: Module interface definition
-- **Features**: Module discovery, loading, validation
-- **File**: [community_modules.md](community_modules.md)
+#### Bluetooth Support (`drivers/bluetooth/bluefruit_le.cpp`)
+Adafruit Bluefruit LE module support with:
+- SDEP (Simple Data Exchange Protocol) implementation
+- Keyboard HID over Bluetooth
+- Connection management and power control
+
+### Utilities
+
+#### UF2 Converter (`util/uf2conv.py`)
+Universal UF2 format converter supporting:
+- Hex to UF2 conversion
+- Binary to UF2 conversion
+- Direct flashing to UF2-compatible devices
+- Multiple microcontroller families
+
+#### Keymap Beautifier (`keyboards/ergodox_ez/util/keymap_beautifier/KeymapBeautifier.py`)
+ErgoDox EZ keymap formatting tool for improved readability.
+
+## Data Flow
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant CLI
+    participant Search
+    participant Build
+    participant Flash
+    participant Hardware
+    
+    User->>CLI: qmk compile -kb keyboard -km keymap
+    CLI->>Search: Find keyboard/keymap
+    Search->>Build: Return build target
+    Build->>Build: Generate compilation commands
+    Build->>Hardware: Execute build
+    Hardware->>Build: Return firmware binary
+    Build->>Flash: Request flashing
+    Flash->>Hardware: Detect bootloader
+    Flash->>Hardware: Flash firmware
+    Flash->>User: Success/Failure
+```
+
+## Configuration Files
+
+The module supports various configuration formats:
+- **info.json**: Keyboard hardware description
+- **keymap.json**: Keymap configuration
+- **rules.mk**: Build rules and features
+- **config.h**: Hardware configuration
+- **qmk.json**: Userspace configuration
 
 ## Integration Points
 
-The QMK Firmware module integrates with various external systems:
+### With Other Modules
+- **QMK CLI**: Primary interface for all operations
+- **Quantum**: Core firmware framework
+- **Drivers**: Hardware-specific implementations
+- **Tests**: Automated testing framework
 
-1. **Hardware Platforms**: Arduino, ARM Cortex-M, AVR microcontrollers
-2. **Build Systems**: Make, CMake, platform-specific toolchains
-3. **Development Tools**: GDB, OpenOCD, various programmers
-4. **Configuration Tools**: QMK Configurator, VIA, VIAL
-5. **Version Control**: Git submodules for dependency management
+### External Dependencies
+- Python 3.6+ for build tools
+- GCC/Clang for compilation
+- Various flashing tools (dfu-programmer, avrdude, etc.)
+- PIL/Pillow for graphics processing
 
-## Dependencies
+## Development Workflow
 
-The module has several key dependencies:
+1. **Keyboard Definition**: Create `info.json` and hardware configuration
+2. **Keymap Creation**: Define key layouts and functions
+3. **Build Configuration**: Set up `rules.mk` and compile options
+4. **Compilation**: Use build system to generate firmware
+5. **Flashing**: Program firmware to target device
+6. **Testing**: Validate functionality and iterate
 
-- **Python Libraries**: PIL (Python Imaging Library), milc, dotty-dict
-- **System Tools**: avr-gcc, arm-none-eabi-gcc, dfu-util, avrdude
-- **Hardware Tools**: Various flashing utilities and debuggers
-- **External Libraries**: Arduino core libraries, USB stack
+## Error Handling
 
-## Usage Patterns
+The module implements comprehensive error handling:
+- Validation of keyboard/keymap combinations
+- Bootloader detection and compatibility checking
+- Build failure analysis and reporting
+- Hardware communication error recovery
 
-### Typical Workflow
+## Performance Considerations
 
-1. **Configuration**: Define keyboard layout in info.json
-2. **Code Generation**: Generate C files from JSON configuration
-3. **Build**: Compile firmware using build targets
-4. **Flash**: Program microcontroller using appropriate flasher
-5. **Test**: Verify functionality and iterate
+- Parallel processing for multi-keyboard operations
+- Caching of keyboard information and build artifacts
+- Incremental builds to minimize compilation time
+- Efficient memory usage for large keymap datasets
 
-### Advanced Features
-
-- **Custom Graphics**: Create custom fonts and images for displays
-- **Wireless Support**: Enable Bluetooth connectivity
-- **Community Modules**: Extend functionality with third-party modules
-- **Userspace Builds**: Maintain user-specific configurations
-
-## File Structure
-
-```
-qmk--qmk_firmware/
-├── lib/python/qmk/          # Python utilities and libraries
-│   ├── painter_qgf.py       # QGF image format support
-│   ├── painter_qff.py       # QFF font format support
-│   ├── search.py            # Search and filtering utilities
-│   ├── build_targets.py     # Build system interfaces
-│   ├── flashers.py          # Firmware flashing utilities
-│   ├── userspace.py         # Userspace configuration
-│   ├── json_encoders.py     # JSON serialization
-│   ├── keyboard.py          # Keyboard management
-│   ├── path.py              # Path utilities
-│   └── community_modules.py # Community module support
-├── lib/python/qmk/cli/      # Command-line interfaces
-│   ├── generate/            # Code generation tools
-│   └── doctor/              # System checking tools
-├── lib/usbhost/             # USB host support
-├── drivers/                 # Hardware drivers
-├── keyboards/               # Keyboard definitions
-└── util/                    # Utility programs
-```
-
-This documentation provides a comprehensive overview of the QMK Firmware module. For detailed information about specific sub-modules, please refer to their individual documentation files linked throughout this document.
-
-## Generated Documentation Files
-
-The following detailed documentation files have been generated for individual sub-modules:
-
-- **[painter_qgf.md](painter_qgf.md)** - Quantum Graphics File format documentation
-- **[painter_qff.md](painter_qff.md)** - Quantum Font File format documentation  
-- **[search.md](search.md)** - Search and filtering utilities documentation
-- **[build_targets.md](build_targets.md)** - Build system and target management documentation
-- **[keyboard.md](keyboard.md)** - Keyboard management and discovery documentation
-- **[flashers.md](flashers.md)** - Firmware flashing utilities documentation
-- **[userspace.md](userspace.md)** - Userspace configuration management documentation
-- **[json_encoders.md](json_encoders.md)** - JSON serialization utilities documentation
-- **[path.md](path.md)** - Path handling utilities documentation
-- **[community_modules.md](community_modules.md)** - Community module support documentation
-- **[bluefruit_le.md](bluefruit_le.md)** - Bluetooth LE support documentation
-- **[keymap_beautifier.md](keymap_beautifier.md)** - Keymap code formatting documentation
-- **[uf2conv.md](uf2conv.md)** - UF2 firmware format conversion documentation
-- **[kle2xy.md](kle2xy.md)** - KLE layout parser documentation
+This documentation provides a comprehensive overview of the QMK Firmware module's architecture and capabilities. For detailed information on specific sub-modules, refer to the linked documentation files.

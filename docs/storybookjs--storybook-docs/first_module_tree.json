@@ -1,0 +1,147 @@
+{
+    "storybook_configuration": {
+        "path": "code/core/src/types",
+        "components": [
+            "code.core.src.types.modules.core-common.StorybookConfig",
+            "code.core.src.types.modules.core-common.BuilderOptions",
+            "code.core.src.types.modules.core-common.Ref",
+            "code.core.src.csf.story.ProjectAnnotations"
+        ],
+        "children": {}
+    },
+    "component_story_format": {
+        "path": "code/core/src/csf",
+        "components": [
+            "code.core.src.csf.SBType.SBBaseType",
+            "code.core.src.csf.story.StoryIdentifier",
+            "code.core.src.csf.story.StrictArgs",
+            "code.core.src.csf.story.Renderer",
+            "code.core.src.types.modules.indexer.IndexedCSFFile",
+            "code.core.src.types.modules.csf.StorybookTypes"
+        ],
+        "children": {}
+    },
+    "manager_api_and_ui": {
+        "path": "code/core/src/manager",
+        "components": [
+            "code.core.src.manager-api.root.ManagerProvider",
+            "code.core.src.manager.runtime.ReactProvider",
+            "code.core.src.manager.components.sidebar.Sidebar.SidebarProps",
+            "code.core.src.manager.components.sidebar.Explorer.ExplorerProps",
+            "code.core.src.manager.settings.shortcuts.ShortcutsScreen",
+            "code.core.src.types.modules.api.API_ProviderData"
+        ],
+        "children": {}
+    },
+    "preview_api": {
+        "path": "code/core/src/preview-api",
+        "components": [
+            "code.core.src.preview-api.modules.preview-web.Preview.Preview",
+            "code.core.src.preview-api.modules.preview-web.PreviewWithSelection.PreviewWithSelection",
+            "code.core.src.types.modules.story.WebRenderer"
+        ],
+        "children": {}
+    },
+    "core_ui_library": {
+        "path": "code/core/src/components/components",
+        "components": [
+            "code.core.src.components.components.Button.Button.ButtonProps",
+            "code.core.src.components.components.bar.bar.BarProps",
+            "code.core.src.components.components.tooltip.Tooltip.TooltipProps",
+            "code.core.src.components.components.tabs.tabs.WrapperProps",
+            "code.core.src.components.components.syntaxhighlighter.syntaxhighlighter-types.SyntaxHighlighterBaseProps",
+            "code.core.src.components.components.Form.Field.FieldProps",
+            "code.core.src.components.components.icon.icon.SymbolsProps"
+        ],
+        "children": {}
+    },
+    "docs_addon": {
+        "path": "code/addons/docs/src",
+        "components": [
+            "code.addons.docs.src.DocsRenderer.DocsRenderer",
+            "code.addons.docs.src.blocks.components.ArgsTable.ArgsTable.ArgsTableOptionProps",
+            "code.addons.docs.src.blocks.components.ArgsTable.types.ArgTypes",
+            "code.addons.docs.src.blocks.components.IFrame.IFrame",
+            "code.addons.docs.src.blocks.controls.types.ControlProps",
+            "code.addons.docs.src.compiler.types.CompileOptions",
+            "code.addons.docs.src.types.DocsTypes"
+        ],
+        "children": {}
+    },
+    "a11y_addon": {
+        "path": "code/addons/a11y/src",
+        "components": [
+            "code.addons.a11y.src.components.A11yContext.A11yContextStore",
+            "code.addons.a11y.src.params.A11yParameters",
+            "code.addons.a11y.src.types.A11yTypes",
+            "code.addons.a11y.src.components.Report.Report.ReportProps"
+        ],
+        "children": {}
+    },
+    "core_addon_types": {
+        "path": "code/core/src",
+        "components": [
+            "code.core.src.actions.types.ActionsTypes",
+            "code.core.src.backgrounds.types.BackgroundTypes",
+            "code.core.src.viewport.types.ViewportTypes",
+            "code.core.src.controls.types.ControlsTypes",
+            "code.core.src.outline.types.OutlineTypes",
+            "code.core.src.measure.types.MeasureTypes",
+            "code.addons.themes.src.types.ThemesTypes"
+        ],
+        "children": {}
+    },
+    "package_manager_abstraction": {
+        "path": "code/core/src/common/js-package-manager",
+        "components": [
+            "code.core.src.common.js-package-manager.JsPackageManagerFactory.JsPackageManagerFactory",
+            "code.core.src.common.js-package-manager.NPMProxy.NPMProxy",
+            "code.core.src.common.js-package-manager.Yarn1Proxy.Yarn1Proxy",
+            "code.core.src.common.js-package-manager.Yarn2Proxy.Yarn2Proxy",
+            "code.core.src.common.js-package-manager.PNPMProxy.PNPMProxy",
+            "code.core.src.common.js-package-manager.BUNProxy.BUNProxy"
+        ],
+        "children": {}
+    },
+    "instrumenter": {
+        "path": "code/core/src/instrumenter",
+        "components": [
+            "code.core.src.instrumenter.instrumenter.Instrumenter",
+            "code.core.src.instrumenter.types.Options"
+        ],
+        "children": {}
+    },
+    "webpack_builder": {
+        "path": "code/builders/builder-webpack5",
+        "components": [
+            "code.builders.builder-webpack5.src.types.BuilderResult",
+            "code.builders.builder-webpack5.src.types.StorybookConfigWebpack",
+            "code.lib.core-webpack.src.types.WebpackConfiguration"
+        ],
+        "children": {}
+    },
+    "angular_framework": {
+        "path": "code/frameworks/angular/src",
+        "components": [
+            "code.frameworks.angular.src.types.AngularOptions",
+            "code.frameworks.angular.src.client.angular-beta.RendererFactory.RendererFactory"
+        ],
+        "children": {}
+    },
+    "theming": {
+        "path": "code/core/src/theming",
+        "components": [
+            "code.core.src.theming.types.ThemeVarsBase"
+        ],
+        "children": {}
+    },
+    "cli_automigration": {
+        "path": "code/lib/cli-storybook/src/automigrate",
+        "components": [
+            "code.lib.cli-storybook.src.automigrate.fixes.renderer-to-framework.MigrationResult",
+            "code.lib.cli-storybook.src.automigrate.fixes.eslint-plugin.EslintPluginRunOptions",
+            "code.lib.cli-storybook.src.automigrate.fixes.consolidated-imports.ConsolidatedOptions"
+        ],
+        "children": {}
+    }
+}

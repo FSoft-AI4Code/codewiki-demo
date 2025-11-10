@@ -2,257 +2,323 @@
 
 ## Introduction
 
-The Memory Management module is a core component of the x64dbg debugger that provides comprehensive memory analysis and manipulation capabilities for Windows processes. It handles memory page enumeration, memory reading/writing operations, heap analysis, and memory protection management. The module is specifically designed to work with modern Windows versions, including Windows 11 24H2+ with its updated heap structures.
+The Memory Management module is a core component of the x64dbg debugging framework that provides comprehensive memory analysis and manipulation capabilities for Windows processes. This module handles memory mapping, page information retrieval, memory reading/writing operations, and specialized Windows 11 24H2+ heap management features.
 
 ## Core Functionality
 
-### Memory Page Management
-The module maintains a comprehensive map of all memory pages in the target process, providing detailed information about memory regions, their protection attributes, and associated modules or system structures.
+The module serves as the primary interface for all memory-related operations within the debugger, offering:
 
-### Memory Operations
-Provides safe and unsafe memory read/write operations with automatic page boundary handling and error recovery mechanisms.
-
-### Heap Analysis
-Advanced heap enumeration capabilities, including support for Windows 11 24H2+ segment heap structures and process heap descriptors.
-
-### Memory Protection
-Comprehensive memory protection management with string-based rights conversion and validation.
+- **Memory Mapping**: Dynamic construction and maintenance of process memory maps
+- **Page Analysis**: Detailed memory page information including protection attributes and state
+- **Memory Access**: Safe and unsafe memory read/write operations with cross-page boundary handling
+- **Windows 11 Support**: Specialized heap enumeration for Windows 11 24H2+ systems
+- **Module Integration**: Integration with PE file sections and module information
 
 ## Architecture
+
+### Component Overview
 
 ```mermaid
 graph TB
     subgraph "Memory Management Core"
-        MM[Memory Manager]
-        MP[Memory Pages]
-        MO[Memory Operations]
-        HA[Heap Analysis]
-        MPV[Memory Protection]
-    end
-    
-    subgraph "Windows 11 24H2+ Support"
-        W11H[_WIN11_HEAP]
-        W11PHD[_WIN11_PROCESS_HEAP_DESCRIPTOR]
-        W11SH[_WIN11_SEGMENT_HEAP]
+        A[MemUpdateMap] --> B[QueryMemPages]
+        A --> C[ProcessFileSections]
+        A --> D[ProcessSystemPages]
+        
+        E[Memory Operations] --> F[MemRead/MemWrite]
+        E --> G[MemPatch]
+        E --> H[MemoryReadSafePage]
+        
+        I[Page Management] --> J[MemGetPageInfo]
+        I --> K[MemSetPageRights]
+        I --> L[MemFindBaseAddr]
+        
+        M[Windows 11 Support] --> N[_WIN11_HEAP]
+        M --> O[_WIN11_SEGMENT_HEAP]
+        M --> P[_WIN11_PROCESS_HEAP_DESCRIPTOR]
     end
     
     subgraph "External Dependencies"
-        DBG[Debugger Engine]
-        MOD[Module Management]
-        THR[Thread Management]
-        GUI[GUI Interface]
+        Q[Debugger Core]
+        R[Module System]
+        S[Thread Management]
+        T[Symbol Processing]
     end
     
-    MM --> MP
-    MM --> MO
-    MM --> HA
-    MM --> MPV
-    
-    HA --> W11H
-    HA --> W11PHD
-    HA --> W11SH
-    
-    MM --> DBG
-    MM --> MOD
-    MM --> THR
-    MM --> GUI
+    A -.-> Q
+    C -.-> R
+    D -.-> S
+    F -.-> T
 ```
 
-## Component Relationships
+### Data Flow Architecture
 
 ```mermaid
 graph LR
-    subgraph "Memory Management Components"
-        A[MemUpdateMap]
-        B[QueryMemPages]
-        C[ProcessFileSections]
-        D[ProcessSystemPages]
-        E[MemRead/MemWrite]
-        F[Heap Enumeration]
+    subgraph "Memory Discovery"
+        A[VirtualQueryEx] --> B[Memory Pages Vector]
+        C[Module Database] --> D[Section Information]
+        E[Thread List] --> F[TEB/Stack Info]
+        G[PEB Analysis] --> H[Heap Information]
     end
     
-    A --> B
-    A --> C
-    A --> D
+    subgraph "Processing Pipeline"
+        B --> I[Page Consolidation]
+        D --> I
+        F --> J[System Page Marking]
+        H --> J
+        I --> K[Memory Map Construction]
+        J --> K
+    end
     
-    B --> E
-    C --> E
-    D --> E
-    
-    D --> F
-    
-    E --> G[Memory Cache]
-    F --> H[Heap Cache]
+    subgraph "Storage"
+        K --> L[memoryPages Map]
+    end
 ```
 
-## Data Flow
+## Core Components
 
-```mermaid
-sequenceDiagram
-    participant GUI
-    participant MM
-    participant OS
-    participant Cache
-    
-    GUI->>MM: Request memory map update
-    MM->>OS: VirtualQueryEx for memory regions
-    OS-->>MM: Memory information
-    MM->>OS: Get module information
-    OS-->>MM: Module details
-    MM->>OS: Get thread information
-    OS-->>MM: Thread/TEB details
-    MM->>OS: Get heap information
-    OS-->>MM: Heap descriptors
-    MM->>Cache: Update memory pages
-    MM->>GUI: Notify update complete
+### Windows 11 Heap Structures
+
+The module includes specialized support for Windows 11 24H2+ heap management:
+
+#### `_WIN11_HEAP`
+```cpp
+typedef struct _WIN11_HEAP
+{
+    UCHAR Reserved0[0x10];   // 0x0   ~ 0x10  Skip unused members
+    ULONG SegmentSignature;  // 0x10  ~ 0x14
+    UCHAR Reserved1[0x174];  // 0x14  ~ 0x188 Skip unused members
+    PVOID UserContext;       // 0x188 ~ 0x190
+    UCHAR Reserved2[0x130];  // 0x190 ~ 0x2C0 Skip unused members
+} WIN11_HEAP, * PWIN11_HEAP;
 ```
 
-## Key Components
+#### `_WIN11_SEGMENT_HEAP`
+```cpp
+typedef struct _WIN11_SEGMENT_HEAP
+{
+    UCHAR Reserved0[0x10];  // 0x0  ~ 0x10  Skip unused members
+    ULONG Signature;        // 0x10 ~ 0x14
+    UCHAR Reserved1[0x24];  // 0x14 ~ 0x38  Skip unused members
+    PVOID UserContext;      // 0x38 ~ 0x40
+} WIN11_SEGMENT_HEAP, *PWIN11_SEGMENT_HEAP;
+```
 
-### Memory Page Enumeration
-- **QueryMemPages()**: Enumerates all memory pages in the process address space
-- **ProcessFileSections()**: Breaks down module pages into individual sections
-- **ProcessSystemPages()**: Identifies system structures (PEB, TEB, heaps, stacks)
+#### `_WIN11_PROCESS_HEAP_DESCRIPTOR`
+```cpp
+typedef struct _WIN11_PROCESS_HEAP_DESCRIPTOR
+{
+    PVOID Next;
+    PVOID Prev;
+    PWIN11_HEAP Heap;
+} WIN11_PROCESS_HEAP_DESCRIPTOR, *PWIN11_PROCESS_HEAP_DESCRIPTOR;
+```
 
-### Memory Operations
-- **MemRead()**: Safe memory reading with caching and validation
-- **MemWrite()**: Memory writing with page boundary handling
-- **MemReadUnsafe()**: Direct memory access without safety checks
-- **MemoryReadSafePage()**: Page-aligned safe reading with working set validation
+### Memory Mapping System
 
-### Heap Analysis (Windows 11 24H2+)
-- **_WIN11_HEAP**: Structure for Windows 11 NT heap format
-- **_WIN11_SEGMENT_HEAP**: Structure for Windows 11 segment heap format
-- **_WIN11_PROCESS_HEAP_DESCRIPTOR**: Process heap descriptor chain
+The memory mapping system constructs a comprehensive view of process memory through several key functions:
 
-### Memory Protection
-- **MemGetProtect()**: Retrieves memory protection attributes
-- **MemSetProtect()**: Modifies memory protection
-- **MemPageRightsToString()**: Converts protection flags to string format
-- **MemPageRightsFromString()**: Parses string protection format
+#### `MemUpdateMap()`
+The primary function that orchestrates memory map construction:
+
+1. **Page Discovery**: Uses `VirtualQueryEx` to enumerate all memory regions
+2. **Module Integration**: Processes PE file sections and maps them to memory pages
+3. **System Information**: Identifies special Windows structures (PEB, TEB, stacks, heaps)
+4. **Map Construction**: Builds the final `memoryPages` map for efficient lookup
+
+#### `QueryMemPages()`
+Performs the initial memory page discovery:
+
+```cpp
+std::vector<MEMPAGE> QueryMemPages()
+{
+    // Iterates through process memory using VirtualQueryEx
+    // Consolidates adjacent pages with same attributes
+    // Identifies module mappings and file-backed sections
+    // Returns vector of MEMPAGE structures
+}
+```
+
+#### `ProcessFileSections()`
+Integrates module section information:
+
+- Retrieves module information from the module database
+- Aligns sections according to PE header specifications
+- Handles special cases like Windows 11 24H2+ hotpatching support
+- Creates individual pages for each section when in detailed view mode
+
+#### `ProcessSystemPages()`
+Identifies and marks system-specific memory regions:
+
+- **PEB Detection**: Marks Process Environment Block pages
+- **TEB Identification**: Thread Environment Blocks for each thread
+- **Stack Recognition**: Thread stack regions using TIB information
+- **Heap Enumeration**: Windows 11 24H2+ extended heap discovery
+
+### Memory Access Operations
+
+The module provides multiple memory access methods with different safety levels:
+
+#### Safe Memory Operations
+```cpp
+bool MemRead(duint BaseAddress, void* Buffer, duint Size, duint* NumberOfBytesRead, bool cache)
+bool MemWrite(duint BaseAddress, const void* Buffer, duint Size, duint* NumberOfBytesWritten)
+```
+
+Features:
+- Cross-page boundary handling
+- Canonical address validation
+- Cache integration for performance
+- Working set optimization
+
+#### Unsafe Memory Operations
+```cpp
+bool MemReadUnsafe(duint BaseAddress, void* Buffer, duint Size, duint* NumberOfBytesRead)
+```
+
+Used for:
+- Direct memory access without safety checks
+- Performance-critical operations
+- Special debugging scenarios
+
+#### Memory Patching
+```cpp
+bool MemPatch(duint BaseAddress, const void* Buffer, duint Size, duint* NumberOfBytesWritten)
+```
+
+Integrates with the [Patch System](Patch%20System.md) to:
+- Track memory modifications
+- Maintain patch history
+- Enable undo functionality
 
 ## Process Flow
 
+### Memory Map Update Process
+
+```mermaid
+sequenceDiagram
+    participant D as Debugger
+    participant MM as Memory Management
+    participant OS as Operating System
+    participant MD as Module Database
+    participant TS as Thread System
+
+    D->>MM: MemUpdateMap()
+    MM->>OS: VirtualQueryEx (enumerate pages)
+    OS-->>MM: Memory region information
+    MM->>MD: ModInfoFromAddr() (get module info)
+    MD-->>MM: Module sections and headers
+    MM->>TS: ThreadGetList() (get threads)
+    TS-->>MM: Thread information
+    MM->>MM: ProcessFileSections()
+    MM->>MM: ProcessSystemPages()
+    MM->>MM: Build memoryPages map
+    MM-->>D: Updated memory map
+```
+
+### Windows 11 Heap Enumeration
+
 ```mermaid
 flowchart TD
-    A[Memory Map Update Request] --> B{Debugging Active?}
-    B -->|Yes| C[Query Memory Pages]
-    B -->|No| Z[Return Empty]
+    A[Check Windows Build >= 26100] --> B{PEB shows only 1 heap?}
+    B -->|Yes| C[Read heap signature]
+    B -->|No| D[Use standard PEB enumeration]
     
-    C --> D[Process File Sections]
-    D --> E[Process System Pages]
-    E --> F[Update Memory Cache]
-    F --> G[Notify GUI Update]
+    C --> E{Signature type}
+    E -->|NT_HEAP| F[Read UserContext from WIN11_HEAP]
+    E -->|SEGMENT_HEAP| G[Read UserContext from WIN11_SEGMENT_HEAP]
     
-    subgraph "System Page Processing"
-        E --> H[Identify PEB]
-        E --> I[Identify TEBs]
-        E --> J[Identify Stacks]
-        E --> K[Identify Heaps]
-        E --> L[Identify KUSER_SHARED_DATA]
-    end
+    F --> H[Walk heap descriptor list]
+    G --> H
+    
+    H --> I[ProcessHeapDescriptor.Next != 0?]
+    I -->|Yes| J[Read heap pointer]
+    I -->|No| K[Complete enumeration]
+    
+    J --> L[Validate heap signature]
+    L -->|Valid| M[Add to heap map]
+    M --> H
 ```
 
-## Windows 11 24H2+ Heap Support
+## Integration Points
 
-The module includes specialized support for Windows 11 24H2+ enhanced heap structures:
+### Module System Integration
+The Memory Management module closely integrates with the [Module System](Module%20System.md) to:
+- Retrieve module section information
+- Map PE headers to memory pages
+- Handle module loading/unloading events
+- Process section alignment and protection
 
-```mermaid
-graph TD
-    A[PEB ProcessHeaps] --> B{Windows 11 24H2+?}
-    B -->|Yes| C[Check Segment Signature]
-    C --> D{NT Heap or Segment Heap?}
-    D -->|NT Heap| E[Read UserContext]
-    D -->|Segment Heap| F[Read UserContext]
-    E --> G[Traverse Heap Descriptor Chain]
-    F --> G
-    G --> H[Enumerate All Heaps]
+### Thread System Integration
+Coordinates with the [Thread Management](Thread%20Management.md) system to:
+- Identify thread stack regions
+- Map TEB (Thread Environment Block) locations
+- Track thread creation/destruction
+- Update memory maps on thread changes
+
+### Symbol Processing Integration
+Works with the [Symbol Processing](Symbol%20Processing.md) module to:
+- Resolve symbol addresses for memory regions
+- Provide symbolic names for memory pages
+- Handle symbol-based memory queries
+- Support address-to-symbol resolution
+
+### File Parsing Integration
+Utilizes the [File Parsing](File%20Parsing.md) capabilities for:
+- PE file section analysis
+- Module header parsing
+- Section protection determination
+- Import/export table processing
+
+## Key Features
+
+### Advanced Memory Analysis
+- **Cross-page Operations**: Seamless handling of memory operations spanning multiple pages
+- **Working Set Optimization**: Intelligent use of working set information to avoid unnecessary reads
+- **Canonical Address Validation**: Proper validation of 64-bit canonical addresses
+- **Memory Protection Tracking**: Comprehensive protection attribute management
+
+### Windows 11 24H2+ Support
+- **Extended Heap Discovery**: Handles new Windows 11 heap enumeration mechanisms
+- **Hotpatching Support**: Detects and properly handles hotpatching-enabled modules
+- **Segment Heap Recognition**: Distinguishes between NT heap and segment heap types
+
+### Performance Optimizations
+- **Memory Caching**: Intelligent caching system for frequently accessed memory
+- **Asynchronous Updates**: Background memory map updates to avoid blocking
+- **Page Consolidation**: Efficient consolidation of adjacent pages with identical attributes
+- **Working Set Integration**: Uses working set information to optimize memory access
+
+## Error Handling
+
+The module implements comprehensive error handling for various scenarios:
+
+- **Invalid Memory Access**: Graceful handling of inaccessible memory regions
+- **Module Information Errors**: Detection and reporting of malformed PE headers
+- **System API Failures**: Proper handling of VirtualQueryEx and related API failures
+- **Memory Alignment Issues**: Validation of page-aligned operations
+
+Error reporting includes detailed information for debugging:
+```cpp
+auto summary = StringUtils::sprintf("Error replacing page: %p[%p] (%s)\n", 
+    pageBase, pageSize, currentPage.info);
 ```
-
-## Integration with Other Modules
-
-### Module Management Integration
-- Uses [Module Management](Module%20Management.md) for section information
-- Retrieves module base addresses and sizes
-- Processes PE header information for proper section alignment
-
-### Thread Management Integration
-- Uses [Thread Management](Thread%20Management.md) for TEB and stack identification
-- Correlates thread IDs with memory regions
-- Handles both 32-bit and 64-bit thread contexts
-
-### GUI Integration
-- Notifies GUI components of memory map updates
-- Provides progress information during memory searches
-- Updates memory view displays
-
-## Memory Safety Features
-
-### Page Boundary Handling
-All memory operations automatically handle page boundaries, ensuring that reads and writes don't cross page boundaries which could cause partial operations or errors.
-
-### Working Set Validation
-The module can validate memory pages against the working set to avoid accessing pages that are not currently resident in memory.
-
-### Canonical Address Validation
-Ensures that addresses are valid canonical addresses, particularly important for 64-bit processes.
-
-### Error Recovery
-Implements comprehensive error handling and recovery mechanisms, including fallback strategies for memory operations.
-
-## Performance Optimizations
-
-### Caching System
-Maintains a comprehensive cache of memory page information to avoid repeated system calls and improve performance.
-
-### Asynchronous Updates
-Memory map updates can be performed asynchronously to avoid blocking the debugger interface.
-
-### Section-Aware Processing
-Processes memory at the section level for modules, providing more detailed and useful information while reducing overhead.
 
 ## Security Considerations
 
-### Process Cookie Support
-Implements pointer decoding using process cookies, essential for analyzing encoded pointers in modern Windows versions.
+- **Address Space Layout Randomization (ASLR)**: Proper handling of ASLR-enabled modules
+- **Data Execution Prevention (DEP)**: Accurate detection of executable memory regions
+- **Process Isolation**: Safe cross-process memory operations
+- **Privilege Validation**: Appropriate privilege checks for memory operations
 
-### Safe Memory Access
-Provides both safe and unsafe memory access methods, allowing users to choose the appropriate level of safety for their use case.
+## Performance Metrics
 
-### Protection Validation
-Validates memory protection attributes before performing operations to ensure compliance with system security policies.
+The module is designed for high-performance memory analysis:
 
-## Usage Examples
+- **Memory Map Construction**: Typically completes in milliseconds for large processes
+- **Page Lookup**: O(log n) complexity using ordered map structure
+- **Cross-page Operations**: Optimized for minimal system call overhead
+- **Cache Hit Rates**: Achieves high cache hit rates for typical debugging patterns
 
-### Basic Memory Reading
-```cpp
-duint address = 0x00400000;
-byte buffer[256];
-duint bytesRead;
-if(MemRead(address, buffer, sizeof(buffer), &bytesRead))
-{
-    // Process memory data
-}
-```
-
-### Memory Page Information
-```cpp
-MEMPAGE pageInfo;
-if(MemGetPageInfo(address, &pageInfo))
-{
-    // Access page protection, size, and other information
-}
-```
-
-### Heap Enumeration
-```cpp
-// Heap information is automatically populated during memory map updates
-// Access through the memory pages map
-```
-
-## Related Documentation
-
-- [Module Management](Module%20Management.md) - For module and section information
-- [Thread Management](Thread%20Management.md) - For thread and TEB information
-- [Breakpoint System](Breakpoint%20System.md) - For memory breakpoint functionality
-- [Symbol Resolution](Symbol%20Resolution.md) - For symbol information in memory regions
+This comprehensive memory management system provides the foundation for all memory-related debugging operations within the x64dbg framework, ensuring accurate, efficient, and reliable memory analysis across all supported Windows versions.

@@ -2,17 +2,16 @@
 
 ## Overview
 
-The Carousel module provides a sophisticated layout manager for Android RecyclerView that creates dynamic, stylized scrolling experiences. It implements a unique masking and offsetting system that allows items to transform their appearance as they move along the scrolling axis, creating fluid animations tied to scroll position.
+The Carousel module provides a sophisticated layout manager for creating stylized, scrollable lists with dynamic item masking and positioning effects. It implements a unique viewing experience where items are transformed as they scroll through focal points, creating fluid animations and visual hierarchy.
 
 ## Purpose
 
 The Carousel module is designed to:
 - Create visually appealing scrollable lists with dynamic item transformations
-- Provide smooth, interpolated animations based on scroll position
+- Provide smooth animations and transitions between different item states
 - Support both horizontal and vertical orientations
-- Enable customizable item masking and sizing behaviors
-- Offer multiple alignment strategies (start, center)
-- Integrate seamlessly with RecyclerView's recycling mechanism
+- Enable customizable item masking and positioning strategies
+- Integrate seamlessly with RecyclerView for efficient memory management
 
 ## Architecture
 
@@ -23,79 +22,61 @@ graph TB
         CS[CarouselStrategy]
         KSB[KeylineState.Builder]
         CSH[CarouselStrategyHelper]
-        KS[KeylineState]
-        KL[Keyline]
+        
+        CLM --> CS
+        CLM --> KSB
+        CS --> CSH
+        KSB --> KS[KeylineState]
     end
     
     subgraph "Android Framework"
         RV[RecyclerView]
         LM[LayoutManager]
-        VL[View]
+        V[View]
     end
     
-    CLM -->|extends| LM
-    CLM -->|uses| CS
-    CLM -->|uses| KS
-    CLM -->|manages| VL
-    CS -->|uses| CSH
-    CSH -->|builds| KSB
-    KSB -->|creates| KS
-    KS -->|contains| KL
-    RV -->|uses| CLM
+    CLM -.->|extends| LM
+    RV -.->|uses| CLM
+    V -.->|contains| CLM
 ```
 
 ## Core Components
 
-### 1. CarouselLayoutManager
+### CarouselLayoutManager
 The main layout manager that orchestrates the carousel behavior. It:
-- Manages item positioning and masking
+- Manages item positioning and masking based on keyline states
 - Handles scroll events and animations
-- Coordinates with RecyclerView's recycling mechanism
+- Coordinates with RecyclerView for efficient view recycling
 - Supports both horizontal and vertical orientations
 
-### 2. KeylineState System
-A sophisticated state management system that:
-- Defines item transformations at specific positions
-- Enables smooth interpolation between states
-- Supports focal and non-focal keylines
-- Handles RTL layout support
+### KeylineState.Builder
+A builder pattern implementation for creating keyline states that define:
+- Item positioning along the scroll axis
+- Masking percentages for visual effects
+- Focal points where items are fully visible
+- Anchor points for boundary conditions
 
-### 3. CarouselStrategy
-Abstract strategy pattern for defining carousel behaviors:
-- Determines item sizing and masking patterns
-- Supports multiple strategy types (contained, unrestricted)
-- Enables customizable alignment options
-
-### 4. CarouselStrategyHelper
+### CarouselStrategyHelper
 Utility class providing:
 - Dimension calculations for different item sizes
-- Keyline state creation helpers
-- Alignment-specific layout calculations
+- Keyline state creation for various alignment options
+- Helper methods for positioning calculations
 
 ## Key Features
 
 ### Dynamic Item Masking
-Items are dynamically masked based on their position along the scrolling axis, creating smooth transitions between different visual states.
-
-### Keyline-Based Animation
-The system uses keylines - specific points along the scroll axis where items should be in particular states. Items interpolate between these states as they scroll.
+Items are dynamically masked as they scroll, creating smooth transitions between different visual states. The masking is controlled by keylines that define how much of each item should be visible at different positions.
 
 ### Flexible Alignment
-Supports both start-aligned and center-aligned layouts, allowing for different visual presentations.
+Supports multiple alignment strategies:
+- **Start Alignment**: Large items align to the start of the carousel
+- **Center Alignment**: Large items center within the carousel
 
 ### Orientation Support
-Works in both horizontal and vertical orientations with appropriate behavior adaptations.
+Works in both horizontal and vertical orientations, adapting the keyline calculations and item positioning accordingly.
 
-### RTL Support
-Full right-to-left layout support with proper keyline reversal.
-
-## Integration Points
-
-The Carousel module integrates with:
-- **RecyclerView**: As a custom LayoutManager
-- **Material Design Components**: Following Material Design principles
-- **Android Animation Framework**: For smooth interpolations
-- **View System**: Through custom view behaviors and masking
+### Efficient Recycling
+Integrates with RecyclerView's recycling mechanism to maintain performance even with large datasets.
 
 ## Usage Patterns
 
@@ -113,26 +94,28 @@ CarouselLayoutManager layoutManager =
 
 ### Orientation Configuration
 ```java
+layoutManager.setOrientation(CarouselLayoutManager.HORIZONTAL);
+// or
 layoutManager.setOrientation(CarouselLayoutManager.VERTICAL);
 ```
 
+## Integration Points
+
+The Carousel module integrates with:
+- **RecyclerView**: As a custom LayoutManager
+- **MaskableFrameLayout**: Required for all carousel items
+- **Material Design Components**: For consistent theming and styling
+
 ## Performance Considerations
 
-- Efficient view recycling through RecyclerView integration
-- Lazy keyline state calculation
-- Optimized scroll handling with clamping
-- Minimal memory footprint for state management
+- Uses view recycling for memory efficiency
+- Implements lazy loading of keyline states
+- Provides debug mode for performance monitoring
+- Supports item prefetching for smooth scrolling
 
 ## Related Documentation
 
-- [appbar.md](appbar.md) - For app bar integration patterns
-- [transition.md](transition.md) - For animation transition details
-- [shape.md](shape.md) - For custom shape implementations
-
-## Sub-modules
-
-The carousel module consists of several interconnected sub-modules:
-
-- **[layout-manager-core](layout-manager-core.md)**: Core layout management functionality including orientation handling, scroll management, and view positioning
-- **[keyline-system](keyline-system.md)**: Keyline state management, interpolation algorithms, and RTL support for dynamic item transformations
-- **[strategy-framework](strategy-framework.md)**: Strategy pattern implementation for customizable carousel behaviors, alignment options, and sizing calculations
+- [CarouselLayoutManager Documentation](carousel-layout-manager.md) - Detailed documentation of the main layout manager component
+- [CarouselStrategyHelper Documentation](carousel-strategy-helper.md) - Utility methods and helper functions for carousel strategies
+- [KeylineState.Builder Documentation](keyline-state-builder.md) - Builder pattern for creating keyline states
+- [Material Design Carousel Guidelines](https://material.io/components/carousel)
