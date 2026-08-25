@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-09-16T22:53:13.786594",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/StackExchange--StackExchange.Redis",
         "commit_id": "d48af3edcad1286b1997015881e00d771ba6be1b"

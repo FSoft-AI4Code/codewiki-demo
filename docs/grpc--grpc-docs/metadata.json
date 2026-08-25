@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-09-16T18:55:07.861606",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/grpc--grpc",
         "commit_id": "bb96be017584c206eb3036eb7da14f5ccdc57e8d"

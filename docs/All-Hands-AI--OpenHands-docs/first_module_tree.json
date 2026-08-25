@@ -1,160 +1,773 @@
 {
-    "core_agent_system": {
-        "path": "openhands/controller",
+    "agent_reasoning_core": {
+        "path": "openhands",
         "components": [
-            "openhands.controller.agent.Agent",
-            "openhands.controller.action_parser.ActionParser",
-            "openhands.controller.action_parser.ResponseParser",
-            "openhands.controller.state.state.TrafficControlState",
-            "openhands.controller.state.control_flags.ControlFlag"
+            "openhands/controller/agent_controller.py::AgentController",
+            "openhands/controller/state/state_tracker.py::StateTracker",
+            "openhands/controller/state/state.py::TrafficControlState",
+            "openhands/controller/state/control_flags.py::ControlFlag",
+            "openhands/controller/stuck.py::StuckDetector",
+            "openhands/controller/replay.py::ReplayManager",
+            "openhands/agenthub/browsing_agent/browsing_agent.py::BrowsingAgent",
+            "openhands/agenthub/browsing_agent/response_parser.py::BrowsingResponseParser",
+            "openhands/agenthub/browsing_agent/response_parser.py::BrowsingActionParserBrowseInteractive",
+            "openhands/agenthub/browsing_agent/response_parser.py::BrowsingActionParserMessage",
+            "openhands/agenthub/visualbrowsing_agent/visualbrowsing_agent.py::VisualBrowsingAgent",
+            "openhands/agenthub/readonly_agent/readonly_agent.py::ReadOnlyAgent",
+            "openhands/agenthub/loc_agent/loc_agent.py::LocAgent",
+            "openhands/agenthub/dummy_agent/agent.py::DummyAgent",
+            "openhands/critic/finish_critic.py::AgentFinishedCritic",
+            "openhands/llm/llm_registry.py::LLMRegistry",
+            "openhands/llm/streaming_llm.py::StreamingLLM",
+            "openhands/llm/metrics.py::Metrics",
+            "openhands/llm/router/rule_based/impl.py::MultimodalRouter",
+            "openhands/memory/memory.py::Memory",
+            "openhands/memory/conversation_memory.py::ConversationMemory",
+            "openhands/memory/condenser/impl/pipeline.py::CondenserPipeline",
+            "openhands/memory/condenser/impl/amortized_forgetting_condenser.py::AmortizedForgettingCondenser",
+            "openhands/memory/condenser/impl/browser_output_condenser.py::BrowserOutputCondenser",
+            "openhands/memory/condenser/impl/conversation_window_condenser.py::ConversationWindowCondenser",
+            "openhands/memory/condenser/impl/llm_attention_condenser.py::LLMAttentionCondenser",
+            "openhands/memory/condenser/impl/llm_attention_condenser.py::ImportantEventSelection",
+            "openhands/memory/condenser/impl/llm_summarizing_condenser.py::LLMSummarizingCondenser",
+            "openhands/memory/condenser/impl/observation_masking_condenser.py::ObservationMaskingCondenser",
+            "openhands/memory/condenser/impl/recent_events_condenser.py::RecentEventsCondenser",
+            "openhands/memory/condenser/impl/structured_summary_condenser.py::StructuredSummaryCondenser",
+            "openhands/microagent/microagent.py::RepoMicroagent",
+            "openhands/microagent/microagent.py::TaskMicroagent",
+            "openhands/microagent/types.py::MicroagentType",
+            "openhands/microagent/types.py::InputMetadata",
+            "openhands/security/invariant/analyzer.py::InvariantAnalyzer",
+            "openhands/security/invariant/client.py::InvariantClient",
+            "openhands/security/invariant/client.py::InvariantClient._Monitor",
+            "openhands/security/invariant/client.py::InvariantClient._Policy",
+            "openhands/security/invariant/parser.py::InvariantState",
+            "openhands/security/invariant/nodes.py::LLM",
+            "openhands/security/llm/analyzer.py::LLMRiskAnalyzer"
         ],
-        "children": {}
+        "children": {
+            "agent_controller": {
+                "path": "openhands/controller",
+                "components": [
+                    "openhands/controller/agent_controller.py::AgentController",
+                    "openhands/controller/state/state_tracker.py::StateTracker",
+                    "openhands/controller/state/state.py::TrafficControlState",
+                    "openhands/controller/state/control_flags.py::ControlFlag",
+                    "openhands/controller/stuck.py::StuckDetector",
+                    "openhands/controller/replay.py::ReplayManager"
+                ],
+                "children": {}
+            },
+            "agents": {
+                "path": "openhands/agenthub",
+                "components": [
+                    "openhands/agenthub/browsing_agent/browsing_agent.py::BrowsingAgent",
+                    "openhands/agenthub/browsing_agent/response_parser.py::BrowsingResponseParser",
+                    "openhands/agenthub/browsing_agent/response_parser.py::BrowsingActionParserBrowseInteractive",
+                    "openhands/agenthub/browsing_agent/response_parser.py::BrowsingActionParserMessage",
+                    "openhands/agenthub/visualbrowsing_agent/visualbrowsing_agent.py::VisualBrowsingAgent",
+                    "openhands/agenthub/readonly_agent/readonly_agent.py::ReadOnlyAgent",
+                    "openhands/agenthub/loc_agent/loc_agent.py::LocAgent",
+                    "openhands/agenthub/dummy_agent/agent.py::DummyAgent",
+                    "openhands/critic/finish_critic.py::AgentFinishedCritic"
+                ],
+                "children": {}
+            },
+            "llm_layer": {
+                "path": "openhands/llm",
+                "components": [
+                    "openhands/llm/llm_registry.py::LLMRegistry",
+                    "openhands/llm/streaming_llm.py::StreamingLLM",
+                    "openhands/llm/metrics.py::Metrics",
+                    "openhands/llm/router/rule_based/impl.py::MultimodalRouter"
+                ],
+                "children": {}
+            },
+            "memory_and_condensers": {
+                "path": "openhands/memory",
+                "components": [
+                    "openhands/memory/memory.py::Memory",
+                    "openhands/memory/conversation_memory.py::ConversationMemory",
+                    "openhands/memory/condenser/impl/pipeline.py::CondenserPipeline",
+                    "openhands/memory/condenser/impl/amortized_forgetting_condenser.py::AmortizedForgettingCondenser",
+                    "openhands/memory/condenser/impl/browser_output_condenser.py::BrowserOutputCondenser",
+                    "openhands/memory/condenser/impl/conversation_window_condenser.py::ConversationWindowCondenser",
+                    "openhands/memory/condenser/impl/llm_attention_condenser.py::LLMAttentionCondenser",
+                    "openhands/memory/condenser/impl/llm_attention_condenser.py::ImportantEventSelection",
+                    "openhands/memory/condenser/impl/llm_summarizing_condenser.py::LLMSummarizingCondenser",
+                    "openhands/memory/condenser/impl/observation_masking_condenser.py::ObservationMaskingCondenser",
+                    "openhands/memory/condenser/impl/recent_events_condenser.py::RecentEventsCondenser",
+                    "openhands/memory/condenser/impl/structured_summary_condenser.py::StructuredSummaryCondenser"
+                ],
+                "children": {}
+            },
+            "microagents": {
+                "path": "openhands/microagent",
+                "components": [
+                    "openhands/microagent/microagent.py::RepoMicroagent",
+                    "openhands/microagent/microagent.py::TaskMicroagent",
+                    "openhands/microagent/types.py::MicroagentType",
+                    "openhands/microagent/types.py::InputMetadata"
+                ],
+                "children": {}
+            },
+            "security_analyzers": {
+                "path": "openhands/security",
+                "components": [
+                    "openhands/security/invariant/analyzer.py::InvariantAnalyzer",
+                    "openhands/security/invariant/client.py::InvariantClient",
+                    "openhands/security/invariant/client.py::InvariantClient._Monitor",
+                    "openhands/security/invariant/client.py::InvariantClient._Policy",
+                    "openhands/security/invariant/parser.py::InvariantState",
+                    "openhands/security/invariant/nodes.py::LLM",
+                    "openhands/security/llm/analyzer.py::LLMRiskAnalyzer"
+                ],
+                "children": {}
+            }
+        }
     },
-    "agent_implementations": {
-        "path": "openhands/agenthub",
+    "sandboxed_execution_layer": {
+        "path": "",
         "components": [
-            "openhands.agenthub.codeact_agent.codeact_agent.CodeActAgent",
-            "openhands.agenthub.browsing_agent.browsing_agent.BrowsingAgent",
-            "openhands.agenthub.visualbrowsing_agent.visualbrowsing_agent.VisualBrowsingAgent",
-            "openhands.agenthub.loc_agent.loc_agent.LocAgent",
-            "openhands.agenthub.readonly_agent.readonly_agent.ReadOnlyAgent"
+            "openhands/runtime/impl/docker/docker_runtime.py::DockerRuntime",
+            "openhands/runtime/impl/local/local_runtime.py::LocalRuntime",
+            "openhands/runtime/impl/cli/cli_runtime.py::CLIRuntime",
+            "openhands/runtime/impl/remote/remote_runtime.py::RemoteRuntime",
+            "openhands/runtime/impl/kubernetes/kubernetes_runtime.py::KubernetesRuntime",
+            "openhands/runtime/action_execution_server.py::ActionExecutor",
+            "openhands/runtime/action_execution_server.py::ActionRequest",
+            "third_party/runtime/impl/daytona/daytona_runtime.py::DaytonaRuntime",
+            "third_party/runtime/impl/modal/modal_runtime.py::ModalRuntime",
+            "third_party/runtime/impl/runloop/runloop_runtime.py::RunloopRuntime",
+            "third_party/runtime/impl/e2b/e2b_runtime.py::E2BRuntime",
+            "third_party/runtime/impl/e2b/sandbox.py::E2BBox",
+            "third_party/runtime/impl/e2b/filestore.py::E2BFileStore",
+            "third_party/runtime/impl/e2b/filestore.py::SupportsFilesystemOperations",
+            "openhands/runtime/builder/docker.py::DockerRuntimeBuilder",
+            "openhands/runtime/builder/remote.py::RemoteRuntimeBuilder",
+            "openhands/runtime/utils/runtime_build.py::BuildFromImageType",
+            "openhands/runtime/plugins/agent_skills/__init__.py::AgentSkillsPlugin",
+            "openhands/runtime/plugins/jupyter/__init__.py::JupyterPlugin",
+            "openhands/runtime/plugins/jupyter/execute_server.py::JupyterKernel",
+            "openhands/runtime/plugins/jupyter/execute_server.py::ExecuteHandler",
+            "openhands/runtime/plugins/vscode/__init__.py::VSCodePlugin",
+            "openhands/runtime/utils/bash.py::BashSession",
+            "openhands/runtime/utils/bash.py::BashCommandStatus",
+            "openhands/runtime/utils/windows_bash.py::WindowsPowershellSession",
+            "openhands/runtime/utils/git_handler.py::GitHandler",
+            "openhands/runtime/utils/log_streamer.py::LogStreamer",
+            "openhands/runtime/utils/memory_monitor.py::MemoryMonitor",
+            "openhands/runtime/utils/port_lock.py::PortLock",
+            "openhands/runtime/utils/tenacity_stop.py::stop_if_should_exit",
+            "openhands/runtime/mcp/proxy/manager.py::MCPProxyManager",
+            "openhands/runtime/browser/browser_env.py::BrowserEnv"
         ],
-        "children": {}
+        "children": {
+            "runtime_implementations": {
+                "path": "openhands/runtime/impl",
+                "components": [
+                    "openhands/runtime/impl/docker/docker_runtime.py::DockerRuntime",
+                    "openhands/runtime/impl/local/local_runtime.py::LocalRuntime",
+                    "openhands/runtime/impl/cli/cli_runtime.py::CLIRuntime",
+                    "openhands/runtime/impl/remote/remote_runtime.py::RemoteRuntime",
+                    "openhands/runtime/impl/kubernetes/kubernetes_runtime.py::KubernetesRuntime",
+                    "openhands/runtime/action_execution_server.py::ActionExecutor",
+                    "openhands/runtime/action_execution_server.py::ActionRequest"
+                ],
+                "children": {}
+            },
+            "third_party_runtimes": {
+                "path": "third_party/runtime/impl",
+                "components": [
+                    "third_party/runtime/impl/daytona/daytona_runtime.py::DaytonaRuntime",
+                    "third_party/runtime/impl/modal/modal_runtime.py::ModalRuntime",
+                    "third_party/runtime/impl/runloop/runloop_runtime.py::RunloopRuntime",
+                    "third_party/runtime/impl/e2b/e2b_runtime.py::E2BRuntime",
+                    "third_party/runtime/impl/e2b/sandbox.py::E2BBox",
+                    "third_party/runtime/impl/e2b/filestore.py::E2BFileStore",
+                    "third_party/runtime/impl/e2b/filestore.py::SupportsFilesystemOperations"
+                ],
+                "children": {}
+            },
+            "runtime_image_builders": {
+                "path": "openhands/runtime/builder",
+                "components": [
+                    "openhands/runtime/builder/docker.py::DockerRuntimeBuilder",
+                    "openhands/runtime/builder/remote.py::RemoteRuntimeBuilder",
+                    "openhands/runtime/utils/runtime_build.py::BuildFromImageType"
+                ],
+                "children": {}
+            },
+            "runtime_plugins": {
+                "path": "openhands/runtime/plugins",
+                "components": [
+                    "openhands/runtime/plugins/agent_skills/__init__.py::AgentSkillsPlugin",
+                    "openhands/runtime/plugins/jupyter/__init__.py::JupyterPlugin",
+                    "openhands/runtime/plugins/jupyter/execute_server.py::JupyterKernel",
+                    "openhands/runtime/plugins/jupyter/execute_server.py::ExecuteHandler",
+                    "openhands/runtime/plugins/vscode/__init__.py::VSCodePlugin"
+                ],
+                "children": {}
+            },
+            "runtime_utils": {
+                "path": "openhands/runtime/utils",
+                "components": [
+                    "openhands/runtime/utils/bash.py::BashSession",
+                    "openhands/runtime/utils/bash.py::BashCommandStatus",
+                    "openhands/runtime/utils/windows_bash.py::WindowsPowershellSession",
+                    "openhands/runtime/utils/git_handler.py::GitHandler",
+                    "openhands/runtime/utils/log_streamer.py::LogStreamer",
+                    "openhands/runtime/utils/memory_monitor.py::MemoryMonitor",
+                    "openhands/runtime/utils/port_lock.py::PortLock",
+                    "openhands/runtime/utils/tenacity_stop.py::stop_if_should_exit",
+                    "openhands/runtime/mcp/proxy/manager.py::MCPProxyManager"
+                ],
+                "children": {}
+            },
+            "browser_environment": {
+                "path": "openhands/runtime/browser/browser_env.py",
+                "components": [
+                    "openhands/runtime/browser/browser_env.py::BrowserEnv"
+                ],
+                "children": {}
+            }
+        }
     },
-    "events_and_actions": {
-        "path": "openhands/events",
+    "shared_platform_foundation": {
+        "path": "openhands",
         "components": [
-            "openhands.events.event.Event",
-            "openhands.events.action.action.Action",
-            "openhands.events.observation.observation.Observation",
-            "openhands.events.stream.EventStreamSubscriber",
-            "openhands.events.event_store_abc.EventStoreABC",
-            "openhands.core.schema.action.ActionType",
-            "openhands.core.schema.observation.ObservationType"
+            "openhands/core/config/cli_config.py::CLIConfig",
+            "openhands/core/config/kubernetes_config.py::KubernetesConfig",
+            "openhands/core/config/security_config.py::SecurityConfig",
+            "openhands/core/config/condenser_config.py::AmortizedForgettingCondenserConfig",
+            "openhands/core/config/condenser_config.py::LLMAttentionCondenserConfig",
+            "openhands/core/config/condenser_config.py::ObservationMaskingCondenserConfig",
+            "openhands/core/config/condenser_config.py::RecentEventsCondenserConfig",
+            "openhands/core/config/condenser_config.py::StructuredSummaryCondenserConfig",
+            "openhands/core/schema/action.py::ActionType",
+            "openhands/core/schema/observation.py::ObservationType",
+            "openhands/core/schema/agent.py::AgentState",
+            "openhands/core/schema/exit_reason.py::ExitReason",
+            "openhands/core/message.py::ContentType",
+            "openhands/core/main.py::FakeUserResponseFunc",
+            "openhands/io/json.py::OpenHandsJSONEncoder",
+            "openhands/utils/prompt.py::PromptManager",
+            "openhands/utils/term_color.py::TermColor",
+            "openhands/core/logger.py::LlmFileHandler",
+            "openhands/core/logger.py::NoColorFormatter",
+            "openhands/core/logger.py::OpenHandsLoggerAdapter",
+            "openhands/core/logger.py::RollingLogger",
+            "openhands/core/logger.py::SensitiveDataFilter",
+            "openhands/core/logger.py::StackInfoFilter",
+            "openhands/events/stream.py::EventStream",
+            "openhands/events/stream.py::EventStreamSubscriber",
+            "openhands/events/async_event_store_wrapper.py::AsyncEventStoreWrapper",
+            "openhands/events/event.py::FileEditSource",
+            "openhands/events/event.py::FileReadSource",
+            "openhands/events/action/action.py::ActionConfirmationStatus",
+            "openhands/events/action/browse.py::BrowseURLAction",
+            "openhands/events/observation/commands.py::CmdOutputObservation",
+            "openhands/events/observation/success.py::SuccessObservation",
+            "openhands/storage/local.py::LocalFileStore",
+            "openhands/storage/memory.py::InMemoryFileStore",
+            "openhands/storage/google_cloud.py::GoogleCloudFileStore",
+            "openhands/storage/s3.py::S3FileStore",
+            "openhands/storage/s3.py::S3ObjectDict",
+            "openhands/storage/s3.py::GetObjectOutputDict",
+            "openhands/storage/s3.py::ListObjectsV2OutputDict",
+            "openhands/storage/web_hook.py::WebHookFileStore",
+            "openhands/storage/batched_web_hook.py::BatchedWebHookFileStore",
+            "openhands/storage/data_models/conversation_status.py::ConversationStatus"
         ],
-        "children": {}
+        "children": {
+            "core_configuration": {
+                "path": "openhands/core/config",
+                "components": [
+                    "openhands/core/config/cli_config.py::CLIConfig",
+                    "openhands/core/config/kubernetes_config.py::KubernetesConfig",
+                    "openhands/core/config/security_config.py::SecurityConfig",
+                    "openhands/core/config/condenser_config.py::AmortizedForgettingCondenserConfig",
+                    "openhands/core/config/condenser_config.py::LLMAttentionCondenserConfig",
+                    "openhands/core/config/condenser_config.py::ObservationMaskingCondenserConfig",
+                    "openhands/core/config/condenser_config.py::RecentEventsCondenserConfig",
+                    "openhands/core/config/condenser_config.py::StructuredSummaryCondenserConfig"
+                ],
+                "children": {}
+            },
+            "core_schema_and_runtime_support": {
+                "path": "openhands/core",
+                "components": [
+                    "openhands/core/schema/action.py::ActionType",
+                    "openhands/core/schema/observation.py::ObservationType",
+                    "openhands/core/schema/agent.py::AgentState",
+                    "openhands/core/schema/exit_reason.py::ExitReason",
+                    "openhands/core/message.py::ContentType",
+                    "openhands/core/main.py::FakeUserResponseFunc",
+                    "openhands/io/json.py::OpenHandsJSONEncoder",
+                    "openhands/utils/prompt.py::PromptManager",
+                    "openhands/utils/term_color.py::TermColor"
+                ],
+                "children": {}
+            },
+            "logging": {
+                "path": "openhands/core/logger.py",
+                "components": [
+                    "openhands/core/logger.py::LlmFileHandler",
+                    "openhands/core/logger.py::NoColorFormatter",
+                    "openhands/core/logger.py::OpenHandsLoggerAdapter",
+                    "openhands/core/logger.py::RollingLogger",
+                    "openhands/core/logger.py::SensitiveDataFilter",
+                    "openhands/core/logger.py::StackInfoFilter"
+                ],
+                "children": {}
+            },
+            "event_system": {
+                "path": "openhands/events",
+                "components": [
+                    "openhands/events/stream.py::EventStream",
+                    "openhands/events/stream.py::EventStreamSubscriber",
+                    "openhands/events/async_event_store_wrapper.py::AsyncEventStoreWrapper",
+                    "openhands/events/event.py::FileEditSource",
+                    "openhands/events/event.py::FileReadSource",
+                    "openhands/events/action/action.py::ActionConfirmationStatus",
+                    "openhands/events/action/browse.py::BrowseURLAction",
+                    "openhands/events/observation/commands.py::CmdOutputObservation",
+                    "openhands/events/observation/success.py::SuccessObservation"
+                ],
+                "children": {}
+            },
+            "storage_backends": {
+                "path": "openhands/storage",
+                "components": [
+                    "openhands/storage/local.py::LocalFileStore",
+                    "openhands/storage/memory.py::InMemoryFileStore",
+                    "openhands/storage/google_cloud.py::GoogleCloudFileStore",
+                    "openhands/storage/s3.py::S3FileStore",
+                    "openhands/storage/s3.py::S3ObjectDict",
+                    "openhands/storage/s3.py::GetObjectOutputDict",
+                    "openhands/storage/s3.py::ListObjectsV2OutputDict",
+                    "openhands/storage/web_hook.py::WebHookFileStore",
+                    "openhands/storage/batched_web_hook.py::BatchedWebHookFileStore",
+                    "openhands/storage/data_models/conversation_status.py::ConversationStatus"
+                ],
+                "children": {}
+            }
+        }
     },
-    "llm_integration": {
-        "path": "openhands/llm",
-        "components": [
-            "openhands.llm.llm.LLM",
-            "openhands.llm.async_llm.AsyncLLM",
-            "openhands.llm.streaming_llm.StreamingLLM",
-            "openhands.llm.router.base.RouterLLM",
-            "openhands.llm.retry_mixin.RetryMixin",
-            "openhands.llm.debug_mixin.DebugMixin"
-        ],
-        "children": {}
-    },
-    "runtime_system": {
-        "path": "openhands/runtime",
-        "components": [
-            "openhands.runtime.base.Runtime",
-            "openhands.runtime.impl.local.local_runtime.LocalRuntime",
-            "openhands.runtime.impl.cli.cli_runtime.CLIRuntime",
-            "openhands.runtime.impl.kubernetes.kubernetes_runtime.KubernetesRuntime",
-            "openhands.runtime.builder.base.RuntimeBuilder",
-            "openhands.runtime.plugins.requirement.Plugin"
-        ],
-        "children": {}
-    },
-    "git_integrations": {
-        "path": "openhands/integrations",
-        "components": [
-            "openhands.integrations.service_types.GitService",
-            "openhands.integrations.service_types.BaseGitService",
-            "openhands.integrations.github.service.base.GitHubMixinBase",
-            "openhands.integrations.gitlab.service.base.GitLabMixinBase",
-            "openhands.integrations.bitbucket.service.base.BitBucketMixinBase"
-        ],
-        "children": {}
-    },
-    "server_and_api": {
+    "conversation_service_tier": {
         "path": "openhands/server",
         "components": [
-            "openhands.server.conversation_manager.conversation_manager.ConversationManager",
-            "openhands.server.session.session.WebSession",
-            "openhands.server.middleware.RateLimitMiddleware",
-            "openhands.server.types.ServerConfigInterface",
-            "openhands.server.user_auth.user_auth.UserAuth"
+            "openhands/server/middleware.py::LocalhostCORSMiddleware",
+            "openhands/server/middleware.py::CacheControlMiddleware",
+            "openhands/server/middleware.py::RateLimitMiddleware",
+            "openhands/server/middleware.py::InMemoryRateLimiter",
+            "openhands/server/static.py::SPAStaticFiles",
+            "openhands/server/types.py::AppMode",
+            "openhands/server/types.py::SessionMiddlewareInterface",
+            "openhands/server/user_auth/user_auth.py::AuthType",
+            "openhands/server/session/agent_session.py::AgentSession",
+            "openhands/server/session/session.py::WebSession",
+            "openhands/server/session/conversation.py::ServerConversation",
+            "openhands/server/services/conversation_stats.py::ConversationStats",
+            "openhands/server/routes/manage_conversations.py::InitSessionRequest",
+            "openhands/server/routes/manage_conversations.py::UpdateConversationRequest",
+            "openhands/server/routes/manage_conversations.py::ProvidersSetModel",
+            "openhands/server/settings.py::POSTProviderModel",
+            "openhands/server/settings.py::CustomSecretModel",
+            "openhands/server/settings.py::POSTCustomSecrets",
+            "openhands/server/files.py::POSTUploadFilesModel"
         ],
-        "children": {}
+        "children": {
+            "server_core": {
+                "path": "openhands/server",
+                "components": [
+                    "openhands/server/middleware.py::LocalhostCORSMiddleware",
+                    "openhands/server/middleware.py::CacheControlMiddleware",
+                    "openhands/server/middleware.py::RateLimitMiddleware",
+                    "openhands/server/middleware.py::InMemoryRateLimiter",
+                    "openhands/server/static.py::SPAStaticFiles",
+                    "openhands/server/types.py::AppMode",
+                    "openhands/server/types.py::SessionMiddlewareInterface",
+                    "openhands/server/user_auth/user_auth.py::AuthType"
+                ],
+                "children": {}
+            },
+            "server_sessions": {
+                "path": "openhands/server/session",
+                "components": [
+                    "openhands/server/session/agent_session.py::AgentSession",
+                    "openhands/server/session/session.py::WebSession",
+                    "openhands/server/session/conversation.py::ServerConversation",
+                    "openhands/server/services/conversation_stats.py::ConversationStats"
+                ],
+                "children": {}
+            },
+            "server_api_models": {
+                "path": "openhands/server",
+                "components": [
+                    "openhands/server/routes/manage_conversations.py::InitSessionRequest",
+                    "openhands/server/routes/manage_conversations.py::UpdateConversationRequest",
+                    "openhands/server/routes/manage_conversations.py::ProvidersSetModel",
+                    "openhands/server/settings.py::POSTProviderModel",
+                    "openhands/server/settings.py::CustomSecretModel",
+                    "openhands/server/settings.py::POSTCustomSecrets",
+                    "openhands/server/files.py::POSTUploadFilesModel"
+                ],
+                "children": {}
+            }
+        }
     },
-    "storage_system": {
-        "path": "openhands/storage",
+    "code_host_automation": {
+        "path": "openhands",
         "components": [
-            "openhands.storage.conversation.conversation_store.ConversationStore",
-            "openhands.storage.files.FileStore",
-            "openhands.storage.secrets.secrets_store.SecretsStore",
-            "openhands.storage.settings.settings_store.SettingsStore"
+            "openhands/integrations/provider.py::ProviderHandler",
+            "openhands/integrations/service_types.py::GitService",
+            "openhands/integrations/service_types.py::RequestMethod",
+            "openhands/integrations/service_types.py::OwnerType",
+            "openhands/integrations/service_types.py::TaskType",
+            "openhands/integrations/service_types.py::CreateMicroagent",
+            "openhands/resolver/issue_resolver.py::IssueResolver",
+            "openhands/resolver/issue_handler_factory.py::IssueHandlerFactory",
+            "openhands/resolver/interfaces/issue_definitions.py::ServiceContextIssue",
+            "openhands/resolver/interfaces/issue_definitions.py::ServiceContextPR",
+            "openhands/resolver/interfaces/github.py::GithubPRHandler",
+            "openhands/resolver/interfaces/gitlab.py::GitlabPRHandler",
+            "openhands/resolver/interfaces/bitbucket.py::BitbucketPRHandler"
         ],
-        "children": {}
+        "children": {
+            "git_provider_integrations": {
+                "path": "openhands/integrations",
+                "components": [
+                    "openhands/integrations/provider.py::ProviderHandler",
+                    "openhands/integrations/service_types.py::GitService",
+                    "openhands/integrations/service_types.py::RequestMethod",
+                    "openhands/integrations/service_types.py::OwnerType",
+                    "openhands/integrations/service_types.py::TaskType",
+                    "openhands/integrations/service_types.py::CreateMicroagent"
+                ],
+                "children": {}
+            },
+            "issue_resolver": {
+                "path": "openhands/resolver",
+                "components": [
+                    "openhands/resolver/issue_resolver.py::IssueResolver",
+                    "openhands/resolver/issue_handler_factory.py::IssueHandlerFactory",
+                    "openhands/resolver/interfaces/issue_definitions.py::ServiceContextIssue",
+                    "openhands/resolver/interfaces/issue_definitions.py::ServiceContextPR",
+                    "openhands/resolver/interfaces/github.py::GithubPRHandler",
+                    "openhands/resolver/interfaces/gitlab.py::GitlabPRHandler",
+                    "openhands/resolver/interfaces/bitbucket.py::BitbucketPRHandler"
+                ],
+                "children": {}
+            }
+        }
     },
-    "frontend_core": {
-        "path": "frontend/src/api",
+    "user_facing_clients": {
+        "path": "",
         "components": [
-            "frontend.src.api.open-hands.OpenHands",
-            "frontend.src.api.auth-service.auth-service.api.AuthService",
-            "frontend.src.api.git-service.git-service.api.GitService",
-            "frontend.src.api.user-service.user-service.api.UserService"
+            "openhands/cli/tui.py::CommandCompleter",
+            "openhands/cli/tui.py::UsageMetrics",
+            "openhands/cli/shell_config.py::ShellConfigManager",
+            "frontend/src/api/open-hands.ts::OpenHands",
+            "frontend/src/api/open-hands.types.ts::AuthenticationResponse",
+            "frontend/src/api/open-hands.types.ts::GetFileResponse",
+            "frontend/src/api/open-hands.types.ts::SaveFileSuccessResponse",
+            "frontend/src/api/open-hands.types.ts::GetMicroagentPromptResponse",
+            "frontend/src/api/open-hands.types.ts::InputMetadata",
+            "frontend/src/api/auth-service/auth-service.api.ts::AuthService",
+            "frontend/src/api/auth-service/auth.types.ts::AuthenticateResponse",
+            "frontend/src/api/git-service/git-service.api.ts::GitService",
+            "frontend/src/api/user-service/user-service.api.ts::UserService",
+            "frontend/src/api/option-service/option-service.api.ts::OptionService",
+            "frontend/src/api/suggestions-service/suggestions-service.api.ts::SuggestionsService",
+            "frontend/src/api/secrets-service.ts::SecretsService",
+            "frontend/src/api/secrets-service.types.ts::GetSecretsResponse",
+            "frontend/src/api/api-keys.ts::ApiKeysClient",
+            "frontend/src/api/invariant-service.ts::InvariantService",
+            "frontend/src/settings-service/settings-service.api.ts::SettingsService",
+            "frontend/src/ui/microagent-management-service/microagent-management-service.api.ts::MicroagentManagementService",
+            "frontend/src/types/core/base.ts::OpenHandsBaseEvent",
+            "frontend/src/types/core/base.ts::OpenHandsActionEvent",
+            "frontend/src/types/core/base.ts::OpenHandsObservationEvent",
+            "frontend/src/types/core/actions.ts::FileReadAction",
+            "frontend/src/types/core/actions.ts::FileEditAction",
+            "frontend/src/types/core/actions.ts::DelegateAction",
+            "frontend/src/types/core/actions.ts::RecallAction",
+            "frontend/src/types/core/actions.ts::RejectAction",
+            "frontend/src/types/core/actions.ts::SystemMessageAction",
+            "frontend/src/types/core/observations.ts::AgentThinkObservation",
+            "frontend/src/types/core/observations.ts::BrowseInteractiveObservation",
+            "frontend/src/types/core/observations.ts::DelegateObservation",
+            "frontend/src/types/core/observations.ts::MCPObservation",
+            "frontend/src/types/core/observations.ts::UserRejectedObservation",
+            "frontend/src/types/core/observations.ts::WriteObservation",
+            "frontend/src/types/core/variances.ts::InitConfig",
+            "frontend/src/types/core/variances.ts::LocalUserMessageAction",
+            "frontend/src/types/core/variances.ts::StatusUpdate",
+            "frontend/src/types/core/variances.ts::TokenConfigSuccess",
+            "frontend/src/types/microagent-status.ts::EventMicroagentStatus",
+            "frontend/src/types/microagent-management.tsx::IMicroagentItem",
+            "frontend/src/types/microagent-management.tsx::LearnThisRepoFormData",
+            "frontend/src/state/conversation-slice.tsx::ConversationState",
+            "frontend/src/state/code-slice.ts::FileState",
+            "frontend/src/state/metrics-slice.ts::MetricsState",
+            "frontend/src/utils/event-logger.ts::EventLogger"
         ],
-        "children": {}
+        "children": {
+            "cli": {
+                "path": "openhands/cli",
+                "components": [
+                    "openhands/cli/tui.py::CommandCompleter",
+                    "openhands/cli/tui.py::UsageMetrics",
+                    "openhands/cli/shell_config.py::ShellConfigManager"
+                ],
+                "children": {}
+            },
+            "frontend_api_services": {
+                "path": "frontend/src/api",
+                "components": [
+                    "frontend/src/api/open-hands.ts::OpenHands",
+                    "frontend/src/api/open-hands.types.ts::AuthenticationResponse",
+                    "frontend/src/api/open-hands.types.ts::GetFileResponse",
+                    "frontend/src/api/open-hands.types.ts::SaveFileSuccessResponse",
+                    "frontend/src/api/open-hands.types.ts::GetMicroagentPromptResponse",
+                    "frontend/src/api/open-hands.types.ts::InputMetadata",
+                    "frontend/src/api/auth-service/auth-service.api.ts::AuthService",
+                    "frontend/src/api/auth-service/auth.types.ts::AuthenticateResponse",
+                    "frontend/src/api/git-service/git-service.api.ts::GitService",
+                    "frontend/src/api/user-service/user-service.api.ts::UserService",
+                    "frontend/src/api/option-service/option-service.api.ts::OptionService",
+                    "frontend/src/api/suggestions-service/suggestions-service.api.ts::SuggestionsService",
+                    "frontend/src/api/secrets-service.ts::SecretsService",
+                    "frontend/src/api/secrets-service.types.ts::GetSecretsResponse",
+                    "frontend/src/api/api-keys.ts::ApiKeysClient",
+                    "frontend/src/api/invariant-service.ts::InvariantService",
+                    "frontend/src/settings-service/settings-service.api.ts::SettingsService",
+                    "frontend/src/ui/microagent-management-service/microagent-management-service.api.ts::MicroagentManagementService"
+                ],
+                "children": {}
+            },
+            "frontend_event_types": {
+                "path": "frontend/src/types/core",
+                "components": [
+                    "frontend/src/types/core/base.ts::OpenHandsBaseEvent",
+                    "frontend/src/types/core/base.ts::OpenHandsActionEvent",
+                    "frontend/src/types/core/base.ts::OpenHandsObservationEvent",
+                    "frontend/src/types/core/actions.ts::FileReadAction",
+                    "frontend/src/types/core/actions.ts::FileEditAction",
+                    "frontend/src/types/core/actions.ts::DelegateAction",
+                    "frontend/src/types/core/actions.ts::RecallAction",
+                    "frontend/src/types/core/actions.ts::RejectAction",
+                    "frontend/src/types/core/actions.ts::SystemMessageAction",
+                    "frontend/src/types/core/observations.ts::AgentThinkObservation",
+                    "frontend/src/types/core/observations.ts::BrowseInteractiveObservation",
+                    "frontend/src/types/core/observations.ts::DelegateObservation",
+                    "frontend/src/types/core/observations.ts::MCPObservation",
+                    "frontend/src/types/core/observations.ts::UserRejectedObservation",
+                    "frontend/src/types/core/observations.ts::WriteObservation",
+                    "frontend/src/types/core/variances.ts::InitConfig",
+                    "frontend/src/types/core/variances.ts::LocalUserMessageAction",
+                    "frontend/src/types/core/variances.ts::StatusUpdate",
+                    "frontend/src/types/core/variances.ts::TokenConfigSuccess",
+                    "frontend/src/types/microagent-status.ts::EventMicroagentStatus",
+                    "frontend/src/types/microagent-management.tsx::IMicroagentItem",
+                    "frontend/src/types/microagent-management.tsx::LearnThisRepoFormData"
+                ],
+                "children": {}
+            },
+            "frontend_state": {
+                "path": "frontend/src/state",
+                "components": [
+                    "frontend/src/state/conversation-slice.tsx::ConversationState",
+                    "frontend/src/state/code-slice.ts::FileState",
+                    "frontend/src/state/metrics-slice.ts::MetricsState",
+                    "frontend/src/utils/event-logger.ts::EventLogger"
+                ],
+                "children": {}
+            }
+        }
     },
-    "frontend_state_management": {
-        "path": "frontend/src/state",
+    "hosted_saas_overlay": {
+        "path": "enterprise",
         "components": [
-            "frontend.src.state.conversation-slice.ConversationState",
-            "frontend.src.state.code-slice.FileState",
-            "frontend.src.state.metrics-slice.MetricsState"
+            "enterprise/server/config.py::SaaSServerConfig",
+            "enterprise/server/rate_limit.py::RateLimiter",
+            "enterprise/server/mcp/mcp_config.py::SaaSOpenHandsMCPConfig",
+            "enterprise/server/saas_monitoring_listener.py::SaaSMonitoringListener",
+            "enterprise/server/saas_nested_conversation_manager.py::EventRetrieval",
+            "enterprise/server/maintenance_task_processor/user_version_upgrade_processor.py::UserVersionUpgradeProcessor",
+            "enterprise/experiments/experiment_manager.py::SaaSExperimentManager",
+            "enterprise/server/routes/api_keys.py::ApiKeyCreate",
+            "enterprise/server/routes/api_keys.py::ApiKeyCreateResponse",
+            "enterprise/server/routes/api_keys.py::LlmApiKeyResponse",
+            "enterprise/server/routes/billing.py::BillingSessionType",
+            "enterprise/server/routes/billing.py::CreateCheckoutSessionRequest",
+            "enterprise/server/routes/billing.py::GetSessionStatusResponse",
+            "enterprise/server/routes/billing.py::LiteLlmUserInfo",
+            "enterprise/server/routes/email.py::EmailUpdate",
+            "enterprise/server/routes/feedback.py::FeedbackRequest",
+            "enterprise/server/routes/event_webhook.py::BatchMethod",
+            "enterprise/server/routes/event_webhook.py::BatchOperation",
+            "enterprise/server/routes/integration/jira.py::JiraLinkCreate",
+            "enterprise/server/routes/integration/jira.py::JiraWorkspaceCreate",
+            "enterprise/server/routes/integration/jira_dc.py::JiraDcLinkCreate",
+            "enterprise/server/routes/integration/jira_dc.py::JiraDcWorkspaceCreate",
+            "enterprise/server/routes/integration/linear.py::LinearLinkCreate",
+            "enterprise/server/routes/integration/linear.py::LinearWorkspaceCreate",
+            "enterprise/server/auth/token_manager.py::TokenManager",
+            "enterprise/server/auth/auth_utils.py::UserVerifier",
+            "enterprise/server/auth/github_utils.py::UserVerifier",
+            "enterprise/server/auth/sheets_client.py::GoogleSheetsClient",
+            "enterprise/server/middleware.py::SetAuthCookieMiddleware",
+            "enterprise/storage/stored_settings.py::StoredSettings",
+            "enterprise/storage/saas_conversation_validator.py::SaasConversationValidator",
+            "enterprise/storage/conversation_callback.py::CallbackStatus",
+            "enterprise/storage/billing_session_type.py::BillingSessionType",
+            "enterprise/storage/subscription_access_status.py::SubscriptionAccessStatus",
+            "enterprise/storage/experiment_assignment.py::ExperimentAssignment",
+            "enterprise/storage/feedback.py::Feedback",
+            "enterprise/storage/gitlab_webhook.py::WebhookStatus",
+            "enterprise/storage/maintenance_task.py::MaintenanceTask",
+            "enterprise/storage/maintenance_task.py::MaintenanceTaskStatus",
+            "enterprise/integrations/github/github_manager.py::GithubManager",
+            "enterprise/integrations/github/github_view.py::GithubFactory",
+            "enterprise/integrations/github/github_view.py::GithubFailingAction",
+            "enterprise/integrations/github/github_service.py::SaaSGitHubService",
+            "enterprise/integrations/github/github_types.py::WorkflowRunStatus",
+            "enterprise/integrations/github/data_collector.py::GitHubDataCollector",
+            "enterprise/integrations/github/data_collector.py::TriggerType",
+            "enterprise/integrations/gitlab/gitlab_manager.py::GitlabManager",
+            "enterprise/integrations/gitlab/gitlab_view.py::GitlabFactory",
+            "enterprise/integrations/gitlab/gitlab_service.py::SaaSGitLabService",
+            "enterprise/integrations/bitbucket/bitbucket_service.py::SaaSBitBucketService",
+            "enterprise/integrations/jira/jira_manager.py::JiraManager",
+            "enterprise/integrations/jira/jira_view.py::JiraFactory",
+            "enterprise/integrations/jira_dc/jira_dc_manager.py::JiraDcManager",
+            "enterprise/integrations/jira_dc/jira_dc_view.py::JiraDcFactory",
+            "enterprise/integrations/linear/linear_manager.py::LinearManager",
+            "enterprise/integrations/linear/linear_view.py::LinearFactory",
+            "enterprise/integrations/slack/slack_manager.py::SlackManager",
+            "enterprise/integrations/slack/slack_view.py::SlackFactory",
+            "enterprise/integrations/models.py::Message",
+            "enterprise/integrations/models.py::JobResult",
+            "enterprise/integrations/models.py::SourceType",
+            "enterprise/integrations/models.py::GithubResolverJob",
+            "enterprise/integrations/types.py::GitLabResourceType",
+            "enterprise/integrations/types.py::PRStatus",
+            "enterprise/integrations/solvability/models/classifier.py::SolvabilityClassifier",
+            "enterprise/integrations/solvability/models/featurizer.py::Featurizer",
+            "enterprise/integrations/solvability/models/featurizer.py::Feature",
+            "enterprise/integrations/solvability/models/featurizer.py::EmbeddingDimension",
+            "enterprise/integrations/solvability/models/importance_strategy.py::ImportanceStrategy",
+            "enterprise/integrations/solvability/models/difficulty_level.py::DifficultyLevel"
         ],
-        "children": {}
-    },
-    "core_configuration": {
-        "path": "openhands/core/config",
-        "components": [
-            "openhands.core.config.cli_config.CLIConfig",
-            "openhands.core.config.security_config.SecurityConfig",
-            "openhands.core.config.mcp_config.OpenHandsMCPConfig",
-            "openhands.core.config.kubernetes_config.KubernetesConfig"
-        ],
-        "children": {}
-    },
-    "microagent_system": {
-        "path": "openhands/microagent",
-        "components": [
-            "openhands.microagent.microagent.TaskMicroagent",
-            "openhands.microagent.types.MicroagentType",
-            "openhands.microagent.types.MicroagentResponse"
-        ],
-        "children": {}
-    },
-    "security_system": {
-        "path": "openhands/security",
-        "components": [
-            "openhands.security.analyzer.SecurityAnalyzer",
-            "openhands.security.invariant.analyzer.InvariantAnalyzer",
-            "openhands.security.llm.analyzer.LLMRiskAnalyzer"
-        ],
-        "children": {}
-    },
-    "enterprise_integrations": {
-        "path": "enterprise/integrations",
-        "components": [
-            "enterprise.integrations.github.github_manager.GithubManager",
-            "enterprise.integrations.gitlab.gitlab_manager.GitlabManager",
-            "enterprise.integrations.jira.jira_manager.JiraManager",
-            "enterprise.integrations.slack.slack_manager.SlackManager",
-            "enterprise.integrations.models.JobResult"
-        ],
-        "children": {}
-    },
-    "enterprise_server": {
-        "path": "enterprise/server",
-        "components": [
-            "enterprise.server.config.SaaSServerConfig",
-            "enterprise.server.auth.auth_utils.UserVerifier",
-            "enterprise.server.middleware.SetAuthCookieMiddleware"
-        ],
-        "children": {}
+        "children": {
+            "enterprise_server": {
+                "path": "enterprise/server",
+                "components": [
+                    "enterprise/server/config.py::SaaSServerConfig",
+                    "enterprise/server/rate_limit.py::RateLimiter",
+                    "enterprise/server/mcp/mcp_config.py::SaaSOpenHandsMCPConfig",
+                    "enterprise/server/saas_monitoring_listener.py::SaaSMonitoringListener",
+                    "enterprise/server/saas_nested_conversation_manager.py::EventRetrieval",
+                    "enterprise/server/maintenance_task_processor/user_version_upgrade_processor.py::UserVersionUpgradeProcessor",
+                    "enterprise/experiments/experiment_manager.py::SaaSExperimentManager"
+                ],
+                "children": {}
+            },
+            "enterprise_routes": {
+                "path": "enterprise/server/routes",
+                "components": [
+                    "enterprise/server/routes/api_keys.py::ApiKeyCreate",
+                    "enterprise/server/routes/api_keys.py::ApiKeyCreateResponse",
+                    "enterprise/server/routes/api_keys.py::LlmApiKeyResponse",
+                    "enterprise/server/routes/billing.py::BillingSessionType",
+                    "enterprise/server/routes/billing.py::CreateCheckoutSessionRequest",
+                    "enterprise/server/routes/billing.py::GetSessionStatusResponse",
+                    "enterprise/server/routes/billing.py::LiteLlmUserInfo",
+                    "enterprise/server/routes/email.py::EmailUpdate",
+                    "enterprise/server/routes/feedback.py::FeedbackRequest",
+                    "enterprise/server/routes/event_webhook.py::BatchMethod",
+                    "enterprise/server/routes/event_webhook.py::BatchOperation",
+                    "enterprise/server/routes/integration/jira.py::JiraLinkCreate",
+                    "enterprise/server/routes/integration/jira.py::JiraWorkspaceCreate",
+                    "enterprise/server/routes/integration/jira_dc.py::JiraDcLinkCreate",
+                    "enterprise/server/routes/integration/jira_dc.py::JiraDcWorkspaceCreate",
+                    "enterprise/server/routes/integration/linear.py::LinearLinkCreate",
+                    "enterprise/server/routes/integration/linear.py::LinearWorkspaceCreate"
+                ],
+                "children": {}
+            },
+            "enterprise_auth": {
+                "path": "enterprise/server/auth",
+                "components": [
+                    "enterprise/server/auth/token_manager.py::TokenManager",
+                    "enterprise/server/auth/auth_utils.py::UserVerifier",
+                    "enterprise/server/auth/github_utils.py::UserVerifier",
+                    "enterprise/server/auth/sheets_client.py::GoogleSheetsClient",
+                    "enterprise/server/middleware.py::SetAuthCookieMiddleware"
+                ],
+                "children": {}
+            },
+            "enterprise_storage": {
+                "path": "enterprise/storage",
+                "components": [
+                    "enterprise/storage/stored_settings.py::StoredSettings",
+                    "enterprise/storage/saas_conversation_validator.py::SaasConversationValidator",
+                    "enterprise/storage/conversation_callback.py::CallbackStatus",
+                    "enterprise/storage/billing_session_type.py::BillingSessionType",
+                    "enterprise/storage/subscription_access_status.py::SubscriptionAccessStatus",
+                    "enterprise/storage/experiment_assignment.py::ExperimentAssignment",
+                    "enterprise/storage/feedback.py::Feedback",
+                    "enterprise/storage/gitlab_webhook.py::WebhookStatus",
+                    "enterprise/storage/maintenance_task.py::MaintenanceTask",
+                    "enterprise/storage/maintenance_task.py::MaintenanceTaskStatus"
+                ],
+                "children": {}
+            },
+            "enterprise_integrations": {
+                "path": "enterprise/integrations",
+                "components": [
+                    "enterprise/integrations/github/github_manager.py::GithubManager",
+                    "enterprise/integrations/github/github_view.py::GithubFactory",
+                    "enterprise/integrations/github/github_view.py::GithubFailingAction",
+                    "enterprise/integrations/github/github_service.py::SaaSGitHubService",
+                    "enterprise/integrations/github/github_types.py::WorkflowRunStatus",
+                    "enterprise/integrations/github/data_collector.py::GitHubDataCollector",
+                    "enterprise/integrations/github/data_collector.py::TriggerType",
+                    "enterprise/integrations/gitlab/gitlab_manager.py::GitlabManager",
+                    "enterprise/integrations/gitlab/gitlab_view.py::GitlabFactory",
+                    "enterprise/integrations/gitlab/gitlab_service.py::SaaSGitLabService",
+                    "enterprise/integrations/bitbucket/bitbucket_service.py::SaaSBitBucketService",
+                    "enterprise/integrations/jira/jira_manager.py::JiraManager",
+                    "enterprise/integrations/jira/jira_view.py::JiraFactory",
+                    "enterprise/integrations/jira_dc/jira_dc_manager.py::JiraDcManager",
+                    "enterprise/integrations/jira_dc/jira_dc_view.py::JiraDcFactory",
+                    "enterprise/integrations/linear/linear_manager.py::LinearManager",
+                    "enterprise/integrations/linear/linear_view.py::LinearFactory",
+                    "enterprise/integrations/slack/slack_manager.py::SlackManager",
+                    "enterprise/integrations/slack/slack_view.py::SlackFactory",
+                    "enterprise/integrations/models.py::Message",
+                    "enterprise/integrations/models.py::JobResult",
+                    "enterprise/integrations/models.py::SourceType",
+                    "enterprise/integrations/models.py::GithubResolverJob",
+                    "enterprise/integrations/types.py::GitLabResourceType",
+                    "enterprise/integrations/types.py::PRStatus"
+                ],
+                "children": {}
+            },
+            "enterprise_solvability": {
+                "path": "enterprise/integrations/solvability/models",
+                "components": [
+                    "enterprise/integrations/solvability/models/classifier.py::SolvabilityClassifier",
+                    "enterprise/integrations/solvability/models/featurizer.py::Featurizer",
+                    "enterprise/integrations/solvability/models/featurizer.py::Feature",
+                    "enterprise/integrations/solvability/models/featurizer.py::EmbeddingDimension",
+                    "enterprise/integrations/solvability/models/importance_strategy.py::ImportanceStrategy",
+                    "enterprise/integrations/solvability/models/difficulty_level.py::DifficultyLevel"
+                ],
+                "children": {}
+            }
+        }
     }
 }

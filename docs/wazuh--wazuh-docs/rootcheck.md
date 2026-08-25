@@ -1,283 +1,124 @@
-# Rootcheck Module Documentation
+# Rootcheck Module
 
-## Overview
+## 1. Purpose and Overview
 
-The Rootcheck module is a specialized security component within the Wazuh framework that provides rootkit detection and system anomaly monitoring capabilities. It implements database query functionality for retrieving and managing rootcheck scan results, enabling security analysts to monitor system integrity and detect potential security threats.
+**Rootcheck** is a legacy anomaly and rootkit-detection engine built into the Wazuh agent/manager native daemon codebase (`src/rootcheck/`). It performs a battery of host-based heuristics designed to reveal signs of kernel-level rootkits, hidden processes, hidden ports, suspicious file permissions, and policy violations defined through a simple domain-specific configuration language (RCL — Rootcheck Configuration Language).
 
-## Architecture
+Historically, Rootcheck was the precursor to the more modern SCA (Security Configuration Assessment) module, and it is still shipped for backward compatibility and legacy policy files (`system_audit`, `rootkit_files`, `rootkit_trojans`, etc.). It runs as a periodic background thread inside the `ossec-syscheckd` process (it shares the daemon with FIM/Syscheck) and reports findings to the alerting pipeline via the internal message queue.
 
-The rootcheck module is part of the broader Security Modules ecosystem within Wazuh, working alongside other security components like SCA (Security Configuration Assessment), Syscheck (File Integrity Monitoring), and Syscollector.
+Rootcheck is a pure C component with no direct network-facing interface; it is driven entirely by local configuration (`ossec.conf` / `rootcheck-config`) and communicates results by writing formatted messages to the Wazuh queue, which are then processed by `analysisd` and ultimately exposed through the Wazuh API and Wazuh DB (`wdb_rootcheck.c`) for querying by the [`rootcheck_module`](rootcheck_module.md) API layer.
+
+## 2. Architecture Overview
+
+Rootcheck consists of 14 source/header files that fall into three functional areas:
 
 ```mermaid
 graph TB
-    subgraph "Security Modules"
-        RC[Rootcheck Module]
-        SCA[SCA Module]
-        SC[Syscheck Module]
-        SYS[Syscollector Module]
+    subgraph Rootcheck Daemon Thread
+        ORCH[Orchestration & Utilities<br/>run_rk_check.c, common.c]
+        CFG[Configuration & RCL Engine<br/>rootcheck-config.c, common_rcl.c, rootcheck.h]
+        CHK[Detection Checks<br/>check_rc_*.c, check_open_ports.c, os_string.c, win-process.c]
     end
-    
-    subgraph "Core Framework"
-        WDB[WazuhDBQuery]
-        AGENT[Agent Management]
-        CONN[WazuhDBConnection]
-    end
-    
-    subgraph "Database Layer"
-        WDBCONN[WazuhDB Connection]
-        BACKEND[WazuhDBBackend]
-        PMTABLE[(pm_event Table)]
-    end
-    
-    RC --> WDB
-    RC --> AGENT
-    RC --> CONN
-    WDB --> BACKEND
-    BACKEND --> WDBCONN
-    WDBCONN --> PMTABLE
-    
-    RC -.-> SCA
-    RC -.-> SC
-    RC -.-> SYS
+
+    CFG -->|loads settings & policies| ORCH
+    ORCH -->|invokes each enabled check| CHK
+    CHK -->|calls notify_rk| ORCH
+    ORCH -->|SendMSG to queue| QUEUE[(Wazuh Message Queue)]
+    QUEUE --> ANALYSISD[analysisd]
+    ANALYSISD --> WDB[(wazuh_db rootcheck table)]
+    WDB --> APIRC[rootcheck API layer]
+
+    style ORCH fill:#e1f5ff
+    style CFG fill:#fff4e1
+    style CHK fill:#ffe1e1
 ```
 
-## Core Components
+### Sub-modules
 
-### WazuhDBQueryRootcheck
+| Sub-module | Description | Documentation |
+|---|---|---|
+| **Detection Checks** | The individual heuristics that scan the filesystem, network stack, and process table for anomalies (hidden ports, hidden PIDs, promiscuous interfaces, `/dev` and full filesystem scans). | [rootcheck_checks.md](rootcheck_checks.md) |
+| **Configuration & RCL Engine** | XML configuration parsing (`Read_Rootcheck_Config`) and the RCL policy interpreter (`rkcl_get_entry`) used to evaluate `system_audit`/`windows_audit` policy files against files, registry keys, directories, and processes. | [rootcheck_config_rcl.md](rootcheck_config_rcl.md) |
+| **Orchestration & Core Utilities** | The main scan loop/thread (`run_rk_check`), shared pattern-matching and file-existence helpers (`common.c`), binary string search (`os_string.c`), and the Windows process enumeration helper (`win-process.c`). | [rootcheck_core_utils.md](rootcheck_core_utils.md) |
 
-The primary component that handles database queries for rootcheck events and scan results.
-
-**Key Features:**
-- Inherits from `WazuhDBQuery` for standardized database operations
-- Manages rootcheck-specific field mappings and filters
-- Handles status-based filtering (outstanding, solved, all)
-- Provides date formatting and timestamp conversion
-- Supports pagination, sorting, and search functionality
-
-**Field Mappings:**
-```python
-fields = {
-    'status': 'status',
-    'log': 'log', 
-    'date_first': 'date_first',
-    'date_last': 'date_last',
-    'pci_dss': 'pci_dss',
-    'cis': 'cis'
-}
-```
-
-### Utility Functions
-
-#### last_scan(agent_id: str)
-Retrieves the last rootcheck scan information for a specific agent, including start and end timestamps.
-
-#### rootcheck_delete_agent(agent: str, wdb_conn: WazuhDBConnection)
-Removes all rootcheck data for a specified agent from the database.
-
-## Data Flow
+## 3. High-Level Data / Control Flow
 
 ```mermaid
 sequenceDiagram
-    participant API as API Layer
-    participant RC as Rootcheck Module
-    participant WDB as WazuhDBQuery
-    participant BACKEND as WazuhDBBackend
-    participant DB as WazuhDB
+    participant Thread as w_rootcheck_thread
+    participant Cfg as Read_Rootcheck_Config
+    participant Run as run_rk_check
+    participant Checks as check_rc_*() functions
+    participant Notify as notify_rk
+    participant Queue as Wazuh Queue
 
-    API->>RC: Query rootcheck events
-    RC->>RC: Validate agent exists
-    RC->>WDB: Initialize query with filters
-    WDB->>WDB: Parse filters and build SQL
-    WDB->>BACKEND: Execute query
-    BACKEND->>DB: Send SQL to pm_event table
-    DB-->>BACKEND: Return raw results
-    BACKEND-->>WDB: Process results
-    WDB->>WDB: Format data with timestamps
-    WDB-->>RC: Return formatted data
-    RC-->>API: Return rootcheck events
-```
-
-## Database Schema
-
-The rootcheck module primarily interacts with the `pm_event` table in the agent databases:
-
-```mermaid
-erDiagram
-    pm_event {
-        string status
-        string log
-        integer date_first
-        integer date_last
-        string pci_dss
-        string cis
-    }
-    
-    pm_event ||--o{ ROOTCHECK_EVENTS : contains
-```
-
-## Status Management
-
-The module implements a sophisticated status filtering system:
-
-```mermaid
-graph LR
-    subgraph "Status Types"
-        ALL[All Events]
-        OUT[Outstanding]
-        SOLVED[Solved]
+    Thread->>Cfg: Parse ossec.conf rootcheck block (once at startup)
+    loop every rootcheck.time seconds
+        Thread->>Run: run_rk_check()
+        Run->>Checks: check_rc_files/trojans (RCL via rkcl_get_entry)
+        Run->>Checks: check_rc_dev/sys/pids/ports/if/open_ports
+        Checks->>Notify: notify_rk(ALERT_*, message)
+        Notify->>Queue: SendMSG (ROOTCHECK_MQ)
     end
-    
-    subgraph "Filter Logic"
-        SCAN_END[Scan End Timestamp]
-        EVENT_TIME[Event Last Date]
-        COMPARISON{date_last vs scan_end}
-    end
-    
-    ALL --> COMPARISON
-    COMPARISON -->|date_last > scan_end - 86400| OUT
-    COMPARISON -->|date_last <= scan_end - 86400| SOLVED
 ```
 
-## Integration Points
+Key orchestration facts:
+- The thread entry point `w_rootcheck_thread` (in `run_rk_check.c`) is spawned by the Syscheck/FIM daemon process (see [syscheckd_core](syscheckd_core.md)) and loops based on `rootcheck.time` (configurable frequency, default 12 hours via `ROOTCHECK_WAIT`).
+- Each check function increments error/anomaly counters and calls `notify_rk()`, which either prints to stdout (standalone/test mode) or sends a formatted message through `SendMSG`/`StartMQPredicated` to the local queue (`ROOTCHECK_MQ`) when running inside the HIDS context (`OSSECHIDS`).
+- Results flow into `analysisd` decoders and are persisted by `wazuh_db` (see `wdb_rootcheck.c` in the [wazuh_db](wazuh_db.md) module), which backs the REST API endpoints implemented in [`rootcheck_module`](rootcheck_module.md) (`GET/PUT/DELETE /rootcheck`).
 
-### Agent Management Integration
-- Validates agent existence before processing queries
-- Leverages [agent_management](agent_management.md) for agent information retrieval
-- Integrates with agent lifecycle management
+## 4. Relationship to Other System Modules
 
-### Database Connectivity
-- Utilizes [database_connectivity](database_connectivity.md) for WazuhDB connections
-- Implements connection pooling and error handling
-- Supports both synchronous and asynchronous operations
+Rootcheck does not operate in isolation; it depends on and is consumed by several other documented modules:
 
-### Core Framework Integration
-- Extends [core_framework](core_framework.md) WazuhDBQuery functionality
-- Inherits standardized query processing and validation
-- Implements framework-wide error handling patterns
+- **[shared_lib](shared_lib.md)** — provides common OS abstraction helpers used throughout Rootcheck: file operations (`file_op.c`), string utilities (`string_op.c`), hashing, and the low-level messaging primitives (`mq_op.c`) used by `notify_rk`.
+- **[os_regex](os_regex.md)** — the regex engine (`OS_Regex`, `OS_PRegex`) used by `common.c`, `common_rcl.c`, and `os_string.c` to match file names and binary content against RCL patterns.
+- **[os_xml](os_xml.md)** *(part of shared/native daemons)* — used by `rootcheck-config.c` to parse the `<rootcheck>` XML block from `ossec.conf`.
+- **[syscheckd_core](syscheckd_core.md)** — Rootcheck's scanning thread is hosted inside the same daemon process as Syscheck/FIM; `run_rk_check.c` directly includes `syscheck.h` and coordinates shutdown state (`fim_shutdown_process_on`) and restart triggers (`os_check_restart_rootcheck`).
+- **[wazuh_db](wazuh_db.md)** — persists rootcheck findings (see `wdb_rootcheck.c`, `wdb_parse_rootcheck_*`) so they can be queried later.
+- **[rootcheck_module](rootcheck_module.md)** (Python API layer) — exposes rootcheck scan results and control operations (`clear`, `get_last_scan`, `get_rootcheck_agent`) over the Wazuh REST API, ultimately reading from the same `wazuh_db` tables populated by this C daemon.
+- **[Rootcheck_Config](Rootcheck_Config.md)** *(Configuration_Data_Structures module)* — defines the `rkconfig`/`_rkconfig` and `_checks` C structs (`rootcheck-config.h`) that back the global `rootcheck` variable used throughout this module.
 
-## API Operations
+## 5. Platform Considerations
 
-### Query Rootcheck Events
-```python
-# Initialize rootcheck query
-query = WazuhDBQueryRootcheck(
-    agent_id="001",
-    offset=0,
-    limit=100,
-    sort={"fields": ["date_last"], "order": "desc"},
-    search={"value": "rootkit", "fields": ["log"]},
-    select=["status", "log", "date_last"],
-    query="status=outstanding",
-    count=True,
-    get_data=True,
-    filters={"status": "outstanding"}
-)
+Several checks are POSIX-only and are stubbed out (no-op) on Windows, while others (`win-process.c`, Windows audit/malware/app checks referenced in `rootcheck.h`) are Windows-specific:
 
-# Execute query
-results = query.run()
-```
+| Check | Linux/Unix | Windows |
+|---|---|---|
+| `check_rc_dev` | Full implementation | No-op stub |
+| `check_rc_if` | Full implementation (promiscuous mode via `ioctl`) | No-op stub |
+| `check_rc_pids` | Full implementation (`kill`/`getsid`/`getpgid`/`/proc`) | No-op stub |
+| `check_rc_ports` / `check_open_ports` | Full implementation (`netstat` + `bind`/`connect`) | No-op stub |
+| `check_rc_sys` | Full filesystem scan, `/dev`, `/proc` skip logic | Adapted paths (`C:\`, `WINDOWS`, `Program Files`) |
+| `os_get_process_list` / `os_win32_setdebugpriv` | N/A | Full implementation (Toolhelp32 snapshot) |
 
-### Get Last Scan Information
-```python
-# Get last scan details
-scan_info = last_scan("001")
-# Returns: {'start': '2024-01-15 10:30:00', 'end': '2024-01-15 10:45:00'}
-```
+## 6. Summary of Core Components by File
 
-### Delete Agent Rootcheck Data
-```python
-# Remove all rootcheck data for agent
-with WazuhDBConnection() as wdb_conn:
-    rootcheck_delete_agent("001", wdb_conn)
-```
+| File | Responsibility |
+|---|---|
+| `check_open_ports.c` | Brute-force TCP/UDP loopback connect scan (0–65535) to detect open ports independent of `netstat`. |
+| `check_rc_dev.c` | Recursively inspects `/dev` for unexpected regular files (a classic rootkit hiding spot). |
+| `check_rc_if.c` | Detects network interfaces running in promiscuous mode and cross-checks against `ifconfig` output. |
+| `check_rc_pids.c` | Detects hidden processes by comparing `kill()`, `getsid()`, `getpgid()`, and `/proc` visibility. |
+| `check_rc_ports.c` | Detects hidden/rootkit-obscured ports by comparing raw socket `bind()` results against `netstat`. |
+| `check_rc_readproc.c` | Helper used by `check_rc_pids` to determine if a "hidden" PID is actually a kernel thread visible under `/proc/<pid>/task`. |
+| `check_rc_sys.c` | Full/partial filesystem walk checking for known rootkit signature files, world-writable files, and dir entry-count mismatches. |
+| `common.c` | Shared primitives: pattern matching (`pt_matches`), negate-pattern detection, file/dir existence checks, process list matching. |
+| `common_rcl.c` | RCL (Rootcheck Configuration Language) file parser and evaluator (`rkcl_get_entry`) — the audit-policy engine. |
+| `os_string.c` | Scans binaries for embedded ASCII strings matching a regex (`os_string`), similar to `strings | grep`. |
+| `rootcheck-config.c` | Parses the `<rootcheck>` XML configuration block into the global `rootcheck` struct. |
+| `rootcheck.h` | Central header declaring the `rkconfig` struct, alert-type constants, and all check function prototypes. |
+| `run_rk_check.c` | Orchestrates a full scan pass, manages the background thread, and implements `notify_rk` for alert dispatch. |
+| `win-process.c` | Windows-only process enumeration (via Toolhelp32) used by Windows audit/malware/app checks. |
 
-## Error Handling
+## 7. Further Reading
 
-The module implements comprehensive error handling:
-
-- **WazuhException(1603)**: Invalid status filter values
-- **WazuhResourceNotFound(1701)**: Agent does not exist
-- **WazuhError(2007)**: Agent database not found
-- **Connection errors**: Database connectivity issues
-
-## Performance Considerations
-
-### Query Optimization
-- Implements efficient status filtering with UNION queries
-- Uses indexed date fields for temporal filtering
-- Supports pagination to handle large result sets
-
-### Memory Management
-- Processes results in configurable chunks
-- Implements connection pooling for database access
-- Provides lazy loading for large datasets
-
-## Security Features
-
-### Input Validation
-- Validates agent IDs and filter parameters
-- Sanitizes SQL query inputs
-- Implements RBAC integration for access control
-
-### Data Protection
-- Filters sensitive information from logs
-- Implements secure database connections
-- Provides audit trail for data access
-
-## Monitoring and Logging
-
-The module integrates with the [logging_system](logging_system.md) for:
-- Query performance monitoring
-- Error tracking and alerting
-- Audit logging for compliance
-- Debug information for troubleshooting
-
-## Configuration
-
-### Default Settings
-- Default sort field: `date_last`
-- Default sort order: `DESC`
-- Date format: `%Y-%m-%d %H:%M:%S`
-- Maximum query limit: Inherited from framework settings
-
-### Customization Options
-- Field selection and filtering
-- Custom sort criteria
-- Search parameter configuration
-- Status filter customization
-
-## Related Modules
-
-- **[SCA Module](sca.md)**: Security Configuration Assessment
-- **[Syscheck Module](syscheck.md)**: File Integrity Monitoring  
-- **[Syscollector Module](syscollector.md)**: System Information Collection
-- **[Agent Management](agent_management.md)**: Agent lifecycle and information
-- **[Database Connectivity](database_connectivity.md)**: Database connection management
-- **[Core Framework](core_framework.md)**: Base framework functionality
-
-## Best Practices
-
-### Query Performance
-1. Use specific date ranges to limit result sets
-2. Implement appropriate pagination for large datasets
-3. Utilize indexed fields in filter conditions
-4. Cache frequently accessed scan information
-
-### Error Handling
-1. Always validate agent existence before queries
-2. Implement proper connection cleanup
-3. Handle database connectivity issues gracefully
-4. Provide meaningful error messages to users
-
-### Security
-1. Validate all input parameters
-2. Implement proper access controls
-3. Log security-relevant operations
-4. Sanitize data before database operations
-
-## Future Enhancements
-
-- Real-time rootcheck event streaming
-- Enhanced correlation with other security modules
-- Machine learning integration for anomaly detection
-- Improved performance optimization for large-scale deployments
+- [rootcheck_checks.md](rootcheck_checks.md) — Detection Checks sub-module
+- [rootcheck_config_rcl.md](rootcheck_config_rcl.md) — Configuration & RCL Engine sub-module
+- [rootcheck_core_utils.md](rootcheck_core_utils.md) — Orchestration & Core Utilities sub-module
+- [syscheckd_core.md](syscheckd_core.md) — Host daemon that hosts the Rootcheck thread
+- [rootcheck_module.md](rootcheck_module.md) — REST API layer exposing Rootcheck results
+- [wazuh_db.md](wazuh_db.md) — Persistence layer for scan results
+- [shared_lib.md](shared_lib.md) — Common C utility library used throughout
+- [os_regex.md](os_regex.md) — Regex engine used for pattern matching
+- [Rootcheck_Config.md](Rootcheck_Config.md) — Configuration data structures (`rkconfig`)

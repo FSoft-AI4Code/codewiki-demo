@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-09-17T08:50:08.313828",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/StarRocks--starrocks",
         "commit_id": "3c9b9c5b3ab217c9743c95f1b3a59a2ab8665c9a"

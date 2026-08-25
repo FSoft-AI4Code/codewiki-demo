@@ -1,266 +1,152 @@
-# Electron Framework Documentation
+# Electron
 
-## Overview
+## 1. Purpose
 
-Electron is a framework that enables developers to build cross-platform desktop applications using web technologies (HTML, CSS, and JavaScript). This documentation covers the core architecture and components of the Electron framework, providing insights into its internal structure and functionality.
+**Electron** is a framework for building cross-platform desktop applications using JavaScript, HTML, and CSS. It achieves this by combining the **Chromium** rendering/browser engine with the **Node.js** runtime inside a single native application, exposing a rich set of native OS capabilities (windowing, menus, tray icons, dialogs, notifications, device access, networking, etc.) through a JavaScript API.
 
-## Architecture Overview
+This repository contains:
 
-Electron follows a multi-process architecture with distinct process types and communication mechanisms:
+- The **native C++ core** (`shell/`) that embeds Chromium's `//content` layer and Node.js, implements Electron's multi-process architecture (browser, renderer, GPU, utility processes), and binds native functionality to JavaScript via `gin`/V8.
+- The **public TypeScript/JavaScript API layer** (`lib/`) that application developers consume as `require('electron')`.
+- The **build and developer tooling** (`build/`, `script/`) used to compile, bundle, test, and lint the codebase itself.
+
+Architecturally, Electron mirrors Chromium's multi-process model: a **main (browser) process** owns application lifecycle, windows, menus, and sessions; **renderer processes** host web content and run sandboxed/preloaded JavaScript; **utility processes** run isolated Node.js workloads; and a thin **native bootstrap layer** wires everything together at startup.
+
+## 2. End-to-End Architecture
+
+### 2.1 Process & Module Topology
 
 ```mermaid
 graph TB
-    subgraph "Main Process"
-        App[App Module]
-        BW[BrowserWindow]
-        Menu[Menu System]
-        IpcMain[IPC Main]
-        PowerMonitor[Power Monitor]
-        AutoUpdater[Auto Updater]
+    subgraph Entry["Application Bootstrap & Process Entry"]
+        MainDelegate["ElectronMainDelegate"]
     end
-    
-    subgraph "Renderer Process"
-        WebContents[WebContents]
-        IpcRenderer[IPC Renderer]
-        WebFrame[WebFrame]
-        ContextBridge[Context Bridge]
+
+    subgraph Browser["Browser Process"]
+        Core["Browser_Process_Core_&_Lifecycle"]
+        Session["Browser_Context_&_Session_Management"]
+        Window["Native_Window_&_Menu_Management"]
+        WC["WebContents_Rendering_&_Communication"]
+        Ext["Extensions_Subsystem"]
+        Device["Device_&_Peripheral_Access"]
+        Net["Networking_Layer"]
+        SysAPI["System_&_App-Level_Services_API"]
+        Platform["Platform-Specific_Integration"]
+        UI["Desktop_UI_Widgets_&_Dialogs"]
+        Preload["Preload_Script_Infrastructure"]
     end
-    
-    subgraph "Utility Process"
-        UtilityProcess[Utility Process]
-        ParentPort[Parent Port]
+
+    subgraph Renderer["Renderer Process"]
+        RendererInfra["Renderer_Process_Infrastructure"]
     end
-    
-    subgraph "Build System"
-        Webpack[Webpack Config]
-        Scripts[Build Scripts]
-        Tests[Test Framework]
+
+    subgraph Utility["Utility Process"]
+        NodeSvc["Node_Utility_Services"]
     end
-    
-    App --> BW
-    BW --> WebContents
-    IpcMain <--> IpcRenderer
-    WebContents --> WebFrame
-    App --> UtilityProcess
-    UtilityProcess --> ParentPort
-    
-    style App fill:#e1f5fe
-    style WebContents fill:#f3e5f5
-    style UtilityProcess fill:#e8f5e8
-    style Webpack fill:#fff3e0
+
+    subgraph Shared["Shared Native Foundation"]
+        Gin["Common_Native_Gin_Infrastructure"]
+    end
+
+    subgraph JS["JavaScript API Layer"]
+        PublicAPI["Public_JS_API_Bindings (lib/)"]
+    end
+
+    subgraph Tooling["Build & Development Tooling"]
+        Build["Webpack / Test / Lint Scripts"]
+    end
+
+    MainDelegate --> Core
+    MainDelegate --> RendererInfra
+    MainDelegate --> NodeSvc
+
+    Core --> Session
+    Core --> Window
+    Session --> WC
+    Window --> WC
+    WC --> Ext
+    WC --> Device
+    Session --> Net
+    Core --> SysAPI
+    Core --> Platform
+    Window --> UI
+    Session --> Preload
+
+    Core --> Gin
+    WC --> Gin
+    Window --> Gin
+    SysAPI --> Gin
+    RendererInfra --> Gin
+    NodeSvc --> Gin
+
+    RendererInfra <-->|IPC / Mojo| WC
+    PublicAPI -->|Gin bindings| Core
+    PublicAPI -->|IPC| RendererInfra
+    Build -.->|bundles| PublicAPI
+    Build -.->|validates| Core
 ```
 
-## Core Module Structure
-
-The Electron framework is organized into several key modules, each with detailed documentation:
-
-### 1. Process Management ([process_management.md](process_management.md))
-- **Utility Process**: Background task execution and isolated operations
-- **Parent Port**: Communication channel for utility processes
-- **Process Lifecycle**: Creation, management, and cleanup of processes
-
-### 2. Inter-Process Communication ([ipc_communication.md](ipc_communication.md))
-- **IPC Main**: Main process communication handling
-- **IPC Renderer**: Renderer process communication management
-- **Message Ports**: Structured data transfer between processes
-- **Message Channels**: Bidirectional communication channels
-
-### 3. UI Components ([ui_components.md](ui_components.md))
-- **BrowserView**: Embeddable web content views
-- **TouchBar**: macOS Touch Bar integration with various controls
-- **Share Menu**: Native sharing functionality
-- **Menu System**: Cross-platform menu implementation
-
-### 4. System Integration ([system_integration.md](system_integration.md))
-- **Power Monitor**: System power state monitoring and events
-- **Auto Updater**: Application update management (Windows)
-- **Crash Reporter**: Error reporting and crash handling
-
-### 5. Networking ([networking.md](networking.md))
-- **Client Request**: HTTP/HTTPS request handling
-- **Streaming**: Chunked and buffered data transfer
-- **Protocol Support**: Custom protocol implementation
-
-### 6. WebView System ([web_view_system.md](web_view_system.md))
-- **WebView Implementation**: Embedded web content management
-- **Attribute System**: WebView configuration and behavior
-- **Guest View Management**: Isolated web content handling
-
-### 7. Build and Testing ([build_and_testing.md](build_and_testing.md))
-- **Webpack Configuration**: Module bundling and build process
-- **Test Framework**: Comprehensive testing infrastructure
-- **Code Quality**: Formatting and linting tools
-- **Screen Testing**: Visual testing capabilities
-
-### 8. Type Definitions ([type_definitions.md](type_definitions.md))
-- **Internal Types**: Framework-specific type definitions
-- **Ambient Types**: Global type declarations
-- **API Interfaces**: Public and internal API contracts
-
-## Key Features
-
-### Multi-Process Architecture
-Electron uses a multi-process model similar to modern web browsers:
-- **Security**: Isolates web content from the main application
-- **Stability**: Prevents renderer crashes from affecting the main process
-- **Performance**: Enables parallel processing and resource management
-
-### Native API Access
-Provides access to native operating system features:
-- File system operations
-- System notifications
-- Hardware integration
-- Platform-specific functionality
-
-### Web Technology Integration
-Seamlessly integrates web technologies with native capabilities:
-- Modern web standards support
-- Node.js integration in renderer processes
-- Context isolation for security
-- Preload scripts for safe API exposure
-
-## Communication Patterns
-
-The Electron framework implements sophisticated communication patterns between processes:
+### 2.2 Startup & Runtime Flow
 
 ```mermaid
 sequenceDiagram
-    participant Main as Main Process
+    participant OS as OS Process Entry
+    participant MD as ElectronMainDelegate
+    participant BMP as ElectronBrowserMainParts
+    participant Node as NodeBindings/V8
+    participant Win as NativeWindow/BrowserWindow
+    participant WC as WebContents
     participant Renderer as Renderer Process
-    participant Utility as Utility Process
-    participant WebView as WebView Guest
-    
-    Main->>Renderer: Create BrowserWindow
-    Renderer->>Main: IPC Message (invoke)
-    Main->>Utility: Spawn Utility Process
-    Utility->>Main: Task Result (MessagePort)
-    Main->>Renderer: Update UI State
-    
-    Note over Renderer,WebView: WebView Communication
-    Renderer->>WebView: Create Guest Instance
-    WebView->>Renderer: Guest Events
-    Renderer->>Main: Guest Management
+
+    OS->>MD: process launch
+    MD->>BMP: create ElectronBrowserClient/MainParts
+    BMP->>Node: bootstrap Node.js + V8 in browser process
+    BMP->>Win: app 'ready' -> create BrowserWindow
+    Win->>WC: attach WebContents
+    WC->>Renderer: spawn renderer process
+    Renderer->>Renderer: ElectronRendererClient bootstraps Node/context bridge
+    Renderer-->>WC: IPC (ipcRenderer <-> ipcMain)
+    WC-->>Win: render/paint/events
+    Win-->>OS: user closes all windows -> Browser quits
 ```
 
-### Data Flow Architecture
+### 2.3 JavaScript-to-Native Binding Flow
 
 ```mermaid
-graph LR
-    subgraph "Main Process"
-        App[App Controller]
-        IpcMain[IPC Main Handler]
-        WindowManager[Window Manager]
-        SystemAPI[System APIs]
-    end
-    
-    subgraph "Renderer Process"
-        WebContent[Web Content]
-        IpcRenderer[IPC Renderer]
-        ContextBridge[Context Bridge]
-        Preload[Preload Scripts]
-    end
-    
-    subgraph "Utility Process"
-        Worker[Background Worker]
-        ParentPort[Parent Port]
-    end
-    
-    subgraph "WebView System"
-        GuestView[Guest View]
-        GuestManager[Guest Manager]
-        Attributes[Attribute System]
-    end
-    
-    App --> WindowManager
-    WindowManager --> WebContent
-    IpcMain <--> IpcRenderer
-    WebContent --> ContextBridge
-    ContextBridge --> Preload
-    App --> Worker
-    Worker --> ParentPort
-    WebContent --> GuestView
-    GuestView --> GuestManager
-    GuestManager --> Attributes
-    
-    style App fill:#e3f2fd
-    style WebContent fill:#f3e5f5
-    style Worker fill:#e8f5e8
-    style GuestView fill:#fff3e0
+flowchart LR
+    JSApp["App JavaScript (main/preload/renderer)"]
+    PublicAPI["Public_JS_API_Bindings (lib/)"]
+    GinHelper["Gin_Helper / Gin_Converters (Common_Native_Gin_Infrastructure)"]
+    NativeAPI["Native gin-bound classes (BrowserWindow, Session, WebContents, Tray, ...)"]
+    Chromium["Chromium //content, Views, Network Service"]
+
+    JSApp --> PublicAPI
+    PublicAPI --> GinHelper
+    GinHelper --> NativeAPI
+    NativeAPI --> Chromium
+    Chromium -->|events/callbacks| NativeAPI
+    NativeAPI -->|EventEmitter| PublicAPI
+    PublicAPI -->|events| JSApp
 ```
 
-## Security Model
+## 3. Core Modules
 
-Electron implements multiple security layers:
-
-1. **Process Isolation**: Separates main and renderer processes
-2. **Context Isolation**: Isolates the main world from isolated world
-3. **Preload Scripts**: Safe API exposure mechanism
-4. **Content Security Policy**: Web content security enforcement
-5. **Node Integration Control**: Configurable Node.js access
-
-## Development Workflow
-
-The framework supports comprehensive development workflows:
-
-### Build Process
-- **TypeScript Compilation**: Full TypeScript support with strict type checking
-- **Module Bundling**: Webpack-based bundling with custom configurations
-- **Asset Optimization**: Automatic optimization of resources and dependencies
-- **Platform-specific Packaging**: Cross-platform build and distribution
-
-### Testing Infrastructure ([build_and_testing.md](build_and_testing.md))
-- **Unit Testing**: Component-level testing with comprehensive coverage
-- **Integration Testing**: Cross-process communication testing
-- **End-to-end Testing**: Full application workflow testing
-- **Visual Testing**: Screen capture and pixel-perfect UI testing
-- **Performance Testing**: Memory and CPU usage monitoring
-
-### Release Management
-- **Automated Version Bumping**: Semantic versioning with automated updates
-- **Release Note Generation**: Automatic changelog creation from commit history
-- **Multi-platform Distribution**: Simultaneous releases across platforms
-- **Update Delivery System**: Automatic update mechanisms for deployed applications
-
-### Code Quality
-- **Linting and Formatting**: Automated code style enforcement
-- **Type Safety**: Comprehensive TypeScript type definitions
-- **Security Auditing**: Built-in security best practices
-- **Documentation Generation**: Automatic API documentation
-
-## Platform Support
-
-Electron provides cross-platform compatibility:
-- **Windows**: Full Windows API integration
-- **macOS**: Native macOS features and UI guidelines
-- **Linux**: X11 and Wayland support
-
-## Performance Considerations
-
-### Memory Management
-- Efficient process lifecycle management
-- Garbage collection optimization
-- Resource cleanup mechanisms
-
-### Startup Optimization
-- Lazy loading strategies
-- Preload script optimization
-- Bundle size minimization
-
-### Runtime Performance
-- V8 engine optimization
-- Native module integration
-- Background task management
-
-## Extension Points
-
-The framework provides multiple extension mechanisms:
-- Custom protocol handlers
-- Native module integration
-- Plugin architecture
-- Theme and styling customization
-
-## Conclusion
-
-Electron provides a comprehensive framework for building cross-platform desktop applications using web technologies. Its multi-process architecture, extensive API surface, and robust development tools make it suitable for applications ranging from simple utilities to complex enterprise software.
-
-The framework continues to evolve with modern web standards while maintaining backward compatibility and providing developers with the tools needed to create high-quality desktop applications.
+| Module | Responsibility |
+|---|---|
+| [Build & Development Tooling](Build_&_Development_Tooling.md) | Webpack bundling of `lib/**` into runtime bundles; native test runner and clang-format tooling for CI. |
+| [Application Bootstrap & Process Entry](Application_Bootstrap_&_Process_Entry.md) | OS process entry points, `ElectronMainDelegate`, content/crash-reporter clients, libuv task runner, and the app-relauncher mechanism. |
+| [Public JS API Bindings](Public_JS_API_Bindings.md) | TypeScript layer (`lib/`) implementing the public `electron` module surface for both browser and renderer processes. |
+| [Browser Process Core & Lifecycle](Browser_Process_Core_&_Lifecycle.md) | The `Browser` singleton, `BrowserProcessImpl`, `ElectronBrowserClient`/`ElectronBrowserMainParts`, and V8/Node bootstrap for the main process. |
+| [Browser Context & Session Management](Browser_Context_&_Session_Management.md) | `ElectronBrowserContext`/`Session` and per-session cookies, permissions, downloads, protocols, and service workers. |
+| [Native Window & Menu Management](Native_Window_&_Menu_Management.md) | `NativeWindow`/`BrowserWindow`/`Menu`/`Tray`/`View` native windowing and the global `WindowList` registry. |
+| [WebContents Rendering & Communication](WebContents_Rendering_&_Communication.md) | Core `WebContents` implementation, `<webview>` guests, offscreen rendering, printing, and browser-process IPC handlers. |
+| [Extensions Subsystem](Extensions_Subsystem.md) | Chrome-extension-compatible APIs, extension system/loader, and browser/renderer extension clients. |
+| [Device & Peripheral Access](Device_&_Peripheral_Access.md) | Bluetooth, HID, Serial, USB, WebAuthn delegates, File System Access, and media device permissioning. |
+| [Networking Layer](Networking_Layer.md) | ASAR/custom protocol URL loaders, request/WebSocket proxying (`webRequest`), network context management, DNS/proxy resolution. |
+| [System & App-Level Services API](System_&_App-Level_Services_API.md) | `app`, `autoUpdater`, `globalShortcut`, `powerMonitor`, `nativeTheme`, notifications, `UtilityProcess`, and app badging. |
+| [Platform-Specific Integration](Platform-Specific_Integration.md) | macOS IAP/StoreKit, Linux Unity launcher, Windows WinRT interop, OS shell operations, and native notification backends. |
+| [Preload Script Infrastructure](Preload_Script_Infrastructure.md) | `PreloadScript` descriptor and Service-Worker preload realm execution machinery. |
+| [Desktop UI Widgets & Dialogs](Desktop_UI_Widgets_&_Dialogs.md) | Autofill popup, native dialogs, DevTools hosting, tray/menu platform backends, custom window frames, Jump Lists/taskbar. |
+| [Common Native Gin Infrastructure](Common_Native_Gin_Infrastructure.md) | Foundational gin/V8 binding scaffolding, type converters, Node.js embedding (`NodeBindings`), ASAR, and shared utilities used by nearly every other module. |
+| [Renderer Process Infrastructure](Renderer_Process_Infrastructure.md) | Renderer-side Node bootstrap, context bridge, frame observers, autofill/spellcheck agents, and renderer extensions client. |
+| [Node Utility Services](Node_Utility_Services.md) | `NodeService`/`ParentPort` hosting Node.js inside Chromium utility processes for the `UtilityProcess` API. |

@@ -1,358 +1,999 @@
 {
-    "unity_runtime_core": {
-        "path": "com.unity.ml-agents/Runtime",
+    "Unity_Editor_Tooling": {
+        "path": "com.unity.ml-agents/Editor",
         "components": [
-            "com.unity.ml-agents.Runtime.Agent.AgentVectorActuator",
-            "com.unity.ml-agents.Runtime.Agent.AgentParameters",
-            "com.unity.ml-agents.Runtime.DecisionRequester.DecisionRequester",
-            "com.unity.ml-agents.Runtime.SimpleMultiAgentGroup.SimpleMultiAgentGroup"
+            "com.unity.ml-agents/Editor/BufferSensorComponentEditor.cs::BufferSensorComponentEditor",
+            "com.unity.ml-agents/Editor/CameraSensorComponentEditor.cs::CameraSensorComponentEditor",
+            "com.unity.ml-agents/Editor/GridSensorComponentEditor.cs::GridSensorComponentEditor",
+            "com.unity.ml-agents/Editor/Input/InputActuatorComponentEditor.cs::InputActuatorComponentEditor",
+            "com.unity.ml-agents/Editor/Match3ActuatorComponentEditor.cs::Match3ActuatorComponentEditor",
+            "com.unity.ml-agents/Editor/Match3SensorComponentEditor.cs::Match3SensorComponentEditor",
+            "com.unity.ml-agents/Editor/RayPerceptionSensorComponentBaseEditor.cs::RayPerceptionSensorComponent2DEditor",
+            "com.unity.ml-agents/Editor/RayPerceptionSensorComponentBaseEditor.cs::RayPerceptionSensorComponent3DEditor",
+            "com.unity.ml-agents/Editor/RenderTextureSensorComponentEditor.cs::RenderTextureSensorComponentEditor",
+            "com.unity.ml-agents/Editor/RigidBodySensorComponentEditor.cs::RigidBodySensorComponentEditor",
+            "com.unity.ml-agents/Editor/VectorSensorComponentEditor.cs::VectorSensorComponentEditor",
+            "com.unity.ml-agents/Editor/AgentEditor.cs::AgentEditor",
+            "com.unity.ml-agents/Editor/BehaviorParametersEditor.cs::BehaviorParametersEditor",
+            "com.unity.ml-agents/Editor/BrainParametersDrawer.cs::BrainParametersDrawer",
+            "com.unity.ml-agents/Editor/DemonstrationDrawer.cs::DemonstrationEditor",
+            "com.unity.ml-agents/Editor/DemonstrationImporter.cs::DemonstrationImporter",
+            "com.unity.ml-agents/Editor/MLAgentsSettingsBuildProvider.cs::MLAgentsSettingsBuildProvider"
         ],
         "children": {
-            "agent_core": {
+            "editor_component_inspectors": {
+                "path": "com.unity.ml-agents/Editor",
                 "components": [
-                    "com.unity.ml-agents.Runtime.Agent.AgentVectorActuator",
-                    "com.unity.ml-agents.Runtime.Agent.AgentParameters"
+                    "com.unity.ml-agents/Editor/BufferSensorComponentEditor.cs::BufferSensorComponentEditor",
+                    "com.unity.ml-agents/Editor/CameraSensorComponentEditor.cs::CameraSensorComponentEditor",
+                    "com.unity.ml-agents/Editor/GridSensorComponentEditor.cs::GridSensorComponentEditor",
+                    "com.unity.ml-agents/Editor/Input/InputActuatorComponentEditor.cs::InputActuatorComponentEditor",
+                    "com.unity.ml-agents/Editor/Match3ActuatorComponentEditor.cs::Match3ActuatorComponentEditor",
+                    "com.unity.ml-agents/Editor/Match3SensorComponentEditor.cs::Match3SensorComponentEditor",
+                    "com.unity.ml-agents/Editor/RayPerceptionSensorComponentBaseEditor.cs::RayPerceptionSensorComponent2DEditor",
+                    "com.unity.ml-agents/Editor/RayPerceptionSensorComponentBaseEditor.cs::RayPerceptionSensorComponent3DEditor",
+                    "com.unity.ml-agents/Editor/RenderTextureSensorComponentEditor.cs::RenderTextureSensorComponentEditor",
+                    "com.unity.ml-agents/Editor/RigidBodySensorComponentEditor.cs::RigidBodySensorComponentEditor",
+                    "com.unity.ml-agents/Editor/VectorSensorComponentEditor.cs::VectorSensorComponentEditor"
                 ],
                 "children": {}
             },
-            "decision_management": {
+            "editor_core": {
+                "path": "com.unity.ml-agents/Editor",
                 "components": [
-                    "com.unity.ml-agents.Runtime.DecisionRequester.DecisionRequester"
+                    "com.unity.ml-agents/Editor/AgentEditor.cs::AgentEditor",
+                    "com.unity.ml-agents/Editor/BehaviorParametersEditor.cs::BehaviorParametersEditor",
+                    "com.unity.ml-agents/Editor/BrainParametersDrawer.cs::BrainParametersDrawer",
+                    "com.unity.ml-agents/Editor/DemonstrationDrawer.cs::DemonstrationEditor",
+                    "com.unity.ml-agents/Editor/DemonstrationImporter.cs::DemonstrationImporter",
+                    "com.unity.ml-agents/Editor/MLAgentsSettingsBuildProvider.cs::MLAgentsSettingsBuildProvider"
                 ],
-                "children": {}
-            },
-            "multi_agent_coordination": {
-                "components": [
-                    "com.unity.ml-agents.Runtime.SimpleMultiAgentGroup.SimpleMultiAgentGroup"
-                ],
-                "children": {}
+                "children": {
+                    "editor_core_agent_inspectors": {
+                        "components": [
+                            "com.unity.ml-agents/Editor/AgentEditor.cs::AgentEditor",
+                            "com.unity.ml-agents/Editor/BehaviorParametersEditor.cs::BehaviorParametersEditor",
+                            "com.unity.ml-agents/Editor/BrainParametersDrawer.cs::BrainParametersDrawer"
+                        ],
+                        "children": {}
+                    },
+                    "editor_core_demonstration_tooling": {
+                        "components": [
+                            "com.unity.ml-agents/Editor/DemonstrationDrawer.cs::DemonstrationEditor",
+                            "com.unity.ml-agents/Editor/DemonstrationImporter.cs::DemonstrationImporter"
+                        ],
+                        "children": {}
+                    }
+                }
             }
         }
     },
-    "unity_actuators": {
-        "path": "com.unity.ml-agents/Runtime/Actuators",
-        "components": [
-            "com.unity.ml-agents.Runtime.Actuators.ActionSegment.ActionSegment",
-            "com.unity.ml-agents.Runtime.Actuators.ActionSpec.ActionSpec",
-            "com.unity.ml-agents.Runtime.Actuators.IActionReceiver.IActionReceiver",
-            "com.unity.ml-agents.Runtime.Actuators.IHeuristicProvider.IHeuristicProvider",
-            "com.unity.ml-agents.Runtime.Actuators.VectorActuator.VectorActuator"
-        ],
-        "children": {
-            "action_data_structures": {
-                "components": [
-                    "com.unity.ml-agents.Runtime.Actuators.ActionSegment.ActionSegment"
-                ],
-                "children": {}
-            },
-            "action_execution": {
-                "components": [
-                    "com.unity.ml-agents.Runtime.Actuators.VectorActuator.VectorActuator"
-                ],
-                "children": {}
-            },
-            "action_interfaces": {
-                "components": [
-                    "com.unity.ml-agents.Runtime.Actuators.IActionReceiver.IActionReceiver",
-                    "com.unity.ml-agents.Runtime.Actuators.IHeuristicProvider.IHeuristicProvider"
-                ],
-                "children": {}
-            },
-            "action_specification": {
-                "components": [
-                    "com.unity.ml-agents.Runtime.Actuators.ActionSpec.ActionSpec"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "unity_sensors": {
+    "Unity_Perception_&_Sensing": {
         "path": "com.unity.ml-agents/Runtime/Sensors",
         "components": [
-            "com.unity.ml-agents.Runtime.Sensors.ObservationSpec.ObservationSpec",
-            "com.unity.ml-agents.Runtime.Sensors.CameraSensor.CameraSensor",
-            "com.unity.ml-agents.Runtime.Sensors.CameraSensorComponent.CameraSensorComponent",
-            "com.unity.ml-agents.Runtime.Sensors.RayPerceptionSensorComponent2D.RayPerceptionSensorComponent2D",
-            "com.unity.ml-agents.Runtime.Sensors.RayPerceptionSensorComponent3D.RayPerceptionSensorComponent3D",
-            "com.unity.ml-agents.Runtime.Sensors.VectorSensorComponent.VectorSensorComponent",
-            "com.unity.ml-agents.Runtime.Sensors.BufferSensor.BufferSensor",
-            "com.unity.ml-agents.Runtime.Sensors.BufferSensorComponent.BufferSensorComponent"
+            "com.unity.ml-agents/Runtime/Sensors/ArticulationBodySensorComponent.cs::ArticulationBodySensorComponent",
+            "com.unity.ml-agents/Runtime/Sensors/BufferSensorComponent.cs::BufferSensorComponent",
+            "com.unity.ml-agents/Runtime/Sensors/CameraSensorComponent.cs::CameraSensorComponent",
+            "com.unity.ml-agents/Runtime/Sensors/CountingGridSensor.cs::CountingGridSensor",
+            "com.unity.ml-agents/Runtime/Sensors/GridSensorComponent.cs::GridSensorComponent",
+            "com.unity.ml-agents/Runtime/Sensors/RayPerceptionSensorComponent2D.cs::RayPerceptionSensorComponent2D",
+            "com.unity.ml-agents/Runtime/Sensors/RayPerceptionSensorComponent3D.cs::RayPerceptionSensorComponent3D",
+            "com.unity.ml-agents/Runtime/Sensors/RenderTextureSensorComponent.cs::RenderTextureSensorComponent",
+            "com.unity.ml-agents/Runtime/Sensors/RigidBodySensorComponent.cs::RigidBodySensorComponent",
+            "com.unity.ml-agents/Runtime/Sensors/VectorSensorComponent.cs::VectorSensorComponent",
+            "com.unity.ml-agents/Runtime/Sensors/Reflection/BoolReflectionSensor.cs::BoolReflectionSensor",
+            "com.unity.ml-agents/Runtime/Sensors/Reflection/FloatReflectionSensor.cs::FloatReflectionSensor",
+            "com.unity.ml-agents/Runtime/Sensors/Reflection/IntReflectionSensor.cs::IntReflectionSensor",
+            "com.unity.ml-agents/Runtime/Sensors/Reflection/QuaternionReflectionSensor.cs::QuaternionReflectionSensor",
+            "com.unity.ml-agents/Runtime/Sensors/Reflection/Vector2ReflectionSensor.cs::Vector2ReflectionSensor",
+            "com.unity.ml-agents/Runtime/Sensors/Reflection/Vector3ReflectionSensor.cs::Vector3ReflectionSensor",
+            "com.unity.ml-agents/Runtime/Sensors/Reflection/Vector4ReflectionSensor.cs::Vector4ReflectionSensor"
         ],
         "children": {
-            "data_sensors": {
+            "runtime_sensors": {
+                "path": "com.unity.ml-agents/Runtime/Sensors",
                 "components": [
-                    "com.unity.ml-agents.Runtime.Sensors.VectorSensorComponent.VectorSensorComponent",
-                    "com.unity.ml-agents.Runtime.Sensors.BufferSensor.BufferSensor",
-                    "com.unity.ml-agents.Runtime.Sensors.BufferSensorComponent.BufferSensorComponent"
+                    "com.unity.ml-agents/Runtime/Sensors/ArticulationBodySensorComponent.cs::ArticulationBodySensorComponent",
+                    "com.unity.ml-agents/Runtime/Sensors/BufferSensorComponent.cs::BufferSensorComponent",
+                    "com.unity.ml-agents/Runtime/Sensors/CameraSensorComponent.cs::CameraSensorComponent",
+                    "com.unity.ml-agents/Runtime/Sensors/CountingGridSensor.cs::CountingGridSensor",
+                    "com.unity.ml-agents/Runtime/Sensors/GridSensorComponent.cs::GridSensorComponent",
+                    "com.unity.ml-agents/Runtime/Sensors/RayPerceptionSensorComponent2D.cs::RayPerceptionSensorComponent2D",
+                    "com.unity.ml-agents/Runtime/Sensors/RayPerceptionSensorComponent3D.cs::RayPerceptionSensorComponent3D",
+                    "com.unity.ml-agents/Runtime/Sensors/RenderTextureSensorComponent.cs::RenderTextureSensorComponent",
+                    "com.unity.ml-agents/Runtime/Sensors/RigidBodySensorComponent.cs::RigidBodySensorComponent",
+                    "com.unity.ml-agents/Runtime/Sensors/VectorSensorComponent.cs::VectorSensorComponent"
                 ],
-                "children": {}
+                "children": {
+                    "runtime_sensors_visual": {
+                        "components": [
+                            "com.unity.ml-agents/Runtime/Sensors/CameraSensorComponent.cs::CameraSensorComponent",
+                            "com.unity.ml-agents/Runtime/Sensors/RenderTextureSensorComponent.cs::RenderTextureSensorComponent"
+                        ],
+                        "children": {}
+                    },
+                    "runtime_sensors_spatial": {
+                        "components": [
+                            "com.unity.ml-agents/Runtime/Sensors/GridSensorComponent.cs::GridSensorComponent",
+                            "com.unity.ml-agents/Runtime/Sensors/CountingGridSensor.cs::CountingGridSensor",
+                            "com.unity.ml-agents/Runtime/Sensors/RayPerceptionSensorComponent2D.cs::RayPerceptionSensorComponent2D",
+                            "com.unity.ml-agents/Runtime/Sensors/RayPerceptionSensorComponent3D.cs::RayPerceptionSensorComponent3D"
+                        ],
+                        "children": {}
+                    },
+                    "runtime_sensors_physics": {
+                        "components": [
+                            "com.unity.ml-agents/Runtime/Sensors/ArticulationBodySensorComponent.cs::ArticulationBodySensorComponent",
+                            "com.unity.ml-agents/Runtime/Sensors/RigidBodySensorComponent.cs::RigidBodySensorComponent"
+                        ],
+                        "children": {}
+                    },
+                    "runtime_sensors_data": {
+                        "components": [
+                            "com.unity.ml-agents/Runtime/Sensors/BufferSensorComponent.cs::BufferSensorComponent",
+                            "com.unity.ml-agents/Runtime/Sensors/VectorSensorComponent.cs::VectorSensorComponent"
+                        ],
+                        "children": {}
+                    }
+                }
             },
-            "sensor_infrastructure": {
+            "runtime_sensors_reflection": {
+                "path": "com.unity.ml-agents/Runtime/Sensors/Reflection",
                 "components": [
-                    "com.unity.ml-agents.Runtime.Sensors.ObservationSpec.ObservationSpec"
-                ],
-                "children": {}
-            },
-            "spatial_sensors": {
-                "components": [
-                    "com.unity.ml-agents.Runtime.Sensors.RayPerceptionSensorComponent2D.RayPerceptionSensorComponent2D",
-                    "com.unity.ml-agents.Runtime.Sensors.RayPerceptionSensorComponent3D.RayPerceptionSensorComponent3D"
-                ],
-                "children": {}
-            },
-            "visual_sensors": {
-                "components": [
-                    "com.unity.ml-agents.Runtime.Sensors.CameraSensor.CameraSensor",
-                    "com.unity.ml-agents.Runtime.Sensors.CameraSensorComponent.CameraSensorComponent"
+                    "com.unity.ml-agents/Runtime/Sensors/Reflection/BoolReflectionSensor.cs::BoolReflectionSensor",
+                    "com.unity.ml-agents/Runtime/Sensors/Reflection/FloatReflectionSensor.cs::FloatReflectionSensor",
+                    "com.unity.ml-agents/Runtime/Sensors/Reflection/IntReflectionSensor.cs::IntReflectionSensor",
+                    "com.unity.ml-agents/Runtime/Sensors/Reflection/QuaternionReflectionSensor.cs::QuaternionReflectionSensor",
+                    "com.unity.ml-agents/Runtime/Sensors/Reflection/Vector2ReflectionSensor.cs::Vector2ReflectionSensor",
+                    "com.unity.ml-agents/Runtime/Sensors/Reflection/Vector3ReflectionSensor.cs::Vector3ReflectionSensor",
+                    "com.unity.ml-agents/Runtime/Sensors/Reflection/Vector4ReflectionSensor.cs::Vector4ReflectionSensor"
                 ],
                 "children": {}
             }
         }
     },
-    "unity_communication": {
-        "path": "com.unity.ml-agents/Runtime/Communicator",
+    "Unity_Actuation_&_Input_Integration": {
+        "path": "com.unity.ml-agents/Runtime",
         "components": [
-            "com.unity.ml-agents.Runtime.Communicator.ICommunicator.ICommunicator",
-            "com.unity.ml-agents.Runtime.Communicator.RpcCommunicator.RpcCommunicator",
-            "com.unity.ml-agents.Runtime.Grpc.CommunicatorObjects.UnityToExternalGrpc.UnityToExternalProtoClient"
-        ],
-        "children": {}
-    },
-    "unity_policies": {
-        "path": "com.unity.ml-agents/Runtime/Policies",
-        "components": [
-            "com.unity.ml-agents.Runtime.Policies.IPolicy.IPolicy",
-            "com.unity.ml-agents.Runtime.Policies.HeuristicPolicy.HeuristicPolicy",
-            "com.unity.ml-agents.Runtime.Policies.RemotePolicy.RemotePolicy",
-            "com.unity.ml-agents.Runtime.Policies.SentisPolicy.SentisPolicy"
-        ],
-        "children": {}
-    },
-    "unity_inference": {
-        "path": "com.unity.ml-agents/Runtime/Inference",
-        "components": [
-            "com.unity.ml-agents.Runtime.Inference.ModelRunner.ModelRunner",
-            "com.unity.ml-agents.Runtime.Inference.TensorGenerator.TensorGenerator",
-            "com.unity.ml-agents.Runtime.Inference.TensorApplier.TensorApplier",
-            "com.unity.ml-agents.Runtime.Inference.SentisModelParamLoader.SentisModelParamLoader"
+            "com.unity.ml-agents/Runtime/Input/Adaptors/ButtonInputActionAdaptor.cs::ButtonInputActionAdaptor",
+            "com.unity.ml-agents/Runtime/Input/Adaptors/DoubleInputActionAdaptor.cs::DoubleInputActionAdaptor",
+            "com.unity.ml-agents/Runtime/Input/Adaptors/FloatInputActionAdaptor.cs::FloatInputActionAdaptor",
+            "com.unity.ml-agents/Runtime/Input/Adaptors/IntegerInputActionAdaptor.cs::IntegerInputActionAdaptor",
+            "com.unity.ml-agents/Runtime/Input/Adaptors/Vector2InputActionAdaptor.cs::Vector2InputActionAdaptor",
+            "com.unity.ml-agents/Runtime/Input/IInputActionAssetProvider.cs::IInputActionAssetProvider",
+            "com.unity.ml-agents/Runtime/Input/InputActuatorComponent.cs::InputActuatorComponent",
+            "com.unity.ml-agents/Runtime/Integrations/Match3/Match3ActuatorComponent.cs::Match3ActuatorComponent",
+            "com.unity.ml-agents/Runtime/Integrations/Match3/Match3SensorComponent.cs::Match3SensorComponent"
         ],
         "children": {
-            "model_execution": {
+            "runtime_input": {
+                "path": "com.unity.ml-agents/Runtime/Input",
                 "components": [
-                    "com.unity.ml-agents.Runtime.Inference.ModelRunner.ModelRunner"
+                    "com.unity.ml-agents/Runtime/Input/Adaptors/ButtonInputActionAdaptor.cs::ButtonInputActionAdaptor",
+                    "com.unity.ml-agents/Runtime/Input/Adaptors/DoubleInputActionAdaptor.cs::DoubleInputActionAdaptor",
+                    "com.unity.ml-agents/Runtime/Input/Adaptors/FloatInputActionAdaptor.cs::FloatInputActionAdaptor",
+                    "com.unity.ml-agents/Runtime/Input/Adaptors/IntegerInputActionAdaptor.cs::IntegerInputActionAdaptor",
+                    "com.unity.ml-agents/Runtime/Input/Adaptors/Vector2InputActionAdaptor.cs::Vector2InputActionAdaptor",
+                    "com.unity.ml-agents/Runtime/Input/IInputActionAssetProvider.cs::IInputActionAssetProvider",
+                    "com.unity.ml-agents/Runtime/Input/InputActuatorComponent.cs::InputActuatorComponent"
                 ],
                 "children": {}
             },
-            "model_validation": {
+            "runtime_integrations_match3": {
+                "path": "com.unity.ml-agents/Runtime/Integrations/Match3",
                 "components": [
-                    "com.unity.ml-agents.Runtime.Inference.SentisModelParamLoader.SentisModelParamLoader"
-                ],
-                "children": {}
-            },
-            "tensor_processing": {
-                "components": [
-                    "com.unity.ml-agents.Runtime.Inference.TensorGenerator.TensorGenerator",
-                    "com.unity.ml-agents.Runtime.Inference.TensorApplier.TensorApplier"
+                    "com.unity.ml-agents/Runtime/Integrations/Match3/Match3ActuatorComponent.cs::Match3ActuatorComponent",
+                    "com.unity.ml-agents/Runtime/Integrations/Match3/Match3SensorComponent.cs::Match3SensorComponent"
                 ],
                 "children": {}
             }
         }
     },
-    "unity_side_channels": {
-        "path": "com.unity.ml-agents/Runtime/SideChannels",
+    "Unity_Agent_&_Environment_Foundation": {
+        "path": "com.unity.ml-agents/Runtime",
         "components": [
-            "com.unity.ml-agents.Runtime.SideChannels.EngineConfigurationChannel.EngineConfigurationChannel",
-            "com.unity.ml-agents.Runtime.SideChannels.EnvironmentParametersChannel.EnvironmentParametersChannel",
-            "com.unity.ml-agents.Runtime.SideChannels.StatsSideChannel.StatsSideChannel",
-            "com.unity.ml-agents.Runtime.SideChannels.IncomingMessage.IncomingMessage",
-            "com.unity.ml-agents.Runtime.SideChannels.OutgoingMessage.OutgoingMessage"
+            "com.unity.ml-agents/Runtime/DecisionRequester.cs::DecisionRequester",
+            "com.unity.ml-agents/Runtime/SimpleMultiAgentGroup.cs::SimpleMultiAgentGroup",
+            "com.unity.ml-agents/Runtime/Areas/TrainingAreaReplicator.cs::TrainingAreaReplicator"
         ],
         "children": {
-            "communication_channels": {
+            "runtime_core_agent": {
+                "path": "com.unity.ml-agents/Runtime",
                 "components": [
-                    "com.unity.ml-agents.Runtime.SideChannels.EngineConfigurationChannel.EngineConfigurationChannel",
-                    "com.unity.ml-agents.Runtime.SideChannels.EnvironmentParametersChannel.EnvironmentParametersChannel",
-                    "com.unity.ml-agents.Runtime.SideChannels.StatsSideChannel.StatsSideChannel"
+                    "com.unity.ml-agents/Runtime/DecisionRequester.cs::DecisionRequester",
+                    "com.unity.ml-agents/Runtime/SimpleMultiAgentGroup.cs::SimpleMultiAgentGroup"
                 ],
                 "children": {}
             },
-            "message_infrastructure": {
+            "runtime_areas": {
+                "path": "com.unity.ml-agents/Runtime/Areas",
                 "components": [
-                    "com.unity.ml-agents.Runtime.SideChannels.IncomingMessage.IncomingMessage",
-                    "com.unity.ml-agents.Runtime.SideChannels.OutgoingMessage.OutgoingMessage"
+                    "com.unity.ml-agents/Runtime/Areas/TrainingAreaReplicator.cs::TrainingAreaReplicator"
                 ],
                 "children": {}
             }
         }
     },
-    "python_environment": {
+    "Unity-Python_Bridge_&_ML_Integration": {
+        "path": "com.unity.ml-agents/Runtime",
+        "components": [
+            "com.unity.ml-agents/Runtime/Communicator/ICommunicator.cs::UnityRLInputParameters",
+            "com.unity.ml-agents/Runtime/SideChannels/FloatPropertiesChannel.cs::FloatPropertiesChannel",
+            "com.unity.ml-agents/Runtime/SideChannels/RawBytesChannel.cs::RawBytesChannel",
+            "com.unity.ml-agents/Runtime/Demonstrations/DemonstrationRecorder.cs::DemonstrationRecorder",
+            "com.unity.ml-agents/Runtime/Demonstrations/DemonstrationSummary.cs::DemonstrationSummary",
+            "com.unity.ml-agents/Runtime/Analytics/AnalyticsUtils.cs::DisableAnalyticsSending",
+            "com.unity.ml-agents/Runtime/Analytics/InferenceAnalytics.cs::InferenceAnalytics",
+            "com.unity.ml-agents/Runtime/Inference/SentisModelParamLoader.cs::SentisModelParamLoader"
+        ],
+        "children": {
+            "runtime_communicator": {
+                "path": "com.unity.ml-agents/Runtime/Communicator",
+                "components": [
+                    "com.unity.ml-agents/Runtime/Communicator/ICommunicator.cs::UnityRLInputParameters"
+                ],
+                "children": {}
+            },
+            "runtime_sidechannels": {
+                "path": "com.unity.ml-agents/Runtime/SideChannels",
+                "components": [
+                    "com.unity.ml-agents/Runtime/SideChannels/FloatPropertiesChannel.cs::FloatPropertiesChannel",
+                    "com.unity.ml-agents/Runtime/SideChannels/RawBytesChannel.cs::RawBytesChannel"
+                ],
+                "children": {}
+            },
+            "runtime_demonstrations": {
+                "path": "com.unity.ml-agents/Runtime/Demonstrations",
+                "components": [
+                    "com.unity.ml-agents/Runtime/Demonstrations/DemonstrationRecorder.cs::DemonstrationRecorder",
+                    "com.unity.ml-agents/Runtime/Demonstrations/DemonstrationSummary.cs::DemonstrationSummary"
+                ],
+                "children": {}
+            },
+            "runtime_analytics": {
+                "path": "com.unity.ml-agents/Runtime/Analytics",
+                "components": [
+                    "com.unity.ml-agents/Runtime/Analytics/AnalyticsUtils.cs::DisableAnalyticsSending",
+                    "com.unity.ml-agents/Runtime/Analytics/InferenceAnalytics.cs::InferenceAnalytics"
+                ],
+                "children": {}
+            },
+            "runtime_inference": {
+                "path": "com.unity.ml-agents/Runtime/Inference",
+                "components": [
+                    "com.unity.ml-agents/Runtime/Inference/SentisModelParamLoader.cs::SentisModelParamLoader"
+                ],
+                "children": {}
+            }
+        }
+    },
+    "Python_Environment_Interface_Layer": {
         "path": "ml-agents-envs/mlagents_envs",
         "components": [
-            "ml-agents-envs.mlagents_envs.base_env.BaseEnv",
-            "ml-agents-envs.mlagents_envs.communicator.Communicator",
-            "ml-agents-envs.mlagents_envs.communicator_objects.unity_to_external_pb2_grpc.UnityToExternalProto",
-            "ml-agents-envs.mlagents_envs.envs.unity_gym_env.UnityToGymWrapper"
-        ],
-        "children": {}
-    },
-    "python_side_channels": {
-        "path": "ml-agents-envs/mlagents_envs/side_channel",
-        "components": [
-            "ml-agents-envs.mlagents_envs.side_channel.engine_configuration_channel.ConfigurationType",
-            "ml-agents-envs.mlagents_envs.side_channel.environment_parameters_channel.EnvironmentDataTypes",
-            "ml-agents-envs.mlagents_envs.side_channel.float_properties_channel.FloatPropertiesChannel",
-            "ml-agents-envs.mlagents_envs.side_channel.raw_bytes_channel.RawBytesChannel"
+            "ml-agents-envs/mlagents_envs/base_env.py::BehaviorMapping",
+            "ml-agents-envs/mlagents_envs/base_env.py::TerminalSteps",
+            "ml-agents-envs/mlagents_envs/base_env.py::DecisionSteps",
+            "ml-agents-envs/mlagents_envs/base_env.py::_ActionTupleBase",
+            "ml-agents-envs/mlagents_envs/environment.py::UnityEnvironment",
+            "ml-agents-envs/mlagents_envs/mock_communicator.py::MockCommunicator",
+            "ml-agents-envs/mlagents_envs/rpc_communicator.py::RpcCommunicator",
+            "ml-agents-envs/mlagents_envs/rpc_communicator.py::UnityToExternalServicerImplementation",
+            "ml-agents-envs/mlagents_envs/rpc_utils.py::OffsetBytesIO",
+            "ml-agents-envs/mlagents_envs/timers.py::GaugeNode",
+            "ml-agents-envs/mlagents_envs/timers.py::TimerNode",
+            "ml-agents-envs/mlagents_envs/timers.py::TimerStack",
+            "ml-agents-envs/mlagents_envs/communicator_objects/unity_to_external_pb2_grpc.py::UnityToExternalProto",
+            "ml-agents-envs/mlagents_envs/communicator_objects/unity_to_external_pb2_grpc.py::UnityToExternalProtoStub",
+            "ml-agents-envs/mlagents_envs/envs/pettingzoo_env_factory.py::PettingZooEnvFactory",
+            "ml-agents-envs/mlagents_envs/envs/unity_aec_env.py::UnityAECEnv",
+            "ml-agents-envs/mlagents_envs/envs/unity_gym_env.py::ActionFlattener",
+            "ml-agents-envs/mlagents_envs/envs/unity_gym_env.py::UnityToGymWrapper",
+            "ml-agents-envs/mlagents_envs/envs/unity_parallel_env.py::UnityParallelEnv",
+            "ml-agents-envs/mlagents_envs/envs/unity_pettingzoo_base_env.py::UnityPettingzooBaseEnv",
+            "ml-agents-envs/mlagents_envs/registry/base_registry_entry.py::BaseRegistryEntry",
+            "ml-agents-envs/mlagents_envs/registry/remote_registry_entry.py::RemoteRegistryEntry",
+            "ml-agents-envs/mlagents_envs/registry/unity_env_registry.py::UnityEnvRegistry",
+            "ml-agents-envs/mlagents_envs/side_channel/default_training_analytics_side_channel.py::DefaultTrainingAnalyticsSideChannel",
+            "ml-agents-envs/mlagents_envs/side_channel/engine_configuration_channel.py::EngineConfigurationChannel",
+            "ml-agents-envs/mlagents_envs/side_channel/engine_configuration_channel.py::EngineConfigurationChannel.ConfigurationType",
+            "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel",
+            "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel.EnvironmentDataTypes",
+            "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel.SamplerTypes",
+            "ml-agents-envs/mlagents_envs/side_channel/float_properties_channel.py::FloatPropertiesChannel",
+            "ml-agents-envs/mlagents_envs/side_channel/incoming_message.py::IncomingMessage",
+            "ml-agents-envs/mlagents_envs/side_channel/outgoing_message.py::OutgoingMessage",
+            "ml-agents-envs/mlagents_envs/side_channel/raw_bytes_channel.py::RawBytesChannel",
+            "ml-agents-envs/mlagents_envs/side_channel/side_channel.py::SideChannel",
+            "ml-agents-envs/mlagents_envs/side_channel/side_channel_manager.py::SideChannelManager",
+            "ml-agents-envs/mlagents_envs/side_channel/stats_side_channel.py::StatsSideChannel"
         ],
         "children": {
-            "configuration_channels": {
+            "envs_core": {
+                "path": "ml-agents-envs/mlagents_envs",
                 "components": [
-                    "ml-agents-envs.mlagents_envs.side_channel.engine_configuration_channel.ConfigurationType"
+                    "ml-agents-envs/mlagents_envs/base_env.py::BehaviorMapping",
+                    "ml-agents-envs/mlagents_envs/base_env.py::TerminalSteps",
+                    "ml-agents-envs/mlagents_envs/base_env.py::DecisionSteps",
+                    "ml-agents-envs/mlagents_envs/base_env.py::_ActionTupleBase",
+                    "ml-agents-envs/mlagents_envs/environment.py::UnityEnvironment",
+                    "ml-agents-envs/mlagents_envs/mock_communicator.py::MockCommunicator",
+                    "ml-agents-envs/mlagents_envs/rpc_communicator.py::RpcCommunicator",
+                    "ml-agents-envs/mlagents_envs/rpc_communicator.py::UnityToExternalServicerImplementation",
+                    "ml-agents-envs/mlagents_envs/rpc_utils.py::OffsetBytesIO",
+                    "ml-agents-envs/mlagents_envs/timers.py::GaugeNode",
+                    "ml-agents-envs/mlagents_envs/timers.py::TimerNode",
+                    "ml-agents-envs/mlagents_envs/timers.py::TimerStack",
+                    "ml-agents-envs/mlagents_envs/communicator_objects/unity_to_external_pb2_grpc.py::UnityToExternalProto",
+                    "ml-agents-envs/mlagents_envs/communicator_objects/unity_to_external_pb2_grpc.py::UnityToExternalProtoStub"
+                ],
+                "children": {
+                    "envs_core_api": {
+                        "components": [
+                            "ml-agents-envs/mlagents_envs/base_env.py::BehaviorMapping",
+                            "ml-agents-envs/mlagents_envs/base_env.py::TerminalSteps",
+                            "ml-agents-envs/mlagents_envs/base_env.py::DecisionSteps",
+                            "ml-agents-envs/mlagents_envs/base_env.py::_ActionTupleBase",
+                            "ml-agents-envs/mlagents_envs/environment.py::UnityEnvironment"
+                        ],
+                        "children": {}
+                    },
+                    "envs_core_communicator": {
+                        "components": [
+                            "ml-agents-envs/mlagents_envs/rpc_communicator.py::RpcCommunicator",
+                            "ml-agents-envs/mlagents_envs/rpc_communicator.py::UnityToExternalServicerImplementation",
+                            "ml-agents-envs/mlagents_envs/mock_communicator.py::MockCommunicator",
+                            "ml-agents-envs/mlagents_envs/communicator_objects/unity_to_external_pb2_grpc.py::UnityToExternalProto",
+                            "ml-agents-envs/mlagents_envs/communicator_objects/unity_to_external_pb2_grpc.py::UnityToExternalProtoStub"
+                        ],
+                        "children": {}
+                    },
+                    "envs_core_utils": {
+                        "components": [
+                            "ml-agents-envs/mlagents_envs/rpc_utils.py::OffsetBytesIO",
+                            "ml-agents-envs/mlagents_envs/timers.py::GaugeNode",
+                            "ml-agents-envs/mlagents_envs/timers.py::TimerNode",
+                            "ml-agents-envs/mlagents_envs/timers.py::TimerStack"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "envs_wrappers": {
+                "path": "ml-agents-envs/mlagents_envs/envs",
+                "components": [
+                    "ml-agents-envs/mlagents_envs/envs/pettingzoo_env_factory.py::PettingZooEnvFactory",
+                    "ml-agents-envs/mlagents_envs/envs/unity_aec_env.py::UnityAECEnv",
+                    "ml-agents-envs/mlagents_envs/envs/unity_gym_env.py::ActionFlattener",
+                    "ml-agents-envs/mlagents_envs/envs/unity_gym_env.py::UnityToGymWrapper",
+                    "ml-agents-envs/mlagents_envs/envs/unity_parallel_env.py::UnityParallelEnv",
+                    "ml-agents-envs/mlagents_envs/envs/unity_pettingzoo_base_env.py::UnityPettingzooBaseEnv"
+                ],
+                "children": {
+                    "envs_wrappers_gym": {
+                        "components": [
+                            "ml-agents-envs/mlagents_envs/envs/unity_gym_env.py::ActionFlattener",
+                            "ml-agents-envs/mlagents_envs/envs/unity_gym_env.py::UnityToGymWrapper"
+                        ],
+                        "children": {}
+                    },
+                    "envs_wrappers_pettingzoo": {
+                        "components": [
+                            "ml-agents-envs/mlagents_envs/envs/pettingzoo_env_factory.py::PettingZooEnvFactory",
+                            "ml-agents-envs/mlagents_envs/envs/unity_aec_env.py::UnityAECEnv",
+                            "ml-agents-envs/mlagents_envs/envs/unity_parallel_env.py::UnityParallelEnv",
+                            "ml-agents-envs/mlagents_envs/envs/unity_pettingzoo_base_env.py::UnityPettingzooBaseEnv"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "envs_registry": {
+                "path": "ml-agents-envs/mlagents_envs/registry",
+                "components": [
+                    "ml-agents-envs/mlagents_envs/registry/base_registry_entry.py::BaseRegistryEntry",
+                    "ml-agents-envs/mlagents_envs/registry/remote_registry_entry.py::RemoteRegistryEntry",
+                    "ml-agents-envs/mlagents_envs/registry/unity_env_registry.py::UnityEnvRegistry"
                 ],
                 "children": {}
             },
-            "data_exchange_channels": {
+            "envs_sidechannel": {
+                "path": "ml-agents-envs/mlagents_envs/side_channel",
                 "components": [
-                    "ml-agents-envs.mlagents_envs.side_channel.float_properties_channel.FloatPropertiesChannel",
-                    "ml-agents-envs.mlagents_envs.side_channel.raw_bytes_channel.RawBytesChannel"
+                    "ml-agents-envs/mlagents_envs/side_channel/default_training_analytics_side_channel.py::DefaultTrainingAnalyticsSideChannel",
+                    "ml-agents-envs/mlagents_envs/side_channel/engine_configuration_channel.py::EngineConfigurationChannel",
+                    "ml-agents-envs/mlagents_envs/side_channel/engine_configuration_channel.py::EngineConfigurationChannel.ConfigurationType",
+                    "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel",
+                    "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel.EnvironmentDataTypes",
+                    "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel.SamplerTypes",
+                    "ml-agents-envs/mlagents_envs/side_channel/float_properties_channel.py::FloatPropertiesChannel",
+                    "ml-agents-envs/mlagents_envs/side_channel/incoming_message.py::IncomingMessage",
+                    "ml-agents-envs/mlagents_envs/side_channel/outgoing_message.py::OutgoingMessage",
+                    "ml-agents-envs/mlagents_envs/side_channel/raw_bytes_channel.py::RawBytesChannel",
+                    "ml-agents-envs/mlagents_envs/side_channel/side_channel.py::SideChannel",
+                    "ml-agents-envs/mlagents_envs/side_channel/side_channel_manager.py::SideChannelManager",
+                    "ml-agents-envs/mlagents_envs/side_channel/stats_side_channel.py::StatsSideChannel"
                 ],
-                "children": {}
-            },
-            "parameter_channels": {
-                "components": [
-                    "ml-agents-envs.mlagents_envs.side_channel.environment_parameters_channel.EnvironmentDataTypes"
-                ],
-                "children": {}
+                "children": {
+                    "envs_sidechannel_framework": {
+                        "components": [
+                            "ml-agents-envs/mlagents_envs/side_channel/side_channel.py::SideChannel",
+                            "ml-agents-envs/mlagents_envs/side_channel/incoming_message.py::IncomingMessage",
+                            "ml-agents-envs/mlagents_envs/side_channel/outgoing_message.py::OutgoingMessage",
+                            "ml-agents-envs/mlagents_envs/side_channel/side_channel_manager.py::SideChannelManager"
+                        ],
+                        "children": {}
+                    },
+                    "envs_sidechannel_channels": {
+                        "components": [
+                            "ml-agents-envs/mlagents_envs/side_channel/engine_configuration_channel.py::EngineConfigurationChannel",
+                            "ml-agents-envs/mlagents_envs/side_channel/engine_configuration_channel.py::EngineConfigurationChannel.ConfigurationType",
+                            "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel",
+                            "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel.EnvironmentDataTypes",
+                            "ml-agents-envs/mlagents_envs/side_channel/environment_parameters_channel.py::EnvironmentParametersChannel.SamplerTypes",
+                            "ml-agents-envs/mlagents_envs/side_channel/float_properties_channel.py::FloatPropertiesChannel",
+                            "ml-agents-envs/mlagents_envs/side_channel/raw_bytes_channel.py::RawBytesChannel",
+                            "ml-agents-envs/mlagents_envs/side_channel/stats_side_channel.py::StatsSideChannel",
+                            "ml-agents-envs/mlagents_envs/side_channel/default_training_analytics_side_channel.py::DefaultTrainingAnalyticsSideChannel"
+                        ],
+                        "children": {}
+                    }
+                }
             }
         }
     },
-    "training_core": {
+    "Training_Orchestration_&_Lifecycle_Infrastructure": {
         "path": "ml-agents/mlagents/trainers",
         "components": [
-            "ml-agents.mlagents.trainers.trainer.trainer.Trainer",
-            "ml-agents.mlagents.trainers.trainer.rl_trainer.RLTrainer",
-            "ml-agents.mlagents.trainers.env_manager.EnvManager",
-            "ml-agents.mlagents.trainers.simple_env_manager.SimpleEnvManager",
-            "ml-agents.mlagents.trainers.policy.policy.Policy"
+            "ml-agents/mlagents/trainers/agent_processor.py::AgentManager",
+            "ml-agents/mlagents/trainers/agent_processor.py::AgentManagerQueue",
+            "ml-agents/mlagents/trainers/buffer.py::RewardSignalUtil",
+            "ml-agents/mlagents/trainers/buffer.py::AgentBuffer",
+            "ml-agents/mlagents/trainers/buffer.py::AgentBufferField",
+            "ml-agents/mlagents/trainers/cli_utils.py::StoreConfigFile",
+            "ml-agents/mlagents/trainers/cli_utils.py::DetectDefaultStoreTrue",
+            "ml-agents/mlagents/trainers/cli_utils.py::RaiseRemovedWarning",
+            "ml-agents/mlagents/trainers/env_manager.py::EnvManager",
+            "ml-agents/mlagents/trainers/environment_parameter_manager.py::EnvironmentParameterManager",
+            "ml-agents/mlagents/trainers/settings.py::CuriositySettings",
+            "ml-agents/mlagents/trainers/settings.py::RunOptions",
+            "ml-agents/mlagents/trainers/settings.py::CompletionCriteriaSettings.MeasureType",
+            "ml-agents/mlagents/trainers/settings.py::GaussianSettings",
+            "ml-agents/mlagents/trainers/settings.py::CheckpointSettings",
+            "ml-agents/mlagents/trainers/settings.py::TrainerSettings.DefaultTrainerDict",
+            "ml-agents/mlagents/trainers/settings.py::ConditioningType",
+            "ml-agents/mlagents/trainers/settings.py::MultiRangeUniformSettings",
+            "ml-agents/mlagents/trainers/settings.py::ScheduleType",
+            "ml-agents/mlagents/trainers/settings.py::EncoderType",
+            "ml-agents/mlagents/trainers/settings.py::BehavioralCloningSettings",
+            "ml-agents/mlagents/trainers/settings.py::RNDSettings",
+            "ml-agents/mlagents/trainers/settings.py::UniformSettings",
+            "ml-agents/mlagents/trainers/settings.py::GAILSettings",
+            "ml-agents/mlagents/trainers/settings.py::NetworkSettings",
+            "ml-agents/mlagents/trainers/settings.py::SerializationSettings",
+            "ml-agents/mlagents/trainers/settings.py::CompletionCriteriaSettings",
+            "ml-agents/mlagents/trainers/settings.py::TorchSettings",
+            "ml-agents/mlagents/trainers/settings.py::SelfPlaySettings",
+            "ml-agents/mlagents/trainers/settings.py::EnvironmentSettings",
+            "ml-agents/mlagents/trainers/settings.py::EngineSettings",
+            "ml-agents/mlagents/trainers/simple_env_manager.py::SimpleEnvManager",
+            "ml-agents/mlagents/trainers/stats.py::StatsReporter",
+            "ml-agents/mlagents/trainers/stats.py::ConsoleWriter",
+            "ml-agents/mlagents/trainers/stats.py::TensorboardWriter",
+            "ml-agents/mlagents/trainers/stats.py::StatsPropertyType",
+            "ml-agents/mlagents/trainers/subprocess_env_manager.py::EnvironmentCommand",
+            "ml-agents/mlagents/trainers/subprocess_env_manager.py::SubprocessEnvManager",
+            "ml-agents/mlagents/trainers/subprocess_env_manager.py::UnityEnvWorker",
+            "ml-agents/mlagents/trainers/trainer_controller.py::TrainerController",
+            "ml-agents/mlagents/trainers/training_analytics_side_channel.py::TrainingAnalyticsSideChannel",
+            "ml-agents/mlagents/trainers/training_status.py::StatusType",
+            "ml-agents/mlagents/trainers/training_status.py::GlobalTrainingStatus",
+            "ml-agents/mlagents/trainers/trajectory.py::ObsUtil",
+            "ml-agents/mlagents/trainers/trajectory.py::GroupObsUtil",
+            "ml-agents/mlagents/trainers/trainer/off_policy_trainer.py::OffPolicyTrainer",
+            "ml-agents/mlagents/trainers/trainer/on_policy_trainer.py::OnPolicyTrainer",
+            "ml-agents/mlagents/trainers/trainer/rl_trainer.py::RLTrainer",
+            "ml-agents/mlagents/trainers/trainer/trainer.py::Trainer",
+            "ml-agents/mlagents/trainers/trainer/trainer_factory.py::TrainerFactory",
+            "ml-agents/mlagents/trainers/model_saver/model_saver.py::BaseModelSaver",
+            "ml-agents/mlagents/trainers/model_saver/torch_model_saver.py::TorchModelSaver",
+            "ml-agents/mlagents/trainers/policy/checkpoint_manager.py::ModelCheckpointManager",
+            "ml-agents/mlagents/trainers/policy/policy.py::Policy",
+            "ml-agents/mlagents/trainers/policy/torch_policy.py::TorchPolicy",
+            "ml-agents/mlagents/trainers/optimizer/optimizer.py::Optimizer",
+            "ml-agents/mlagents/trainers/optimizer/torch_optimizer.py::TorchOptimizer",
+            "ml-agents/mlagents/trainers/ghost/controller.py::GhostController",
+            "ml-agents/mlagents/trainers/ghost/trainer.py::GhostTrainer"
         ],
         "children": {
-            "environment_management": {
+            "trainers_core": {
+                "path": "ml-agents/mlagents/trainers",
                 "components": [
-                    "ml-agents.mlagents.trainers.env_manager.EnvManager",
-                    "ml-agents.mlagents.trainers.simple_env_manager.SimpleEnvManager"
+                    "ml-agents/mlagents/trainers/agent_processor.py::AgentManager",
+                    "ml-agents/mlagents/trainers/agent_processor.py::AgentManagerQueue",
+                    "ml-agents/mlagents/trainers/buffer.py::RewardSignalUtil",
+                    "ml-agents/mlagents/trainers/buffer.py::AgentBuffer",
+                    "ml-agents/mlagents/trainers/buffer.py::AgentBufferField",
+                    "ml-agents/mlagents/trainers/cli_utils.py::StoreConfigFile",
+                    "ml-agents/mlagents/trainers/cli_utils.py::DetectDefaultStoreTrue",
+                    "ml-agents/mlagents/trainers/cli_utils.py::RaiseRemovedWarning",
+                    "ml-agents/mlagents/trainers/env_manager.py::EnvManager",
+                    "ml-agents/mlagents/trainers/environment_parameter_manager.py::EnvironmentParameterManager",
+                    "ml-agents/mlagents/trainers/settings.py::CuriositySettings",
+                    "ml-agents/mlagents/trainers/settings.py::RunOptions",
+                    "ml-agents/mlagents/trainers/settings.py::CompletionCriteriaSettings.MeasureType",
+                    "ml-agents/mlagents/trainers/settings.py::GaussianSettings",
+                    "ml-agents/mlagents/trainers/settings.py::CheckpointSettings",
+                    "ml-agents/mlagents/trainers/settings.py::TrainerSettings.DefaultTrainerDict",
+                    "ml-agents/mlagents/trainers/settings.py::ConditioningType",
+                    "ml-agents/mlagents/trainers/settings.py::MultiRangeUniformSettings",
+                    "ml-agents/mlagents/trainers/settings.py::ScheduleType",
+                    "ml-agents/mlagents/trainers/settings.py::EncoderType",
+                    "ml-agents/mlagents/trainers/settings.py::BehavioralCloningSettings",
+                    "ml-agents/mlagents/trainers/settings.py::RNDSettings",
+                    "ml-agents/mlagents/trainers/settings.py::UniformSettings",
+                    "ml-agents/mlagents/trainers/settings.py::GAILSettings",
+                    "ml-agents/mlagents/trainers/settings.py::NetworkSettings",
+                    "ml-agents/mlagents/trainers/settings.py::SerializationSettings",
+                    "ml-agents/mlagents/trainers/settings.py::CompletionCriteriaSettings",
+                    "ml-agents/mlagents/trainers/settings.py::TorchSettings",
+                    "ml-agents/mlagents/trainers/settings.py::SelfPlaySettings",
+                    "ml-agents/mlagents/trainers/settings.py::EnvironmentSettings",
+                    "ml-agents/mlagents/trainers/settings.py::EngineSettings",
+                    "ml-agents/mlagents/trainers/simple_env_manager.py::SimpleEnvManager",
+                    "ml-agents/mlagents/trainers/stats.py::StatsReporter",
+                    "ml-agents/mlagents/trainers/stats.py::ConsoleWriter",
+                    "ml-agents/mlagents/trainers/stats.py::TensorboardWriter",
+                    "ml-agents/mlagents/trainers/stats.py::StatsPropertyType",
+                    "ml-agents/mlagents/trainers/subprocess_env_manager.py::EnvironmentCommand",
+                    "ml-agents/mlagents/trainers/subprocess_env_manager.py::SubprocessEnvManager",
+                    "ml-agents/mlagents/trainers/subprocess_env_manager.py::UnityEnvWorker",
+                    "ml-agents/mlagents/trainers/trainer_controller.py::TrainerController",
+                    "ml-agents/mlagents/trainers/training_analytics_side_channel.py::TrainingAnalyticsSideChannel",
+                    "ml-agents/mlagents/trainers/training_status.py::StatusType",
+                    "ml-agents/mlagents/trainers/training_status.py::GlobalTrainingStatus",
+                    "ml-agents/mlagents/trainers/trajectory.py::ObsUtil",
+                    "ml-agents/mlagents/trainers/trajectory.py::GroupObsUtil"
+                ],
+                "children": {
+                    "trainers_core_config": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/cli_utils.py::StoreConfigFile",
+                            "ml-agents/mlagents/trainers/cli_utils.py::DetectDefaultStoreTrue",
+                            "ml-agents/mlagents/trainers/cli_utils.py::RaiseRemovedWarning",
+                            "ml-agents/mlagents/trainers/settings.py::CuriositySettings",
+                            "ml-agents/mlagents/trainers/settings.py::RunOptions",
+                            "ml-agents/mlagents/trainers/settings.py::CompletionCriteriaSettings.MeasureType",
+                            "ml-agents/mlagents/trainers/settings.py::GaussianSettings",
+                            "ml-agents/mlagents/trainers/settings.py::CheckpointSettings",
+                            "ml-agents/mlagents/trainers/settings.py::TrainerSettings.DefaultTrainerDict",
+                            "ml-agents/mlagents/trainers/settings.py::ConditioningType",
+                            "ml-agents/mlagents/trainers/settings.py::MultiRangeUniformSettings",
+                            "ml-agents/mlagents/trainers/settings.py::ScheduleType",
+                            "ml-agents/mlagents/trainers/settings.py::EncoderType",
+                            "ml-agents/mlagents/trainers/settings.py::BehavioralCloningSettings",
+                            "ml-agents/mlagents/trainers/settings.py::RNDSettings",
+                            "ml-agents/mlagents/trainers/settings.py::UniformSettings",
+                            "ml-agents/mlagents/trainers/settings.py::GAILSettings",
+                            "ml-agents/mlagents/trainers/settings.py::NetworkSettings",
+                            "ml-agents/mlagents/trainers/settings.py::SerializationSettings",
+                            "ml-agents/mlagents/trainers/settings.py::CompletionCriteriaSettings",
+                            "ml-agents/mlagents/trainers/settings.py::TorchSettings",
+                            "ml-agents/mlagents/trainers/settings.py::SelfPlaySettings",
+                            "ml-agents/mlagents/trainers/settings.py::EnvironmentSettings",
+                            "ml-agents/mlagents/trainers/settings.py::EngineSettings"
+                        ],
+                        "children": {
+                            "trainers_core_config_cli": {
+                                "components": [
+                                    "ml-agents/mlagents/trainers/cli_utils.py::StoreConfigFile",
+                                    "ml-agents/mlagents/trainers/cli_utils.py::DetectDefaultStoreTrue",
+                                    "ml-agents/mlagents/trainers/cli_utils.py::RaiseRemovedWarning"
+                                ],
+                                "children": {}
+                            },
+                            "trainers_core_config_settings": {
+                                "components": [
+                                    "ml-agents/mlagents/trainers/settings.py::CuriositySettings",
+                                    "ml-agents/mlagents/trainers/settings.py::RunOptions",
+                                    "ml-agents/mlagents/trainers/settings.py::CompletionCriteriaSettings.MeasureType",
+                                    "ml-agents/mlagents/trainers/settings.py::GaussianSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::CheckpointSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::TrainerSettings.DefaultTrainerDict",
+                                    "ml-agents/mlagents/trainers/settings.py::ConditioningType",
+                                    "ml-agents/mlagents/trainers/settings.py::MultiRangeUniformSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::ScheduleType",
+                                    "ml-agents/mlagents/trainers/settings.py::EncoderType",
+                                    "ml-agents/mlagents/trainers/settings.py::BehavioralCloningSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::RNDSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::UniformSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::GAILSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::NetworkSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::SerializationSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::CompletionCriteriaSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::TorchSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::SelfPlaySettings",
+                                    "ml-agents/mlagents/trainers/settings.py::EnvironmentSettings",
+                                    "ml-agents/mlagents/trainers/settings.py::EngineSettings"
+                                ],
+                                "children": {}
+                            }
+                        }
+                    },
+                    "trainers_core_env_management": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/env_manager.py::EnvManager",
+                            "ml-agents/mlagents/trainers/simple_env_manager.py::SimpleEnvManager",
+                            "ml-agents/mlagents/trainers/subprocess_env_manager.py::EnvironmentCommand",
+                            "ml-agents/mlagents/trainers/subprocess_env_manager.py::SubprocessEnvManager",
+                            "ml-agents/mlagents/trainers/subprocess_env_manager.py::UnityEnvWorker"
+                        ],
+                        "children": {}
+                    },
+                    "trainers_core_data_pipeline": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/agent_processor.py::AgentManager",
+                            "ml-agents/mlagents/trainers/agent_processor.py::AgentManagerQueue",
+                            "ml-agents/mlagents/trainers/buffer.py::RewardSignalUtil",
+                            "ml-agents/mlagents/trainers/buffer.py::AgentBuffer",
+                            "ml-agents/mlagents/trainers/buffer.py::AgentBufferField",
+                            "ml-agents/mlagents/trainers/trajectory.py::ObsUtil",
+                            "ml-agents/mlagents/trainers/trajectory.py::GroupObsUtil"
+                        ],
+                        "children": {}
+                    },
+                    "trainers_core_monitoring": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/stats.py::StatsReporter",
+                            "ml-agents/mlagents/trainers/stats.py::ConsoleWriter",
+                            "ml-agents/mlagents/trainers/stats.py::TensorboardWriter",
+                            "ml-agents/mlagents/trainers/stats.py::StatsPropertyType",
+                            "ml-agents/mlagents/trainers/training_status.py::StatusType",
+                            "ml-agents/mlagents/trainers/training_status.py::GlobalTrainingStatus",
+                            "ml-agents/mlagents/trainers/training_analytics_side_channel.py::TrainingAnalyticsSideChannel"
+                        ],
+                        "children": {}
+                    },
+                    "trainers_core_orchestration": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/trainer_controller.py::TrainerController",
+                            "ml-agents/mlagents/trainers/environment_parameter_manager.py::EnvironmentParameterManager"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "trainers_trainer_base": {
+                "path": "ml-agents/mlagents/trainers/trainer",
+                "components": [
+                    "ml-agents/mlagents/trainers/trainer/off_policy_trainer.py::OffPolicyTrainer",
+                    "ml-agents/mlagents/trainers/trainer/on_policy_trainer.py::OnPolicyTrainer",
+                    "ml-agents/mlagents/trainers/trainer/rl_trainer.py::RLTrainer",
+                    "ml-agents/mlagents/trainers/trainer/trainer.py::Trainer",
+                    "ml-agents/mlagents/trainers/trainer/trainer_factory.py::TrainerFactory"
                 ],
                 "children": {}
             },
-            "policy_system": {
+            "trainers_model_saver": {
+                "path": "ml-agents/mlagents/trainers/model_saver",
                 "components": [
-                    "ml-agents.mlagents.trainers.policy.policy.Policy"
+                    "ml-agents/mlagents/trainers/model_saver/model_saver.py::BaseModelSaver",
+                    "ml-agents/mlagents/trainers/model_saver/torch_model_saver.py::TorchModelSaver"
                 ],
                 "children": {}
             },
-            "trainer_abstractions": {
+            "trainers_policy": {
+                "path": "ml-agents/mlagents/trainers/policy",
                 "components": [
-                    "ml-agents.mlagents.trainers.trainer.trainer.Trainer",
-                    "ml-agents.mlagents.trainers.trainer.rl_trainer.RLTrainer"
+                    "ml-agents/mlagents/trainers/policy/checkpoint_manager.py::ModelCheckpointManager",
+                    "ml-agents/mlagents/trainers/policy/policy.py::Policy",
+                    "ml-agents/mlagents/trainers/policy/torch_policy.py::TorchPolicy"
+                ],
+                "children": {}
+            },
+            "trainers_optimizer": {
+                "path": "ml-agents/mlagents/trainers/optimizer",
+                "components": [
+                    "ml-agents/mlagents/trainers/optimizer/optimizer.py::Optimizer",
+                    "ml-agents/mlagents/trainers/optimizer/torch_optimizer.py::TorchOptimizer"
+                ],
+                "children": {}
+            },
+            "trainers_ghost": {
+                "path": "ml-agents/mlagents/trainers/ghost",
+                "components": [
+                    "ml-agents/mlagents/trainers/ghost/controller.py::GhostController",
+                    "ml-agents/mlagents/trainers/ghost/trainer.py::GhostTrainer"
                 ],
                 "children": {}
             }
         }
     },
-    "training_algorithms": {
+    "Neural_Network_Building_Blocks": {
+        "path": "ml-agents/mlagents/trainers/torch_entities",
+        "components": [
+            "ml-agents/mlagents/trainers/torch_entities/action_flattener.py::ActionFlattener",
+            "ml-agents/mlagents/trainers/torch_entities/action_model.py::ActionModel",
+            "ml-agents/mlagents/trainers/torch_entities/attention.py::ResidualSelfAttention",
+            "ml-agents/mlagents/trainers/torch_entities/attention.py::EntityEmbedding",
+            "ml-agents/mlagents/trainers/torch_entities/attention.py::MultiHeadAttention",
+            "ml-agents/mlagents/trainers/torch_entities/conditioning.py::ConditionalEncoder",
+            "ml-agents/mlagents/trainers/torch_entities/conditioning.py::HyperNetwork",
+            "ml-agents/mlagents/trainers/torch_entities/decoders.py::ValueHeads",
+            "ml-agents/mlagents/trainers/torch_entities/distributions.py::CategoricalDistInstance",
+            "ml-agents/mlagents/trainers/torch_entities/distributions.py::TanhGaussianDistInstance",
+            "ml-agents/mlagents/trainers/torch_entities/distributions.py::GaussianDistribution",
+            "ml-agents/mlagents/trainers/torch_entities/distributions.py::MultiCategoricalDistribution",
+            "ml-agents/mlagents/trainers/torch_entities/encoders.py::ResNetBlock",
+            "ml-agents/mlagents/trainers/torch_entities/encoders.py::FullyConnectedVisualEncoder",
+            "ml-agents/mlagents/trainers/torch_entities/encoders.py::NatureVisualEncoder",
+            "ml-agents/mlagents/trainers/torch_entities/encoders.py::VectorInput",
+            "ml-agents/mlagents/trainers/torch_entities/encoders.py::Normalizer",
+            "ml-agents/mlagents/trainers/torch_entities/encoders.py::SimpleVisualEncoder",
+            "ml-agents/mlagents/trainers/torch_entities/encoders.py::ResNetVisualEncoder",
+            "ml-agents/mlagents/trainers/torch_entities/encoders.py::SmallVisualEncoder",
+            "ml-agents/mlagents/trainers/torch_entities/layers.py::Initialization",
+            "ml-agents/mlagents/trainers/torch_entities/layers.py::LinearEncoder",
+            "ml-agents/mlagents/trainers/torch_entities/layers.py::LSTM",
+            "ml-agents/mlagents/trainers/torch_entities/model_serialization.py::TensorNames",
+            "ml-agents/mlagents/trainers/torch_entities/model_serialization.py::ModelSerializer",
+            "ml-agents/mlagents/trainers/torch_entities/networks.py::ObservationEncoder",
+            "ml-agents/mlagents/trainers/torch_entities/networks.py::SharedActorCritic",
+            "ml-agents/mlagents/trainers/torch_entities/networks.py::GlobalSteps",
+            "ml-agents/mlagents/trainers/torch_entities/networks.py::ValueNetwork",
+            "ml-agents/mlagents/trainers/torch_entities/networks.py::MultiAgentNetworkBody",
+            "ml-agents/mlagents/trainers/torch_entities/networks.py::LearningRate",
+            "ml-agents/mlagents/trainers/torch_entities/networks.py::NetworkBody",
+            "ml-agents/mlagents/trainers/torch_entities/utils.py::ModelUtils.DecayedValue",
+            "ml-agents/mlagents/trainers/torch_entities/utils.py::ModelUtils",
+            "ml-agents/mlagents/trainers/torch_entities/components/bc/module.py::BCModule",
+            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/base_reward_provider.py::BaseRewardProvider",
+            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/curiosity_reward_provider.py::CuriosityNetwork",
+            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/curiosity_reward_provider.py::CuriosityRewardProvider",
+            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/extrinsic_reward_provider.py::ExtrinsicRewardProvider",
+            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/gail_reward_provider.py::DiscriminatorNetwork",
+            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/gail_reward_provider.py::GAILRewardProvider",
+            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/rnd_reward_provider.py::RNDNetwork",
+            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/rnd_reward_provider.py::RNDRewardProvider"
+        ],
+        "children": {
+            "trainers_torch_entities": {
+                "path": "ml-agents/mlagents/trainers/torch_entities",
+                "components": [
+                    "ml-agents/mlagents/trainers/torch_entities/action_flattener.py::ActionFlattener",
+                    "ml-agents/mlagents/trainers/torch_entities/action_model.py::ActionModel",
+                    "ml-agents/mlagents/trainers/torch_entities/attention.py::ResidualSelfAttention",
+                    "ml-agents/mlagents/trainers/torch_entities/attention.py::EntityEmbedding",
+                    "ml-agents/mlagents/trainers/torch_entities/attention.py::MultiHeadAttention",
+                    "ml-agents/mlagents/trainers/torch_entities/conditioning.py::ConditionalEncoder",
+                    "ml-agents/mlagents/trainers/torch_entities/conditioning.py::HyperNetwork",
+                    "ml-agents/mlagents/trainers/torch_entities/decoders.py::ValueHeads",
+                    "ml-agents/mlagents/trainers/torch_entities/distributions.py::CategoricalDistInstance",
+                    "ml-agents/mlagents/trainers/torch_entities/distributions.py::TanhGaussianDistInstance",
+                    "ml-agents/mlagents/trainers/torch_entities/distributions.py::GaussianDistribution",
+                    "ml-agents/mlagents/trainers/torch_entities/distributions.py::MultiCategoricalDistribution",
+                    "ml-agents/mlagents/trainers/torch_entities/encoders.py::ResNetBlock",
+                    "ml-agents/mlagents/trainers/torch_entities/encoders.py::FullyConnectedVisualEncoder",
+                    "ml-agents/mlagents/trainers/torch_entities/encoders.py::NatureVisualEncoder",
+                    "ml-agents/mlagents/trainers/torch_entities/encoders.py::VectorInput",
+                    "ml-agents/mlagents/trainers/torch_entities/encoders.py::Normalizer",
+                    "ml-agents/mlagents/trainers/torch_entities/encoders.py::SimpleVisualEncoder",
+                    "ml-agents/mlagents/trainers/torch_entities/encoders.py::ResNetVisualEncoder",
+                    "ml-agents/mlagents/trainers/torch_entities/encoders.py::SmallVisualEncoder",
+                    "ml-agents/mlagents/trainers/torch_entities/layers.py::Initialization",
+                    "ml-agents/mlagents/trainers/torch_entities/layers.py::LinearEncoder",
+                    "ml-agents/mlagents/trainers/torch_entities/layers.py::LSTM",
+                    "ml-agents/mlagents/trainers/torch_entities/model_serialization.py::TensorNames",
+                    "ml-agents/mlagents/trainers/torch_entities/model_serialization.py::ModelSerializer",
+                    "ml-agents/mlagents/trainers/torch_entities/networks.py::ObservationEncoder",
+                    "ml-agents/mlagents/trainers/torch_entities/networks.py::SharedActorCritic",
+                    "ml-agents/mlagents/trainers/torch_entities/networks.py::GlobalSteps",
+                    "ml-agents/mlagents/trainers/torch_entities/networks.py::ValueNetwork",
+                    "ml-agents/mlagents/trainers/torch_entities/networks.py::MultiAgentNetworkBody",
+                    "ml-agents/mlagents/trainers/torch_entities/networks.py::LearningRate",
+                    "ml-agents/mlagents/trainers/torch_entities/networks.py::NetworkBody",
+                    "ml-agents/mlagents/trainers/torch_entities/utils.py::ModelUtils.DecayedValue",
+                    "ml-agents/mlagents/trainers/torch_entities/utils.py::ModelUtils"
+                ],
+                "children": {
+                    "trainers_torch_entities_layers_encoders": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/torch_entities/layers.py::Initialization",
+                            "ml-agents/mlagents/trainers/torch_entities/layers.py::LinearEncoder",
+                            "ml-agents/mlagents/trainers/torch_entities/layers.py::LSTM",
+                            "ml-agents/mlagents/trainers/torch_entities/encoders.py::ResNetBlock",
+                            "ml-agents/mlagents/trainers/torch_entities/encoders.py::FullyConnectedVisualEncoder",
+                            "ml-agents/mlagents/trainers/torch_entities/encoders.py::NatureVisualEncoder",
+                            "ml-agents/mlagents/trainers/torch_entities/encoders.py::VectorInput",
+                            "ml-agents/mlagents/trainers/torch_entities/encoders.py::Normalizer",
+                            "ml-agents/mlagents/trainers/torch_entities/encoders.py::SimpleVisualEncoder",
+                            "ml-agents/mlagents/trainers/torch_entities/encoders.py::ResNetVisualEncoder",
+                            "ml-agents/mlagents/trainers/torch_entities/encoders.py::SmallVisualEncoder",
+                            "ml-agents/mlagents/trainers/torch_entities/decoders.py::ValueHeads"
+                        ],
+                        "children": {}
+                    },
+                    "trainers_torch_entities_attention_conditioning": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/torch_entities/attention.py::ResidualSelfAttention",
+                            "ml-agents/mlagents/trainers/torch_entities/attention.py::EntityEmbedding",
+                            "ml-agents/mlagents/trainers/torch_entities/attention.py::MultiHeadAttention",
+                            "ml-agents/mlagents/trainers/torch_entities/conditioning.py::ConditionalEncoder",
+                            "ml-agents/mlagents/trainers/torch_entities/conditioning.py::HyperNetwork"
+                        ],
+                        "children": {}
+                    },
+                    "trainers_torch_entities_actions": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/torch_entities/action_flattener.py::ActionFlattener",
+                            "ml-agents/mlagents/trainers/torch_entities/action_model.py::ActionModel",
+                            "ml-agents/mlagents/trainers/torch_entities/distributions.py::CategoricalDistInstance",
+                            "ml-agents/mlagents/trainers/torch_entities/distributions.py::TanhGaussianDistInstance",
+                            "ml-agents/mlagents/trainers/torch_entities/distributions.py::GaussianDistribution",
+                            "ml-agents/mlagents/trainers/torch_entities/distributions.py::MultiCategoricalDistribution"
+                        ],
+                        "children": {}
+                    },
+                    "trainers_torch_entities_networks": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/torch_entities/networks.py::ObservationEncoder",
+                            "ml-agents/mlagents/trainers/torch_entities/networks.py::SharedActorCritic",
+                            "ml-agents/mlagents/trainers/torch_entities/networks.py::GlobalSteps",
+                            "ml-agents/mlagents/trainers/torch_entities/networks.py::ValueNetwork",
+                            "ml-agents/mlagents/trainers/torch_entities/networks.py::MultiAgentNetworkBody",
+                            "ml-agents/mlagents/trainers/torch_entities/networks.py::LearningRate",
+                            "ml-agents/mlagents/trainers/torch_entities/networks.py::NetworkBody"
+                        ],
+                        "children": {}
+                    },
+                    "trainers_torch_entities_utils_serialization": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/torch_entities/utils.py::ModelUtils.DecayedValue",
+                            "ml-agents/mlagents/trainers/torch_entities/utils.py::ModelUtils",
+                            "ml-agents/mlagents/trainers/torch_entities/model_serialization.py::TensorNames",
+                            "ml-agents/mlagents/trainers/torch_entities/model_serialization.py::ModelSerializer"
+                        ],
+                        "children": {
+                            "trainers_torch_entities_utils_serialization_utils": {
+                                "components": [
+                                    "ml-agents/mlagents/trainers/torch_entities/utils.py::ModelUtils.DecayedValue",
+                                    "ml-agents/mlagents/trainers/torch_entities/utils.py::ModelUtils"
+                                ],
+                                "children": {}
+                            },
+                            "trainers_torch_entities_utils_serialization_export": {
+                                "components": [
+                                    "ml-agents/mlagents/trainers/torch_entities/model_serialization.py::TensorNames",
+                                    "ml-agents/mlagents/trainers/torch_entities/model_serialization.py::ModelSerializer"
+                                ],
+                                "children": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "trainers_torch_components": {
+                "path": "ml-agents/mlagents/trainers/torch_entities/components",
+                "components": [
+                    "ml-agents/mlagents/trainers/torch_entities/components/bc/module.py::BCModule",
+                    "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/base_reward_provider.py::BaseRewardProvider",
+                    "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/curiosity_reward_provider.py::CuriosityNetwork",
+                    "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/curiosity_reward_provider.py::CuriosityRewardProvider",
+                    "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/extrinsic_reward_provider.py::ExtrinsicRewardProvider",
+                    "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/gail_reward_provider.py::DiscriminatorNetwork",
+                    "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/gail_reward_provider.py::GAILRewardProvider",
+                    "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/rnd_reward_provider.py::RNDNetwork",
+                    "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/rnd_reward_provider.py::RNDRewardProvider"
+                ],
+                "children": {
+                    "trainers_torch_components_reward_providers": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/base_reward_provider.py::BaseRewardProvider",
+                            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/extrinsic_reward_provider.py::ExtrinsicRewardProvider",
+                            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/curiosity_reward_provider.py::CuriosityNetwork",
+                            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/curiosity_reward_provider.py::CuriosityRewardProvider",
+                            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/gail_reward_provider.py::DiscriminatorNetwork",
+                            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/gail_reward_provider.py::GAILRewardProvider",
+                            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/rnd_reward_provider.py::RNDNetwork",
+                            "ml-agents/mlagents/trainers/torch_entities/components/reward_providers/rnd_reward_provider.py::RNDRewardProvider"
+                        ],
+                        "children": {}
+                    }
+                }
+            }
+        }
+    },
+    "Built-in_RL_Algorithms": {
         "path": "ml-agents/mlagents/trainers",
         "components": [
-            "ml-agents.mlagents.trainers.ppo.trainer.PPOTrainer",
-            "ml-agents.mlagents.trainers.ppo.optimizer_torch.PPOSettings",
-            "ml-agents.mlagents.trainers.sac.trainer.SACTrainer",
-            "ml-agents.mlagents.trainers.sac.optimizer_torch.SACSettings",
-            "ml-agents.mlagents.trainers.poca.trainer.POCATrainer",
-            "ml-agents.mlagents.trainers.poca.optimizer_torch.POCASettings"
+            "ml-agents/mlagents/trainers/ppo/optimizer_torch.py::TorchPPOOptimizer",
+            "ml-agents/mlagents/trainers/ppo/optimizer_torch.py::PPOSettings",
+            "ml-agents/mlagents/trainers/ppo/trainer.py::PPOTrainer",
+            "ml-agents/mlagents/trainers/sac/optimizer_torch.py::SACSettings",
+            "ml-agents/mlagents/trainers/sac/optimizer_torch.py::TorchSACOptimizer.PolicyValueNetwork",
+            "ml-agents/mlagents/trainers/sac/optimizer_torch.py::TorchSACOptimizer.LogEntCoef",
+            "ml-agents/mlagents/trainers/sac/optimizer_torch.py::TorchSACOptimizer",
+            "ml-agents/mlagents/trainers/sac/trainer.py::SACTrainer",
+            "ml-agents/mlagents/trainers/poca/optimizer_torch.py::TorchPOCAOptimizer",
+            "ml-agents/mlagents/trainers/poca/optimizer_torch.py::TorchPOCAOptimizer.POCAValueNetwork",
+            "ml-agents/mlagents/trainers/poca/optimizer_torch.py::POCASettings",
+            "ml-agents/mlagents/trainers/poca/trainer.py::POCATrainer"
         ],
         "children": {
-            "poca_algorithm": {
+            "trainers_ppo": {
+                "path": "ml-agents/mlagents/trainers/ppo",
                 "components": [
-                    "ml-agents.mlagents.trainers.poca.trainer.POCATrainer",
-                    "ml-agents.mlagents.trainers.poca.optimizer_torch.POCASettings"
+                    "ml-agents/mlagents/trainers/ppo/optimizer_torch.py::TorchPPOOptimizer",
+                    "ml-agents/mlagents/trainers/ppo/optimizer_torch.py::PPOSettings",
+                    "ml-agents/mlagents/trainers/ppo/trainer.py::PPOTrainer"
                 ],
                 "children": {}
             },
-            "ppo_algorithm": {
+            "trainers_sac": {
+                "path": "ml-agents/mlagents/trainers/sac",
                 "components": [
-                    "ml-agents.mlagents.trainers.ppo.trainer.PPOTrainer",
-                    "ml-agents.mlagents.trainers.ppo.optimizer_torch.PPOSettings"
+                    "ml-agents/mlagents/trainers/sac/optimizer_torch.py::SACSettings",
+                    "ml-agents/mlagents/trainers/sac/optimizer_torch.py::TorchSACOptimizer.PolicyValueNetwork",
+                    "ml-agents/mlagents/trainers/sac/optimizer_torch.py::TorchSACOptimizer.LogEntCoef",
+                    "ml-agents/mlagents/trainers/sac/optimizer_torch.py::TorchSACOptimizer",
+                    "ml-agents/mlagents/trainers/sac/trainer.py::SACTrainer"
                 ],
                 "children": {}
             },
-            "sac_algorithm": {
+            "trainers_poca": {
+                "path": "ml-agents/mlagents/trainers/poca",
                 "components": [
-                    "ml-agents.mlagents.trainers.sac.trainer.SACTrainer",
-                    "ml-agents.mlagents.trainers.sac.optimizer_torch.SACSettings"
+                    "ml-agents/mlagents/trainers/poca/optimizer_torch.py::TorchPOCAOptimizer",
+                    "ml-agents/mlagents/trainers/poca/optimizer_torch.py::TorchPOCAOptimizer.POCAValueNetwork",
+                    "ml-agents/mlagents/trainers/poca/optimizer_torch.py::POCASettings",
+                    "ml-agents/mlagents/trainers/poca/trainer.py::POCATrainer"
                 ],
-                "children": {}
+                "children": {
+                    "trainers_poca_trainer": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/poca/trainer.py::POCATrainer"
+                        ],
+                        "children": {}
+                    },
+                    "trainers_poca_optimizer": {
+                        "components": [
+                            "ml-agents/mlagents/trainers/poca/optimizer_torch.py::TorchPOCAOptimizer",
+                            "ml-agents/mlagents/trainers/poca/optimizer_torch.py::TorchPOCAOptimizer.POCAValueNetwork",
+                            "ml-agents/mlagents/trainers/poca/optimizer_torch.py::POCASettings"
+                        ],
+                        "children": {}
+                    }
+                }
             }
         }
     },
-    "training_infrastructure": {
-        "path": "ml-agents/mlagents/trainers",
+    "Extensible_RL_Algorithm_Plugins": {
+        "path": "ml-agents-trainer-plugin/mlagents_trainer_plugin",
         "components": [
-            "ml-agents.mlagents.trainers.settings.TrainerSettings",
-            "ml-agents.mlagents.trainers.settings.NetworkSettings",
-            "ml-agents.mlagents.trainers.settings.RunOptions",
-            "ml-agents.mlagents.trainers.optimizer.torch_optimizer.TorchOptimizer",
-            "ml-agents.mlagents.trainers.torch_entities.networks.SharedActorCritic"
+            "ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c/a2c_optimizer.py::A2COptimizer",
+            "ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c/a2c_optimizer.py::A2CSettings",
+            "ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c/a2c_trainer.py::A2CTrainer",
+            "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn/dqn_optimizer.py::QNetwork",
+            "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn/dqn_optimizer.py::DQNSettings",
+            "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn/dqn_optimizer.py::DQNOptimizer",
+            "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn/dqn_trainer.py::DQNTrainer"
         ],
         "children": {
-            "configuration_system": {
+            "trainer_plugin_a2c": {
+                "path": "ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c",
                 "components": [
-                    "ml-agents.mlagents.trainers.settings.TrainerSettings",
-                    "ml-agents.mlagents.trainers.settings.NetworkSettings",
-                    "ml-agents.mlagents.trainers.settings.RunOptions"
+                    "ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c/a2c_optimizer.py::A2COptimizer",
+                    "ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c/a2c_optimizer.py::A2CSettings",
+                    "ml-agents-trainer-plugin/mlagents_trainer_plugin/a2c/a2c_trainer.py::A2CTrainer"
                 ],
                 "children": {}
             },
-            "network_architecture": {
+            "trainer_plugin_dqn": {
+                "path": "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn",
                 "components": [
-                    "ml-agents.mlagents.trainers.torch_entities.networks.SharedActorCritic"
-                ],
-                "children": {}
-            },
-            "optimization_infrastructure": {
-                "components": [
-                    "ml-agents.mlagents.trainers.optimizer.torch_optimizer.TorchOptimizer"
-                ],
-                "children": {}
-            }
-        }
-    },
-    "reward_systems": {
-        "path": "ml-agents/mlagents/trainers/torch_entities/components/reward_providers",
-        "components": [
-            "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.base_reward_provider.BaseRewardProvider",
-            "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.extrinsic_reward_provider.ExtrinsicRewardProvider",
-            "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.curiosity_reward_provider.CuriosityRewardProvider",
-            "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.gail_reward_provider.GAILRewardProvider"
-        ],
-        "children": {
-            "base_reward_infrastructure": {
-                "components": [
-                    "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.base_reward_provider.BaseRewardProvider"
-                ],
-                "children": {}
-            },
-            "curiosity_rewards": {
-                "components": [
-                    "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.curiosity_reward_provider.CuriosityRewardProvider"
-                ],
-                "children": {}
-            },
-            "extrinsic_rewards": {
-                "components": [
-                    "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.extrinsic_reward_provider.ExtrinsicRewardProvider"
-                ],
-                "children": {}
-            },
-            "imitation_learning_rewards": {
-                "components": [
-                    "ml-agents.mlagents.trainers.torch_entities.components.reward_providers.gail_reward_provider.GAILRewardProvider"
+                    "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn/dqn_optimizer.py::QNetwork",
+                    "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn/dqn_optimizer.py::DQNSettings",
+                    "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn/dqn_optimizer.py::DQNOptimizer",
+                    "ml-agents-trainer-plugin/mlagents_trainer_plugin/dqn/dqn_trainer.py::DQNTrainer"
                 ],
                 "children": {}
             }

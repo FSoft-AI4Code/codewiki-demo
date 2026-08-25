@@ -1,259 +1,1009 @@
 {
-    "core_data_structures": {
-        "path": "logstash-core/src/main/java/org/logstash",
+    "runtime_foundation_and_configuration": {
+        "path": "",
         "components": [
-            "logstash-core.src.main.java.org.logstash.Accessors.Accessors",
-            "logstash-core.src.main.java.org.logstash.Cloner.Cloner",
-            "logstash-core.src.main.java.org.logstash.Javafier.Javafier",
-            "logstash-core.src.main.java.org.logstash.Rubyfier.Converter",
-            "logstash-core.src.main.java.org.logstash.Rubyfier.Rubyfier",
-            "logstash-core.src.main.java.org.logstash.Valuefier.Converter",
-            "logstash-core.src.main.java.org.logstash.ObjectMappers.ObjectMappers",
-            "logstash-core.src.main.java.org.logstash.StringInterpolation.StringInterpolation",
-            "logstash-core.src.main.java.org.logstash.Util.Util"
+            "logstash-core/lib/logstash/runner.rb::Runner",
+            "logstash-core/lib/logstash/settings.rb::Port",
+            "logstash-core/lib/logstash/settings.rb::SettingWithDeprecatedAlias",
+            "logstash-core/lib/logstash/settings.rb::SplittableStringArray",
+            "logstash-core/lib/logstash/settings.rb::ValidatedPassword",
+            "logstash-core/lib/logstash/settings.rb::Validator",
+            "logstash-core/lib/logstash/bootstrap_check/default_config.rb::DefaultConfig",
+            "logstash-core/lib/logstash/persisted_queue_config_validator.rb::PersistedQueueConfigValidator",
+            "logstash-core/lib/logstash/pipeline_resource_usage_validator.rb::PipelineResourceUsageValidator",
+            "logstash-core/src/main/java/org/logstash/settings/Boolean.java::Boolean",
+            "logstash-core/src/main/java/org/logstash/settings/Coercible.java::Coercible",
+            "logstash-core/src/main/java/org/logstash/settings/DeprecatedAlias.java::DeprecatedAlias",
+            "logstash-core/src/main/java/org/logstash/settings/SettingDelegator.java::SettingDelegator",
+            "logstash-core/src/main/java/org/logstash/common/SettingKeyDefinitions.java::SettingKeyDefinitions",
+            "logstash-core/src/main/java/org/logstash/FileLockFactory.java::FileLockFactory",
+            "logstash-core/src/main/java/org/logstash/JavaVersionUtils.java::JavaVersionUtils",
+            "logstash-core/src/main/java/org/logstash/util/CloudSettingAuth.java::CloudSettingAuth",
+            "logstash-core/src/main/java/org/logstash/util/CloudSettingId.java::CloudSettingId",
+            "logstash-core/lib/logstash/config/source/base.rb::Base",
+            "logstash-core/lib/logstash/config/source/local.rb::ConfigRemoteLoader",
+            "logstash-core/lib/logstash/config/source/local.rb::ConfigStringLoader",
+            "logstash-core/lib/logstash/config/source/multi_local.rb::MultiLocal",
+            "logstash-core/lib/logstash/config/pipelines_info.rb::PipelinesInfo",
+            "logstash-core/lib/logstash/config/lir_serializer.rb::LIRSerializer",
+            "logstash-core/src/main/java/org/logstash/common/BufferedTokenizer.java::IteratorDecorator",
+            "logstash-core/src/main/java/org/logstash/common/BufferedTokenizerExt.java::BufferedTokenizerExt",
+            "logstash-core/src/main/java/org/logstash/common/Util.java::Util",
+            "logstash-core/lib/logstash/util/charset.rb::Charset",
+            "logstash-core/lib/logstash/util/plugin_version.rb::PluginVersion",
+            "logstash-core/src/main/java/org/logstash/util/CheckedSupplier.java::CheckedSupplier",
+            "logstash-core/src/main/java/org/logstash/util/UtilExt.java::UtilExt",
+            "lib/secretstore/cli.rb::SecretStoreCli",
+            "logstash-core/src/main/java/org/logstash/secret/cli/SecretStoreCli.java::CommandLine",
+            "logstash-core/src/main/java/org/logstash/secret/cli/SecretStoreCli.java::SecretStoreCli",
+            "logstash-core/src/main/java/org/logstash/secret/password/PasswordParamConverter.java::PasswordParamConverter",
+            "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreExt.java::SecretStoreExt",
+            "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreUtil.java::SecretStoreUtil",
+            "logstash-core/src/main/java/org/logstash/secret/store/backend/JavaKeyStore.java::JavaKeyStore",
+            "x-pack/lib/config_management/bootstrap_check.rb::BootstrapCheck",
+            "x-pack/lib/config_management/extension.rb::Extension"
         ],
         "children": {
-            "data_access_layer": {
+            "application_bootstrap_and_settings": {
+                "path": "logstash-core/lib/logstash",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.Accessors.Accessors",
-                    "logstash-core.src.main.java.org.logstash.Cloner.Cloner"
+                    "logstash-core/lib/logstash/runner.rb::Runner",
+                    "logstash-core/lib/logstash/settings.rb::Port",
+                    "logstash-core/lib/logstash/settings.rb::SettingWithDeprecatedAlias",
+                    "logstash-core/lib/logstash/settings.rb::SplittableStringArray",
+                    "logstash-core/lib/logstash/settings.rb::ValidatedPassword",
+                    "logstash-core/lib/logstash/settings.rb::Validator",
+                    "logstash-core/lib/logstash/bootstrap_check/default_config.rb::DefaultConfig",
+                    "logstash-core/lib/logstash/persisted_queue_config_validator.rb::PersistedQueueConfigValidator",
+                    "logstash-core/lib/logstash/pipeline_resource_usage_validator.rb::PipelineResourceUsageValidator",
+                    "logstash-core/src/main/java/org/logstash/settings/Boolean.java::Boolean",
+                    "logstash-core/src/main/java/org/logstash/settings/Coercible.java::Coercible",
+                    "logstash-core/src/main/java/org/logstash/settings/DeprecatedAlias.java::DeprecatedAlias",
+                    "logstash-core/src/main/java/org/logstash/settings/SettingDelegator.java::SettingDelegator",
+                    "logstash-core/src/main/java/org/logstash/common/SettingKeyDefinitions.java::SettingKeyDefinitions",
+                    "logstash-core/src/main/java/org/logstash/FileLockFactory.java::FileLockFactory",
+                    "logstash-core/src/main/java/org/logstash/JavaVersionUtils.java::JavaVersionUtils",
+                    "logstash-core/src/main/java/org/logstash/util/CloudSettingAuth.java::CloudSettingAuth",
+                    "logstash-core/src/main/java/org/logstash/util/CloudSettingId.java::CloudSettingId"
                 ],
                 "children": {}
             },
-            "serialization_framework": {
+            "configuration_sources_and_loading": {
+                "path": "logstash-core/lib/logstash/config",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.ObjectMappers.ObjectMappers"
+                    "logstash-core/lib/logstash/config/source/base.rb::Base",
+                    "logstash-core/lib/logstash/config/source/local.rb::ConfigRemoteLoader",
+                    "logstash-core/lib/logstash/config/source/local.rb::ConfigStringLoader",
+                    "logstash-core/lib/logstash/config/source/multi_local.rb::MultiLocal",
+                    "logstash-core/lib/logstash/config/pipelines_info.rb::PipelinesInfo",
+                    "logstash-core/lib/logstash/config/lir_serializer.rb::LIRSerializer"
                 ],
                 "children": {}
             },
-            "type_conversion_system": {
+            "core_data_and_io_utilities": {
+                "path": "logstash-core",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.Javafier.Javafier",
-                    "logstash-core.src.main.java.org.logstash.Rubyfier.Converter",
-                    "logstash-core.src.main.java.org.logstash.Rubyfier.Rubyfier",
-                    "logstash-core.src.main.java.org.logstash.Valuefier.Converter"
+                    "logstash-core/src/main/java/org/logstash/common/BufferedTokenizer.java::IteratorDecorator",
+                    "logstash-core/src/main/java/org/logstash/common/BufferedTokenizerExt.java::BufferedTokenizerExt",
+                    "logstash-core/src/main/java/org/logstash/common/Util.java::Util",
+                    "logstash-core/lib/logstash/util/charset.rb::Charset",
+                    "logstash-core/lib/logstash/util/plugin_version.rb::PluginVersion",
+                    "logstash-core/src/main/java/org/logstash/util/CheckedSupplier.java::CheckedSupplier",
+                    "logstash-core/src/main/java/org/logstash/util/UtilExt.java::UtilExt"
                 ],
                 "children": {}
             },
-            "utility_operations": {
+            "secret_store": {
+                "path": "logstash-core/src/main/java/org/logstash/secret",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.StringInterpolation.StringInterpolation",
-                    "logstash-core.src.main.java.org.logstash.Util.Util"
+                    "lib/secretstore/cli.rb::SecretStoreCli",
+                    "logstash-core/src/main/java/org/logstash/secret/cli/SecretStoreCli.java::CommandLine",
+                    "logstash-core/src/main/java/org/logstash/secret/cli/SecretStoreCli.java::SecretStoreCli",
+                    "logstash-core/src/main/java/org/logstash/secret/password/PasswordParamConverter.java::PasswordParamConverter",
+                    "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreExt.java::SecretStoreExt",
+                    "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreUtil.java::SecretStoreUtil",
+                    "logstash-core/src/main/java/org/logstash/secret/store/backend/JavaKeyStore.java::JavaKeyStore"
+                ],
+                "children": {
+                    "secret_store_cli": {
+                        "components": [
+                            "lib/secretstore/cli.rb::SecretStoreCli",
+                            "logstash-core/src/main/java/org/logstash/secret/cli/SecretStoreCli.java::CommandLine",
+                            "logstash-core/src/main/java/org/logstash/secret/cli/SecretStoreCli.java::SecretStoreCli"
+                        ],
+                        "children": {}
+                    },
+                    "secret_store_backend": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreExt.java::SecretStoreExt",
+                            "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreUtil.java::SecretStoreUtil",
+                            "logstash-core/src/main/java/org/logstash/secret/store/backend/JavaKeyStore.java::JavaKeyStore"
+                        ],
+                        "children": {
+                            "keystore_operations_and_secure_data_handling": {
+                                "components": [
+                                    "logstash-core/src/main/java/org/logstash/secret/store/backend/JavaKeyStore.java::JavaKeyStore",
+                                    "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreExt.java::SecretStoreExt",
+                                    "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreUtil.java::SecretStoreUtil"
+                                ],
+                                "children": {
+                                    "keystore_backend": {
+                                        "components": [
+                                            "logstash-core/src/main/java/org/logstash/secret/store/backend/JavaKeyStore.java::JavaKeyStore",
+                                            "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreExt.java::SecretStoreExt"
+                                        ],
+                                        "children": {}
+                                    },
+                                    "secure_data_utilities": {
+                                        "components": [
+                                            "logstash-core/src/main/java/org/logstash/secret/store/SecretStoreUtil.java::SecretStoreUtil"
+                                        ],
+                                        "children": {}
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "secret_store_passwords": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/secret/password/PasswordParamConverter.java::PasswordParamConverter"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "xpack_centralized_pipeline_management": {
+                "path": "x-pack/lib/config_management",
+                "components": [
+                    "x-pack/lib/config_management/bootstrap_check.rb::BootstrapCheck",
+                    "x-pack/lib/config_management/extension.rb::Extension"
                 ],
                 "children": {}
             }
         }
     },
-    "ruby_integration": {
-        "path": "logstash-core/src/main/java/org/logstash",
+    "pipeline_language_and_compilation": {
+        "path": "logstash-core",
         "components": [
-            "logstash-core.src.main.java.org.logstash.RubyJavaIntegration.RubyJavaIntegration",
-            "logstash-core.src.main.java.org.logstash.RubyUtil.RubyUtil",
-            "logstash-core.src.main.java.org.logstash.ext.JrubyEventExtLibrary.JrubyEventExtLibrary",
-            "logstash-core.src.main.java.org.logstash.ext.JrubyTimestampExtLibrary.JrubyTimestampExtLibrary"
-        ],
-        "children": {}
-    },
-    "event_api": {
-        "path": "logstash-core/src/main/java/co/elastic/logstash/api",
-        "components": [
-            "logstash-core.src.main.java.co.elastic.logstash.api.Event.Event",
-            "logstash-core.src.main.java.co.elastic.logstash.api.Plugin.Plugin",
-            "logstash-core.src.main.java.co.elastic.logstash.api.PluginHelper.PluginHelper",
-            "logstash-core.src.main.java.co.elastic.logstash.api.DeadLetterQueueWriter.DeadLetterQueueWriter"
-        ],
-        "children": {}
-    },
-    "pipeline_execution": {
-        "path": "logstash-core/src/main/java/org/logstash/execution",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.execution.WorkerLoop.WorkerLoop",
-            "logstash-core.src.main.java.org.logstash.execution.EventDispatcherExt.EventDispatcherExt",
-            "logstash-core.src.main.java.org.logstash.execution.PeriodicFlush.PeriodicFlush",
-            "logstash-core.src.main.java.org.logstash.execution.ShutdownWatcherExt.ShutdownWatcherExt"
-        ],
-        "children": {}
-    },
-    "config_compilation": {
-        "path": "logstash-core/src/main/java/org/logstash/config/ir",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.config.ir.CompiledPipeline.CompiledUnorderedExecution",
-            "logstash-core.src.main.java.org.logstash.config.ir.CompiledPipeline.CompiledOrderedExecution",
-            "logstash-core.src.main.java.org.logstash.config.ir.ConfigCompiler.ConfigCompiler",
-            "logstash-core.src.main.java.org.logstash.config.ir.DSL.DSL"
-        ],
-        "children": {}
-    },
-    "ir_compiler": {
-        "path": "logstash-core/src/main/java/org/logstash/config/ir/compiler",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.config.ir.compiler.DatasetCompiler.DatasetCompiler",
-            "logstash-core.src.main.java.org.logstash.config.ir.compiler.EventCondition.Compiler",
-            "logstash-core.src.main.java.org.logstash.config.ir.compiler.FilterDelegatorExt.FilterDelegatorExt",
-            "logstash-core.src.main.java.org.logstash.config.ir.compiler.OutputStrategyExt.OutputStrategyExt",
-            "logstash-core.src.main.java.org.logstash.config.ir.compiler.RubyIntegration.RubyIntegration"
+            "logstash-core/lib/logstash/compiler.rb::Compiler",
+            "logstash-core/lib/logstash/compiler/lscl/lscl_grammar.rb::Parser",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Attribute",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Bareword",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Branch",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Comment",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Condition",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Config",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Else",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Elsif",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Hash",
+            "logstash-core/lib/logstash/compiler/lscl.rb::HashEntries",
+            "logstash-core/lib/logstash/compiler/lscl.rb::HashEntry",
+            "logstash-core/lib/logstash/compiler/lscl.rb::If",
+            "logstash-core/lib/logstash/compiler/lscl.rb::MethodCall",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Name",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Number",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Plugin",
+            "logstash-core/lib/logstash/compiler/lscl.rb::PluginSection",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Plugins",
+            "logstash-core/lib/logstash/compiler/lscl.rb::RegExp",
+            "logstash-core/lib/logstash/compiler/lscl.rb::RegexpExpression",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Selector",
+            "logstash-core/lib/logstash/compiler/lscl.rb::SelectorElement",
+            "logstash-core/lib/logstash/compiler/lscl.rb::String",
+            "logstash-core/lib/logstash/compiler/lscl.rb::Whitespace",
+            "logstash-core/src/main/java/org/logstash/config/ir/ConfigCompiler.java::ConfigCompiler",
+            "logstash-core/src/main/java/org/logstash/config/ir/CompiledPipeline.java::CompiledOrderedExecution",
+            "logstash-core/src/main/java/org/logstash/config/ir/CompiledPipeline.java::CompiledUnorderedExecution",
+            "logstash-core/src/main/java/org/logstash/config/ir/DSL.java::DSL",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/BaseDataset.java::BaseDataset",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/CommonActions.java::CommonActions",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::Complement",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::ComputeAndClear",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::DatasetCompiler",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::Compiler",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::ConstantMatches",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::ConstantScalarInField",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::ConstantStringInField",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldInConstantList",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldInConstantScalar",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldInField",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldMatches",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldTruthy",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/FilterDelegatorExt.java::FilterDelegatorExt",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/MethodSyntaxElement.java::MethodSyntaxElementImpl",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputDelegatorExt.java::OutputDelegatorExt",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::AbstractOutputStrategyExt",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::LegacyOutputStrategyExt",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::OutputStrategyExt",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::OutputStrategyRegistryExt",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::SharedOutputStrategyExt",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::SingleOutputStrategyExt",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/RubyIntegration.java::PluginFactory",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/RubyIntegration.java::RubyIntegration",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SplitDataset.java::SplitDataset",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::Assignment",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::IdentifierStatement",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::MethodCallReturnValue",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::ReturnStatement",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::SyntaxFactory",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::TernaryStatement",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::TypeCastStatement",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::ValueStatement",
+            "logstash-core/src/main/java/org/logstash/config/ir/compiler/Utils.java::Utils",
+            "logstash-core/src/main/java/org/logstash/config/ir/expression/ExpressionSubstitution.java::ExpressionSubstitution",
+            "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedParallelStatement.java::ComposedParallelStatement",
+            "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedSequenceStatement.java::ComposedSequenceStatement",
+            "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedStatement.java::IFactory",
+            "logstash-core/src/main/java/org/logstash/config/ir/graph/BooleanEdge.java::BooleanEdgeFactory",
+            "logstash-core/src/main/java/org/logstash/config/ir/graph/Graph.java::GraphCombinationResult",
+            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/BreadthFirst.java::BfsResult",
+            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/BreadthFirst.java::BreadthFirst",
+            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/DepthFirst.java::DepthFirst",
+            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/DepthFirst.java::Traversal",
+            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/GraphDiff.java::GraphDiff",
+            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/TopologicalSort.java::TopologicalSort"
         ],
         "children": {
-            "dataset_compilation": {
+            "pipeline_configuration_parser": {
+                "path": "logstash-core/lib/logstash/compiler",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.DatasetCompiler.DatasetCompiler"
+                    "logstash-core/lib/logstash/compiler.rb::Compiler",
+                    "logstash-core/lib/logstash/compiler/lscl/lscl_grammar.rb::Parser",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Attribute",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Bareword",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Branch",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Comment",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Condition",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Config",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Else",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Elsif",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Hash",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::HashEntries",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::HashEntry",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::If",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::MethodCall",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Name",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Number",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Plugin",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::PluginSection",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Plugins",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::RegExp",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::RegexpExpression",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Selector",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::SelectorElement",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::String",
+                    "logstash-core/lib/logstash/compiler/lscl.rb::Whitespace"
                 ],
                 "children": {}
             },
-            "event_condition_system": {
+            "pipeline_ir_and_compilation": {
+                "path": "logstash-core/src/main/java/org/logstash/config/ir",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.EventCondition.Compiler"
+                    "logstash-core/src/main/java/org/logstash/config/ir/ConfigCompiler.java::ConfigCompiler",
+                    "logstash-core/src/main/java/org/logstash/config/ir/CompiledPipeline.java::CompiledOrderedExecution",
+                    "logstash-core/src/main/java/org/logstash/config/ir/CompiledPipeline.java::CompiledUnorderedExecution",
+                    "logstash-core/src/main/java/org/logstash/config/ir/DSL.java::DSL",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/BaseDataset.java::BaseDataset",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/CommonActions.java::CommonActions",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::Complement",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::ComputeAndClear",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::DatasetCompiler",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::Compiler",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::ConstantMatches",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::ConstantScalarInField",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::ConstantStringInField",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldInConstantList",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldInConstantScalar",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldInField",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldMatches",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldTruthy",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/FilterDelegatorExt.java::FilterDelegatorExt",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/MethodSyntaxElement.java::MethodSyntaxElementImpl",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputDelegatorExt.java::OutputDelegatorExt",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::AbstractOutputStrategyExt",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::LegacyOutputStrategyExt",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::OutputStrategyExt",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::OutputStrategyRegistryExt",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::SharedOutputStrategyExt",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::SingleOutputStrategyExt",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/RubyIntegration.java::PluginFactory",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/RubyIntegration.java::RubyIntegration",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SplitDataset.java::SplitDataset",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::Assignment",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::IdentifierStatement",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::MethodCallReturnValue",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::ReturnStatement",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::SyntaxFactory",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::TernaryStatement",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::TypeCastStatement",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/SyntaxFactory.java::ValueStatement",
+                    "logstash-core/src/main/java/org/logstash/config/ir/compiler/Utils.java::Utils",
+                    "logstash-core/src/main/java/org/logstash/config/ir/expression/ExpressionSubstitution.java::ExpressionSubstitution",
+                    "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedParallelStatement.java::ComposedParallelStatement",
+                    "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedSequenceStatement.java::ComposedSequenceStatement",
+                    "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedStatement.java::IFactory"
                 ],
-                "children": {}
+                "children": {
+                    "pipeline_ir_and_compilation_ir_assembly": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/config/ir/ConfigCompiler.java::ConfigCompiler",
+                            "logstash-core/src/main/java/org/logstash/config/ir/DSL.java::DSL",
+                            "logstash-core/src/main/java/org/logstash/config/ir/expression/ExpressionSubstitution.java::ExpressionSubstitution",
+                            "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedStatement.java::IFactory",
+                            "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedSequenceStatement.java::ComposedSequenceStatement",
+                            "logstash-core/src/main/java/org/logstash/config/ir/imperative/ComposedParallelStatement.java::ComposedParallelStatement"
+                        ],
+                        "children": {}
+                    },
+                    "pipeline_ir_and_compilation_dataset_runtime": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/config/ir/CompiledPipeline.java::CompiledOrderedExecution",
+                            "logstash-core/src/main/java/org/logstash/config/ir/CompiledPipeline.java::CompiledUnorderedExecution",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/BaseDataset.java::BaseDataset",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/CommonActions.java::CommonActions",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::DatasetCompiler",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::Complement",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/DatasetCompiler.java::ComputeAndClear",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::Compiler",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/EventCondition.java::FieldTruthy",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/SplitDataset.java::SplitDataset",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/Utils.java::Utils"
+                        ],
+                        "children": {}
+                    },
+                    "pipeline_ir_and_compilation_jruby_plugin_bridge": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/FilterDelegatorExt.java::FilterDelegatorExt",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputDelegatorExt.java::OutputDelegatorExt",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::AbstractOutputStrategyExt",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::LegacyOutputStrategyExt",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::SingleOutputStrategyExt",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::SharedOutputStrategyExt",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/OutputStrategyExt.java::OutputStrategyRegistryExt",
+                            "logstash-core/src/main/java/org/logstash/config/ir/compiler/RubyIntegration.java::PluginFactory"
+                        ],
+                        "children": {}
+                    },
+                    "pipeline_ir_and_compilation_graph_processing": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/config/ir/graph/Graph.java::Graph",
+                            "logstash-core/src/main/java/org/logstash/config/ir/graph/BooleanEdge.java::BooleanEdgeFactory",
+                            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/BreadthFirst.java::BreadthFirst",
+                            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/DepthFirst.java::DepthFirst",
+                            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/GraphDiff.java::GraphDiff",
+                            "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/TopologicalSort.java::TopologicalSort"
+                        ],
+                        "children": {}
+                    }
+                }
             },
-            "output_strategy_management": {
+            "pipeline_ir_graph": {
+                "path": "logstash-core/src/main/java/org/logstash/config/ir/graph",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.OutputStrategyExt.OutputStrategyExt"
-                ],
-                "children": {}
-            },
-            "plugin_delegation": {
-                "components": [
-                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.FilterDelegatorExt.FilterDelegatorExt"
-                ],
-                "children": {}
-            },
-            "ruby_integration_layer": {
-                "components": [
-                    "logstash-core.src.main.java.org.logstash.config.ir.compiler.RubyIntegration.RubyIntegration"
+                    "logstash-core/src/main/java/org/logstash/config/ir/graph/BooleanEdge.java::BooleanEdgeFactory",
+                    "logstash-core/src/main/java/org/logstash/config/ir/graph/Graph.java::GraphCombinationResult",
+                    "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/BreadthFirst.java::BfsResult",
+                    "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/BreadthFirst.java::BreadthFirst",
+                    "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/DepthFirst.java::DepthFirst",
+                    "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/DepthFirst.java::Traversal",
+                    "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/GraphDiff.java::GraphDiff",
+                    "logstash-core/src/main/java/org/logstash/config/ir/graph/algorithms/TopologicalSort.java::TopologicalSort"
                 ],
                 "children": {}
             }
         }
     },
-    "plugin_system": {
-        "path": "logstash-core/src/main/java/org/logstash/plugins",
+    "data_plane_execution_and_reliability": {
+        "path": "logstash-core",
         "components": [
-            "logstash-core.src.main.java.org.logstash.plugins.PluginLookup.PluginClass",
-            "logstash-core.src.main.java.org.logstash.plugins.PluginUtil.PluginUtil",
-            "logstash-core.src.main.java.org.logstash.plugins.UniversalPluginExt.UniversalPluginExt",
-            "logstash-core.src.main.java.org.logstash.plugins.HooksRegistryExt.HooksRegistryExt"
+            "logstash-core/lib/logstash/pipeline_action/base.rb::Base",
+            "logstash-core/lib/logstash/pipelines_registry.rb::PipelineStates",
+            "logstash-core/lib/logstash/pipelines_registry.rb::PipelinesRegistry",
+            "logstash-core/lib/logstash/state_resolver.rb::StateResolver",
+            "logstash-core/src/main/java/org/logstash/execution/ConvergeResultExt.java::ConvergeResultExt",
+            "logstash-core/src/main/java/org/logstash/execution/EventDispatcherExt.java::EventDispatcherExt",
+            "logstash-core/src/main/java/org/logstash/execution/PipelineReporterExt.java::SnapshotExt",
+            "logstash-core/src/main/java/org/logstash/execution/ShutdownWatcherExt.java::ShutdownWatcherExt",
+            "logstash-core/lib/logstash/plugins/builtin/pipeline/input.rb::Input",
+            "logstash-core/lib/logstash/plugins/builtin/pipeline/output.rb::Output",
+            "logstash-core/src/main/java/org/logstash/plugins/pipeline/AbstractPipelineBus.java::AbstractPipelineBus",
+            "logstash-core/src/main/java/org/logstash/plugins/pipeline/AddressState.java::AddressState",
+            "logstash-core/src/main/java/org/logstash/plugins/pipeline/PipelineBus.java::Testable",
+            "logstash-core/src/main/java/org/logstash/plugins/pipeline/PipelineBusV2.java::AddressStateMapping",
+            "logstash-core/src/main/java/org/logstash/plugins/pipeline/PipelineBusV2.java::Testable",
+            "logstash-core/src/main/java/org/logstash/ackedqueue/PageFactory.java::PageFactory",
+            "logstash-core/src/main/java/org/logstash/ackedqueue/PqCheck.java::PqCheck",
+            "logstash-core/src/main/java/org/logstash/ackedqueue/PqRepair.java::PqRepair",
+            "logstash-core/src/main/java/org/logstash/ackedqueue/QueueFactoryExt.java::QueueFactoryExt",
+            "logstash-core/src/main/java/org/logstash/ackedqueue/QueueUpgrade.java::QueueUpgrade",
+            "logstash-core/src/main/java/org/logstash/ackedqueue/Settings.java::Builder",
+            "logstash-core/src/main/java/org/logstash/ackedqueue/SettingsImpl.java::SettingsImpl",
+            "logstash-core/src/main/java/org/logstash/common/FsUtil.java::FsUtil",
+            "logstash-core/src/main/java/org/logstash/common/LsQueueUtils.java::LsQueueUtils",
+            "logstash-core/src/main/java/org/logstash/common/AbstractDeadLetterQueueWriterExt.java::DummyDeadLetterQueueWriterExt",
+            "logstash-core/src/main/java/org/logstash/common/AbstractDeadLetterQueueWriterExt.java::PluginDeadLetterQueueWriterExt",
+            "logstash-core/src/main/java/org/logstash/common/DeadLetterQueueFactory.java::DeadLetterQueueFactory",
+            "logstash-core/src/main/java/org/logstash/common/io/DeadLetterQueueReader.java::DeadLetterQueueReader",
+            "logstash-core/src/main/java/org/logstash/common/io/DeadLetterQueueUtils.java::DeadLetterQueueUtils",
+            "logstash-core/src/main/java/org/logstash/common/io/RecordIOReader.java::Builder"
         ],
         "children": {
-            "plugin_factory": {
+            "pipeline_lifecycle_and_execution": {
+                "path": "logstash-core",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.plugins.factory.AbstractPluginCreator.AbstractPluginCreator",
-                    "logstash-core.src.main.java.org.logstash.plugins.factory.ContextualizerExt.ContextualizerExt",
-                    "logstash-core.src.main.java.org.logstash.plugins.factory.PluginFactoryExt.IdExtractor"
+                    "logstash-core/lib/logstash/pipeline_action/base.rb::Base",
+                    "logstash-core/lib/logstash/pipelines_registry.rb::PipelineStates",
+                    "logstash-core/lib/logstash/pipelines_registry.rb::PipelinesRegistry",
+                    "logstash-core/lib/logstash/state_resolver.rb::StateResolver",
+                    "logstash-core/src/main/java/org/logstash/execution/ConvergeResultExt.java::ConvergeResultExt",
+                    "logstash-core/src/main/java/org/logstash/execution/EventDispatcherExt.java::EventDispatcherExt",
+                    "logstash-core/src/main/java/org/logstash/execution/PipelineReporterExt.java::SnapshotExt",
+                    "logstash-core/src/main/java/org/logstash/execution/ShutdownWatcherExt.java::ShutdownWatcherExt"
+                ],
+                "children": {
+                    "pipeline_lifecycle_and_execution_state_convergence": {
+                        "components": [
+                            "logstash-core/lib/logstash/pipeline_action/base.rb::Base",
+                            "logstash-core/lib/logstash/pipelines_registry.rb::PipelineStates",
+                            "logstash-core/lib/logstash/pipelines_registry.rb::PipelinesRegistry",
+                            "logstash-core/lib/logstash/state_resolver.rb::StateResolver"
+                        ],
+                        "children": {}
+                    },
+                    "pipeline_lifecycle_and_execution_reporting": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/execution/ConvergeResultExt.java::ConvergeResultExt",
+                            "logstash-core/src/main/java/org/logstash/execution/EventDispatcherExt.java::EventDispatcherExt",
+                            "logstash-core/src/main/java/org/logstash/execution/PipelineReporterExt.java::SnapshotExt",
+                            "logstash-core/src/main/java/org/logstash/execution/ShutdownWatcherExt.java::ShutdownWatcherExt"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "pipeline_to_pipeline_communication": {
+                "path": "logstash-core/src/main/java/org/logstash/plugins/pipeline",
+                "components": [
+                    "logstash-core/lib/logstash/plugins/builtin/pipeline/input.rb::Input",
+                    "logstash-core/lib/logstash/plugins/builtin/pipeline/output.rb::Output",
+                    "logstash-core/src/main/java/org/logstash/plugins/pipeline/AbstractPipelineBus.java::AbstractPipelineBus",
+                    "logstash-core/src/main/java/org/logstash/plugins/pipeline/AddressState.java::AddressState",
+                    "logstash-core/src/main/java/org/logstash/plugins/pipeline/PipelineBus.java::Testable",
+                    "logstash-core/src/main/java/org/logstash/plugins/pipeline/PipelineBusV2.java::AddressStateMapping",
+                    "logstash-core/src/main/java/org/logstash/plugins/pipeline/PipelineBusV2.java::Testable"
+                ],
+                "children": {}
+            },
+            "persistent_queue": {
+                "path": "logstash-core/src/main/java/org/logstash/ackedqueue",
+                "components": [
+                    "logstash-core/src/main/java/org/logstash/ackedqueue/PageFactory.java::PageFactory",
+                    "logstash-core/src/main/java/org/logstash/ackedqueue/PqCheck.java::PqCheck",
+                    "logstash-core/src/main/java/org/logstash/ackedqueue/PqRepair.java::PqRepair",
+                    "logstash-core/src/main/java/org/logstash/ackedqueue/QueueFactoryExt.java::QueueFactoryExt",
+                    "logstash-core/src/main/java/org/logstash/ackedqueue/QueueUpgrade.java::QueueUpgrade",
+                    "logstash-core/src/main/java/org/logstash/ackedqueue/Settings.java::Builder",
+                    "logstash-core/src/main/java/org/logstash/ackedqueue/SettingsImpl.java::SettingsImpl",
+                    "logstash-core/src/main/java/org/logstash/common/FsUtil.java::FsUtil",
+                    "logstash-core/src/main/java/org/logstash/common/LsQueueUtils.java::LsQueueUtils"
+                ],
+                "children": {
+                    "persistent_queue_storage_and_recovery": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/ackedqueue/PageFactory.java::PageFactory",
+                            "logstash-core/src/main/java/org/logstash/ackedqueue/PqCheck.java::PqCheck",
+                            "logstash-core/src/main/java/org/logstash/ackedqueue/PqRepair.java::PqRepair",
+                            "logstash-core/src/main/java/org/logstash/ackedqueue/QueueUpgrade.java::QueueUpgrade"
+                        ],
+                        "children": {}
+                    },
+                    "persistent_queue_configuration_and_factory": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/ackedqueue/QueueFactoryExt.java::QueueFactoryExt",
+                            "logstash-core/src/main/java/org/logstash/ackedqueue/Settings.java::Builder",
+                            "logstash-core/src/main/java/org/logstash/ackedqueue/SettingsImpl.java::SettingsImpl"
+                        ],
+                        "children": {}
+                    },
+                    "persistent_queue_queue_utilities": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/common/FsUtil.java::FsUtil",
+                            "logstash-core/src/main/java/org/logstash/common/LsQueueUtils.java::LsQueueUtils"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "dead_letter_queue": {
+                "path": "logstash-core/src/main/java/org/logstash/common",
+                "components": [
+                    "logstash-core/src/main/java/org/logstash/common/AbstractDeadLetterQueueWriterExt.java::DummyDeadLetterQueueWriterExt",
+                    "logstash-core/src/main/java/org/logstash/common/AbstractDeadLetterQueueWriterExt.java::PluginDeadLetterQueueWriterExt",
+                    "logstash-core/src/main/java/org/logstash/common/DeadLetterQueueFactory.java::DeadLetterQueueFactory",
+                    "logstash-core/src/main/java/org/logstash/common/io/DeadLetterQueueReader.java::DeadLetterQueueReader",
+                    "logstash-core/src/main/java/org/logstash/common/io/DeadLetterQueueUtils.java::DeadLetterQueueUtils",
+                    "logstash-core/src/main/java/org/logstash/common/io/RecordIOReader.java::Builder"
                 ],
                 "children": {}
             }
         }
     },
-    "plugin_factory": {
-        "path": "logstash-core/src/main/java/org/logstash/plugins/factory",
+    "event_processing_and_extensibility": {
+        "path": "",
         "components": [
-            "logstash-core.src.main.java.org.logstash.plugins.factory.AbstractPluginCreator.AbstractPluginCreator",
-            "logstash-core.src.main.java.org.logstash.plugins.factory.ContextualizerExt.ContextualizerExt",
-            "logstash-core.src.main.java.org.logstash.plugins.factory.PluginFactoryExt.IdExtractor"
-        ],
-        "children": {}
-    },
-    "queue_management": {
-        "path": "logstash-core/src/main/java/org/logstash/ackedqueue",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.ackedqueue.QueueFactoryExt.QueueFactoryExt",
-            "logstash-core.src.main.java.org.logstash.ackedqueue.PageFactory.PageFactory",
-            "logstash-core.src.main.java.org.logstash.ackedqueue.SettingsImpl.SettingsImpl",
-            "logstash-core.src.main.java.org.logstash.ackedqueue.Settings.Builder"
-        ],
-        "children": {}
-    },
-    "metrics_system": {
-        "path": "logstash-core/src/main/java/org/logstash/instrument/metrics",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.instrument.metrics.AbstractMetric.AbstractMetric",
-            "logstash-core.src.main.java.org.logstash.instrument.metrics.MetricExt.TimedExecution",
-            "logstash-core.src.main.java.org.logstash.instrument.metrics.SnapshotExt.SnapshotExt",
-            "logstash-core.src.main.java.co.elastic.logstash.api.CounterMetric.CounterMetric",
-            "logstash-core.src.main.java.co.elastic.logstash.api.TimerMetric.TimerMetric",
-            "logstash-core.src.main.java.co.elastic.logstash.api.Metric.Metric"
-        ],
-        "children": {}
-    },
-    "monitoring": {
-        "path": "logstash-core/src/main/java/org/logstash/instrument/monitors",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.instrument.monitors.HotThreadsMonitor.HotThreadsMonitor",
-            "logstash-core.src.main.java.org.logstash.instrument.monitors.MemoryMonitor.MemoryMonitor",
-            "logstash-core.src.main.java.org.logstash.instrument.monitors.ProcessMonitor.ProcessMonitor",
-            "logstash-core.src.main.java.org.logstash.instrument.monitors.SystemMonitor.SystemMonitor"
-        ],
-        "children": {}
-    },
-    "health_system": {
-        "path": "logstash-core/src/main/java/org/logstash/health",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.health.HealthObserver.HealthObserver",
-            "logstash-core.src.main.java.org.logstash.health.Indicator.Report",
-            "logstash-core.src.main.java.org.logstash.health.PipelineIndicator.Status",
-            "logstash-core.src.main.java.org.logstash.health.ProbeIndicator.ProbeIndicator"
-        ],
-        "children": {}
-    },
-    "settings_management": {
-        "path": "logstash-core/src/main/java/org/logstash/settings",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.settings.SettingDelegator.SettingDelegator",
-            "logstash-core.src.main.java.org.logstash.settings.Coercible.Coercible",
-            "logstash-core.src.main.java.org.logstash.settings.Boolean.Boolean",
-            "logstash-core.src.main.java.org.logstash.settings.SettingNumeric.SettingNumeric"
-        ],
-        "children": {}
-    },
-    "dead_letter_queue": {
-        "path": "logstash-core/src/main/java/org/logstash/common/io",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.common.io.DeadLetterQueueReader.DeadLetterQueueReader",
-            "logstash-core.src.main.java.org.logstash.common.io.DeadLetterQueueWriter.Builder",
-            "logstash-core.src.main.java.org.logstash.common.DeadLetterQueueFactory.DeadLetterQueueFactory",
-            "logstash-core.src.main.java.org.logstash.common.AbstractDeadLetterQueueWriterExt.PluginDeadLetterQueueWriterExt"
+            "logstash-core/src/main/java/co/elastic/logstash/api/Event.java::Event",
+            "logstash-core/src/main/java/org/logstash/Accessors.java::Accessors",
+            "logstash-core/src/main/java/org/logstash/Cloner.java::Cloner",
+            "logstash-core/src/main/java/org/logstash/Javafier.java::Javafier",
+            "logstash-core/src/main/java/org/logstash/KeyNode.java::KeyNode",
+            "logstash-core/src/main/java/org/logstash/ObjectMappers.java::NonTypedScalarSerializer",
+            "logstash-core/src/main/java/org/logstash/ObjectMappers.java::RubyTimestampSerializer",
+            "logstash-core/src/main/java/org/logstash/ObjectMappers.java::TimestampDeserializer",
+            "logstash-core/src/main/java/org/logstash/ObjectMappers.java::TimestampSerializer",
+            "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::JavaCollectionOverride",
+            "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::JavaMapOverride",
+            "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::RubyArrayOverride",
+            "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::RubyHashOverride",
+            "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::RubyJavaIntegration",
+            "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::RubyMapProxyOverride",
+            "logstash-core/src/main/java/org/logstash/RubyUtil.java::RubyUtil",
+            "logstash-core/src/main/java/org/logstash/Rubyfier.java::Converter",
+            "logstash-core/src/main/java/org/logstash/Rubyfier.java::Rubyfier",
+            "logstash-core/src/main/java/org/logstash/StringInterpolation.java::StringInterpolation",
+            "logstash-core/src/main/java/org/logstash/Util.java::Util",
+            "logstash-core/src/main/java/org/logstash/Valuefier.java::Converter",
+            "logstash-core/src/main/java/org/logstash/Valuefier.java::Valuefier",
+            "logstash-core/src/main/java/org/logstash/ext/JrubyEventExtLibrary.java::JrubyEventExtLibrary",
+            "logstash-core/src/main/java/org/logstash/ext/JrubyTimestampExtLibrary.java::JrubyTimestampExtLibrary",
+            "logstash-core/src/main/java/co/elastic/logstash/api/Plugin.java::Plugin",
+            "logstash-core/src/main/java/co/elastic/logstash/api/PluginHelper.java::PluginHelper",
+            "logstash-core/lib/logstash/plugin.rb::Plugin",
+            "logstash-core/lib/logstash/codecs/base.rb::Base",
+            "logstash-core/lib/logstash/filters/base.rb::Base",
+            "logstash-core/lib/logstash/inputs/base.rb::Base",
+            "logstash-core/lib/logstash/inputs/threadable.rb::Threadable",
+            "logstash-core/lib/logstash/outputs/base.rb::Base",
+            "logstash-core/lib/logstash/plugins/event_factory_support.rb::BasicEventFactory",
+            "logstash-core/lib/logstash/plugins/registry.rb::GemRegistry",
+            "logstash-core/lib/logstash/plugins/registry.rb::UniversalPluginSpecification",
+            "logstash-core/lib/logstash/plugins/registry.rb::UnknownPlugin",
+            "logstash-core/src/main/java/org/logstash/plugins/HooksRegistryExt.java::HooksRegistryExt",
+            "logstash-core/src/main/java/org/logstash/plugins/PluginLookup.java::PluginClass",
+            "logstash-core/src/main/java/org/logstash/plugins/PluginUtil.java::PluginUtil",
+            "logstash-core/src/main/java/org/logstash/plugins/UniversalPluginExt.java::UniversalPluginExt",
+            "logstash-core/src/main/java/org/logstash/plugins/factory/AbstractPluginCreator.java::AbstractPluginCreator",
+            "logstash-core/src/main/java/org/logstash/plugins/factory/CodecPluginCreator.java::CodecPluginCreator",
+            "logstash-core/src/main/java/org/logstash/plugins/factory/ContextualizerExt.java::ContextualizerExt",
+            "logstash-core/src/main/java/org/logstash/plugins/factory/FilterPluginCreator.java::FilterPluginCreator",
+            "logstash-core/src/main/java/org/logstash/plugins/factory/InputPluginCreator.java::InputPluginCreator",
+            "logstash-core/src/main/java/org/logstash/plugins/factory/OutputPluginCreator.java::OutputPluginCreator",
+            "logstash-core/src/main/java/org/logstash/plugins/factory/PluginFactoryExt.java::IdExtractor",
+            "logstash-core/src/main/java/org/logstash/plugins/factory/PluginFactoryExt.java::PluginResolver",
+            "logstash-core/src/main/java/org/logstash/plugins/filters/Uuid.java::Uuid",
+            "logstash-core/src/main/java/org/logstash/plugins/inputs/Stdin.java::Stdin",
+            "logstash-core/src/main/java/org/logstash/plugins/outputs/Sink.java::Sink",
+            "logstash-core/src/main/java/org/logstash/plugins/outputs/Stdout.java::Stdout",
+            "lib/pluginmanager/main.rb::Main",
+            "lib/pluginmanager/bundler/logstash_injector.rb::LogstashInjector",
+            "lib/pluginmanager/gem_installer.rb::GemInstaller",
+            "lib/pluginmanager/gemfile.rb::Gem",
+            "lib/pluginmanager/gemfile.rb::Gemset",
+            "lib/pluginmanager/generate.rb::Generate",
+            "lib/pluginmanager/install.rb::Install",
+            "lib/pluginmanager/install_strategy_factory.rb::InstallStrategyFactory",
+            "lib/pluginmanager/offline_plugin_packager.rb::SpecificationHelpers",
+            "lib/pluginmanager/pack.rb::Pack",
+            "lib/pluginmanager/pack_fetch_strategy/repository.rb::Repository",
+            "lib/pluginmanager/pack_fetch_strategy/uri.rb::Uri",
+            "lib/pluginmanager/pack_installer/pack.rb::GemInformation",
+            "lib/pluginmanager/prepare_offline_pack.rb::PrepareOfflinePack",
+            "lib/pluginmanager/remove.rb::Remove",
+            "lib/pluginmanager/unpack.rb::Unpack",
+            "lib/pluginmanager/update.rb::Update",
+            "lib/pluginmanager/utils/downloader.rb::ProgressbarFeedback",
+            "lib/pluginmanager/utils/downloader.rb::SilentFeedback",
+            "lib/pluginmanager/utils/http_client.rb::HttpClient",
+            "lib/pluginmanager/utils/http_client.rb::RedirectionLimit",
+            "x-pack/lib/filters/geoip/database_manager.rb::DatabaseManager",
+            "x-pack/lib/geoip_database_management/data_path.rb::DataPath",
+            "x-pack/lib/geoip_database_management/downloader.rb::Downloader",
+            "x-pack/lib/geoip_database_management/extension.rb::Extension",
+            "x-pack/lib/geoip_database_management/manager.rb::Manager",
+            "x-pack/lib/geoip_database_management/metadata.rb::Metadata"
         ],
         "children": {
-            "dlq_reader_system": {
+            "event_model_and_jruby_interop": {
+                "path": "logstash-core/src/main/java/org/logstash",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.common.io.DeadLetterQueueReader.DeadLetterQueueReader"
+                    "logstash-core/src/main/java/co/elastic/logstash/api/Event.java::Event",
+                    "logstash-core/src/main/java/org/logstash/Accessors.java::Accessors",
+                    "logstash-core/src/main/java/org/logstash/Cloner.java::Cloner",
+                    "logstash-core/src/main/java/org/logstash/Javafier.java::Javafier",
+                    "logstash-core/src/main/java/org/logstash/KeyNode.java::KeyNode",
+                    "logstash-core/src/main/java/org/logstash/ObjectMappers.java::NonTypedScalarSerializer",
+                    "logstash-core/src/main/java/org/logstash/ObjectMappers.java::RubyTimestampSerializer",
+                    "logstash-core/src/main/java/org/logstash/ObjectMappers.java::TimestampDeserializer",
+                    "logstash-core/src/main/java/org/logstash/ObjectMappers.java::TimestampSerializer",
+                    "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::JavaCollectionOverride",
+                    "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::JavaMapOverride",
+                    "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::RubyArrayOverride",
+                    "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::RubyHashOverride",
+                    "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::RubyJavaIntegration",
+                    "logstash-core/src/main/java/org/logstash/RubyJavaIntegration.java::RubyMapProxyOverride",
+                    "logstash-core/src/main/java/org/logstash/RubyUtil.java::RubyUtil",
+                    "logstash-core/src/main/java/org/logstash/Rubyfier.java::Converter",
+                    "logstash-core/src/main/java/org/logstash/Rubyfier.java::Rubyfier",
+                    "logstash-core/src/main/java/org/logstash/StringInterpolation.java::StringInterpolation",
+                    "logstash-core/src/main/java/org/logstash/Util.java::Util",
+                    "logstash-core/src/main/java/org/logstash/Valuefier.java::Converter",
+                    "logstash-core/src/main/java/org/logstash/Valuefier.java::Valuefier",
+                    "logstash-core/src/main/java/org/logstash/ext/JrubyEventExtLibrary.java::JrubyEventExtLibrary",
+                    "logstash-core/src/main/java/org/logstash/ext/JrubyTimestampExtLibrary.java::JrubyTimestampExtLibrary"
                 ],
                 "children": {}
             },
-            "dlq_writer_system": {
+            "plugin_api_and_registry": {
+                "path": "logstash-core",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.common.io.DeadLetterQueueWriter.Builder",
-                    "logstash-core.src.main.java.org.logstash.common.DeadLetterQueueFactory.DeadLetterQueueFactory"
+                    "logstash-core/src/main/java/co/elastic/logstash/api/Plugin.java::Plugin",
+                    "logstash-core/src/main/java/co/elastic/logstash/api/PluginHelper.java::PluginHelper",
+                    "logstash-core/lib/logstash/plugin.rb::Plugin",
+                    "logstash-core/lib/logstash/codecs/base.rb::Base",
+                    "logstash-core/lib/logstash/filters/base.rb::Base",
+                    "logstash-core/lib/logstash/inputs/base.rb::Base",
+                    "logstash-core/lib/logstash/inputs/threadable.rb::Threadable",
+                    "logstash-core/lib/logstash/outputs/base.rb::Base",
+                    "logstash-core/lib/logstash/plugins/event_factory_support.rb::BasicEventFactory",
+                    "logstash-core/lib/logstash/plugins/registry.rb::GemRegistry",
+                    "logstash-core/lib/logstash/plugins/registry.rb::UniversalPluginSpecification",
+                    "logstash-core/lib/logstash/plugins/registry.rb::UnknownPlugin",
+                    "logstash-core/src/main/java/org/logstash/plugins/HooksRegistryExt.java::HooksRegistryExt",
+                    "logstash-core/src/main/java/org/logstash/plugins/PluginLookup.java::PluginClass",
+                    "logstash-core/src/main/java/org/logstash/plugins/PluginUtil.java::PluginUtil",
+                    "logstash-core/src/main/java/org/logstash/plugins/UniversalPluginExt.java::UniversalPluginExt",
+                    "logstash-core/src/main/java/org/logstash/plugins/factory/AbstractPluginCreator.java::AbstractPluginCreator",
+                    "logstash-core/src/main/java/org/logstash/plugins/factory/CodecPluginCreator.java::CodecPluginCreator",
+                    "logstash-core/src/main/java/org/logstash/plugins/factory/ContextualizerExt.java::ContextualizerExt",
+                    "logstash-core/src/main/java/org/logstash/plugins/factory/FilterPluginCreator.java::FilterPluginCreator",
+                    "logstash-core/src/main/java/org/logstash/plugins/factory/InputPluginCreator.java::InputPluginCreator",
+                    "logstash-core/src/main/java/org/logstash/plugins/factory/OutputPluginCreator.java::OutputPluginCreator",
+                    "logstash-core/src/main/java/org/logstash/plugins/factory/PluginFactoryExt.java::IdExtractor",
+                    "logstash-core/src/main/java/org/logstash/plugins/factory/PluginFactoryExt.java::PluginResolver"
                 ],
                 "children": {}
             },
-            "plugin_integration_layer": {
+            "core_builtin_plugins": {
+                "path": "logstash-core/src/main/java/org/logstash/plugins",
                 "components": [
-                    "logstash-core.src.main.java.org.logstash.common.AbstractDeadLetterQueueWriterExt.PluginDeadLetterQueueWriterExt"
+                    "logstash-core/src/main/java/org/logstash/plugins/filters/Uuid.java::Uuid",
+                    "logstash-core/src/main/java/org/logstash/plugins/inputs/Stdin.java::Stdin",
+                    "logstash-core/src/main/java/org/logstash/plugins/outputs/Sink.java::Sink",
+                    "logstash-core/src/main/java/org/logstash/plugins/outputs/Stdout.java::Stdout"
+                ],
+                "children": {}
+            },
+            "plugin_manager": {
+                "path": "lib/pluginmanager",
+                "components": [
+                    "lib/pluginmanager/main.rb::Main",
+                    "lib/pluginmanager/bundler/logstash_injector.rb::LogstashInjector",
+                    "lib/pluginmanager/gem_installer.rb::GemInstaller",
+                    "lib/pluginmanager/gemfile.rb::Gem",
+                    "lib/pluginmanager/gemfile.rb::Gemset",
+                    "lib/pluginmanager/generate.rb::Generate",
+                    "lib/pluginmanager/install.rb::Install",
+                    "lib/pluginmanager/install_strategy_factory.rb::InstallStrategyFactory",
+                    "lib/pluginmanager/offline_plugin_packager.rb::SpecificationHelpers",
+                    "lib/pluginmanager/pack.rb::Pack",
+                    "lib/pluginmanager/pack_fetch_strategy/repository.rb::Repository",
+                    "lib/pluginmanager/pack_fetch_strategy/uri.rb::Uri",
+                    "lib/pluginmanager/pack_installer/pack.rb::GemInformation",
+                    "lib/pluginmanager/prepare_offline_pack.rb::PrepareOfflinePack",
+                    "lib/pluginmanager/remove.rb::Remove",
+                    "lib/pluginmanager/unpack.rb::Unpack",
+                    "lib/pluginmanager/update.rb::Update",
+                    "lib/pluginmanager/utils/downloader.rb::ProgressbarFeedback",
+                    "lib/pluginmanager/utils/downloader.rb::SilentFeedback",
+                    "lib/pluginmanager/utils/http_client.rb::HttpClient",
+                    "lib/pluginmanager/utils/http_client.rb::RedirectionLimit"
+                ],
+                "children": {}
+            },
+            "xpack_geoip_database_management": {
+                "path": "x-pack/lib/geoip_database_management",
+                "components": [
+                    "x-pack/lib/filters/geoip/database_manager.rb::DatabaseManager",
+                    "x-pack/lib/geoip_database_management/data_path.rb::DataPath",
+                    "x-pack/lib/geoip_database_management/downloader.rb::Downloader",
+                    "x-pack/lib/geoip_database_management/extension.rb::Extension",
+                    "x-pack/lib/geoip_database_management/manager.rb::Manager",
+                    "x-pack/lib/geoip_database_management/metadata.rb::Metadata"
                 ],
                 "children": {}
             }
         }
     },
-    "common_utilities": {
-        "path": "logstash-core/src/main/java/org/logstash/common",
+    "observability_and_operational_control": {
+        "path": "",
         "components": [
-            "logstash-core.src.main.java.org.logstash.common.BufferedTokenizer.IteratorDecorator",
-            "logstash-core.src.main.java.org.logstash.common.BufferedTokenizerExt.BufferedTokenizerExt",
-            "logstash-core.src.main.java.org.logstash.common.FsUtil.FsUtil",
-            "logstash-core.src.main.java.org.logstash.common.LsQueueUtils.LsQueueUtils"
+            "logstash-core/lib/logstash/instrument/metric_store.rb::MetricNotFound",
+            "logstash-core/lib/logstash/instrument/metric_store.rb::MetricStore",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/AbstractMetric.java::AbstractMetric",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoBlockProvided",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoKeyProvided",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoNamespaceProvided",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::TimedExecution",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricKeys.java::MetricKeys",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/NullMetricExt.java::NullTimedExecution",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/NullNamespacedMetricExt.java::NullCounter",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/SnapshotExt.java::SnapshotExt",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/gauge/AbstractGaugeMetric.java::AbstractGaugeMetric",
+            "logstash-core/src/main/java/org/logstash/instrument/metrics/timer/Util.java::Util",
+            "logstash-core/lib/logstash/instrument/periodic_poller/base.rb::Base",
+            "logstash-core/lib/logstash/instrument/periodic_poller/cgroup.rb::Cgroup",
+            "logstash-core/lib/logstash/instrument/periodic_poller/dlq.rb::DeadLetterQueue",
+            "logstash-core/lib/logstash/instrument/periodic_poller/flow_rate.rb::FlowRate",
+            "logstash-core/lib/logstash/instrument/periodic_poller/jvm.rb::GarbageCollectorName",
+            "logstash-core/lib/logstash/instrument/periodic_poller/jvm.rb::JVM",
+            "logstash-core/lib/logstash/instrument/periodic_poller/load_average.rb::Linux",
+            "logstash-core/lib/logstash/instrument/periodic_poller/load_average.rb::LoadAverage",
+            "logstash-core/lib/logstash/instrument/periodic_poller/load_average.rb::Other",
+            "logstash-core/lib/logstash/instrument/periodic_poller/load_average.rb::Windows",
+            "logstash-core/lib/logstash/instrument/periodic_poller/os.rb::Os",
+            "logstash-core/lib/logstash/instrument/periodic_poller/pq.rb::PersistentQueue",
+            "logstash-core/src/main/java/org/logstash/instrument/monitors/HotThreadsMonitor.java::HotThreadsMonitor",
+            "logstash-core/src/main/java/org/logstash/instrument/monitors/MemoryMonitor.java::MemoryMonitor",
+            "logstash-core/src/main/java/org/logstash/instrument/monitors/ProcessMonitor.java::ProcessMonitor",
+            "logstash-core/src/main/java/org/logstash/instrument/monitors/SystemMonitor.java::SystemMonitor",
+            "logstash-core/src/main/java/org/logstash/instrument/reports/MemoryReport.java::MemoryReport",
+            "logstash-core/src/main/java/org/logstash/instrument/reports/ProcessReport.java::ProcessReport",
+            "logstash-core/src/main/java/org/logstash/instrument/reports/ThreadsReport.java::ThreadsReport",
+            "logstash-core/lib/logstash/util/thread_dump.rb::ThreadDump",
+            "logstash-core/src/main/java/org/logstash/health/ApiHealthReport.java::JsonSerializer",
+            "logstash-core/src/main/java/org/logstash/health/Diagnosis.java::JsonSerializer",
+            "logstash-core/src/main/java/org/logstash/health/HealthObserver.java::HealthObserver",
+            "logstash-core/src/main/java/org/logstash/health/Impact.java::Builder",
+            "logstash-core/src/main/java/org/logstash/health/Impact.java::JsonSerializer",
+            "logstash-core/src/main/java/org/logstash/health/Indicator.java::Report",
+            "logstash-core/src/main/java/org/logstash/health/MultiIndicator.java::JsonSerializer",
+            "logstash-core/src/main/java/org/logstash/health/MultiIndicator.java::Report",
+            "logstash-core/src/main/java/org/logstash/health/PipelineIndicator.java::JsonSerializer",
+            "logstash-core/src/main/java/org/logstash/health/Probe.java::Analysis",
+            "logstash-core/src/main/java/org/logstash/health/ProbeIndicator.java::JsonSerializer",
+            "logstash-core/src/main/java/org/logstash/health/ProbeIndicator.java::ProbeIndicator",
+            "logstash-core/src/main/java/org/logstash/health/Status.java::Holder",
+            "logstash-core/lib/logstash/webserver.rb::WebServer",
+            "logstash-core/lib/logstash/api/rack_app.rb::ApiLogger",
+            "logstash-core/lib/logstash/api/command_factory.rb::CommandFactory",
+            "logstash-core/lib/logstash/api/commands/default_metadata.rb::DefaultMetadata",
+            "logstash-core/lib/logstash/api/commands/health_report.rb::HealthReport",
+            "logstash-core/lib/logstash/api/commands/node.rb::Node",
+            "logstash-core/lib/logstash/api/commands/stats.rb::Stats",
+            "logstash-core/lib/logstash/api/commands/system/basicinfo_command.rb::BasicInfo",
+            "logstash-core/lib/logstash/api/commands/system/plugins_command.rb::Plugins",
+            "logstash-core/lib/logstash/api/modules/base.rb::Base",
+            "logstash-core/lib/logstash/api/modules/health_report.rb::HealthReport",
+            "logstash-core/lib/logstash/api/modules/logging.rb::Logging",
+            "logstash-core/lib/logstash/api/modules/node.rb::Node",
+            "logstash-core/lib/logstash/api/modules/node_stats.rb::NodeStats",
+            "logstash-core/lib/logstash/api/modules/plugins.rb::Plugins",
+            "logstash-core/lib/logstash/api/modules/stats.rb::Stats",
+            "logstash-core/src/main/java/org/logstash/log/CustomLogEventSerializer.java::CustomLogEventSerializer",
+            "logstash-core/src/main/java/org/logstash/log/LoggableExt.java::ClassMethods",
+            "logstash-core/src/main/java/org/logstash/log/LoggableExt.java::LoggableExt",
+            "logstash-core/src/main/java/org/logstash/log/LoggerExt.java::LoggerExt",
+            "logstash-core/src/main/java/org/logstash/log/LogstashConfigurationFactory.java::LogstashConfigurationFactory",
+            "logstash-core/src/main/java/org/logstash/log/LogstashLogEventFactory.java::LogstashLogEventFactory",
+            "logstash-core/src/main/java/org/logstash/log/PipelineRoutingAppender.java::Builder",
+            "logstash-core/lib/logstash/deprecation_message.rb::DeprecationMessage",
+            "x-pack/lib/monitoring/inputs/metrics.rb::Metrics",
+            "x-pack/lib/monitoring/inputs/metrics/state_event_factory.rb::Metrics",
+            "x-pack/lib/monitoring/inputs/metrics/stats_event_factory.rb::Metrics",
+            "x-pack/lib/monitoring/monitoring.rb::MonitoringExtension",
+            "x-pack/lib/monitoring/outputs/elasticsearch_monitoring.rb::ElasticSearchMonitoring"
         ],
-        "children": {}
-    },
-    "logging_system": {
-        "path": "logstash-core/src/main/java/org/logstash/log",
-        "components": [
-            "logstash-core.src.main.java.org.logstash.log.LoggerExt.LoggerExt",
-            "logstash-core.src.main.java.org.logstash.log.LoggableExt.LoggableExt",
-            "logstash-core.src.main.java.org.logstash.log.LogstashConfigurationFactory.LogstashConfigurationFactory",
-            "logstash-core.src.main.java.org.logstash.log.PipelineRoutingAppender.Builder"
-        ],
-        "children": {}
+        "children": {
+            "metrics_and_instrumentation": {
+                "path": "logstash-core",
+                "components": [
+                    "logstash-core/lib/logstash/instrument/metric_store.rb::MetricNotFound",
+                    "logstash-core/lib/logstash/instrument/metric_store.rb::MetricStore",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/AbstractMetric.java::AbstractMetric",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoBlockProvided",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoKeyProvided",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoNamespaceProvided",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::TimedExecution",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricKeys.java::MetricKeys",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/NullMetricExt.java::NullTimedExecution",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/NullNamespacedMetricExt.java::NullCounter",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/SnapshotExt.java::SnapshotExt",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/gauge/AbstractGaugeMetric.java::AbstractGaugeMetric",
+                    "logstash-core/src/main/java/org/logstash/instrument/metrics/timer/Util.java::Util"
+                ],
+                "children": {
+                    "metric_store_and_hierarchical_lookup": {
+                        "components": [
+                            "logstash-core/lib/logstash/instrument/metric_store.rb::MetricStore",
+                            "logstash-core/lib/logstash/instrument/metric_store.rb::MetricNotFound"
+                        ],
+                        "children": {}
+                    },
+                    "metric_api_and_jruby_bridge": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/AbstractMetric.java::AbstractMetric",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::TimedExecution",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoKeyProvided",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoNamespaceProvided",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricExt.java::MetricNoBlockProvided",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/MetricKeys.java::MetricKeys",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/gauge/AbstractGaugeMetric.java::AbstractGaugeMetric",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/timer/Util.java::Util"
+                        ],
+                        "children": {}
+                    },
+                    "null_metrics_and_snapshots": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/NullMetricExt.java::NullTimedExecution",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/NullNamespacedMetricExt.java::NullCounter",
+                            "logstash-core/src/main/java/org/logstash/instrument/metrics/SnapshotExt.java::SnapshotExt"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "runtime_resource_monitoring": {
+                "path": "logstash-core",
+                "components": [
+                    "logstash-core/lib/logstash/instrument/periodic_poller/base.rb::Base",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/cgroup.rb::Cgroup",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/dlq.rb::DeadLetterQueue",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/flow_rate.rb::FlowRate",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/jvm.rb::GarbageCollectorName",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/jvm.rb::JVM",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/load_average.rb::Linux",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/load_average.rb::LoadAverage",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/load_average.rb::Other",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/load_average.rb::Windows",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/os.rb::Os",
+                    "logstash-core/lib/logstash/instrument/periodic_poller/pq.rb::PersistentQueue",
+                    "logstash-core/src/main/java/org/logstash/instrument/monitors/HotThreadsMonitor.java::HotThreadsMonitor",
+                    "logstash-core/src/main/java/org/logstash/instrument/monitors/MemoryMonitor.java::MemoryMonitor",
+                    "logstash-core/src/main/java/org/logstash/instrument/monitors/ProcessMonitor.java::ProcessMonitor",
+                    "logstash-core/src/main/java/org/logstash/instrument/monitors/SystemMonitor.java::SystemMonitor",
+                    "logstash-core/src/main/java/org/logstash/instrument/reports/MemoryReport.java::MemoryReport",
+                    "logstash-core/src/main/java/org/logstash/instrument/reports/ProcessReport.java::ProcessReport",
+                    "logstash-core/src/main/java/org/logstash/instrument/reports/ThreadsReport.java::ThreadsReport",
+                    "logstash-core/lib/logstash/util/thread_dump.rb::ThreadDump"
+                ],
+                "children": {}
+            },
+            "health_reporting": {
+                "path": "logstash-core/src/main/java/org/logstash/health",
+                "components": [
+                    "logstash-core/src/main/java/org/logstash/health/ApiHealthReport.java::JsonSerializer",
+                    "logstash-core/src/main/java/org/logstash/health/Diagnosis.java::JsonSerializer",
+                    "logstash-core/src/main/java/org/logstash/health/HealthObserver.java::HealthObserver",
+                    "logstash-core/src/main/java/org/logstash/health/Impact.java::Builder",
+                    "logstash-core/src/main/java/org/logstash/health/Impact.java::JsonSerializer",
+                    "logstash-core/src/main/java/org/logstash/health/Indicator.java::Report",
+                    "logstash-core/src/main/java/org/logstash/health/MultiIndicator.java::JsonSerializer",
+                    "logstash-core/src/main/java/org/logstash/health/MultiIndicator.java::Report",
+                    "logstash-core/src/main/java/org/logstash/health/PipelineIndicator.java::JsonSerializer",
+                    "logstash-core/src/main/java/org/logstash/health/Probe.java::Analysis",
+                    "logstash-core/src/main/java/org/logstash/health/ProbeIndicator.java::JsonSerializer",
+                    "logstash-core/src/main/java/org/logstash/health/ProbeIndicator.java::ProbeIndicator",
+                    "logstash-core/src/main/java/org/logstash/health/Status.java::Holder"
+                ],
+                "children": {}
+            },
+            "monitoring_http_api": {
+                "path": "logstash-core/lib/logstash/api",
+                "components": [
+                    "logstash-core/lib/logstash/webserver.rb::WebServer",
+                    "logstash-core/lib/logstash/api/rack_app.rb::ApiLogger",
+                    "logstash-core/lib/logstash/api/command_factory.rb::CommandFactory",
+                    "logstash-core/lib/logstash/api/commands/default_metadata.rb::DefaultMetadata",
+                    "logstash-core/lib/logstash/api/commands/health_report.rb::HealthReport",
+                    "logstash-core/lib/logstash/api/commands/node.rb::Node",
+                    "logstash-core/lib/logstash/api/commands/stats.rb::Stats",
+                    "logstash-core/lib/logstash/api/commands/system/basicinfo_command.rb::BasicInfo",
+                    "logstash-core/lib/logstash/api/commands/system/plugins_command.rb::Plugins",
+                    "logstash-core/lib/logstash/api/modules/base.rb::Base",
+                    "logstash-core/lib/logstash/api/modules/health_report.rb::HealthReport",
+                    "logstash-core/lib/logstash/api/modules/logging.rb::Logging",
+                    "logstash-core/lib/logstash/api/modules/node.rb::Node",
+                    "logstash-core/lib/logstash/api/modules/node_stats.rb::NodeStats",
+                    "logstash-core/lib/logstash/api/modules/plugins.rb::Plugins",
+                    "logstash-core/lib/logstash/api/modules/stats.rb::Stats"
+                ],
+                "children": {
+                    "monitoring_http_api_server_and_routing": {
+                        "components": [
+                            "logstash-core/lib/logstash/webserver.rb::WebServer",
+                            "logstash-core/lib/logstash/api/rack_app.rb::ApiLogger",
+                            "logstash-core/lib/logstash/api/modules/base.rb::Base"
+                        ],
+                        "children": {}
+                    },
+                    "monitoring_http_api_command_layer": {
+                        "components": [
+                            "logstash-core/lib/logstash/api/command_factory.rb::CommandFactory",
+                            "logstash-core/lib/logstash/api/commands/default_metadata.rb::DefaultMetadata",
+                            "logstash-core/lib/logstash/api/commands/health_report.rb::HealthReport",
+                            "logstash-core/lib/logstash/api/commands/node.rb::Node",
+                            "logstash-core/lib/logstash/api/commands/stats.rb::Stats",
+                            "logstash-core/lib/logstash/api/commands/system/basicinfo_command.rb::BasicInfo",
+                            "logstash-core/lib/logstash/api/commands/system/plugins_command.rb::Plugins"
+                        ],
+                        "children": {}
+                    },
+                    "monitoring_http_api_endpoint_modules": {
+                        "components": [
+                            "logstash-core/lib/logstash/api/modules/health_report.rb::HealthReport",
+                            "logstash-core/lib/logstash/api/modules/logging.rb::Logging",
+                            "logstash-core/lib/logstash/api/modules/node.rb::Node",
+                            "logstash-core/lib/logstash/api/modules/node_stats.rb::NodeStats",
+                            "logstash-core/lib/logstash/api/modules/plugins.rb::Plugins",
+                            "logstash-core/lib/logstash/api/modules/stats.rb::Stats"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "logging": {
+                "path": "logstash-core/src/main/java/org/logstash/log",
+                "components": [
+                    "logstash-core/src/main/java/org/logstash/log/CustomLogEventSerializer.java::CustomLogEventSerializer",
+                    "logstash-core/src/main/java/org/logstash/log/LoggableExt.java::ClassMethods",
+                    "logstash-core/src/main/java/org/logstash/log/LoggableExt.java::LoggableExt",
+                    "logstash-core/src/main/java/org/logstash/log/LoggerExt.java::LoggerExt",
+                    "logstash-core/src/main/java/org/logstash/log/LogstashConfigurationFactory.java::LogstashConfigurationFactory",
+                    "logstash-core/src/main/java/org/logstash/log/LogstashLogEventFactory.java::LogstashLogEventFactory",
+                    "logstash-core/src/main/java/org/logstash/log/PipelineRoutingAppender.java::Builder",
+                    "logstash-core/lib/logstash/deprecation_message.rb::DeprecationMessage"
+                ],
+                "children": {
+                    "logging_jruby_bridge": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/log/LoggableExt.java::ClassMethods",
+                            "logstash-core/src/main/java/org/logstash/log/LoggableExt.java::LoggableExt",
+                            "logstash-core/src/main/java/org/logstash/log/LoggerExt.java::LoggerExt"
+                        ],
+                        "children": {}
+                    },
+                    "logging_event_and_configuration": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/log/CustomLogEventSerializer.java::CustomLogEventSerializer",
+                            "logstash-core/src/main/java/org/logstash/log/LogstashLogEventFactory.java::LogstashLogEventFactory",
+                            "logstash-core/src/main/java/org/logstash/log/LogstashConfigurationFactory.java::LogstashConfigurationFactory"
+                        ],
+                        "children": {}
+                    },
+                    "logging_pipeline_routing": {
+                        "components": [
+                            "logstash-core/src/main/java/org/logstash/log/PipelineRoutingAppender.java::Builder"
+                        ],
+                        "children": {}
+                    },
+                    "logging_deprecation_buffer": {
+                        "components": [
+                            "logstash-core/lib/logstash/deprecation_message.rb::DeprecationMessage"
+                        ],
+                        "children": {}
+                    }
+                }
+            },
+            "xpack_monitoring": {
+                "path": "x-pack/lib/monitoring",
+                "components": [
+                    "x-pack/lib/monitoring/inputs/metrics.rb::Metrics",
+                    "x-pack/lib/monitoring/inputs/metrics/state_event_factory.rb::Metrics",
+                    "x-pack/lib/monitoring/inputs/metrics/stats_event_factory.rb::Metrics",
+                    "x-pack/lib/monitoring/monitoring.rb::MonitoringExtension",
+                    "x-pack/lib/monitoring/outputs/elasticsearch_monitoring.rb::ElasticSearchMonitoring"
+                ],
+                "children": {}
+            }
+        }
     }
 }

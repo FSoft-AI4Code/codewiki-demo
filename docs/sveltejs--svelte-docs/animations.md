@@ -1,246 +1,175 @@
-# Animations Module
+# Animations
 
-The animations module provides Svelte's built-in animation system, enabling smooth visual transitions for elements during DOM updates. It implements the FLIP (First, Last, Invert, Play) animation technique to create performant animations that respond to layout changes.
+The `animations` module provides Svelte's built-in `flip` animation factory. `flip` implements the First–Last–Invert–Play technique for elements whose position or size changes inside a keyed `{#each}` block. It compares the element's pre-update and post-update `DOMRect` values, then returns a CSS-producing `AnimationConfig` that translates and scales the element from its old geometry into its new geometry.
 
-## Core Components
+This module is intentionally a policy layer, not an animation scheduler. The compiler recognizes and validates `animate:` directives, the client block runtime measures elements around reconciliation, and the DOM animation runtime executes the returned configuration. See [compiler_transform_client_directives.md](compiler_transform_client_directives.md), [client_blocks.md](client_blocks.md), and [client_dom_elements_transitions.md](client_dom_elements_transitions.md) for those responsibilities. General compilation sequencing is described in [compilation_pipeline.md](compilation_pipeline.md).
 
-### AnimationConfig Interface
-Defines the configuration structure for animations, providing control over timing, easing, and visual effects.
+## Scope and public surface
 
-**Properties:**
-- `delay?: number` - Animation start delay in milliseconds
-- `duration?: number` - Animation duration in milliseconds  
-- `easing?: (t: number) => number` - Easing function for animation progression
-- `css?: (t, u) => string` - CSS transformation function
-- `tick?: (t, u) => void` - Frame-by-frame callback function
+The package is exposed through the `svelte/animate` entry point and currently exports:
 
-### FlipParams Interface
-Configuration parameters specifically for the FLIP animation function.
+| Export | Source | Purpose |
+| --- | --- | --- |
+| `flip` | `packages/svelte/src/animate/index.js` | Build a translate/scale animation between two rectangles |
+| `AnimationConfig` | `packages/svelte/src/animate/public.d.ts` | Runtime animation result contract |
+| `FlipParams` | `packages/svelte/src/animate/public.d.ts` | Optional timing and easing parameters |
 
-**Properties:**
-- `delay?: number` - Animation start delay
-- `duration?: number | ((len: number) => number)` - Duration as fixed value or function of distance
-- `easing?: (t: number) => number` - Easing function for smooth transitions
+`public.d.ts` re-exports the implementation entry point. The aggregate published declarations also expose the same contracts through the transitions-and-animations section documented by the package type surface.
 
-### flip() Function
-The core FLIP animation implementation that calculates element position changes and creates smooth transitions.
-
-**Signature:** `flip(node, { from, to }, params) => AnimationConfig`
-
-## Architecture Overview
+## Architecture
 
 ```mermaid
-graph TB
-    subgraph "Animation System Architecture"
-        A[AnimateDirective] --> B[AnimationManager]
-        B --> C[flip Function]
-        C --> D[AnimationConfig]
-        
-        E[Template Parser] --> A
-        F[Client Runtime] --> B
-        G[Easing Functions] --> C
-        
-        D --> H[CSS Transforms]
-        D --> I[Animation Timeline]
-    end
-    
-    subgraph "FLIP Process"
-        J[First: Measure Initial] --> K[Last: Measure Final]
-        K --> L[Invert: Calculate Diff]
-        L --> M[Play: Animate Transition]
-    end
-    
-    C --> J
+flowchart LR
+    Source["Svelte source\n{#each items as item (item.id)}\n  <div animate:flip>\n{/each}"] --> Parse["Parser\nAnimateDirective AST"]
+    Parse --> Analyze["Analyzer\nplacement and key validation"]
+    Analyze --> Transform["Client transform\n$.animation(...) call"]
+    Transform --> Each["Keyed each block\nmeasure before/after reconciliation"]
+    Each --> Factory["svelte/animate\nflip(node, {from, to}, params)"]
+    Factory --> Config["AnimationConfig\ndelay, duration, easing, css"]
+    Config --> Runtime["Client DOM animation runtime\nElement.animate()"]
+    Runtime --> DOM["Updated element\ntranslated and scaled during playback"]
 ```
 
-## Component Relationships
+The dependency direction is important:
 
-```mermaid
-graph LR
-    subgraph "Compiler Integration"
-        A[Template AST] --> B[AnimateDirective]
-        B --> C[Code Generation]
-    end
-    
-    subgraph "Runtime Integration"
-        D[AnimationManager] --> E[Element Lifecycle]
-        E --> F[DOM Updates]
-        F --> G[Animation Triggers]
-    end
-    
-    subgraph "Animation Core"
-        H[flip Function] --> I[Position Calculation]
-        I --> J[Transform Generation]
-        J --> K[CSS Application]
-    end
-    
-    C --> D
-    G --> H
+- The compiler emits a call to the runtime's `animation` helper; it does not import `flip` directly.
+- The keyed `each` runtime owns measurement timing and invokes the user-selected factory.
+- `flip` only calculates geometry and interpolation values.
+- `client/dom/elements/transitions.js` converts the returned CSS function into Web Animations keyframes, applies delay/easing, and handles cancellation and completion.
+
+## Compiler integration
+
+An `AnimateDirective` is valid only when it is attached to the sole meaningful child of a keyed `{#each}` block. The analyzer rejects an animation when:
+
+- its parent is not an `each` block;
+- the `each` block has no key;
+- the block contains more than one meaningful child; or
+- the element contains more than one animation directive.
+
+During client transformation, `AnimateDirective` emits an `after_update` call equivalent to:
+
+```js
+$.animation(element, () => flip, paramsThunk)
 ```
 
-## Data Flow
+The deferred function and parameter thunk preserve component expression semantics. The `after_update` placement also ensures `bind:this` and related element setup has occurred before the animation manager is attached. The keyed `EachBlock` transform marks the block as animated so reconciliation can take the required before/after measurements.
 
 ```mermaid
 sequenceDiagram
-    participant Template as Template
-    participant Compiler as Compiler
-    participant Runtime as Runtime
-    participant Manager as AnimationManager
-    participant Flip as flip()
-    participant DOM as DOM
-    
-    Template->>Compiler: animate:flip directive
-    Compiler->>Runtime: Generate animation code
-    Runtime->>Manager: Create AnimationManager
-    
-    Note over Manager: During keyed each reconciliation
-    Manager->>Manager: measure() - capture initial positions
-    Manager->>DOM: Apply DOM updates
-    Manager->>Manager: apply() - trigger animations
-    Manager->>Flip: Call flip() with positions
-    Flip->>DOM: Apply CSS transforms
-    
-    Note over DOM: Animation plays out
-    DOM->>Manager: Animation complete
+    participant Compiler as Client compiler
+    participant Each as Keyed each block
+    participant Manager as Runtime animation manager
+    participant Factory as flip factory
+    participant Browser as Web Animations API
+
+    Compiler->>Each: Mark block as animated
+    Compiler->>Manager: Emit $.animation(element, get_fn, get_params)
+    Each->>Manager: measure() before list reconciliation
+    Each->>Each: Reconcile keyed items
+    Each->>Manager: apply() after reconciliation
+    Manager->>Manager: Read from/to DOMRects
+    Manager->>Factory: flip(element, { from, to }, params)
+    Factory-->>Manager: AnimationConfig
+    Manager->>Browser: Generate keyframes from css(t, u)
+    Browser-->>Manager: finish / cancel
 ```
 
-## Animation Process Flow
+## `flip` algorithm
+
+The factory accepts an element, a `{ from, to }` rectangle pair, and optional `FlipParams`:
+
+```ts
+interface FlipParams {
+  delay?: number;
+  duration?: number | ((length: number) => number);
+  easing?: (t: number) => number;
+}
+```
+
+Defaults are `delay = 0`, `easing = cubicOut`, and `duration = sqrt(distance) * 120`, where `distance` is the calculated translation length in pixels. A numeric duration bypasses this distance-based calculation.
+
+The calculation proceeds as follows:
+
+1. Read the element's existing transform and transform origin.
+2. Normalize the transform-origin coordinates against the element's client width and height.
+3. Compute effective zoom, using `currentCSSZoom` where available or multiplying the `zoom` value of the element and its ancestors.
+4. Calculate the transform-origin position in the old and new rectangles.
+5. Convert the origin delta into the translation required at the start of playback.
+6. Calculate width and height ratios from `from` to `to`.
+7. Return a CSS callback that interpolates translation and scale while preserving the original transform.
 
 ```mermaid
 flowchart TD
-    A[Element with animate: directive] --> B[AnimationManager created]
-    B --> C[Keyed each block update triggered]
-    
-    C --> D[measure: Capture 'First' positions]
-    D --> E[DOM updates applied]
-    E --> F[measure: Capture 'Last' positions]
-    
-    F --> G[apply: Calculate differences]
-    G --> H[flip function called]
-    
-    H --> I[Calculate transform origin]
-    I --> J[Account for parent transforms/zoom]
-    J --> K[Calculate translation deltas]
-    K --> L[Calculate scale differences]
-    
-    L --> M[Generate AnimationConfig]
-    M --> N[Apply CSS transforms]
-    N --> O[Animation plays]
-    
-    O --> P{Animation complete?}
-    P -->|No| Q[Continue frame updates]
-    P -->|Yes| R[Clean up transforms]
-    
-    Q --> P
+    Input["from/to DOMRects\ncomputed style\nclient dimensions"] --> Origin["Normalize transform origin\nox, oy"]
+    Input --> Zoom["Resolve ancestor zoom\nzoom"]
+    Origin --> Positions["Find old/new origin\nfx, fy and tx, ty"]
+    Zoom --> Translation["Scale origin delta\ndx, dy"]
+    Positions --> Translation
+    Input --> Scale["Compute size ratios\ndsx, dsy"]
+    Translation --> Config["Return AnimationConfig"]
+    Scale --> Config
+    Config --> CSS["css(t, u)\ntranslate(u·dx, u·dy)\nscale(t + u·dsx, t + u·dsy)"]
 ```
 
-## Integration Points
+For normalized progress `t` and `u = 1 - t`, the callback emits:
 
-### Compiler Integration
-The animations module integrates with the compiler through:
-- **[Template Types](template_types.md)**: `AnimateDirective` AST node representation
-- **[Compiler Core](compiler_core.md)**: Code generation for animation directives
-- **[Transform Phase](transform_phase.md)**: Converting animate directives to runtime calls
-
-### Runtime Integration  
-Runtime integration occurs through:
-- **[Client Runtime](client_runtime.md)**: `AnimationManager` interface for lifecycle management
-- **[Animation Transition](animation_transition.md)**: Coordination with transition system
-- **[Reactivity System](reactivity_system.md)**: Responding to reactive state changes
-
-### Related Systems
-- **[Transitions](transitions.md)**: Complementary animation system for enter/exit effects
-- **[Motion](motion.md)**: Higher-level animation utilities (springs, tweens)
-- **[Component System](component_system.md)**: Integration with component lifecycle
-
-## Key Features
-
-### FLIP Animation Technique
-- **First**: Measure initial element positions
-- **Last**: Measure final positions after DOM updates  
-- **Invert**: Calculate the transformation needed
-- **Play**: Animate from inverted state back to natural position
-
-### Performance Optimizations
-- Uses CSS transforms for hardware acceleration
-- Calculates animations based on actual pixel distances
-- Accounts for parent transforms and CSS zoom
-- Minimal DOM manipulation during animation
-
-### Flexible Configuration
-- Customizable duration based on animation distance
-- Support for custom easing functions
-- CSS and JavaScript animation callbacks
-- Configurable delays and timing
-
-## Usage Patterns
-
-### Basic FLIP Animation
-```svelte
-{#each items as item (item.id)}
-  <div animate:flip>
-    {item.name}
-  </div>
-{/each}
+```css
+transform: <existing transform>
+  translate(u * dx, u * dy)
+  scale(t + u * dsx, t + u * dsy);
 ```
 
-### Customized Animation
-```svelte
-{#each items as item (item.id)}
-  <div animate:flip={{ duration: 300, easing: cubicOut }}>
-    {item.name}
-  </div>
-{/each}
+At the beginning (`t = 0`), the element is positioned and sized like the old rectangle. At the end (`t = 1`), the translation is zero and both scale factors are one. Preserving the existing transform avoids discarding transforms authored by component CSS or other runtime behavior.
+
+## Runtime interaction and lifecycle
+
+The runtime's `animation` helper stores a manager on each keyed item. Its lifecycle is:
+
+```mermaid
+stateDiagram-v2
+    [*] --> Registered: $.animation()
+    Registered --> Measured: measure() before reconciliation
+    Measured --> Reconciled: keyed each updates
+    Reconciled --> Compared: apply() reads new rect
+    Compared --> Idle: geometry unchanged
+    Compared --> Playing: flip returns config
+    Playing --> Playing: css(t, u) keyframes sampled
+    Playing --> Idle: finish callback
+    Playing --> Idle: abort / replacement
+    Idle --> [*]: item manager discarded
 ```
 
-### Dynamic Duration
-```svelte
-{#each items as item (item.id)}
-  <div animate:flip={{ duration: d => Math.sqrt(d) * 120 }}>
-    {item.name}
-  </div>
-{/each}
+If the rectangles are unchanged, no animation is created. If an earlier animation is active, `apply()` aborts it before starting the replacement. The runtime also temporarily fixes layout for moving elements when needed, preventing normal-flow changes from invalidating the captured geometry; this implementation detail belongs to [client_dom_elements_transitions.md](client_dom_elements_transitions.md), not to `flip`.
+
+The returned config is consumed as follows:
+
+- `delay` creates the initial delay period.
+- `duration` determines playback length.
+- `easing` shapes progress.
+- `css(t, u)` is sampled into CSS keyframes and applied through `Element.animate()`.
+- The runtime owns finish callbacks, abort behavior, and cleanup.
+
+## Dependencies
+
+```mermaid
+graph TD
+    Animate["animate/index.js"] --> Easing["easing/index.js\ncubicOut"]
+    Animate --> DOM["Browser DOM APIs\ngetComputedStyle\nDOMRect\nclientWidth/clientHeight"]
+    Public["animate/public.d.ts"] -. types .-> Animate
+    Compiler["AnimateDirective"] --> Runtime["internal client transitions.js"]
+    Runtime --> Animate
+    Runtime --> Blocks["client each block runtime"]
+    Runtime --> WA["Element.animate()"]
 ```
 
-## Technical Implementation
+The only code dependency of the factory itself is `cubicOut` from the easing library, used as the default easing function; easing usage and shared animation configuration are covered in [transitions.md](transitions.md). It has no dependency on reactivity, stores, server rendering, or component state. Because it reads browser layout and computed styles, it is evaluated on the client during an animated keyed-list update; server rendering can emit the surrounding markup but does not run this geometry calculation. See [server_runtime.md](server_runtime.md) for server responsibilities.
 
-### Position Calculation
-The flip function performs sophisticated position calculations:
-1. **Transform Origin**: Determines the pivot point for transformations
-2. **Parent Effects**: Accounts for parent transforms and CSS zoom levels
-3. **Scale Factors**: Calculates size differences between states
-4. **Translation Deltas**: Determines movement distances
+## Maintenance guidance
 
-### CSS Generation
-Generates optimized CSS transforms:
-- Combines existing transforms with animation transforms
-- Uses translate3d for hardware acceleration
-- Applies scale transformations for size changes
-- Maintains transform origin consistency
+- Change geometry, zoom handling, transform composition, or defaults in `packages/svelte/src/animate/index.js`.
+- Change public timing contracts in `packages/svelte/src/animate/public.d.ts` and the published declarations.
+- Change directive placement or generated calls in `compiler/phases/3-transform/client/visitors/AnimateDirective.js`.
+- Change legal placement and keyed-block validation in `compiler/phases/2-analyze/visitors/shared/element.js`.
+- Change measurement timing, layout fixing, keyframe generation, or cancellation in `internal/client/dom/elements/transitions.js`.
 
-### Animation Timeline
-Manages animation progression:
-- Linear interpolation between start and end states
-- Easing function application for smooth motion
-- Frame-by-frame updates via requestAnimationFrame
-- Cleanup and restoration of original styles
-
-## Best Practices
-
-### Performance
-- Use animations primarily for layout changes in keyed each blocks
-- Prefer CSS transforms over property animations
-- Consider animation distance when setting duration
-- Test performance on lower-end devices
-
-### User Experience
-- Provide appropriate animation durations (not too fast/slow)
-- Use consistent easing functions across the application
-- Consider reduced motion preferences
-- Ensure animations enhance rather than distract
-
-### Development
-- Test animations with various data sets and update patterns
-- Monitor for animation conflicts with other CSS
-- Consider fallbacks for browsers without animation support
-- Profile animation performance in development tools
+When modifying `flip`, test at least movement, resizing, non-default transform origins, existing transforms, nested CSS zoom, keyed insertion/removal, and interruption by a second list update. Changes to the runtime should also be checked against the transition factories documented in [transitions.md](transitions.md), because both features share the same animation execution machinery.

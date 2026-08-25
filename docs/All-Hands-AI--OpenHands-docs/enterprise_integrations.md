@@ -1,220 +1,80 @@
-# Enterprise Integrations Module
+# Enterprise integrations
 
-## Overview
+`enterprise/integrations` connects OpenHands Cloud conversations to external work-tracking and collaboration systems. It receives provider webhooks, authenticates the actor, decides whether an event is actionable, builds a provider-specific view, starts or resumes an OpenHands conversation, and sends an acknowledgement or error back through the provider API.
 
-The Enterprise Integrations module provides comprehensive integration capabilities for OpenHands with various enterprise platforms including GitHub, GitLab, Jira, and Slack. This module enables seamless workflow automation, issue tracking, and collaborative development across multiple platforms through a unified interface.
-
-## Architecture Overview
-
-The module follows a manager-based architecture where each platform integration is handled by a dedicated manager class that implements common integration patterns while providing platform-specific functionality.
+## Architecture overview
 
 ```mermaid
-graph TB
-    subgraph "Enterprise Integrations"
-        EM[Enterprise Manager Layer]
-        
-        subgraph "Platform Managers"
-            GM[GitHub Manager]
-            GLM[GitLab Manager]
-            JM[Jira Manager]
-            SM[Slack Manager]
-        end
-        
-        subgraph "Shared Components"
-            MSG[Message Models]
-            JR[Job Results]
-            BASE[Base Manager]
-        end
-        
-        subgraph "External Dependencies"
-            TM[Token Manager]
-            DC[Data Collector]
-            CB[Callback Processors]
-        end
-    end
-    
-    subgraph "Core System Dependencies"
-        AUTH[Authentication System]
-        CONV[Conversation Management]
-        AGENT[Agent System]
-        STORAGE[Storage System]
-    end
-    
-    GM --> BASE
-    GLM --> BASE
-    JM --> BASE
-    SM --> BASE
-    
-    GM --> TM
-    GLM --> TM
-    JM --> TM
-    SM --> TM
-    
-    GM --> DC
-    GM --> CB
-    GLM --> CB
-    JM --> CB
-    SM --> CB
-    
-    EM --> AUTH
-    EM --> CONV
-    EM --> AGENT
-    EM --> STORAGE
-    
-    style EM fill:#e1f5fe
-    style GM fill:#f3e5f5
-    style GLM fill:#f3e5f5
-    style JM fill:#f3e5f5
-    style SM fill:#f3e5f5
+flowchart LR
+    EXT[GitHub / GitLab / Jira / Jira DC / Linear / Slack] --> WH[Webhook or event route]
+    WH --> MSG[Message / JobContext]
+    MSG --> M[Provider Manager]
+    M --> AUTH[Token and workspace authentication]
+    M --> F[Provider Factory / View]
+    F --> CONV[Conversation service]
+    CONV --> AGENT[OpenHands agent loop]
+    AGENT --> CB[Callback processor]
+    CB --> M
+    M --> EXT
+    M --> DATA[Integration stores and analytics]
 ```
 
-## Core Components
+Managers are the orchestration boundary. Factories classify payloads and create typed views; views load provider context, render Jinja instructions, and create or update conversations. Provider services encapsulate token refresh, repository access, comments, webhooks, and provider-specific API calls. Callback processors (outside this module) return progress and summaries to the originating system.
 
-### Platform Integration Managers
+## Shared contracts and lifecycle
 
-The module consists of four primary platform managers, each handling specific integration requirements:
-
-#### 1. GitHub Manager (`enterprise.integrations.github.github_manager.GithubManager`)
-- **Purpose**: Manages GitHub App integrations, webhook processing, and repository interactions
-- **Key Features**:
-  - GitHub App authentication and installation token management
-  - Issue and PR comment processing
-  - Automated reaction acknowledgments
-  - Repository permission validation
-  - Solvability analysis integration
-
-#### 2. GitLab Manager (`enterprise.integrations.gitlab.gitlab_manager.GitlabManager`)
-- **Purpose**: Handles GitLab webhook events and merge request interactions
-- **Key Features**:
-  - GitLab API integration
-  - Issue and merge request comment handling
-  - User permission validation
-  - Project-based access control
-
-#### 3. Jira Manager (`enterprise.integrations.jira.jira_manager.JiraManager`)
-- **Purpose**: Processes Jira webhook events and manages issue tracking workflows
-- **Key Features**:
-  - Jira Cloud API integration
-  - Issue comment and label-based triggers
-  - Workspace-based authentication
-  - Repository inference from issue descriptions
-
-#### 4. Slack Manager (`enterprise.integrations.slack.slack_manager.SlackManager`)
-- **Purpose**: Manages Slack bot interactions and conversation workflows
-- **Key Features**:
-  - Slack OAuth integration
-  - Interactive repository selection forms
-  - Thread-based conversation management
-  - User authentication via JWT tokens
-
-### Shared Models and Types
-
-#### Job Result Model (`enterprise.integrations.models.JobResult`)
-- **Purpose**: Standardizes job execution results across all platforms
-- **Components**:
-  - Result status and explanation
-  - Platform-agnostic result representation
-
-## Integration Flow
+`Message.source` identifies the provider and `Message.message` contains the raw payload or outgoing text. `JobContext` normalizes issue identity, actor, workspace, and issue content for Jira-family and Linear flows. GitHub and GitLab use `ResolverViewInterface` implementations carrying repository, issue/MR, installation, and conversation metadata.
 
 ```mermaid
 sequenceDiagram
-    participant Platform as External Platform
-    participant Manager as Platform Manager
-    participant Auth as Authentication
-    participant Conv as Conversation System
-    participant Agent as Agent System
-    
-    Platform->>Manager: Webhook Event
-    Manager->>Manager: Validate Request
-    Manager->>Auth: Authenticate User
-    Auth-->>Manager: User Credentials
-    Manager->>Manager: Check Permissions
-    Manager->>Conv: Create/Update Conversation
-    Conv-->>Manager: Conversation ID
-    Manager->>Agent: Start Job
-    Manager->>Platform: Send Acknowledgment
-    Agent->>Conv: Process Task
-    Conv->>Manager: Status Updates
-    Manager->>Platform: Send Results
+    participant P as Provider
+    participant M as Manager
+    participant V as Factory/View
+    participant C as Conversation service
+    participant S as Callback processor
+    P->>M: webhook Message
+    M->>M: validate source, signature/access, trigger
+    M->>V: create typed view
+    V->>P: fetch issue, comments, branch/context
+    M->>C: create or resume conversation
+    C-->>M: conversation_id
+    M->>S: register callback
+    M->>P: acknowledgement/link
+    S-->>M: agent summary/progress
+    M->>P: follow-up comment
 ```
 
-## Sub-modules
+## Submodules
 
-This module is organized into several focused sub-modules:
+- [GitHub integration](enterprise_integrations_github.md): resolver triggers, PR workflow monitoring, token-aware GitHub service, and interaction collection.
+- [GitLab integration](enterprise_integrations_gitlab.md): issue/MR note triggers, access checks, repository persistence, and webhook management.
+- [Jira Cloud integration](enterprise_integrations_jira.md): signed webhooks, workspace/user authentication, repository inference, and conversation mapping.
+- [Jira Data Center integration](enterprise_integrations_jira_dc.md): the Jira DC variant using its own workspace stores and REST authentication.
+- [Linear integration](enterprise_integrations_linear.md): signed GraphQL webhooks, issue enrichment, and conversation lifecycle.
+- [Slack integration](enterprise_integrations_slack.md): Slack identity correlation, OAuth fallback, repository selection, and threaded follow-ups.
+- [Bitbucket service](enterprise_integrations_bitbucket.md): SaaS token resolution layered over the shared Bitbucket client.
+- [Shared models and types](enterprise_integrations_shared.md): normalized messages, job contexts, resolver views, resource/status enums, and workflow records.
 
-### [Platform Managers](platform_managers.md)
-Detailed documentation of individual platform manager implementations, including:
-- **GitHub Manager**: GitHub App integration, webhook processing, and repository interactions
-- **GitLab Manager**: GitLab API integration and merge request workflows  
-- **Jira Manager**: Jira Cloud integration and issue tracking workflows
-- **Slack Manager**: Slack bot interactions and conversation management
+## System relationships
 
-### [Shared Infrastructure](shared_infrastructure.md)
-Common components, models, and utilities shared across all platform integrations, including:
-- **Job Result Models**: Standardized result representation across platforms
-- **Message Handling**: Common message processing and routing patterns
-- **Base Manager Functionality**: Shared integration patterns and utilities
+The module depends on `enterprise_server` for token/authentication and callback infrastructure, `enterprise_storage` for provider users, workspaces, conversations, webhooks, and PR records, and the shared conversation service for agent execution. It delegates repository access to `ProviderHandler`, which in turn uses the provider services described here.
 
-## Dependencies
+```mermaid
+graph TD
+    EI[enterprise_integrations] --> ES[enterprise_server]
+    EI --> ST[enterprise_storage]
+    EI --> CS[Conversation service]
+    EI --> PH[ProviderHandler]
+    GH[GitHub] --> EI
+    GL[GitLab] --> EI
+    JT[Jira / Jira DC / Linear] --> EI
+    SL[Slack] --> EI
+    EI --> FS[File store / PR analytics]
+```
 
-The Enterprise Integrations module relies on several core system components:
+## Operational considerations
 
-- **[Server and API](server_and_api.md)**: Authentication, session management, and conversation orchestration
-- **[Storage System](storage_system.md)**: User data, secrets, and conversation persistence
-- **[Core Agent System](core_agent_system.md)**: Agent execution and task processing
-- **[Git Integrations](git_integrations.md)**: Repository access and version control operations
-
-## Key Features
-
-### 1. Unified Integration Interface
-- Consistent manager-based architecture across all platforms
-- Standardized message and job result models
-- Common authentication and permission patterns
-
-### 2. Webhook Processing
-- Secure webhook validation and signature verification
-- Event-driven job triggering based on platform-specific events
-- Automatic user permission validation
-
-### 3. Conversation Management
-- Seamless integration with OpenHands conversation system
-- Platform-specific callback processors for status updates
-- Thread and context preservation across interactions
-
-### 4. Authentication & Security
-- OAuth integration for user authentication
-- Token management and encryption
-- Workspace and organization-level access control
-
-### 5. Repository Intelligence
-- Automatic repository inference from issue descriptions
-- Interactive repository selection for ambiguous cases
-- User repository access validation
-
-## Configuration
-
-Each platform manager requires specific configuration:
-
-- **GitHub**: App ID, private key, and installation management
-- **GitLab**: OAuth credentials and project access tokens
-- **Jira**: Cloud ID, service account credentials, and webhook secrets
-- **Slack**: Bot tokens, OAuth configuration, and workspace management
-
-## Error Handling
-
-The module implements comprehensive error handling:
-
-- Authentication failures with user-friendly messages
-- Permission validation with appropriate error responses
-- Graceful degradation for missing configurations
-- Detailed logging for debugging and monitoring
-
-## Future Enhancements
-
-The module is designed for extensibility:
-
-- Additional platform integrations (Linear, Azure DevOps, etc.)
-- Enhanced repository intelligence and matching
-- Advanced workflow automation capabilities
-- Improved analytics and reporting features
+- Provider secrets are resolved through `TokenManager`, workspace records, or SaaS user authentication; callers should not persist raw access tokens in payloads.
+- Webhook handlers reject inactive or unknown workspaces and suppress service-account recursion where applicable.
+- Repository selection is inferred from issue/message text when possible; otherwise the integration asks the user to select or identify a repository.
+- Most provider API failures are logged and converted into a user-facing error comment. Background repository/analytics writes are intentionally non-blocking in GitHub and GitLab services.

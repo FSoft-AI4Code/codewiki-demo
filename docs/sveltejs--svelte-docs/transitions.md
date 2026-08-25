@@ -1,347 +1,193 @@
-# Transitions Module
+# Transitions
 
-The transitions module provides a comprehensive system for creating smooth, animated transitions between different states of DOM elements in Svelte applications. It offers both built-in transition effects and a flexible framework for creating custom transitions.
+The transitions module provides Svelte's built-in element transition factories and their public TypeScript contracts. It converts an element's current computed style or geometry into a time-based `TransitionConfig`; the client DOM runtime then evaluates that configuration during an intro or outro. The module also exports easing functions and `crossfade`, a paired transition factory for keyed elements that move between locations.
 
-## Overview
+This page focuses on the factory library. The compiler visitor that emits runtime transition calls is documented in [compiler_transform_client_directives.md](compiler_transform_client_directives.md), and the runtime lifecycle that executes the returned configurations is documented in [client_dom_elements_transitions.md](client_dom_elements_transitions.md). The module participates in the broader compiler/runtime path described by [compilation_pipeline.md](compilation_pipeline.md).
 
-The transitions module is a core part of Svelte's animation system, working closely with the [compiler_core](compiler_core.md) during template compilation and the [client_runtime](client_runtime.md) during execution. It provides declarative APIs for common transition effects like fade, fly, slide, scale, blur, draw, and crossfade, while also offering low-level primitives for custom transition implementations.
+## Responsibilities and boundaries
+
+`packages/svelte/src/transition/index.js` owns:
+
+- Built-in CSS transition factories: `fade`, `blur`, `fly`, `slide`, `scale`, and `draw`.
+- Paired keyed transitions through `crossfade`.
+- Default easing functions: `linear`, `cubic_out`, and `cubic_in_out`.
+- Reading the element's computed opacity, transform, filter, box metrics, or SVG path length to establish the transition's target state.
+
+`packages/svelte/src/transition/public.d.ts` owns the public parameter types and the `TransitionConfig` shape. It does not implement scheduling, DOM insertion/removal, cancellation, reversal, or Web Animations conversion. Those concerns belong to the client DOM runtime.
+
+```mermaid
+flowchart LR
+    Svelte["Svelte component\ntransition:fade / in:fly / out:slide"] --> Compiler["TransitionDirective\ncompiler transform"]
+    Compiler --> Call["Generated $.transition(...) call"]
+    Call --> Runtime["Client DOM transition runtime"]
+    Runtime --> Factory["Factory from transition/index.js"]
+    Factory --> Config["TransitionConfig\ndelay, duration, easing, css/tick"]
+    Config --> Animation["Runtime animation lifecycle"]
+    Animation --> DOM["Element styles and DOM state"]
+```
+
+## Public API
+
+All built-in factories accept an `Element` (or an SVG element for `draw`) and an optional parameter object. They return a `TransitionConfig` with optional `delay`, `duration`, `easing`, and either a `css(t, u)` function or a runtime `tick(t, u)` function. The runtime supplies normalized progress `t` and its complement `u = 1 - t`; factories use either value depending on whether an effect is entering or leaving.
+
+| Factory | Main effect | Important parameters | Implementation basis |
+| --- | --- | --- | --- |
+| `fade` | Opacity | `delay`, `duration`, `easing` | Current computed opacity |
+| `blur` | Opacity plus blur filter | `amount`, `opacity`, common timing options | Computed opacity and existing filter |
+| `fly` | Translation plus opacity | `x`, `y`, `opacity`, common timing options | Computed transform and opacity; CSS units accepted |
+| `slide` | Collapse/expand along one axis | `axis: 'x' \| 'y'`, common timing options | Computed dimensions, padding, margins, and borders |
+| `scale` | Scale plus opacity | `start`, `opacity`, common timing options | Computed transform and opacity |
+| `draw` | SVG stroke reveal/erase | `speed` or `duration`, `easing` | `getTotalLength()` and stroke width |
+| `crossfade` | Move, resize, and fade between keyed elements | `key`, timing options, optional `fallback` | Bounding rectangles of source and destination |
+
+The parameter contracts are defined in [`public.d.ts`](https://github.com/sveltejs/svelte/blob/main/packages/svelte/src/transition/public.d.ts) in the source tree. `TransitionConfig.duration` is numeric for ordinary factories; `crossfade` and `draw` additionally support duration functions derived from a distance or path length.
 
 ## Architecture
 
 ```mermaid
-graph TB
-    subgraph "Transitions Module"
-        TC[TransitionConfig]
-        EF[EasingFunction]
-        
-        subgraph "Built-in Transitions"
-            FP[FadeParams]
-            FLP[FlyParams]
-            SP[SlideParams]
-            SCP[ScaleParams]
-            BP[BlurParams]
-            DP[DrawParams]
-            CP[CrossfadeParams]
-        end
+graph TD
+    subgraph Public["Public transition package"]
+        API["transition/index.js"]
+        Types["transition/public.d.ts"]
+        Easing["linear\ncubic_out\ncubic_in_out"]
+        Helpers["split_css_unit\nassign"]
+        API --> Easing
+        API --> Helpers
+        Types -. contracts .-> API
     end
-    
-    subgraph "Compiler Integration"
-        TD[TransitionDirective]
-        CC[Compiler Core]
+
+    subgraph Compiler["Compile-time integration"]
+        Visitor["TransitionDirective"]
+        Generated["Generated transition call"]
+        Visitor --> Generated
     end
-    
-    subgraph "Runtime Integration"
-        TM[TransitionManager]
-        CR[Client Runtime]
+
+    subgraph Runtime["Client runtime integration"]
+        Manager["internal/client/dom/elements/transitions.js"]
+        Blocks["if / each / await / key blocks"]
+        WebAnim["CSS-to-animation lifecycle"]
+        Manager --> WebAnim
+        Blocks --> Manager
     end
-    
-    TC --> FP
-    TC --> FLP
-    TC --> SP
-    TC --> SCP
-    TC --> BP
-    TC --> DP
-    TC --> CP
-    
-    TD --> TC
-    CC --> TD
-    TM --> TC
-    CR --> TM
-    
-    classDef coreType fill:#e1f5fe
-    classDef paramType fill:#f3e5f5
-    classDef integration fill:#fff3e0
-    
-    class TC,EF coreType
-    class FP,FLP,SP,SCP,BP,DP,CP paramType
-    class TD,CC,TM,CR integration
+
+    Generated --> Manager
+    Manager --> API
+    API --> Config["TransitionConfig"]
+    Config --> WebAnim
 ```
 
-## Core Components
+The dependency direction is intentional: factories are policy-free descriptions of visual interpolation. The compiler chooses when to request a transition; the runtime chooses when to start, reverse, finish, or cancel it. See [compiler_transform_client_directives.md](compiler_transform_client_directives.md) for directive placement and [client_dom_elements_transitions.md](client_dom_elements_transitions.md) for lifecycle behavior.
 
-### TransitionConfig
+## Factory behavior
 
-The foundational interface that defines the structure of all transition configurations:
+### Shared timing and progress
 
-```typescript
-interface TransitionConfig {
-    delay?: number;           // Delay before transition starts (ms)
-    duration?: number;        // Duration of transition (ms)
-    easing?: EasingFunction;  // Easing function for animation curve
-    css?: (t: number, u: number) => string;  // CSS-based animation
-    tick?: (t: number, u: number) => void;   // JavaScript-based animation
-}
-```
+Every factory applies defaults at call time. Unless overridden, most factories use a `400ms` duration and a factory-specific easing function. `fade` defaults to `linear`; `blur` defaults to `cubic_in_out`; `fly`, `slide`, `scale`, and `crossfade` default to `cubic_out`; `draw` defaults to `cubic_in_out`.
 
-**Key Features:**
-- **Flexible timing control** with delay and duration
-- **Easing functions** for natural animation curves
-- **Dual animation modes**: CSS-based for performance, JavaScript-based for complex logic
-- **Progress parameters**: `t` (0→1 progress), `u` (1→0 reverse progress)
+`css` is a function rather than a precomputed string because the runtime repeatedly evaluates it as progress changes. This keeps the factories independent of the animation scheduler and permits the runtime to support intros, outros, and reversals using the same configuration.
 
-### EasingFunction
+### `fade`
 
-```typescript
-type EasingFunction = (t: number) => number;
-```
+`fade` reads the element's current computed opacity (`o`) and returns `opacity: t * o`. Consequently, an intro progresses from zero to the current opacity, while an outro progresses from the current opacity to zero when the runtime supplies reversed progress.
 
-Defines the mathematical curve for animation progression, where:
-- Input `t`: Linear progress from 0 to 1
-- Output: Eased progress value (typically 0 to 1, but can exceed for bounce effects)
+### `blur`
 
-## Built-in Transition Parameters
+`blur` preserves an existing non-`none` filter and interpolates both opacity and `blur(...)`. `amount` accepts a number or a CSS unit string; `split_css_unit` parses values such as `12px`, `1.5rem`, or numeric values, defaulting numeric values to pixels. `opacity` is the opacity endpoint used for the transition rather than the element's computed target opacity.
 
-### Basic Transitions
+### `fly`
 
-#### FadeParams
-```typescript
-interface FadeParams {
-    delay?: number;
-    duration?: number;
-    easing?: EasingFunction;
-}
-```
-Simple opacity-based fade in/out transition.
+`fly` preserves an existing transform, appends a translation, and interpolates opacity. `x` and `y` use the same number-or-unit-string parsing as `blur`. The translation is based on `(1 - t)`, while opacity uses the complementary interpolation needed to support both entering and leaving transitions.
 
-#### SlideParams
-```typescript
-interface SlideParams {
-    delay?: number;
-    duration?: number;
-    easing?: EasingFunction;
-    axis?: 'x' | 'y';  // Slide direction
-}
-```
-Slides elements along specified axis using transform translations.
+### `slide`
 
-### Advanced Transitions
+`slide` collapses an element without relying only on `height` or `width`. For a vertical slide it interpolates height, top/bottom padding, margins, and border widths; for a horizontal slide it uses width and left/right properties. It always emits `overflow: hidden` and `min-height: 0` or `min-width: 0`.
 
-#### FlyParams
-```typescript
-interface FlyParams {
-    delay?: number;
-    duration?: number;
-    easing?: EasingFunction;
-    x?: number | string;    // Horizontal offset
-    y?: number | string;    // Vertical offset
-    opacity?: number;       // Final opacity
-}
-```
-Combines translation and opacity changes for flying in/out effects.
+In development builds, a one-shot warning is emitted for `contents`, `inline`, or `table` display values because those display modes do not provide reliable dimensions for this technique. The warning state is reset in a microtask so repeated problematic calls do not spam indefinitely.
 
-#### ScaleParams
-```typescript
-interface ScaleParams {
-    delay?: number;
-    duration?: number;
-    easing?: EasingFunction;
-    start?: number;         // Starting scale factor
-    opacity?: number;       // Final opacity
-}
-```
-Scales elements with optional opacity changes for zoom effects.
+### `scale`
 
-#### BlurParams
-```typescript
-interface BlurParams {
-    delay?: number;
-    duration?: number;
-    easing?: EasingFunction;
-    amount?: number | string;  // Blur intensity
-    opacity?: number;          // Final opacity
-}
-```
-Applies blur filter with opacity changes for focus/unfocus effects.
+`scale` preserves an existing transform and appends a scale operation. `start` controls the initial scale, and `opacity` controls the non-target opacity endpoint. As with `fly`, the factory reads the current computed target opacity and transform before producing CSS.
 
-### Specialized Transitions
+### `draw`
 
-#### DrawParams
-```typescript
-interface DrawParams {
-    delay?: number;
-    speed?: number;                           // Drawing speed
-    duration?: number | ((len: number) => number);  // Duration or length-based function
-    easing?: EasingFunction;
-}
-```
-Animates SVG path drawing using stroke-dasharray manipulation.
+`draw` is restricted to SVG nodes exposing `getTotalLength()`. It computes a path length, adds the stroke width for non-`butt` line caps, and emits `stroke-dasharray` plus `stroke-dashoffset`. Duration selection is:
 
-#### CrossfadeParams
-```typescript
-interface CrossfadeParams {
-    delay?: number;
-    duration?: number | ((len: number) => number);  // Duration or distance-based function
-    easing?: EasingFunction;
-}
-```
-Creates smooth transitions between elements at different positions.
+1. An explicit numeric duration wins.
+2. A duration function receives the measured path length.
+3. Otherwise `speed` is converted to duration as `length / speed`.
+4. If neither duration nor speed is supplied, duration defaults to `800ms`.
 
-## Integration with Svelte System
+## Crossfade coordination
 
-### Compiler Integration
+`crossfade({ ...defaults, fallback })` returns `[send, receive]`. Each returned function is used as a transition factory and expects a `key` in its parameters. Internally, two maps temporarily register nodes waiting to send or receive:
+
+- `to_send` stores outgoing nodes.
+- `to_receive` stores incoming nodes.
+
+When a transition is finalized by the runtime, it checks the opposite map for the same key. If found, the source and destination rectangles are measured, the counterpart is claimed and removed, and a configuration is returned that translates, scales, and fades the destination relative to the source. The default duration is proportional to travel distance: `sqrt(distance) * 30`.
 
 ```mermaid
 sequenceDiagram
-    participant Template as Svelte Template
-    participant Compiler as Compiler Core
-    participant Directive as TransitionDirective
-    participant Config as TransitionConfig
-    
-    Template->>Compiler: transition:fade={params}
-    Compiler->>Directive: Parse transition directive
-    Directive->>Config: Generate transition config
-    Config->>Compiler: Return compiled transition
-    Compiler->>Template: Generate runtime code
+    participant Old as Old keyed node
+    participant Send as send map
+    participant Receive as receive map
+    participant New as New keyed node
+    participant Runtime as Transition runtime
+
+    Old->>Send: register key
+    New->>Receive: register same key
+    Runtime->>Send: finalize send(key)
+    Send->>Receive: find counterpart
+    Receive-->>Send: return New and delete key
+    Send->>Old: measure source rectangle
+    Send->>New: measure destination rectangle
+    Send-->>Runtime: translate/scale/fade config
+    Runtime->>Old: animate outgoing side
+    Runtime->>New: animate incoming side
 ```
 
-The transitions module integrates with the [compiler_core](compiler_core.md) through:
-- **TransitionDirective**: Parsed from template syntax like `transition:fade`
-- **Modifiers**: Support for `local` and `global` transition scoping
-- **Expression binding**: Dynamic parameter passing from component state
+If the opposite key is absent, the item is removed from its own map and `fallback(node, params, intro)` is called when a fallback was supplied. This handles elements that disappear altogether instead of moving to a counterpart. The `intro` boolean distinguishes the receive-side fallback from the send-side fallback.
 
-### Runtime Integration
-
-```mermaid
-sequenceDiagram
-    participant Component as Svelte Component
-    participant Manager as TransitionManager
-    participant Config as TransitionConfig
-    participant DOM as DOM Element
-    
-    Component->>Manager: Element enters/exits
-    Manager->>Config: Apply transition parameters
-    Config->>DOM: Generate CSS/JS animation
-    DOM->>Manager: Animation complete
-    Manager->>Component: Notify completion
-```
-
-The transitions module works with the [client_runtime](client_runtime.md) through:
-- **TransitionManager**: Orchestrates transition lifecycle
-- **Effect system**: Integrates with Svelte's reactivity for state-driven transitions
-- **Batch processing**: Coordinates multiple simultaneous transitions
-
-## Data Flow
+The crossfade CSS calculation preserves the destination's existing transform, uses `transform-origin: top left`, translates by the rectangle delta, and interpolates width and height through scale factors. The distance passed to a duration function is the Euclidean distance between rectangle origins, not the full transformed path.
 
 ```mermaid
 flowchart TD
-    subgraph "Template Layer"
-        A["Template Syntax<br/>transition:fade={params}"]
-    end
-    
-    subgraph "Compilation Layer"
-        B[TransitionDirective]
-        C[Parameter Validation]
-        D[Code Generation]
-    end
-    
-    subgraph "Runtime Layer"
-        E[TransitionManager]
-        F[TransitionConfig]
-        G[Animation Engine]
-    end
-    
-    subgraph "DOM Layer"
-        H[CSS Animations]
-        I[JavaScript Animations]
-        J[DOM Updates]
-    end
-    
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
-    G --> H
-    G --> I
-    H --> J
-    I --> J
-    
-    classDef template fill:#e8f5e8
-    classDef compile fill:#e1f5fe
-    classDef runtime fill:#fff3e0
-    classDef dom fill:#fce4ec
-    
-    class A template
-    class B,C,D compile
-    class E,F,G runtime
-    class H,I,J dom
+    Start["send/receive called with key"] --> Register["Store node in its map"]
+    Register --> Finalize["Runtime finalizes transition"]
+    Finalize --> Match{"Counterpart with key?"}
+    Match -->|Yes| Measure["Read both bounding rectangles"]
+    Measure --> Build["Build translate/scale/opacity config"]
+    Build --> Animate["Runtime executes paired transition"]
+    Match -->|No| Delete["Delete unclaimed node"]
+    Delete --> Fallback{"fallback supplied?"}
+    Fallback -->|Yes| UseFallback["Return fallback config"]
+    Fallback -->|No| Noop["No crossfade config"]
 ```
 
-## Usage Patterns
+## End-to-end process
 
-### Basic Usage
-```svelte
-<script>
-  import { fade, fly, scale } from 'svelte/transition';
-  let visible = true;
-</script>
-
-{#if visible}
-  <div transition:fade>Fade in/out</div>
-  <div in:fly={{ x: 200 }} out:scale={{ start: 0.7 }}>
-    Different in/out transitions
-  </div>
-{/if}
+```mermaid
+flowchart LR
+    Source[".svelte source"] --> Parse["Parse transition directive"]
+    Parse --> Analyze["Analyze directive and block ownership"]
+    Analyze --> Transform["Client transform emits transition call"]
+    Transform --> Mount["Element mounted or block changes"]
+    Mount --> Invoke["Runtime invokes factory with node"]
+    Invoke --> Snapshot["Factory snapshots computed style/geometry"]
+    Snapshot --> Tick["Runtime evaluates css(t,u)"]
+    Tick --> Paint["Browser applies styles"]
+    Paint --> Complete["Finish, reverse, or cancel"]
 ```
 
-### Custom Transitions
-```javascript
-function customTransition(node, params) {
-  return {
-    delay: params.delay || 0,
-    duration: params.duration || 400,
-    easing: params.easing || linear,
-    css: (t, u) => `
-      transform: scale(${t}) rotate(${t * 180}deg);
-      opacity: ${t};
-    `
-  };
-}
-```
+The factory is normally invoked only in the browser because it calls `getComputedStyle`, `getBoundingClientRect`, or `getTotalLength`. It is therefore a client-side visual-effects API. Server rendering may emit the element markup, but it does not execute these browser measurements; see [server_runtime.md](server_runtime.md) for server-side rendering responsibilities.
 
-### Advanced Crossfade
-```javascript
-import { crossfade } from 'svelte/transition';
+## Integration and maintenance notes
 
-const [send, receive] = crossfade({
-  duration: 300,
-  fallback: fade
-});
+- Changes to parameter defaults or CSS formulas belong in `packages/svelte/src/transition/index.js`.
+- Changes to public parameter names, accepted types, or `TransitionConfig` belong in `packages/svelte/src/transition/public.d.ts` and the published type surface.
+- Changes to when transitions start, reverse, or clean up belong in `internal/client/dom/elements/transitions.js`, not in the factories.
+- Changes to how `transition:`, `in:`, and `out:` are compiled belong in `compiler/phases/3-transform/client/visitors/TransitionDirective.js`.
+- `slide` is the only built-in factory with an explicit development warning in this file; preserve its throttling behavior when changing validation.
+- `crossfade` depends on lifecycle ordering: its maps are populated before the runtime finalizes a transition. Changes to block or transition scheduling should be checked against keyed `each` and conditional block behavior documented in [client_blocks.md](client_blocks.md).
 
-// Use in template with matching keys
-<div in:receive={{ key: id }} out:send={{ key: id }}>
-  Content that crossfades between positions
-</div>
-```
-
-## Performance Considerations
-
-### CSS vs JavaScript Animations
-- **CSS animations** (`css` function): Hardware accelerated, better performance
-- **JavaScript animations** (`tick` function): More control, complex logic support
-
-### Optimization Strategies
-- Use `transform` and `opacity` properties for best performance
-- Avoid animating layout properties (`width`, `height`, `margin`)
-- Leverage `will-change` CSS property for complex animations
-- Consider `prefers-reduced-motion` for accessibility
-
-## Related Modules
-
-- **[animations](animations.md)**: Complementary animation system for layout changes
-- **[motion](motion.md)**: Physics-based animations with springs and tweening
-- **[client_runtime](client_runtime.md)**: Runtime execution and effect management
-- **[compiler_core](compiler_core.md)**: Template compilation and directive processing
-- **[component_system](component_system.md)**: Component lifecycle integration
-
-## Best Practices
-
-1. **Performance**: Prefer CSS-based transitions for simple animations
-2. **Accessibility**: Respect `prefers-reduced-motion` user preferences
-3. **Timing**: Use appropriate durations (200-500ms for most UI transitions)
-4. **Easing**: Choose easing functions that match the transition's purpose
-5. **Fallbacks**: Provide fallback transitions for crossfade operations
-6. **Testing**: Test transitions across different devices and browsers
-
-The transitions module provides a powerful, declarative way to add smooth animations to Svelte applications while maintaining excellent performance and developer experience through its tight integration with Svelte's compilation and runtime systems.
+The module has no independent reactive state. Its persistent state is limited to the two per-`crossfade` maps and the transient development warning flag for `slide`; all animation progress and cleanup are owned by the client runtime.

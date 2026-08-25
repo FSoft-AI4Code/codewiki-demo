@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-10-13T19:21:11.592337",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/nlohmann--json",
         "commit_id": "4bc4e37f4f56f88b3a80abb7a6508b19a244e803"

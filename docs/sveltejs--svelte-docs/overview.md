@@ -1,152 +1,108 @@
 # Svelte Repository Overview
 
-## Purpose
+Svelte is a compiler-driven UI framework. It compiles `.svelte` components and reactive modules into optimized JavaScript, CSS, and SSR output, then provides client, server, reactivity, animation, store, compatibility, and TypeScript APIs for executing and consuming that output.
 
-The `sveltejs--svelte` repository is the core implementation of Svelte, a modern JavaScript framework for building user interfaces. Svelte is a compile-time framework that transforms declarative components into efficient, vanilla JavaScript code that surgically updates the DOM. Unlike traditional frameworks that do most of their work in the browser, Svelte shifts that work into a compile step that happens when you build your app.
+The repository is centered in `packages/svelte`, with compiler phases, internal runtimes, public entry points, and published type declarations.
 
-The repository provides:
-- **Compiler Infrastructure**: A sophisticated multi-phase compiler that transforms Svelte components into optimized JavaScript
-- **Runtime Systems**: Lightweight client and server runtime systems for reactive state management and DOM manipulation
-- **Developer Tools**: Comprehensive type definitions, preprocessor support, and development utilities
-- **Animation & Interaction**: Built-in systems for transitions, animations, and user interactions
-
-## End-to-End Architecture
+## End-to-end architecture
 
 ```mermaid
-graph TB
-    subgraph "Development Phase"
-        A[Svelte Component Source] --> B[Preprocessor]
-        B --> C[Compiler Core]
-        
-        subgraph "Compiler Pipeline"
-            C --> D[Parse Phase]
-            D --> E[Analysis Phase]
-            E --> F[Transform Phase]
-        end
-        
-        F --> G[Generated JavaScript]
-        F --> H[Generated CSS]
-    end
-    
-    subgraph "Runtime Phase"
-        G --> I[Client Runtime]
-        H --> J[CSS Processing]
-        
-        subgraph "Client Execution"
-            I --> K[Reactivity System]
-            K --> L[Component System]
-            L --> M[DOM Updates]
-        end
-        
-        subgraph "Server Execution"
-            G --> N[Server Runtime]
-            N --> O[SSR Payload]
-            O --> P[HTML Generation]
-        end
-    end
-    
-    subgraph "Enhancement Systems"
-        Q[Motion & Animation] --> I
-        R[Transitions] --> I
-        S[Actions] --> I
-        T[Stores] --> I
-    end
-    
-    subgraph "Type Safety"
-        U[HTML Elements] --> C
-        V[Compiler Types] --> C
-        W[CSS Types] --> C
-    end
-    
-    style A fill:#e1f5fe
-    style G fill:#e8f5e8
-    style H fill:#e8f5e8
-    style M fill:#fff3e0
-    style P fill:#fff3e0
-```
+flowchart TB
+    Source[".svelte / .svelte.js source"]
+    Preprocess["Preprocessing<br/>markup · script · style"]
+    Parse["Phase 1: Parse<br/>AST.Root"]
+    Analyze["Phase 2: Analyze<br/>scopes · bindings · metadata"]
+    Transform{"Phase 3: Transform"}
 
-### Compilation Flow
+    Client["Client transform<br/>DOM-oriented JavaScript"]
+    Server["Server transform<br/>SSR JavaScript"]
+    CSS["CSS transform<br/>scoped CSS"]
+
+    ClientRuntime["Client reactivity + DOM runtime"]
+    ServerRuntime["Server runtime + shared primitives"]
+    Browser["Browser DOM"]
+    HTML["SSR HTML / head / CSS"]
+    Result["CompileResult"]
+
+    Source --> Preprocess --> Parse --> Analyze --> Transform
+    Transform --> Client --> Result
+    Transform --> Server --> Result
+    Transform --> CSS --> Result
+
+    Client --> ClientRuntime --> Browser
+    Server --> ServerRuntime --> HTML
+```
 
 ```mermaid
 sequenceDiagram
-    participant Dev as Developer
-    participant Pre as Preprocessor
-    participant Comp as Compiler Core
-    participant Parse as Parser
-    participant Analyze as Analyzer
-    participant Transform as Transformer
-    participant Output as Generated Code
-    
-    Dev->>Pre: Svelte Component (.svelte)
-    Pre->>Pre: TypeScript → JavaScript
-    Pre->>Pre: SCSS → CSS
-    Pre->>Comp: Processed Source
-    
-    Comp->>Parse: Raw Template + Script
-    Parse->>Parse: Tokenize & Build AST
-    Parse->>Analyze: Component AST
-    
-    Analyze->>Analyze: Scope Resolution
-    Analyze->>Analyze: Dependency Analysis
-    Analyze->>Analyze: Binding Validation
-    Analyze->>Transform: Analysis Results
-    
-    Transform->>Transform: Client Code Generation
-    Transform->>Transform: Server Code Generation
-    Transform->>Output: Optimized JavaScript + CSS
-    
-    Output->>Dev: Compiled Component
+    participant App as Application / bundler
+    participant Compiler as Svelte compiler
+    participant Runtime as Client or server runtime
+    participant Output as DOM or SSR output
+
+    App->>Compiler: compile(source, options)
+    Compiler->>Compiler: parse → analyze → transform
+    Compiler-->>App: JavaScript, CSS, warnings, metadata
+    App->>Runtime: execute compiled component
+    Runtime->>Output: update browser DOM or serialize SSR HTML
+    Output-->>App: rendered component
 ```
 
-### Runtime Execution Flow
+## Runtime and library relationships
 
 ```mermaid
-sequenceDiagram
-    participant App as Application
-    participant Runtime as Client Runtime
-    participant Reactive as Reactivity System
-    participant Component as Component System
-    participant DOM as DOM
-    
-    App->>Runtime: Mount Component
-    Runtime->>Component: Create Component Instance
-    Component->>Reactive: Initialize State
-    Reactive->>DOM: Initial Render
-    
-    loop User Interaction
-        App->>Reactive: State Change
-        Reactive->>Reactive: Track Dependencies
-        Reactive->>Component: Trigger Updates
-        Component->>DOM: Surgical DOM Updates
-    end
-    
-    App->>Runtime: Unmount Component
-    Runtime->>Component: Cleanup
-    Component->>Reactive: Dispose State
+flowchart LR
+    Public["Public package APIs"]
+    Types["Published TypeScript declarations"]
+    Compiler["Compilation pipeline"]
+    Reactivity["Client reactivity core"]
+    DOM["Client DOM rendering runtime"]
+    SSR["Server rendering runtime"]
+    Stores["Stores and reactive built-ins"]
+    Motion["Motion, transitions, animations"]
+    Legacy["Legacy compatibility and migration"]
+
+    Public --> Compiler
+    Public --> Reactivity
+    Public --> DOM
+    Public --> SSR
+    Public --> Stores
+    Public --> Motion
+    Public --> Legacy
+
+    Types -. contracts .-> Public
+    Types -. contracts .-> Compiler
+    Compiler --> Reactivity
+    Compiler --> DOM
+    Compiler --> SSR
+    Reactivity --> DOM
+    Stores --> Reactivity
+    Motion --> DOM
+    Legacy --> Reactivity
+    Legacy --> SSR
 ```
 
-## Core Module Documentation
+## Core module documentation
 
-### Compilation System
-- **[Compiler Core](compiler_core.md)**: Multi-phase compilation pipeline (parsing, analysis, transformation)
-- **[Compiler Types](compiler_types.md)**: AST node definitions and compilation interfaces
-- **[CSS Types](css_types.md)**: CSS parsing and scoping type definitions
-- **[Preprocessor](preprocessor.md)**: Source transformation hooks for TypeScript, SCSS, etc.
+| Module | Source area | Documentation |
+| --- | --- | --- |
+| Compilation pipeline | `packages/svelte/src/compiler` | [compilation_pipeline.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/compilation_pipeline.md) |
+| Compiler support services | `packages/svelte/src/compiler` | [compiler_support_services.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/compiler_support_services.md) |
+| Legacy compatibility and migration | `packages/svelte/src` | [legacy_compatibility_and_migration.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/legacy_compatibility_and_migration.md) |
+| Client reactivity core | `packages/svelte/src/internal/client/reactivity` | [client_reactivity_core.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/client_reactivity_core.md) |
+| Client DOM rendering runtime | `packages/svelte/src/internal/client` | [client_dom_rendering_runtime.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/client_dom_rendering_runtime.md) |
+| Server rendering and shared primitives | `packages/svelte/src/internal` | [server_rendering_and_shared_runtime_primitives.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/server_rendering_and_shared_runtime_primitives.md) |
+| Reactive state and stores | `packages/svelte/src/store`, `packages/svelte/src/reactivity` | [reactive_state_and_stores_library.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/reactive_state_and_stores_library.md) |
+| Motion and visual effects | `packages/svelte/src/transition`, `animate`, `motion`, `easing` | [motion_and_visual_effects_library.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/motion_and_visual_effects_library.md) |
+| Public package entry points | `packages/svelte` | [public_package_entry_points.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/public_package_entry_points.md) |
+| Published type declarations | `packages/svelte/types/index.d.ts` | [published_type_declaration_surface.md](/home/anhnh/CodeWiki-journal/results/generation/svelte/published_type_declaration_surface.md) |
 
-### Runtime Systems
-- **[Client Runtime](client_runtime.md)**: Reactive state management and DOM manipulation
-- **[Server Runtime](server_runtime.md)**: Server-side rendering and payload management
-- **[Component System](component_system.md)**: Component lifecycle and interaction patterns
+## Key design points
 
-### State Management
-- **[Stores](stores.md)**: Reactive state management with subscription patterns
-- **[Reactive Data Structures](reactive_data_structures.md)**: Reactive versions of Map, Set, Date, URL, etc.
-
-### Animation & Interaction
-- **[Motion](motion.md)**: Spring physics and tweening for smooth animations
-- **[Transitions](transitions.md)**: Enter/exit animations with built-in effects
-- **[Animations](animations.md)**: FLIP animations for layout changes
-- **[Actions](actions.md)**: Reusable DOM element behaviors
-
-### Type Safety & Integration
-- **[HTML Elements](html_elements.md)**: Comprehensive DOM element type definitions
+- The compiler parses source into one AST, decorates it during analysis, and shares the analyzed structure with client, server, and CSS transforms.
+- Client output delegates fine-grained updates to the reactivity runtime and DOM runtime.
+- Server output uses payload-based SSR primitives to produce HTML, head content, CSS, and hydration markers.
+- Stores and reactive built-ins provide public state abstractions that integrate with client signals.
+- Transitions, animations, motion, and easing build on compiler-generated instructions and runtime scheduling.
+- Legacy adapters preserve Svelte 3/4 component behavior while migration tools assist conversion to Svelte 5.
+- Public JavaScript APIs and TypeScript declarations form the stable consumer-facing boundary over these internal systems.

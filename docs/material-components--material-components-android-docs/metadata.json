@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-10-14T01:53:28.648254",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/material-components--material-components-android",
         "commit_id": "c2051db2a9be2a1e23f1128bfc76a9ff29ede7c4"

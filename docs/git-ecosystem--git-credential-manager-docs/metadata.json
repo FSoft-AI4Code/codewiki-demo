@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-10-13T21:37:41.115328",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/git-ecosystem--git-credential-manager",
         "commit_id": "b62021fdd7f0e28bf851580e0afd834976bd79d1"

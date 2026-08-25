@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-10-14T10:14:07.456783",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/microsoft--graphrag",
         "commit_id": "a398cc38bb75c17ee37894f2f2a751e2231d9347"

@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-10-13T18:38:50.952510",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/sumatrapdfreader--sumatrapdf",
         "commit_id": "cdadfde74471e9b06898e5c1e87edd98b4204597"

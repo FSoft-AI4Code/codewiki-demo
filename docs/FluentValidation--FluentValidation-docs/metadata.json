@@ -1,7 +1,7 @@
 {
     "generation_info": {
         "timestamp": "2025-10-14T11:08:49.436933",
-        "main_model": "kimi-k2-instruct",
+        "main_model": "claude-sonnet-4",
         "generator_version": "1.0.0",
         "repo_path": "./output/temp/FluentValidation--FluentValidation",
         "commit_id": "298069b4ef88241013d0573f38e25c936e80685f"
