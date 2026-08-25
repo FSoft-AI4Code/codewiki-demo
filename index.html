@@ -3,558 +3,438 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CodeWiki Demo - Documentation Gallery</title>
+    <title>CodeWiki — Documentation Gallery</title>
     <style>
         :root {
-            --primary-color: #2563eb;
-            --secondary-color: #f1f5f9;
-            --text-color: #334155;
-            --border-color: #e2e8f0;
-            --success-color: #10b981;
-            --hover-bg: #f8fafc;
+            --bg: #ffffff;
+            --text: #1f2328;
+            --muted: #59636e;
+            --border: #d1d9e0;
+            --border-light: #e6eaef;
+            --accent: #0969da;
+            --surface: #f6f8fa;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 20px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Noto Sans', Helvetica, Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text);
+            background: var(--bg);
         }
-        
-        .container {
-            max-width: 1200px;
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .topbar {
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .topbar-inner {
+            max-width: 1080px;
             margin: 0 auto;
-            background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: var(--primary-color);
-            color: white;
-            padding: 3rem 2rem;
-            text-align: center;
-        }
-        
-        .header h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-        
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-        
-        .header .subtitle {
-            font-size: 1rem;
-            opacity: 0.8;
-        }
-        
-        .content {
-            padding: 2rem;
-        }
-        
-        .stats {
+            padding: 14px 24px;
             display: flex;
-            justify-content: center;
-            gap: 3rem;
-            padding: 2rem;
-            background: var(--secondary-color);
-            border-radius: 12px;
-            margin-bottom: 2rem;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 16px;
         }
-        
-        .stat-item {
-            text-align: center;
+
+        .wordmark {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text);
+            letter-spacing: -0.01em;
         }
-        
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary-color);
+
+        .wordmark:hover {
+            text-decoration: none;
         }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+
+        .topbar-note {
+            font-size: 13px;
+            color: var(--muted);
         }
-        
-        .search-box {
-            margin-bottom: 2rem;
+
+        .page {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 40px 24px 64px;
         }
-        
+
+        .intro h1 {
+            font-size: 22px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 6px;
+        }
+
+        .intro p {
+            color: var(--muted);
+            max-width: 640px;
+        }
+
+        .summary-line {
+            margin-top: 10px;
+            font-size: 13px;
+            color: var(--muted);
+        }
+
+        .summary-line strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .controls {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin: 28px 0 20px;
+        }
+
         .search-input {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 1rem;
-            transition: border-color 0.2s;
+            flex: 1;
+            min-width: 220px;
+            max-width: 340px;
+            padding: 6px 12px;
+            font-size: 14px;
+            font-family: inherit;
+            color: var(--text);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 6px;
         }
-        
+
         .search-input:focus {
             outline: none;
-            border-color: var(--primary-color);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(9, 105, 218, 0.15);
         }
-        
+
         .filters {
             display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 6px;
             flex-wrap: wrap;
         }
-        
+
         .filter-btn {
-            padding: 0.5rem 1rem;
-            border: 2px solid var(--border-color);
-            background: white;
-            border-radius: 8px;
+            padding: 4px 12px;
+            font-size: 13px;
+            font-family: inherit;
+            color: var(--muted);
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 999px;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
         }
-        
+
         .filter-btn:hover {
-            border-color: var(--primary-color);
-            color: var(--primary-color);
+            background: var(--surface);
+            color: var(--text);
         }
-        
+
         .filter-btn.active {
-            background: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
+            background: var(--surface);
+            border-color: var(--border);
+            color: var(--text);
+            font-weight: 500;
         }
-        
+
         .projects-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 12px;
         }
-        
+
         .project-card {
-            background: white;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 1.5rem;
-            transition: all 0.2s;
+            display: block;
+            padding: 16px;
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
             cursor: pointer;
+            transition: border-color 0.12s ease;
         }
-        
+
         .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px -4px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary-color);
+            border-color: var(--border);
+            text-decoration: none;
         }
-        
-        .project-header {
+
+        .project-card:hover .repo-name {
+            text-decoration: underline;
+        }
+
+        .repo-line {
             display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
         }
-        
-        .project-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary-color), #764ba2);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            flex-shrink: 0;
-        }
-        
-        .project-title {
-            flex: 1;
-        }
-        
-        .project-name {
-            font-size: 1.2rem;
+
+        .repo-name {
+            font-size: 15px;
             font-weight: 600;
-            color: var(--text-color);
-            margin-bottom: 0.25rem;
+            color: var(--accent);
+            word-break: break-word;
         }
-        
-        .project-owner {
-            font-size: 0.85rem;
-            color: #64748b;
+
+        .repo-name .owner {
+            font-weight: 400;
         }
-        
-        .project-meta {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-        
-        .meta-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            color: #64748b;
-        }
-        
-        .project-links {
-            display: flex;
-            gap: 0.5rem;
-            margin-left: auto;
-        }
-        
-        .link-btn {
+
+        .lang {
             display: inline-flex;
             align-items: center;
-            gap: 0.25rem;
-            padding: 0.25rem 0.5rem;
-            background: var(--secondary-color);
-            color: #64748b;
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            transition: all 0.2s;
-            border: 1px solid var(--border-color);
+            gap: 6px;
+            font-size: 12px;
+            color: var(--muted);
+            white-space: nowrap;
         }
-        
-        .link-btn:hover {
-            background: white;
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-            transform: translateY(-1px);
-        }
-        
-        .project-stats {
-            display: flex;
-            gap: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--border-color);
-        }
-        
-        .stat {
-            flex: 1;
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-weight: 600;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-        }
-        
-        .stat-text {
-            font-size: 0.75rem;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 3rem;
-            color: #64748b;
-        }
-        
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid var(--secondary-color);
-            border-top-color: var(--primary-color);
+
+        .lang-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            background: #ccc;
         }
-        
-        @keyframes spin {
-            to { transform: rotate(360deg); }
+
+        .project-desc {
+            margin-top: 6px;
+            font-size: 13px;
+            color: var(--muted);
         }
-        
+
+        .project-foot {
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .project-foot a {
+            color: var(--muted);
+        }
+
+        .project-foot a:hover {
+            color: var(--accent);
+        }
+
+        .foot-spacer {
+            flex: 1;
+        }
+
+        .loading,
         .no-results {
+            padding: 48px 0;
             text-align: center;
-            padding: 3rem;
-            color: #64748b;
+            color: var(--muted);
         }
-        
-        .language-badge {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--secondary-color);
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #64748b;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
+
+        footer {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 20px 24px 40px;
+            font-size: 12px;
+            color: var(--muted);
+            border-top: 1px solid var(--border-light);
         }
-        
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
+
+        @media (max-width: 640px) {
             .projects-grid {
                 grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                flex-direction: column;
-                gap: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>📚 CodeWiki Demo</h1>
-            <p>Automated Repository-Level Documentation Gallery</p>
-            <p class="subtitle">Browse documentation generated for real-world open source projects</p>
-        </div>
-        
-        <div class="content">
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="total-projects">0</div>
-                    <div class="stat-label">Projects</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="total-components">0</div>
-                    <div class="stat-label">Components</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="languages">0</div>
-                    <div class="stat-label">Languages</div>
-                </div>
-            </div>
-            
-            <div class="search-box">
-                <input 
-                    type="text" 
-                    id="search-input" 
-                    class="search-input" 
-                    placeholder="🔍 Search projects by name or language..."
-                >
-            </div>
-            
-            <div class="filters" id="filters"></div>
-            
-            <div id="loading" class="loading">
-                <div class="loading-spinner"></div>
-                <p>Loading projects...</p>
-            </div>
-            
-            <div id="projects-grid" class="projects-grid" style="display: none;"></div>
-            
-            <div id="no-results" class="no-results" style="display: none;">
-                <h3>No projects found</h3>
-                <p>Try adjusting your search or filters</p>
-            </div>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <a class="wordmark" href="index.html">CodeWiki</a>
+            <span class="topbar-note">repository-level documentation, generated from source</span>
         </div>
     </div>
-    
+
+    <div class="page">
+        <div class="intro">
+            <h1>Documentation gallery</h1>
+            <p>Wikis generated by CodeWiki for real-world open source repositories. Pick a project to browse its architecture overview, module pages, and diagrams.</p>
+            <p class="summary-line" id="summary-line"></p>
+        </div>
+
+        <div class="controls">
+            <input
+                type="text"
+                id="search-input"
+                class="search-input"
+                placeholder="Filter by name, owner, or language"
+            >
+            <div class="filters" id="filters"></div>
+        </div>
+
+        <div id="loading" class="loading">Loading projects…</div>
+
+        <div id="projects-grid" class="projects-grid" style="display: none;"></div>
+
+        <div id="no-results" class="no-results" style="display: none;">
+            No projects match your search.
+        </div>
+    </div>
+
+    <footer>
+        Generated with claude-sonnet-4 · <span id="footer-count"></span>
+    </footer>
+
     <script>
         let allProjects = [];
         let currentFilter = 'all';
-        
-        // Automatically detect projects from docs folder
+
+        const LANG_COLORS = {
+            'Python': '#3572A5',
+            'JavaScript': '#f1e05a',
+            'TypeScript': '#3178c6',
+            'Java': '#b07219',
+            'C#': '#178600',
+            'C++': '#f34b7d',
+            'C': '#555555',
+            'Go': '#00ADD8',
+            'Rust': '#dea584',
+            'Ruby': '#701516'
+        };
+
         async function loadProjects() {
             try {
-                // Try to fetch projects.json if it exists
                 const response = await fetch('projects.json');
-                if (response.ok) {
-                    const data = await response.json();
-                    allProjects = data.projects;
-                } else {
-                    // Fallback: generate from directory structure
-                    await scanDocsDirectory();
-                }
-                
+                if (!response.ok) throw new Error('projects.json not found');
+                const data = await response.json();
+                allProjects = data.projects;
+
                 displayProjects();
-                updateStats();
+                updateSummary();
                 createFilters();
             } catch (error) {
                 console.error('Error loading projects:', error);
-                document.getElementById('loading').innerHTML = `
-                    <h3>⚠️ Error Loading Projects</h3>
-                    <p>Please ensure projects.json exists or docs are properly structured.</p>
-                    <p style="font-size: 0.9rem; margin-top: 1rem;">Create projects.json by running: <code>node generate-projects.js</code></p>
-                `;
+                document.getElementById('loading').textContent =
+                    'Could not load projects.json — run generate-projects.py and reload.';
             }
         }
-        
-        async function scanDocsDirectory() {
-            // This will be populated by the generator script
-            // For now, we'll show a helpful message
-            throw new Error('projects.json not found');
+
+        function escapeHtml(s) {
+            return String(s).replace(/[&<>"']/g, c => ({
+                '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+            })[c]);
         }
-        
-        function detectLanguage(repoName) {
-            const langPatterns = {
-                'Python': ['py', 'python', 'django', 'flask'],
-                'JavaScript': ['js', 'javascript', 'node', 'react', 'vue', 'angular'],
-                'TypeScript': ['ts', 'typescript'],
-                'Java': ['java', 'spring'],
-                'C#': ['csharp', 'dotnet', 'cs'],
-                'C++': ['cpp', 'c++'],
-                'C': ['c-'],
-                'Go': ['go', 'golang'],
-                'Rust': ['rust', 'rs']
-            };
-            
-            const lowerName = repoName.toLowerCase();
-            for (const [lang, patterns] of Object.entries(langPatterns)) {
-                if (patterns.some(p => lowerName.includes(p))) {
-                    return lang;
-                }
-            }
-            return 'Unknown';
+
+        function formatCount(n) {
+            return (n || 0).toLocaleString('en-US');
         }
-        
+
         function displayProjects(filter = currentFilter, search = '') {
             const grid = document.getElementById('projects-grid');
             const loading = document.getElementById('loading');
             const noResults = document.getElementById('no-results');
-            
+
             loading.style.display = 'none';
-            
+
             let filtered = allProjects;
-            
-            // Apply language filter
+
             if (filter !== 'all') {
                 filtered = filtered.filter(p => p.language === filter);
             }
-            
-            // Apply search
+
             if (search) {
-                const searchLower = search.toLowerCase();
-                filtered = filtered.filter(p => 
-                    p.name.toLowerCase().includes(searchLower) ||
-                    p.owner.toLowerCase().includes(searchLower) ||
-                    p.language.toLowerCase().includes(searchLower)
+                const q = search.toLowerCase();
+                filtered = filtered.filter(p =>
+                    (p.repo || p.name).toLowerCase().includes(q) ||
+                    p.owner.toLowerCase().includes(q) ||
+                    p.language.toLowerCase().includes(q)
                 );
             }
-            
+
             if (filtered.length === 0) {
                 grid.style.display = 'none';
                 noResults.style.display = 'block';
                 return;
             }
-            
+
             noResults.style.display = 'none';
             grid.style.display = 'grid';
-            
-            grid.innerHTML = filtered.map(project => `
-                <div class="project-card" onclick="viewProject('${project.folder}')">
-                    <div class="project-header">
-                        <div class="project-icon">📄</div>
-                        <div class="project-title">
-                            <div class="project-name">${project.name}</div>
-                            <div class="project-owner">${project.owner}</div>
-                        </div>
+
+            grid.innerHTML = filtered.map(project => {
+                const repo = escapeHtml(project.repo || project.name);
+                const owner = escapeHtml(project.owner);
+                const lang = escapeHtml(project.language);
+                const dot = LANG_COLORS[project.language] || '#8b949e';
+                return `
+                <div class="project-card" onclick="viewProject('${escapeHtml(project.folder)}')">
+                    <div class="repo-line">
+                        <span class="repo-name"><span class="owner">${owner} /</span> ${repo}</span>
+                        <span class="lang"><span class="lang-dot" style="background:${dot}"></span>${lang}</span>
                     </div>
-                    <div class="project-meta">
-                        <div class="meta-item">
-                            <span class="language-badge">${project.language}</span>
-                        </div>
-                        ${project.model ? `
-                        <div class="meta-item">
-                            🤖 ${project.model}
-                        </div>
-                        ` : ''}
-                        <div class="project-links">
-                            ${project.github_url ? `
-                            <a href="${project.github_url}" class="link-btn" onclick="event.stopPropagation()" target="_blank" rel="noopener noreferrer">
-                                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
-                                    <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/>
-                                </svg>
-                                GitHub
-                            </a>
-                            ` : ''}
-                            ${project.deepwiki_url ? `
-                            <a href="${project.deepwiki_url}" class="link-btn" onclick="event.stopPropagation()" target="_blank" rel="noopener noreferrer">
-                                📚 DeepWiki
-                            </a>
-                            ` : ''}
-                        </div>
+                    <div class="project-desc">
+                        ${formatCount(project.components)} components documented across ${formatCount(project.modules)} modules
                     </div>
-                    <div class="project-stats">
-                        <div class="stat">
-                            <div class="stat-value">${project.components || 0}</div>
-                            <div class="stat-text">Components</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">${project.depth || 0}</div>
-                            <div class="stat-text">Depth</div>
-                        </div>
-                        <div class="stat">
-                            <div class="stat-value">${project.modules || 0}</div>
-                            <div class="stat-text">Modules</div>
-                        </div>
+                    <div class="project-foot">
+                        ${project.github_url ? `<a href="${escapeHtml(project.github_url)}" onclick="event.stopPropagation()" target="_blank" rel="noopener noreferrer">Source</a>` : ''}
+                        ${project.deepwiki_url ? `<a href="${escapeHtml(project.deepwiki_url)}" onclick="event.stopPropagation()" target="_blank" rel="noopener noreferrer">DeepWiki</a>` : ''}
+                        <span class="foot-spacer"></span>
+                        <span>Read the wiki →</span>
                     </div>
-                </div>
-            `).join('');
+                </div>`;
+            }).join('');
         }
-        
-        function updateStats() {
-            document.getElementById('total-projects').textContent = allProjects.length;
-            
+
+        function updateSummary() {
             const totalComponents = allProjects.reduce((sum, p) => sum + (p.components || 0), 0);
-            document.getElementById('total-components').textContent = totalComponents.toLocaleString();
-            
             const languages = new Set(allProjects.map(p => p.language));
-            document.getElementById('languages').textContent = languages.size;
+            document.getElementById('summary-line').innerHTML =
+                `<strong>${allProjects.length}</strong> projects · ` +
+                `<strong>${totalComponents.toLocaleString('en-US')}</strong> documented components · ` +
+                `<strong>${languages.size}</strong> languages`;
+            document.getElementById('footer-count').textContent =
+                `${allProjects.length} projects`;
         }
-        
+
         function createFilters() {
             const languages = [...new Set(allProjects.map(p => p.language))].sort();
             const filtersDiv = document.getElementById('filters');
-            
-            filtersDiv.innerHTML = `
-                <button class="filter-btn active" onclick="filterProjects('all')">All</button>
-                ${languages.map(lang => `
-                    <button class="filter-btn" onclick="filterProjects('${lang}')">${lang}</button>
-                `).join('')}
-            `;
+
+            filtersDiv.innerHTML =
+                `<button class="filter-btn active" onclick="filterProjects('all', this)">All</button>` +
+                languages.map(lang =>
+                    `<button class="filter-btn" onclick="filterProjects('${escapeHtml(lang)}', this)">${escapeHtml(lang)}</button>`
+                ).join('');
         }
-        
-        function filterProjects(lang) {
+
+        function filterProjects(lang, btn) {
             currentFilter = lang;
-            
-            // Update button states
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            const search = document.getElementById('search-input').value;
-            displayProjects(lang, search);
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            displayProjects(lang, document.getElementById('search-input').value);
         }
-        
+
         function viewProject(folder) {
             window.location.href = `viewer.html?project=${folder}`;
         }
-        
-        // Search functionality
+
         document.getElementById('search-input').addEventListener('input', (e) => {
             displayProjects(currentFilter, e.target.value);
         });
-        
-        // Initialize
+
         loadProjects();
     </script>
 </body>

@@ -338,6 +338,7 @@
         }
         
         .mermaid {
+            position: relative;
             margin: 2rem 0;
             padding: 1.5rem;
             background: white;
@@ -345,7 +346,130 @@
             border-radius: 0.5rem;
             overflow-x: auto;
         }
-        
+
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .mermaid.zoomable svg {
+            cursor: zoom-in;
+        }
+
+        .mermaid-expand {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            line-height: 1;
+            color: #64748b;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.15s ease, border-color 0.15s ease;
+        }
+
+        .mermaid:hover .mermaid-expand,
+        .mermaid-expand:focus {
+            opacity: 1;
+        }
+
+        @media (hover: none) {
+            .mermaid-expand {
+                opacity: 1;
+            }
+        }
+
+        .mermaid-expand:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .mermaid-lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 400;
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .mermaid-lightbox.open {
+            display: block;
+        }
+
+        .lightbox-canvas {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            cursor: grab;
+            touch-action: none;
+        }
+
+        .lightbox-canvas.dragging {
+            cursor: grabbing;
+        }
+
+        .lightbox-stage {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: 0 0;
+        }
+
+        .lightbox-toolbar {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 2;
+            display: flex;
+            gap: 8px;
+        }
+
+        .lightbox-toolbar button {
+            min-width: 38px;
+            height: 38px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            font-family: inherit;
+            color: var(--text-color);
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+            transition: border-color 0.15s ease, color 0.15s ease;
+        }
+
+        .lightbox-toolbar button:hover {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .lightbox-hint {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            padding: 6px 14px;
+            font-size: 12px;
+            color: #64748b;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
         .loading {
             display: flex;
             flex-direction: column;
@@ -754,13 +878,203 @@
                 try {
                     const { svg } = await mermaid.render(id + '-svg', element.textContent);
                     element.innerHTML = svg;
+                    makeMermaidZoomable(element);
                 } catch (error) {
                     console.error('Mermaid rendering error:', error);
                     element.innerHTML = `<pre>Error rendering diagram:\n${element.textContent}</pre>`;
                 }
             }
         }
-        
+
+        // ---------- Mermaid full-screen lightbox with pan & zoom ----------
+
+        let lightboxEl = null;
+        const lightboxState = { scale: 1, tx: 0, ty: 0, width: 0, height: 0 };
+
+        function makeMermaidZoomable(element) {
+            element.classList.add('zoomable');
+
+            const btn = document.createElement('button');
+            btn.className = 'mermaid-expand';
+            btn.type = 'button';
+            btn.title = 'Expand diagram';
+            btn.setAttribute('aria-label', 'Expand diagram');
+            btn.textContent = '⛶';
+            element.appendChild(btn);
+
+            element.addEventListener('click', function(e) {
+                if (e.target.closest('a')) return; // keep links inside diagrams working
+                openMermaidLightbox(element);
+            });
+        }
+
+        function ensureLightbox() {
+            if (lightboxEl) return lightboxEl;
+
+            lightboxEl = document.createElement('div');
+            lightboxEl.className = 'mermaid-lightbox';
+            lightboxEl.setAttribute('role', 'dialog');
+            lightboxEl.setAttribute('aria-label', 'Diagram viewer');
+            lightboxEl.innerHTML =
+                '<div class="lightbox-canvas"><div class="lightbox-stage"></div></div>' +
+                '<div class="lightbox-toolbar">' +
+                '<button type="button" data-action="zoom-out" title="Zoom out" aria-label="Zoom out">−</button>' +
+                '<button type="button" data-action="zoom-in" title="Zoom in" aria-label="Zoom in">+</button>' +
+                '<button type="button" data-action="reset" title="Reset view" aria-label="Reset view">Fit</button>' +
+                '<button type="button" data-action="close" title="Close (Esc)" aria-label="Close">✕</button>' +
+                '</div>' +
+                '<div class="lightbox-hint">Scroll to zoom · drag to pan · Esc to close</div>';
+            document.body.appendChild(lightboxEl);
+
+            const canvas = lightboxEl.querySelector('.lightbox-canvas');
+
+            lightboxEl.querySelector('.lightbox-toolbar').addEventListener('click', function(e) {
+                const button = e.target.closest('button');
+                if (!button) return;
+                const action = button.getAttribute('data-action');
+                const cx = canvas.clientWidth / 2;
+                const cy = canvas.clientHeight / 2;
+                if (action === 'zoom-in') zoomLightboxAt(cx, cy, 1.4);
+                else if (action === 'zoom-out') zoomLightboxAt(cx, cy, 1 / 1.4);
+                else if (action === 'reset') fitLightbox();
+                else if (action === 'close') closeMermaidLightbox();
+            });
+
+            // Wheel zoom centred on the cursor (trackpad pinch arrives as
+            // ctrl+wheel and is covered by the same handler)
+            canvas.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                const rect = canvas.getBoundingClientRect();
+                const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+                zoomLightboxAt(e.clientX - rect.left, e.clientY - rect.top, factor);
+            }, { passive: false });
+
+            // Drag to pan; two pointers pinch to zoom (touch)
+            const pointers = new Map();
+            let lastPinchDist = 0;
+
+            canvas.addEventListener('pointerdown', function(e) {
+                canvas.setPointerCapture(e.pointerId);
+                pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+                if (pointers.size === 1) canvas.classList.add('dragging');
+                if (pointers.size === 2) {
+                    const pts = Array.from(pointers.values());
+                    lastPinchDist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                }
+            });
+
+            canvas.addEventListener('pointermove', function(e) {
+                if (!pointers.has(e.pointerId)) return;
+                const prev = pointers.get(e.pointerId);
+                pointers.set(e.pointerId, { x: e.clientX, y: e.clientY });
+
+                if (pointers.size === 1) {
+                    lightboxState.tx += e.clientX - prev.x;
+                    lightboxState.ty += e.clientY - prev.y;
+                    applyLightboxTransform();
+                } else if (pointers.size === 2) {
+                    const pts = Array.from(pointers.values());
+                    const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                    if (lastPinchDist > 0) {
+                        const rect = canvas.getBoundingClientRect();
+                        const midX = (pts[0].x + pts[1].x) / 2 - rect.left;
+                        const midY = (pts[0].y + pts[1].y) / 2 - rect.top;
+                        zoomLightboxAt(midX, midY, dist / lastPinchDist);
+                    }
+                    lastPinchDist = dist;
+                }
+            });
+
+            function releasePointer(e) {
+                pointers.delete(e.pointerId);
+                lastPinchDist = 0;
+                if (pointers.size === 0) canvas.classList.remove('dragging');
+            }
+            canvas.addEventListener('pointerup', releasePointer);
+            canvas.addEventListener('pointercancel', releasePointer);
+
+            // Double-click to zoom in on a spot
+            canvas.addEventListener('dblclick', function(e) {
+                const rect = canvas.getBoundingClientRect();
+                zoomLightboxAt(e.clientX - rect.left, e.clientY - rect.top, 2);
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && lightboxEl.classList.contains('open')) {
+                    closeMermaidLightbox();
+                }
+            });
+
+            return lightboxEl;
+        }
+
+        function openMermaidLightbox(element) {
+            const svg = element.querySelector('svg');
+            if (!svg) return;
+
+            const lb = ensureLightbox();
+            const stage = lb.querySelector('.lightbox-stage');
+            stage.innerHTML = '';
+
+            const clone = svg.cloneNode(true);
+            let width = 800;
+            let height = 600;
+            const vb = clone.viewBox && clone.viewBox.baseVal;
+            if (vb && vb.width && vb.height) {
+                width = vb.width;
+                height = vb.height;
+            }
+            // Give the clone its natural size; scaling happens via transform
+            clone.style.maxWidth = 'none';
+            clone.style.width = width + 'px';
+            clone.style.height = height + 'px';
+            clone.setAttribute('width', width);
+            clone.setAttribute('height', height);
+            stage.style.width = width + 'px';
+            stage.style.height = height + 'px';
+            stage.appendChild(clone);
+
+            lightboxState.width = width;
+            lightboxState.height = height;
+
+            lb.classList.add('open');
+            document.body.style.overflow = 'hidden';
+            fitLightbox();
+        }
+
+        function fitLightbox() {
+            const canvas = lightboxEl.querySelector('.lightbox-canvas');
+            const cw = canvas.clientWidth;
+            const ch = canvas.clientHeight;
+            // Fill most of the screen — small diagrams get scaled UP
+            const fit = Math.min(cw * 0.9 / lightboxState.width, ch * 0.85 / lightboxState.height);
+            lightboxState.scale = Math.min(Math.max(fit, 0.1), 10);
+            lightboxState.tx = (cw - lightboxState.width * lightboxState.scale) / 2;
+            lightboxState.ty = (ch - lightboxState.height * lightboxState.scale) / 2;
+            applyLightboxTransform();
+        }
+
+        function zoomLightboxAt(x, y, factor) {
+            const newScale = Math.min(Math.max(lightboxState.scale * factor, 0.1), 12);
+            const applied = newScale / lightboxState.scale;
+            lightboxState.tx = x - (x - lightboxState.tx) * applied;
+            lightboxState.ty = y - (y - lightboxState.ty) * applied;
+            lightboxState.scale = newScale;
+            applyLightboxTransform();
+        }
+
+        function applyLightboxTransform() {
+            const stage = lightboxEl.querySelector('.lightbox-stage');
+            stage.style.transform = 'translate(' + lightboxState.tx + 'px, ' + lightboxState.ty + 'px) scale(' + lightboxState.scale + ')';
+        }
+
+        function closeMermaidLightbox() {
+            if (!lightboxEl) return;
+            lightboxEl.classList.remove('open');
+            lightboxEl.querySelector('.lightbox-stage').innerHTML = '';
+            document.body.style.overflow = '';
+        }
+
         function showError(message) {
             const loading = document.getElementById('loading');
             const content = document.getElementById('content');
