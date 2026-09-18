@@ -1,3 +1,10 @@
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="./img/black-background-logo.png">
+    <img src="./img/white-background-logo.png" alt="CodeWiki" width="520">
+  </picture>
+</p>
+
 # CodeWiki Demo Gallery
 
 **Live documentation showcase for projects documented with CodeWiki**
@@ -14,6 +21,7 @@ This repository hosts a static GitHub Pages site that displays documentation gen
 codewiki-demo/
 ├── index.html              # Project gallery page
 ├── viewer.html             # Documentation viewer
+├── img/                    # CodeWiki logo assets
 ├── generate-projects.js    # Auto-generates projects.json
 ├── projects.json           # Project metadata (auto-generated)
 ├── docs/                   # Documentation folders
@@ -45,4 +53,3 @@ Adding new project documentation is automatic:
 3. **Commit and push** (if using GitHub Pages)
 
 The new project will automatically appear in the gallery!
-
